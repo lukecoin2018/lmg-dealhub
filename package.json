@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "lmg-dealhub",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,13 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.8.0",
+    "@supabase/supabase-js": "^2.91.1",
+    "jspdf": "^4.0.0",
+    "lucide-react": "^0.563.0",
     "next": "16.1.4",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.30",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
