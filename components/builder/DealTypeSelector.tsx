@@ -1,7 +1,7 @@
 'use client';
 
 import { useContract } from '@/contexts/ContractContext';
-import { DealType } from '@/types/contract';
+import { DealType } from '@/lib/types/contract';
 
 const dealTypes: Array<{
   id: DealType;
