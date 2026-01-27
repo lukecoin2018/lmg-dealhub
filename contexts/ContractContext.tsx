@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { ContractState, DealType, SelectedClause } from '@/types/contract';
+import { ContractState, DealType, SelectedClause } from '@/lib/types/contract';
 import { createClient } from '@/lib/supabase/client';
 
 interface ContractContextType {
