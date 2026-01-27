@@ -1,4 +1,4 @@
-import { DealTypePreset } from '@/types/contract';
+import { DealTypePreset } from '@/lib/types/contract';
 
 export const DEAL_TYPE_PRESETS: DealTypePreset[] = [
   {
