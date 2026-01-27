@@ -1,4 +1,4 @@
-import { ContractSection } from '@/types/contract';
+import { ContractSection } from '@/lib/types/contract';
 
 /**
  * Complete library of contract sections and clause variations
