@@ -14,16 +14,16 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
   const [saving, setSaving] = useState(false);
 
   // Get all selected sections with their clauses
-  const contractSections = contract.clauses.map(clause => {
+  const contractSections = contract.clauses.map((clause: any) => {
     const section = CLAUSE_LIBRARY.find(s => s.id === clause.sectionId);
-    const variation = section?.variations.find(v => v.id === clause.variationId);
+    const variation = section?.variations.find((v: any) => v.id === clause.variationId);
     
     if (!section || !variation) return null;
 
     // Replace variables in legal text
     let processedText = variation.legalText;
     
-    variation.variables.forEach(variable => {
+    variation.variables.forEach((variable: any) => {
       const value = clause.variableValues[variable.id];
       const placeholder = `{{${variable.id}}}`;
       
@@ -108,7 +108,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
     };
   
     // Get parties info
-    const partiesClause = contract.clauses.find(c => c.sectionId === 'parties');
+    const partiesClause = contract.clauses.find((c: any) => c.sectionId === 'parties');
     const creatorName = partiesClause?.variableValues?.creatorName || '[Creator Name]';
     const brandName = partiesClause?.variableValues?.brandName || '[Brand Name]';
   
@@ -127,7 +127,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
     yPosition += 10;
   
     // Contract sections
-    contractSections.forEach((item) => {
+    contractSections.forEach((item: any) => {
       if (!item) return;
       const { section, processedText } = item;
       
@@ -227,7 +227,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
           <h1 className="text-3xl font-bold mb-4">INFLUENCER MARKETING AGREEMENT</h1>
           <div className="text-sm text-gray-600 space-y-1">
             {(() => {
-              const partiesClause = contract.clauses.find(c => c.sectionId === 'parties');
+              const partiesClause = contract.clauses.find((c: any) => c.sectionId === 'parties');
               const creatorName = partiesClause?.variableValues?.creatorName || '[Creator Name]';
               const brandName = partiesClause?.variableValues?.brandName || '[Brand Name]';
               
@@ -244,7 +244,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
 
         {/* Contract Sections */}
         <div className="space-y-8">
-          {contractSections.map((item) => {
+        {contractSections.map((item: any) => {
             if (!item) return null;
             const { section, variation, processedText } = item;
             
@@ -262,7 +262,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
                   <div className="mt-4 p-4 bg-red-50 border-l-4 border-red-500">
                     <p className="font-semibold text-red-800 mb-2">⚠️ Important Notice:</p>
                     <ul className="text-sm text-red-700 space-y-1">
-                      {variation.redFlags.map((flag, idx) => (
+                    {variation.redFlags.map((flag: any, idx: number) => (
                         <li key={idx}>• {flag.message}</li>
                       ))}
                     </ul>
@@ -297,7 +297,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
                 <p className="font-bold mb-8">CREATOR:</p>
                 <div className="border-t border-gray-400 pt-2">
                   {(() => {
-                    const partiesClause = contract.clauses.find(c => c.sectionId === 'parties');
+                    const partiesClause = contract.clauses.find((c: any) => c.sectionId === 'parties');
                     const creatorName = partiesClause?.variableValues?.creatorName || '[Creator Name]';
                     const creatorBusinessName = partiesClause?.variableValues?.creatorBusinessName;
                     
@@ -318,7 +318,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
                 <p className="font-bold mb-8">BRAND:</p>
                 <div className="border-t border-gray-400 pt-2">
                   {(() => {
-                    const partiesClause = contract.clauses.find(c => c.sectionId === 'parties');
+                    const partiesClause = contract.clauses.find((c: any) => c.sectionId === 'parties');
                     const brandName = partiesClause?.variableValues?.brandName || '[Brand Name]';
                     const brandContactName = partiesClause?.variableValues?.brandContactName;
                     
@@ -374,4 +374,4 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
       </div>
     </div>
   );
-}
+}// rebuild
