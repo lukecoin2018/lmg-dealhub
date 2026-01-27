@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useContract } from '@/contexts/ContractContext';
 import { CLAUSE_LIBRARY } from '@/data/clauseLibrary';
-import { ClauseVariable } from '@/types/contract';
+import { ClauseVariable } from '@/lib/types/contract';
 
 interface ClauseCustomizerProps {
   onNext: () => void;
@@ -35,10 +35,10 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
   const [variableValues, setVariableValues] = useState<Record<string, Record<string, any>>>(() => {
     const initial: Record<string, Record<string, any>> = {};
     selectedSections.forEach(section => {
-      const variation = section.variations.find(v => v.id === section.defaultVariationId);
+      const variation = section.variations.find((v: any) => v.id === section.defaultVariationId);
       if (variation) {
         initial[section.id] = {};
-        variation.variables.forEach(variable => {
+        variation.variables.forEach((variable: any) => {
           if (!variable.calculated) {
             initial[section.id][variable.id] = variable.defaultValue;
           }
@@ -53,10 +53,10 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
     
     // Reset variables for this section with new variation's defaults
     const section = CLAUSE_LIBRARY.find(s => s.id === sectionId);
-    const variation = section?.variations.find(v => v.id === variationId);
+    const variation = section?.variations.find((v: any) => v.id === variationId);
     if (variation) {
       const newValues: Record<string, any> = {};
-      variation.variables.forEach(variable => {
+      variation.variables.forEach((variable: any) => {
         if (!variable.calculated) {
           newValues[variable.id] = variable.defaultValue;
         }
@@ -78,7 +78,7 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
   const handleNext = () => {
     // Save current section's clause
     const variation = currentSection.variations.find(
-      v => v.id === selectedVariations[currentSection.id]
+      (v: any) => v.id === selectedVariations[currentSection.id]
     );
     
     if (variation) {
@@ -121,7 +121,7 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
   }
 
   const currentVariation = currentSection.variations.find(
-    v => v.id === selectedVariations[currentSection.id]
+    (v: any) => v.id === selectedVariations[currentSection.id]
   );
 
   const progress = ((currentSectionIndex + 1) / selectedSections.length) * 100;
@@ -169,7 +169,7 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
             Choose Your {currentSection.title} Option:
           </label>
           <div className="space-y-3">
-            {currentSection.variations.map(variation => (
+          {currentSection.variations.map((variation: any) => (
               <button
                 key={variation.id}
                 onClick={() => handleVariationChange(currentSection.id, variation.id)}
@@ -200,8 +200,8 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
           <h3 className="text-lg font-semibold mb-4 text-text-primary">Fill in the Details:</h3>
           <div className="space-y-6">
             {currentVariation.variables
-              .filter(v => !v.calculated)
-              .map(variable => (
+              .filter((v: any) => !v.calculated)
+              .map((variable: any) => (
                 <VariableInput
                   key={variable.id}
                   variable={variable}
