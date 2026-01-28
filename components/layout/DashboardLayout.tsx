@@ -1,3 +1,5 @@
+'use client'
+
 import Sidebar from './Sidebar'
 import Header from './Header'
 
@@ -17,9 +19,12 @@ export default function DashboardLayout({
         <Header />
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
-        </main>
+        <main 
+  className="flex-1 overflow-y-auto p-6" 
+  style={{ backgroundColor: 'var(--color-bg-primary)' }}
+>
+  {children}
+</main>
       </div>
     </div>
   )

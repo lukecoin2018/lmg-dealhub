@@ -1,5 +1,7 @@
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
+import { Badge } from '@/components/ui/Badge'
+import { EmptyState } from '@/components/ui/EmptyState'
 import { 
   Calculator, 
   MessageSquare, 
@@ -7,7 +9,8 @@ import {
   Briefcase, 
   DollarSign,
   Clock,
-  CheckCircle
+  CheckCircle,
+  Plus
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -38,98 +41,78 @@ export default async function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-8">
         {/* Welcome Header */}
         <div>
-          <h1 className="text-3xl font-bold text-text-primary">Dashboard</h1>
-          <p className="text-text-secondary mt-1">Welcome back! Here's your business overview.</p>
+          <h1 className="text-3xl font-bold text-[var(--color-text-primary)]">Dashboard</h1>
+          <p className="text-[var(--color-text-secondary)] mt-1">Welcome back! Here's your business overview.</p>
         </div>
 
-        {/* Stats Grid */}
+        {/* Stats Grid - Smaller & Premium */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Active Deals */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-brand-yellow/10 rounded-lg flex items-center justify-center">
-                <Briefcase className="w-6 h-6 text-brand-yellow" />
-              </div>
+          <div className="premium-card p-5 hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 bg-brand-yellow/10 rounded-xl flex items-center justify-center mb-3">
+              <Briefcase className="w-5 h-5 text-brand-yellow" />
             </div>
-            <p className="text-3xl font-bold text-text-primary">{activeDeals.length}</p>
-            <p className="text-sm text-text-secondary mt-1">Active Deals</p>
+            <p className="text-2xl font-bold text-[var(--color-text-primary)] mb-1">{activeDeals.length}</p>
+            <p className="text-sm text-[var(--color-text-secondary)]">Active Deals</p>
           </div>
 
           {/* Total Income */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-brand-pink/10 rounded-lg flex items-center justify-center">
-                <DollarSign className="w-6 h-6 text-brand-pink" />
-              </div>
+          <div className="premium-card p-5 hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 bg-brand-pink/10 rounded-xl flex items-center justify-center mb-3">
+              <DollarSign className="w-5 h-5 text-brand-pink" />
             </div>
-            <p className="text-3xl font-bold text-text-primary">${totalIncome.toLocaleString()}</p>
-            <p className="text-sm text-text-secondary mt-1">Total Value</p>
+            <p className="text-2xl font-bold text-[var(--color-text-primary)] mb-1">${totalIncome.toLocaleString()}</p>
+            <p className="text-sm text-[var(--color-text-secondary)]">Total Value</p>
           </div>
 
           {/* Paid Income */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-              </div>
+          <div className="premium-card p-5 hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 bg-green-500/10 rounded-xl flex items-center justify-center mb-3">
+              <CheckCircle className="w-5 h-5 text-green-500" />
             </div>
-            <p className="text-3xl font-bold text-text-primary">${paidIncome.toLocaleString()}</p>
-            <p className="text-sm text-text-secondary mt-1">Received</p>
+            <p className="text-2xl font-bold text-[var(--color-text-primary)] mb-1">${paidIncome.toLocaleString()}</p>
+            <p className="text-sm text-[var(--color-text-secondary)]">Received</p>
           </div>
 
           {/* Upcoming */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center">
-                <Clock className="w-6 h-6 text-brand-blue" />
-              </div>
+          <div className="premium-card p-5 hover:scale-105 transition-transform duration-200">
+            <div className="w-10 h-10 bg-brand-blue/10 rounded-xl flex items-center justify-center mb-3">
+              <Clock className="w-5 h-5 text-brand-blue" />
             </div>
-            <p className="text-3xl font-bold text-text-primary">{upcomingDeadlines.length}</p>
-            <p className="text-sm text-text-secondary mt-1">Upcoming Deadlines</p>
+            <p className="text-2xl font-bold text-[var(--color-text-primary)] mb-1">{upcomingDeadlines.length}</p>
+            <p className="text-sm text-[var(--color-text-secondary)]">Upcoming Deadlines</p>
           </div>
         </div>
 
         {/* Quick Actions */}
         <div>
-          <h2 className="text-xl font-semibold text-text-primary mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link
-              href="/calculator"
-              className="bg-bg-secondary border border-border-color rounded-xl p-6 hover:border-brand-yellow transition-all group"
-            >
-              <Calculator className="w-8 h-8 text-brand-yellow mb-3" />
-              <h3 className="font-semibold text-text-primary group-hover:text-brand-yellow transition-colors">Calculate Rate</h3>
-              <p className="text-sm text-text-secondary mt-1">Get your fair rate estimate</p>
+          <h2 className="text-xl font-semibold text-[var(--color-text-primary)] mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href="/calculator" className="premium-card p-6 hover:scale-105 transition-all duration-200 group block">
+              <Calculator className="w-8 h-8 text-brand-yellow mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-2">Calculate Rate</h3>
+              <p className="text-sm text-[var(--color-text-secondary)]">Get your fair rate estimate</p>
             </Link>
 
-            <Link
-              href="/negotiate"
-              className="bg-bg-secondary border border-border-color rounded-xl p-6 hover:border-brand-pink transition-all group"
-            >
-              <MessageSquare className="w-8 h-8 text-brand-pink mb-3" />
-              <h3 className="font-semibold text-text-primary group-hover:text-brand-pink transition-colors">Negotiate Deal</h3>
-              <p className="text-sm text-text-secondary mt-1">Craft perfect responses</p>
+            <Link href="/negotiate" className="premium-card p-6 hover:scale-105 transition-all duration-200 group block">
+              <MessageSquare className="w-8 h-8 text-brand-pink mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-2">Negotiate Deal</h3>
+              <p className="text-sm text-[var(--color-text-secondary)]">Craft perfect responses</p>
             </Link>
 
-            <Link
-              href="/contracts/generate"
-              className="bg-bg-secondary border border-border-color rounded-xl p-6 hover:border-brand-blue transition-all group"
-            >
-              <FileText className="w-8 h-8 text-brand-blue mb-3" />
-              <h3 className="font-semibold text-text-primary group-hover:text-brand-blue transition-colors">Generate Contract</h3>
-              <p className="text-sm text-text-secondary mt-1">Create professional contracts</p>
+            <Link href="/contracts/generate" className="premium-card p-6 hover:scale-105 transition-all duration-200 group block">
+              <FileText className="w-8 h-8 text-brand-blue mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-2">Generate Contract</h3>
+              <p className="text-sm text-[var(--color-text-secondary)]">Create professional contracts</p>
             </Link>
 
-            <Link
-              href="/deals/new"
-              className="bg-bg-secondary border border-border-color rounded-xl p-6 hover:border-green-500 transition-all group"
-            >
-              <Briefcase className="w-8 h-8 text-green-500 mb-3" />
-              <h3 className="font-semibold text-text-primary group-hover:text-green-500 transition-colors">New Deal</h3>
-              <p className="text-sm text-text-secondary mt-1">Track a new campaign</p>
+            <Link href="/deals" className="premium-card p-6 hover:scale-105 transition-all duration-200 group block">
+              <Briefcase className="w-8 h-8 text-green-500 mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] mb-2">New Deal</h3>
+              <p className="text-sm text-[var(--color-text-secondary)]">Track a new campaign</p>
             </Link>
           </div>
         </div>
@@ -137,59 +120,63 @@ export default async function DashboardPage() {
         {/* Recent Activity & Upcoming Deadlines */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Upcoming Deadlines */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-text-primary mb-4">Upcoming Deadlines</h2>
+          <div className="premium-card p-6">
+            <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-6">Upcoming Deadlines</h2>
             {upcomingDeadlines.length > 0 ? (
               <div className="space-y-4">
                 {upcomingDeadlines.map((deal) => (
-                  <div key={deal.id} className="flex items-center justify-between py-3 border-b border-border-color last:border-0">
-                    <div>
-                      <p className="font-medium text-text-primary">{deal.deal_name}</p>
-                      <p className="text-sm text-text-secondary">{deal.brand_name}</p>
+                  <div key={deal.id} className="flex items-center justify-between p-4 rounded-lg bg-bg-primary hover:bg-bg-tertiary transition-colors">
+                    <div className="flex-1">
+                      <p className="font-medium text-[var(--color-text-primary)]">{deal.deal_name}</p>
+                      <p className="text-sm text-[var(--color-text-secondary)] mt-1">{deal.brand_name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-brand-blue">
+                      <p className="text-sm font-medium text-brand-blue mb-2">
                         {new Date(deal.deadline!).toLocaleDateString()}
                       </p>
-                      <p className="text-xs text-text-tertiary">{deal.status}</p>
+                      <Badge variant="default" size="sm">
+                        {deal.status.replace('_', ' ')}
+                      </Badge>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-text-secondary text-center py-8">No upcoming deadlines</p>
+              <div className="text-center py-12">
+                <Clock className="w-12 h-12 mx-auto mb-3 text-[var(--color-text-tertiary)] opacity-50" />
+                <p className="text-[var(--color-text-tertiary)]">No upcoming deadlines</p>
+                <p className="text-sm text-[var(--color-text-tertiary)] mt-1">You're all caught up!</p>
+              </div>
             )}
           </div>
 
           {/* Recent Deals */}
-          <div className="bg-bg-secondary border border-border-color rounded-xl p-6">
-            <h2 className="text-xl font-semibold text-text-primary mb-4">Recent Deals</h2>
+          <div className="premium-card p-6">
+            <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-6">Recent Deals</h2>
             {deals && deals.length > 0 ? (
               <div className="space-y-4">
                 {deals.slice(0, 3).map((deal) => (
-                  <div key={deal.id} className="flex items-center justify-between py-3 border-b border-border-color last:border-0">
-                    <div>
-                      <p className="font-medium text-text-primary">{deal.deal_name}</p>
-                      <p className="text-sm text-text-secondary">{deal.brand_name}</p>
+                  <div key={deal.id} className="flex items-center justify-between p-4 rounded-lg bg-bg-primary hover:bg-bg-tertiary transition-colors">
+                    <div className="flex-1">
+                      <p className="font-medium text-[var(--color-text-primary)]">{deal.deal_name}</p>
+                      <p className="text-sm text-[var(--color-text-secondary)] mt-1">{deal.brand_name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-medium text-brand-yellow">
+                      <p className="text-lg font-bold text-brand-yellow mb-2">
                         ${Number(deal.amount).toLocaleString()}
                       </p>
-                      <p className="text-xs text-text-tertiary capitalize">{deal.status.replace('_', ' ')}</p>
+                      <Badge variant="default" size="sm">
+                        {deal.status.replace('_', ' ')}
+                      </Badge>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <p className="text-text-secondary mb-4">No deals yet</p>
-                <Link 
-                  href="/deals/new"
-                  className="inline-block bg-brand-yellow text-black px-6 py-2 rounded-lg font-medium hover:opacity-90 transition-all"
-                >
-                  Create Your First Deal
-                </Link>
+              <div className="text-center py-12">
+                <Briefcase className="w-12 h-12 mx-auto mb-3 text-[var(--color-text-tertiary)] opacity-50" />
+                <p className="text-[var(--color-text-tertiary)]">No deals yet</p>
+                <p className="text-sm text-[var(--color-text-tertiary)] mt-1">Start by creating your first deal</p>
               </div>
             )}
           </div>

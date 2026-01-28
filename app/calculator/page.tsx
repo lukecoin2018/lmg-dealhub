@@ -88,7 +88,7 @@ export default function CalculatorPage() {
     return (
       <DashboardLayout>
         <div className="max-w-5xl mx-auto">
-          <ResultsPage result={result} onStartOver={handleStartOver} onBack={handleBack} />
+        <ResultsPage result={result} formData={formData} onStartOver={handleStartOver} onBack={handleBack} />
         </div>
       </DashboardLayout>
     );

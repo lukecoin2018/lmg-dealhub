@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useContract } from '@/contexts/ContractContext';
+import { useWorkflow } from '@/contexts/WorkflowContext'; // ADD THIS
 import { CLAUSE_LIBRARY } from '@/data/clauseLibrary';
 import { ClauseVariable } from '@/lib/types/contract';
 
@@ -64,6 +65,64 @@ export default function ClauseCustomizer({ onNext, onBack }: ClauseCustomizerPro
       setVariableValues(prev => ({ ...prev, [sectionId]: newValues }));
     }
   };
+  
+  const { contractData } = useWorkflow();
+
+  // Pre-fill variables from workflow context when data arrives
+  useEffect(() => {
+    console.log('🔍 Debug - contractData:', contractData);
+    console.log('🔍 Debug - contract.selectedSections:', contract.selectedSections);
+    
+    if (!contractData || contract.selectedSections.length === 0) {
+      console.log('⏭️ Skipping - no data or no sections selected');
+      return;
+    }
+
+    console.log('✅ Pre-filling data now!');
+    
+    const newValues: Record<string, Record<string, any>> = { ...variableValues };
+    let hasChanges = false;
+    
+    // Pre-fill amount and deliverables in relevant sections
+    CLAUSE_LIBRARY.forEach(section => {
+      if (contract.selectedSections.includes(section.id)) {
+        console.log('🔍 Debug - Processing section:', section.id);
+        const variation = section.variations.find((v: any) => v.id === selectedVariations[section.id]);
+        if (variation) {
+          console.log('🔍 Debug - Found variation, variables:', variation.variables.map((v: any) => v.id));
+          
+          variation.variables.forEach((variable: any) => {
+            // Only set if not already set
+            const currentValue = newValues[section.id]?.[variable.id];
+            
+            if (variable.id === 'totalAmount' && contractData.dealValue && !currentValue) {
+              if (!newValues[section.id]) newValues[section.id] = {};
+              newValues[section.id][variable.id] = contractData.dealValue;
+              hasChanges = true;
+              console.log('✅ Set totalAmount:', contractData.dealValue);
+            }
+            if (variable.id === 'deliverables' && contractData.deliverables && !currentValue) {
+              if (!newValues[section.id]) newValues[section.id] = {};
+              newValues[section.id][variable.id] = contractData.deliverables.join(', ');
+              hasChanges = true;
+              console.log('✅ Set deliverables:', contractData.deliverables);
+            }
+            if (variable.id === 'brandName' && contractData.brandName && !currentValue) {
+              if (!newValues[section.id]) newValues[section.id] = {};
+              newValues[section.id][variable.id] = contractData.brandName;
+              hasChanges = true;
+              console.log('✅ Set brandName:', contractData.brandName);
+            }
+          });
+        }
+      }
+    });
+    
+    if (hasChanges) {
+      console.log('📝 Updating variableValues with:', newValues);
+      setVariableValues(newValues);
+    }
+  }, [contractData, contract.selectedSections, selectedVariations]);
 
   const handleVariableChange = (sectionId: string, variableId: string, value: any) => {
     setVariableValues(prev => ({

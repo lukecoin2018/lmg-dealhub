@@ -13,6 +13,7 @@ import { GapAnalysis } from '@/components/negotiation/GapAnalysis';
 import { ResponseOptions } from '@/components/negotiation/ResponseOptions';
 import { DecisionHelper } from '@/components/negotiation/DecisionHelper';
 import { createClient } from '@/lib/supabase/client';
+import { useWorkflow } from '@/contexts/WorkflowContext';
 import {
   NegotiationStage,
   ObjectionType,
@@ -28,6 +29,7 @@ type Step = 1 | 2 | 3 | 4 | 'results' | 'decision-helper';
 export default function NegotiatePage() {
   const router = useRouter();
   const supabase = createClient();
+  const { negotiationData, setNegotiationData, setContractData } = useWorkflow();
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [showDecisionHelper, setShowDecisionHelper] = useState(false);
   const [recommendation, setRecommendation] = useState<DecisionRecommendation | null>(null);
@@ -53,16 +55,20 @@ export default function NegotiatePage() {
   const [responses, setResponses] = useState<ResponseOption[]>([]);
 
   // URL params pre-fill (from Rate Calculator)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const rateParam = params.get('fairRate');
-    const minRateParam = params.get('minRate');
-    const maxRateParam = params.get('maxRate');
-    const openingAskParam = params.get('openingAsk');
-
-    if (rateParam) setFairRate(rateParam);
-    if (openingAskParam) setFairRate(openingAskParam); // Use opening ask if available
-  }, []);
+ // Pre-fill from WorkflowContext (from Rate Calculator)
+useEffect(() => {
+  if (negotiationData) {
+    if (negotiationData.agreedRate) {
+      setFairRate(negotiationData.agreedRate.toString());
+    }
+    if (negotiationData.deliverables && negotiationData.deliverables.length > 0) {
+      setDeliverables(negotiationData.deliverables.join(', '));
+    }
+    if (negotiationData.brandName) {
+      setBrandName(negotiationData.brandName);
+    }
+  }
+}, [negotiationData]);
 
   const handleFieldChange = (field: string, value: string) => {
     // Clear error when user types
@@ -352,29 +358,82 @@ export default function NegotiatePage() {
               onBack={handleStartOver}
               onShowDecisionHelper={handleShowDecisionHelper}
             />
-
+{/* Final Deal Terms - NEW SECTION */}
+<div className="mb-8 bg-bg-secondary border border-border-color rounded-xl p-6">
+  <h2 className="text-2xl font-bold text-text-primary mb-4">
+    Final Deal Terms
+  </h2>
+  <p className="text-text-secondary mb-6">
+    Confirm the final agreed terms before generating the contract
+  </p>
+  
+  <div className="space-y-4">
+    <div>
+      <label className="block text-sm font-medium text-text-primary mb-2">
+        Brand Name *
+      </label>
+      <input
+        type="text"
+        value={brandName}
+        onChange={(e) => setBrandName(e.target.value)}
+        className="w-full px-4 py-3 bg-bg-primary border border-border-color rounded-lg text-text-primary focus:outline-none focus:border-brand-yellow"
+        placeholder="Enter brand name"
+      />
+    </div>
+    
+    <div>
+      <label className="block text-sm font-medium text-text-primary mb-2">
+        Final Agreed Price *
+      </label>
+      <input
+        type="number"
+        value={fairRate}
+        onChange={(e) => setFairRate(e.target.value)}
+        className="w-full px-4 py-3 bg-bg-primary border border-border-color rounded-lg text-text-primary focus:outline-none focus:border-brand-yellow"
+        placeholder="Enter final price"
+      />
+    </div>
+    
+    <div>
+      <label className="block text-sm font-medium text-text-primary mb-2">
+        Final Deliverables *
+      </label>
+      <textarea
+        value={deliverables}
+        onChange={(e) => setDeliverables(e.target.value)}
+        rows={3}
+        className="w-full px-4 py-3 bg-bg-primary border border-border-color rounded-lg text-text-primary focus:outline-none focus:border-brand-yellow resize-none"
+        placeholder="E.g., 3 Instagram Reels, 2 Stories, 1 TikTok video"
+      />
+    </div>
+  </div>
+</div>
             {/* Save & Generate Contract buttons */}
             <div className="mb-8 flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                onClick={handleSaveNegotiation}
-                disabled={saving}
-                variant="secondary"
-              >
-                {saving ? "Saving..." : "💾 Save Negotiation"}
-              </Button>
-              <Button
-                onClick={() => {
-                  const params = new URLSearchParams({
-                    brandName: brandName || '',
-                    amount: fairRate || '',
-                    deliverables: deliverables || '',
-                  });
-                  router.push(`/contracts/generate?${params.toString()}`);
-                }}
-                variant="primary"
-              >
-                📄 Generate Contract
-              </Button>
+            <Button
+  onClick={() => {
+    // Save final negotiation data to workflow context
+    setNegotiationData({
+      brandName: brandName || '',
+      agreedRate: parseFloat(fairRate) || 0,
+      deliverables: deliverables.split(',').map(d => d.trim()).filter(d => d),
+      negotiationStage: 'initial',
+    });
+    
+    // Also save to contract context for easy access
+    setContractData({
+      brandName: brandName || '',
+      dealValue: parseFloat(fairRate) || 0,
+      deliverables: deliverables.split(',').map(d => d.trim()).filter(d => d),
+    });
+    
+    // Navigate to contracts
+    router.push('/contracts/generate', { scroll: true });
+  }}
+  variant="primary"
+>
+  📄 Generate Contract
+</Button>
             </div>
           </>
         )}

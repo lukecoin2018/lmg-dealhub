@@ -140,16 +140,32 @@ export function ContractProvider({ children }: { children: ReactNode }) {
       if (!user) {
         throw new Error('User not authenticated');
       }
-
-      const { error } = await supabase.from('contracts').insert({
+  
+      // Extract data from contract clauses
+      const paymentClause = contract.clauses.find((c: any) => c.sectionId === 'payment');
+      const deliverablesClause = contract.clauses.find((c: any) => c.sectionId === 'deliverables');
+      
+      const dealAmount = paymentClause?.variableValues?.totalAmount || 0;
+      
+      // Build deliverables description
+      const platform = deliverablesClause?.variableValues?.platform || '';
+      const quantity = deliverablesClause?.variableValues?.quantity || '';
+      const contentType = deliverablesClause?.variableValues?.contentType || '';
+      const deliverables = `${quantity} ${platform} ${contentType}`.trim() || 'Not specified';
+  
+      const { data, error } = await supabase.from('contracts').insert({
         user_id: user.id,
-        brand_name: contract.brandName,
-        deal_type: contract.dealType,
+        brand_name: contract.brandName || 'Unknown',
+        deal_amount: parseFloat(dealAmount.toString()),
+        deliverables: deliverables,
         contract_data: contract,
-      });
-
-      if (error) throw error;
-
+      }).select();
+  
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+  
       alert('✅ Contract saved successfully!');
     } catch (error) {
       console.error('Error saving contract:', error);

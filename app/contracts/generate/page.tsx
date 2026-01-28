@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { ContractProvider, useContract } from '@/contexts/ContractContext';
+import { useWorkflow } from '@/contexts/WorkflowContext';
 import DealTypeSelector from '@/components/builder/DealTypeSelector';
 import SectionSelector from '@/components/builder/SectionSelector';
 import ClauseCustomizer from '@/components/builder/ClauseCustomizer';
@@ -12,7 +13,10 @@ type BuilderStep = 'deal-type' | 'sections' | 'customize' | 'preview';
 
 function ContractBuilderContent() {
   const [currentStep, setCurrentStep] = useState<BuilderStep>('deal-type');
-  const { contract } = useContract();
+  const { contract, updateParties } = useContract(); // CHANGE: updateContract → updateParties
+  const { contractData } = useWorkflow();
+
+  
 
   const handleNext = () => {
     if (currentStep === 'deal-type') setCurrentStep('sections');

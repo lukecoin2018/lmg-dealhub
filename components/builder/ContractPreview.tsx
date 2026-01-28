@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useContract } from '@/contexts/ContractContext';
 import { CLAUSE_LIBRARY } from '@/data/clauseLibrary';
 import { Button } from '@/components/ui/Button';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
 interface ContractPreviewProps {
   onBack: () => void;
@@ -12,10 +14,11 @@ interface ContractPreviewProps {
 export default function ContractPreview({ onBack }: ContractPreviewProps) {
   const { contract, saveToDatabase } = useContract();
   const [saving, setSaving] = useState(false);
+  const router = useRouter(); 
 
   // Get all selected sections with their clauses
   const contractSections = contract.clauses.map((clause: any) => {
-    const section = CLAUSE_LIBRARY.find(s => s.id === clause.sectionId);
+    const section = CLAUSE_LIBRARY.find((s: any) => s.id === clause.sectionId);
     const variation = section?.variations.find((v: any) => v.id === clause.variationId);
     
     if (!section || !variation) return null;
@@ -52,8 +55,55 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
   const handleSaveContract = async () => {
     setSaving(true);
     try {
+      // Save the contract
       await saveToDatabase();
-      alert('✅ Contract saved successfully!');
+      
+      // Extract deal data from contract
+      const partiesClause = contract.clauses.find((c: any) => c.sectionId === 'parties');
+      const paymentClause = contract.clauses.find((c: any) => c.sectionId === 'payment');
+      const deliverablesClause = contract.clauses.find((c: any) => c.sectionId === 'deliverables');
+      
+      const brandName = partiesClause?.variableValues?.brandName || 'Unknown Brand';
+      const totalAmount = paymentClause?.variableValues?.totalAmount || 0;
+      const deadline = deliverablesClause?.variableValues?.dueDate || null;
+      
+      // Build deliverables description
+      const platform = deliverablesClause?.variableValues?.platform || '';
+      const quantity = deliverablesClause?.variableValues?.quantity || '';
+      const contentType = deliverablesClause?.variableValues?.contentType || '';
+      const deliverables = `${quantity} ${platform} ${contentType}`.trim();
+      
+      // Get user ID
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        throw new Error('User not authenticated');
+      }
+      
+      // Create deal automatically
+      const { error: dealError } = await supabase.from('deals').insert({
+        user_id: user.id,
+        brand_name: brandName,
+        deal_name: `${brandName} - ${deliverables || 'Deal'}`,
+        amount: parseFloat(totalAmount.toString()),
+        status: 'lead', // Contract created but not yet signed
+        deliverables: deliverables || null,
+        deadline: deadline || null,
+        notes: 'Automatically created from signed contract',
+      });
+      
+      if (dealError) {
+        console.error('Error creating deal:', dealError);
+        // Don't fail the whole operation if deal creation fails
+      }
+      
+      alert('✅ Contract saved and deal created successfully!');
+      // Redirect to deals page
+    setTimeout(() => {
+      router.push('/deals');
+    }, 1000); // Wait 1 second so user sees the success message
+
     } catch (error) {
       console.error('Error saving contract:', error);
       alert('Failed to save contract. Please try again.');

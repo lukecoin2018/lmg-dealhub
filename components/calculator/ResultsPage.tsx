@@ -1,21 +1,24 @@
 "use client";
 
-import { CalculatorResult } from "@/lib/types/calculator";
+import { CalculatorResult, CalculatorInput } from "@/lib/types/calculator"; // ADD CalculatorInput
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { useWorkflow } from "@/contexts/WorkflowContext";
 
 interface ResultsPageProps {
   result: CalculatorResult;
+  formData: CalculatorInput; // ADD THIS LINE
   onStartOver: () => void;
   onBack: () => void;
 }
 
-export function ResultsPage({ result, onStartOver, onBack }: ResultsPageProps) {
+export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPageProps) { // ADD formData HERE
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const router = useRouter();
   const supabase = createClient();
+  const { setCalculatorData, setNegotiationData } = useWorkflow(); // ADD setNegotiationData HERE
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text);
@@ -58,15 +61,31 @@ export function ResultsPage({ result, onStartOver, onBack }: ResultsPageProps) {
   };
 
   const handleNegotiateThisRate = () => {
-    // Build URL params to pass data to negotiation page
-    const params = new URLSearchParams({
-      fairRate: result.recommendedRate.toString(),
-      minRate: result.minRate.toString(),
-      maxRate: result.maxRate.toString(),
-      openingAsk: result.negotiation.openingAsk.toString(),
+    // Format deliverables for transfer
+    const deliverablesText = result.deliverableBreakdowns
+      .map(d => d.label)
+      .join(', ');
+  
+    // Save calculator data to workflow context
+    setCalculatorData({
+      followers: formData.followers,
+      engagement: formData.engagementRate,
+      niche: formData.niche,
+      recommendedRate: result.recommendedRate,
+      minRate: result.minRate,
+      maxRate: result.maxRate,
     });
-
-    router.push(`/negotiate?${params.toString()}`);
+  
+    // Also save initial negotiation data with deliverables
+    setNegotiationData({
+      brandName: '', // Will be filled in negotiate page
+      agreedRate: result.maxRate, // Start with the high end
+      deliverables: result.deliverableBreakdowns.map(d => d.label),
+      negotiationStage: 'initial',
+    });
+  
+    // Navigate to negotiate page
+    router.push('/negotiate');
   };
 
   const confidenceColors = {

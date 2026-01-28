@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* NEW - Enable dark mode variant */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Static brand colors - always the same */
   --color-brand-yellow: #FFD700;
@@ -8,22 +11,41 @@
   --color-brand-grey: #3A3A3A;
 }
 
-/* Dark mode (our default and only theme for Phase 1) */
+/* NEW - Light mode (default) */
 :root {
-  --color-bg-primary: #1A1A1A;
-  --color-bg-secondary: #2A2A2A;
-  --color-bg-tertiary: #3A3A3A;
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F9FAFB;
+  --color-bg-tertiary: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #E5E7EB;
+}
+
+/* NEW - Dark mode (when .dark class is present) */
+:root.dark,
+.dark {
+  --color-bg-primary: #0a0f1a;      /* Deep navy for main content */
+  --color-bg-secondary: #121b2e;     /* Lighter navy for sidebar/header */
+  --color-bg-tertiary: #1a2332;      /* Even lighter for hover states */
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #D1D5DB;
   --color-text-tertiary: #9CA3AF;
   --color-border: #404040;
 }
 
+
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
 }
 
+/* NEW - Smooth theme transitions */
+* {
+  transition-property: background-color, border-color, color;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+}
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -40,7 +62,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #505050;
+  background-color: var(--color-bg-tertiary); /* UPDATED */
 }
 
 /* Input styles */
@@ -88,4 +110,44 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px var(--color-bg-secondary) inset;
   -webkit-text-fill-color: var(--color-text-primary);
   transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Premium Card Styles */
+.premium-card {
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.premium-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+/* Light mode - cards are white, background is light gray */
+[data-theme="light"] .premium-card {
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .premium-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* Dark mode - cards with nice contrast */
+.dark .premium-card {
+  background-color: #1e293b;  /* Slate blue-gray */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.dark .premium-card:hover {
+  background-color: #334155;  /* Lighter slate on hover */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  transform: translateY(-4px);
 }
