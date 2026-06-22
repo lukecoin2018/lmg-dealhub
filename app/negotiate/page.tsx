@@ -12,7 +12,6 @@ import { Step4Flexibility } from '@/components/negotiation/Step4Flexibility';
 import { GapAnalysis } from '@/components/negotiation/GapAnalysis';
 import { ResponseOptions } from '@/components/negotiation/ResponseOptions';
 import { DecisionHelper } from '@/components/negotiation/DecisionHelper';
-import { createClient } from '@/lib/supabase/client';
 import { useWorkflow } from '@/contexts/WorkflowContext';
 import {
   NegotiationStage,
@@ -28,12 +27,10 @@ type Step = 1 | 2 | 3 | 4 | 'results' | 'decision-helper';
 
 export default function NegotiatePage() {
   const router = useRouter();
-  const supabase = createClient();
   const { negotiationData, setNegotiationData, setContractData } = useWorkflow();
   const [currentStep, setCurrentStep] = useState<Step>(1);
   const [showDecisionHelper, setShowDecisionHelper] = useState(false);
   const [recommendation, setRecommendation] = useState<DecisionRecommendation | null>(null);
-  const [saving, setSaving] = useState(false);
 
   // Form data
   const [stage, setStage] = useState<NegotiationStage | null>(null);
@@ -177,45 +174,6 @@ useEffect(() => {
     const generatedResponses = generateResponseOptions(input);
     setResponses(generatedResponses);
     setCurrentStep('results');
-  };
-
-  const handleSaveNegotiation = async () => {
-    setSaving(true);
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        alert("Please log in to save negotiations");
-        return;
-      }
-
-      const { error } = await supabase.from("negotiations").insert({
-        user_id: user.id,
-        brand_name: brandName || 'Unknown Brand',
-        brand_offer: parseFloat(brandOffer),
-        fair_rate: parseFloat(fairRate),
-        objection_type: objectionType,
-        selected_response: recommendation?.recommendedStrategy || responses[0]?.strategy,
-        negotiation_data: {
-          stage,
-          deliverables,
-          usageRights,
-          exclusivity,
-          flexibility,
-          responses,
-          recommendation,
-        },
-      });
-
-      if (error) throw error;
-
-      alert("✅ Negotiation saved successfully!");
-    } catch (error) {
-      console.error("Error saving negotiation:", error);
-      alert("Failed to save negotiation. Please try again.");
-    } finally {
-      setSaving(false);
-    }
   };
 
   const handleShowDecisionHelper = () => {

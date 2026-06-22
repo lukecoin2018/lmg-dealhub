@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -9,9 +8,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { Loading } from '@/components/ui/Loading';
-import { createClient } from '@/lib/supabase/client';
-import { 
+import {
   Briefcase, 
   DollarSign, 
   Plus,
@@ -47,10 +44,7 @@ type NegotiationNote = {
   content: string;
   created_at: string;
 };
-export default function DealsPage() { 
-    const router = useRouter();
-    const supabase = createClient();
-    
+export default function DealsPage() {
     const [deals, setDeals] = useState<Deal[]>([]);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
@@ -58,9 +52,7 @@ export default function DealsPage() {
     const [newNote, setNewNote] = useState('');
     const [newNoteType, setNewNoteType] = useState<NegotiationNote['note_type']>('conversation');
     const [showNotesModal, setShowNotesModal] = useState<string | false>(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [userId, setUserId] = useState<string | null>(null);
-    
+
     // Form state
     const [brandName, setBrandName] = useState('');
     const [value, setValue] = useState('');
@@ -68,103 +60,38 @@ export default function DealsPage() {
     const [deadline, setDeadline] = useState('');
     const [notes, setNotes] = useState('');
 
-  
-    useEffect(() => {
-      checkUser();
-    }, []);
-  
-    const checkUser = async () => {
-      try {
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (!user) {
-          router.push('/login');
-          return;
-        }
-  
-        setUserId(user.id);
-        await loadDeals();
-      } catch (error) {
-        console.error('Error checking user:', error);
-        router.push('/login');
-      }
-    };
-  
-    const loadDeals = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('deals')
-          .select('*')
-          .order('created_at', { ascending: false });
-    
-        if (error) throw error;
-        setDeals(data || []);
-      } catch (error) {
-        console.error('Error loading deals:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    const handleAddDeal = async (e: React.FormEvent) => {
+    const handleAddDeal = (e: React.FormEvent) => {
       e.preventDefault();
-    
-      if (!userId) {
-        console.error('User not authenticated');
-        return;
-      }
-    
-      try {
-        const { data, error } = await supabase
-          .from('deals')
-          .insert([
-            {
-              user_id: userId,
-              brand_name: brandName,
-              deal_name: `${brandName} - ${deliverables || 'Deal'}`,
-              amount: parseFloat(value),
-              status: 'lead',
-              deliverables: deliverables || null,
-              deadline: deadline || null,
-              notes: notes || null,
-            }
-          ])
-          .select();
-    
-        if (error) throw error;
-        await loadDeals();
-        setIsAddModalOpen(false);
-        resetForm();
-      } catch (error) {
-        console.error('Error adding deal:', error);
-      }
+      const now = new Date().toISOString();
+      const newDeal: Deal = {
+        id: crypto.randomUUID(),
+        brand_name: brandName,
+        deal_name: `${brandName} - ${deliverables || 'Deal'}`,
+        amount: parseFloat(value),
+        status: 'lead',
+        deliverables: deliverables || null,
+        deadline: deadline || null,
+        notes: notes || null,
+        created_at: now,
+        updated_at: now,
+      };
+      setDeals(prev => [newDeal, ...prev]);
+      setIsAddModalOpen(false);
+      resetForm();
     };
-    
-    const handleEditDeal = async (e: React.FormEvent) => {
+
+    const handleEditDeal = (e: React.FormEvent) => {
       e.preventDefault();
       if (!selectedDeal) return;
-    
-      try {
-        const { error } = await supabase
-          .from('deals')
-          .update({
-            brand_name: brandName,
-            amount: parseFloat(value),
-            deliverables: deliverables || null,
-            deadline: deadline || null,
-            notes: notes || null,
-          })
-          .eq('id', selectedDeal.id);
-    
-        if (error) throw error;
-        await loadDeals();
-        setSelectedDeal(null);
-        resetForm();
-      } catch (error) {
-        console.error('Error updating deal:', error);
-      }
+      setDeals(prev => prev.map(d =>
+        d.id === selectedDeal.id
+          ? { ...d, brand_name: brandName, amount: parseFloat(value), deliverables: deliverables || null, deadline: deadline || null, notes: notes || null, updated_at: new Date().toISOString() }
+          : d
+      ));
+      setSelectedDeal(null);
+      resetForm();
     };
-    
+
     const openDealDetails = (deal: Deal) => {
       setSelectedDeal(deal);
       setBrandName(deal.brand_name);
@@ -173,7 +100,7 @@ export default function DealsPage() {
       setDeadline(deal.deadline || '');
       setNotes(deal.notes || '');
     };
-    
+
     const resetForm = () => {
       setBrandName('');
       setValue('');
@@ -181,119 +108,44 @@ export default function DealsPage() {
       setDeadline('');
       setNotes('');
     };
-    
-    const moveDeal = async (dealId: string, newStatus: Deal['status']) => {
-      try {
-        const { error } = await supabase
-          .from('deals')
-          .update({ status: newStatus })
-          .eq('id', dealId);
-    
-        if (error) throw error;
-        await loadDeals();
-      } catch (error) {
-        console.error('Error moving deal:', error);
-        alert('Failed to move deal. Please try again.');
-      }
+
+    const moveDeal = (dealId: string, newStatus: Deal['status']) => {
+      setDeals(prev => prev.map(d => d.id === dealId ? { ...d, status: newStatus } : d));
     };
-    
-    const deleteDeal = async (dealId: string) => {
+
+    const deleteDeal = (dealId: string) => {
       if (!confirm('Are you sure you want to delete this deal?')) return;
-    
-      try {
-        const { error } = await supabase
-          .from('deals')
-          .delete()
-          .eq('id', dealId);
-    
-        if (error) throw error;
-        await loadDeals();
-        setSelectedDeal(null);
-      } catch (error) {
-        console.error('Error deleting deal:', error);
-        alert('Failed to delete deal. Please try again.');
-      }
+      setDeals(prev => prev.filter(d => d.id !== dealId));
+      setSelectedDeal(null);
     };
-    
-    const loadDealNotes = async (dealId: string) => {
-      try {
-        const { data, error } = await supabase
-          .from('deal_notes')
-          .select('*')
-          .eq('deal_id', dealId)
-          .order('created_at', { ascending: false });
-    
-        if (error) throw error;
-        setDealNotes(data || []);
-      } catch (error) {
-        console.error('Error loading notes:', error);
-      }
+
+    const addNote = () => {
+      if (!showNotesModal || !newNote.trim()) return;
+      const note: NegotiationNote = {
+        id: crypto.randomUUID(),
+        deal_id: showNotesModal,
+        note_type: newNoteType,
+        content: newNote,
+        created_at: new Date().toISOString(),
+      };
+      setDealNotes(prev => [note, ...prev]);
+      setNewNote('');
+      setNewNoteType('conversation');
     };
-    
-    const addNote = async () => {
-      if (!showNotesModal || !newNote.trim() || !userId) return;
-    
-      try {
-        const { error } = await supabase
-          .from('deal_notes')
-          .insert([
-            {
-              user_id: userId,
-              deal_id: showNotesModal,
-              note_type: newNoteType,
-              content: newNote,
-            }
-          ]);
-    
-        if (error) throw error;
-    
-        setNewNote('');
-        setNewNoteType('conversation');
-        await loadDealNotes(showNotesModal);
-      } catch (error) {
-        console.error('Error adding note:', error);
-        alert('Failed to add note');
-      }
-    };
-    
-    const deleteNote = async (noteId: string) => {
+
+    const deleteNote = (noteId: string) => {
       if (!confirm('Delete this note?')) return;
-    
-      try {
-        const { error } = await supabase
-          .from('deal_notes')
-          .delete()
-          .eq('id', noteId);
-    
-        if (error) throw error;
-    
-        if (showNotesModal) {
-          await loadDealNotes(showNotesModal);
-        }
-      } catch (error) {
-        console.error('Error deleting note:', error);
-        alert('Failed to delete note');
-      }
+      setDealNotes(prev => prev.filter(n => n.id !== noteId));
     };
-    
-    const openNotesModal = async (dealId: string) => {
+
+    const openNotesModal = (dealId: string) => {
       setShowNotesModal(dealId);
-      await loadDealNotes(dealId);
+      setDealNotes([]);
     };
-    
+
     const getDealsByStatus = (status: Deal['status']) => {
       return deals.filter(deal => deal.status === status);
     };
-    
-    if (isLoading) {
-      return (
-        <DashboardLayout>
-          <div className="flex items-center justify-center py-12">
-            <Loading text="Loading deals..." />
-          </div>
-        </DashboardLayout>
-      );
-    }
     
     const totalPipeline = deals.reduce((sum, deal) => sum + Number(deal.amount), 0);
     const closedValue = getDealsByStatus('closed').reduce((sum, deal) => sum + Number(deal.amount), 0);

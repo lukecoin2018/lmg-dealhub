@@ -2,17 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { 
-  LayoutDashboard, 
-  Calculator, 
-  MessageSquare, 
-  FileText, 
-  Briefcase, 
+import {
+  LayoutDashboard,
+  Calculator,
+  MessageSquare,
+  FileText,
+  Briefcase,
   Building2,
-  LogOut
 } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -25,13 +22,6 @@ const navigation = [
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const router = useRouter()
-  const supabase = createClient()
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut()
-    router.push('/login')
-  }
 
   return (
     <div className="flex flex-col h-full w-64 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)]">
@@ -53,8 +43,8 @@ export default function Sidebar() {
               href={item.href}
               className={`
                 flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all
-                ${isActive 
-                  ? 'bg-brand-yellow text-black' 
+                ${isActive
+                  ? 'bg-brand-yellow text-black'
                   : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)] hover:text-[var(--color-text-primary)]'
                 }
               `}
@@ -65,17 +55,6 @@ export default function Sidebar() {
           )
         })}
       </nav>
-
-      {/* Sign Out */}
-      <div className="px-4 py-4 border-t border-[var(--color-border)]">
-        <button
-          onClick={handleSignOut}
-          className="flex items-center w-full px-4 py-3 text-sm font-medium text-text-secondary hover:bg-bg-primary hover:text-text-primary rounded-lg transition-all"
-        >
-          <LogOut className="w-5 h-5 mr-3" />
-          Sign Out
-        </button>
-      </div>
     </div>
   )
 }

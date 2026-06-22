@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { ContractState, DealType, SelectedClause } from '@/lib/types/contract';
-import { createClient } from '@/lib/supabase/client';
 
 interface ContractContextType {
   contract: ContractState;
@@ -34,7 +33,6 @@ const initialContract: ContractState = {
 
 export function ContractProvider({ children }: { children: ReactNode }) {
   const [contract, setContract] = useState<ContractState>(initialContract);
-  const supabase = createClient();
 
   // Load draft from localStorage on mount
   useEffect(() => {
@@ -134,43 +132,7 @@ export function ContractProvider({ children }: { children: ReactNode }) {
   };
 
   const saveToDatabase = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-  
-      // Extract data from contract clauses
-      const paymentClause = contract.clauses.find((c: any) => c.sectionId === 'payment');
-      const deliverablesClause = contract.clauses.find((c: any) => c.sectionId === 'deliverables');
-      
-      const dealAmount = paymentClause?.variableValues?.totalAmount || 0;
-      
-      // Build deliverables description
-      const platform = deliverablesClause?.variableValues?.platform || '';
-      const quantity = deliverablesClause?.variableValues?.quantity || '';
-      const contentType = deliverablesClause?.variableValues?.contentType || '';
-      const deliverables = `${quantity} ${platform} ${contentType}`.trim() || 'Not specified';
-  
-      const { data, error } = await supabase.from('contracts').insert({
-        user_id: user.id,
-        brand_name: contract.brandName || 'Unknown',
-        deal_amount: parseFloat(dealAmount.toString()),
-        deliverables: deliverables,
-        contract_data: contract,
-      }).select();
-  
-      if (error) {
-        console.error('Supabase error:', error);
-        throw error;
-      }
-  
-      alert('✅ Contract saved successfully!');
-    } catch (error) {
-      console.error('Error saving contract:', error);
-      throw error;
-    }
+    // No-op: database removed
   };
 
   return (

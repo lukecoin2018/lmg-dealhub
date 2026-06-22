@@ -3,7 +3,6 @@
 import { CalculatorResult, CalculatorInput } from "@/lib/types/calculator"; // ADD CalculatorInput
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { useWorkflow } from "@/contexts/WorkflowContext";
 
 interface ResultsPageProps {
@@ -13,51 +12,15 @@ interface ResultsPageProps {
   onBack: () => void;
 }
 
-export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPageProps) { // ADD formData HERE
+export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPageProps) {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
-  const { setCalculatorData, setNegotiationData } = useWorkflow(); // ADD setNegotiationData HERE
+  const { setCalculatorData, setNegotiationData } = useWorkflow();
 
   const copyToClipboard = (text: string, section: string) => {
     navigator.clipboard.writeText(text);
     setCopiedSection(section);
     setTimeout(() => setCopiedSection(null), 2000);
-  };
-
-  const handleSaveCalculation = async () => {
-    setSaving(true);
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        alert("Please log in to save calculations");
-        return;
-      }
-
-      const { error } = await supabase.from("rates_calculated").insert({
-        user_id: user.id,
-        followers: result.deliverableBreakdowns[0]?.quantity || 0, // We'll need to pass this properly
-        engagement_rate: 0, // We'll need to pass this properly
-        platform: result.deliverableBreakdowns[0]?.platform || "instagram",
-        content_type: result.deliverableBreakdowns[0]?.contentType || "post",
-        calculated_rate: result.recommendedRate,
-        calculation_data: {
-          result,
-          timestamp: new Date().toISOString(),
-        },
-      });
-
-      if (error) throw error;
-
-      alert("✅ Calculation saved successfully!");
-    } catch (error) {
-      console.error("Error saving calculation:", error);
-      alert("Failed to save calculation. Please try again.");
-    } finally {
-      setSaving(false);
-    }
   };
 
   const handleNegotiateThisRate = () => {
@@ -120,13 +83,6 @@ export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPa
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
-          <button
-            onClick={handleSaveCalculation}
-            disabled={saving}
-            className="px-6 py-3 bg-brand-blue text-white rounded-lg font-semibold hover:opacity-90 transition-all disabled:opacity-50"
-          >
-            {saving ? "Saving..." : "💾 Save Calculation"}
-          </button>
           <button
             onClick={handleNegotiateThisRate}
             className="px-6 py-3 bg-brand-pink text-white rounded-lg font-semibold hover:opacity-90 transition-all"
