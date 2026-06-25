@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { Clock } from 'lucide-react'
 import type { Segment } from '@/lib/course/moduleData'
 
@@ -28,9 +29,10 @@ interface VideoSegmentProps {
   index: number
   isComplete: boolean
   onToggleComplete: (id: string) => void
+  visual?: React.ReactNode
 }
 
-export default function VideoSegment({ segment, index, isComplete, onToggleComplete }: VideoSegmentProps) {
+export default function VideoSegment({ segment, index, isComplete, onToggleComplete, visual }: VideoSegmentProps) {
   const numeral = ROMAN[index] ?? String(index + 1)
   const timecode = durationToTimecode(segment.duration)
   const displayIndex = String(index + 1).padStart(2, '0')
@@ -84,7 +86,8 @@ export default function VideoSegment({ segment, index, isComplete, onToggleCompl
               <span className="vp-time">00:00</span>
               <span className="vp-track"><i /></span>
               <span className="vp-time">{timecode}</span>
-              <span className="vp-lmg">LMG Media</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/course/lmg-logo.png" className="vp-lmg-img" alt="LMG Media" />
             </div>
           </div>
         )}
@@ -92,7 +95,11 @@ export default function VideoSegment({ segment, index, isComplete, onToggleCompl
 
       {/* Teaching text */}
       <div className="teach">
-        <p>{segment.summary}</p>
+        {segment.paragraphs?.length
+          ? segment.paragraphs.map((p, i) => <p key={i}>{p}</p>)
+          : <p>{segment.summary}</p>}
+
+        {visual && <div className="seg-visual">{visual}</div>}
 
         {segment.pullQuote && (
           <div className="pullquote">

@@ -1,10 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { Play, Layers, Clock, BookOpen, CheckCircle, PenLine, ArrowRight } from 'lucide-react'
-import type { ModuleData } from '@/lib/course/moduleData'
+import type { ModuleData, Segment } from '@/lib/course/moduleData'
 import VideoSegment from './VideoSegment'
+import RevenueStreamsGrid from './visuals/RevenueStreamsGrid'
+import EngagementCallout from './visuals/EngagementCallout'
+import EngagementRateViz from './visuals/EngagementRateViz'
+import CourseRoadmap from './visuals/CourseRoadmap'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -87,9 +91,16 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
   }, 0)
 
   const moduleNum = String(data.number).padStart(2, '0')
-  const nextModuleCoverImage = data.nextModule
-    ? `/course/m${data.nextModule.number}-cover.jpg`
-    : ''
+
+  function getVisual(seg: Segment): React.ReactNode {
+    switch (seg.visualId) {
+      case 'revenue-streams':    return <RevenueStreamsGrid />
+      case 'engagement-callout': return <EngagementCallout />
+      case 'engagement-rate':    return <EngagementRateViz />
+      case 'course-roadmap':     return <CourseRoadmap currentModule={data.number} />
+      default:                   return null
+    }
+  }
 
   return (
     <div className="lesson-root">
@@ -113,7 +124,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
         <section className="lesson-hero">
           <div
             className="lesson-hero-photo"
-            style={{ backgroundImage: `url('${data.coverImage}')` }}
+            style={{ backgroundImage: `url('${data.heroImage}')` }}
           />
           <div className="lesson-hero-overlay" />
           <div className="lesson-hero-content">
@@ -152,6 +163,46 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
             </div>
           </div>
         </section>
+
+        {/* Mobile-only sticky progress bar — hidden on desktop, shown ≤1080px */}
+        {(() => {
+          // Active segment for the context label; fall back to first segment before any scroll
+          const activeSeg = data.segments.find(s => s.id === activeId) ?? data.segments[0]
+          return (
+            <div className="rail-mobile-bar" aria-label="Module progress">
+              <div className="rmb-dots" role="list">
+                {data.segments.map((seg, i) => {
+                  const isDone = mounted && !!completed[seg.id]
+                  const isActive = activeId === seg.id
+                  let cls = 'rmb-dot'
+                  if (isDone) cls += ' done'
+                  else if (isActive) cls += ' active'
+                  return (
+                    <button
+                      key={seg.id}
+                      role="listitem"
+                      className={cls}
+                      onClick={() => scrollToSegment(seg.id)}
+                      type="button"
+                      aria-label={`${isDone ? 'Completed: ' : ''}Segment ${i + 1} — ${seg.title}`}
+                    />
+                  )
+                })}
+              </div>
+              {activeSeg && (
+                <p className="rmb-active-label">
+                  <span className="rmb-eyebrow">{activeSeg.eyebrow}</span>
+                  {activeSeg.title}
+                </p>
+              )}
+              {mounted && (
+                <span className="rmb-count">
+                  <b>{completedCount}</b>/{data.segments.length}
+                </span>
+              )}
+            </div>
+          )
+        })()}
 
         {/* Two-column body */}
         <div className="lesson-body">
@@ -217,6 +268,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
                   index={i}
                   isComplete={mounted ? !!completed[seg.id] : false}
                   onToggleComplete={toggleComplete}
+                  visual={getVisual(seg)}
                 />
               ))}
             </div>
@@ -260,7 +312,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
                 <div className="ebook-book">
                   <div
                     className="ebook-book-img"
-                    style={{ backgroundImage: `url('${data.coverImage}')` }}
+                    style={{ backgroundImage: `url('${data.ebookCover}')` }}
                   />
                   <div className="ebook-book-wash" />
                   <div className="ebook-book-content">
@@ -269,7 +321,6 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
                     <div className="ebook-book-sub">The Brand Partnership Playbook</div>
                   </div>
                 </div>
-                <span className="ebook-pagecount">48 pages · PDF</span>
               </div>
             </div>
 
@@ -326,7 +377,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
                   </div>
                   <div
                     className="nm-photo"
-                    style={{ backgroundImage: `url('${nextModuleCoverImage}')` }}
+                    style={{ backgroundImage: `url('${data.nextModule.coverImage}')` }}
                   >
                     <span className="nm-chip">Module {data.nextModule.number}</span>
                   </div>
