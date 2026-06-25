@@ -10,12 +10,20 @@ export interface Segment {
   summary: string         // Teaching summary shown below the video
   duration: string        // e.g. "12 min"
   videoEmbed: string | null  // null = show IN PRODUCTION placeholder; swap to embed URL/code to go live
+  pullQuote?: {
+    text: string
+    highlight?: string   // substring of text to receive yellow-underline treatment
+  }
+  factors?: string[]
+  dataNote?: { formula: string; description: string }
+  benchmarks?: { value: string; label: string; variant?: 'avg' | 'good' | 'exc' }[]
 }
 
 export interface ModuleData {
   number: number
   slug: string            // e.g. "module-1"
   title: string
+  moduleIntro?: string    // Lead paragraph between hero and segments
   heroCopy: string        // Hero subheading
   coverImage: string      // Path under /public — e.g. "/course/m1-cover.jpg"
   outroImage: string
@@ -33,6 +41,8 @@ export const module1: ModuleData = {
   number: 1,
   slug: 'module-1',
   title: 'The Partnership Landscape',
+  moduleIntro:
+    'Before the tactics, the lay of the land. This first module is your map of the entire business — how partnerships actually work, where the money comes from, and what separates creators who get paid well from those who get paid at all. Five short segments. One clear picture.',
   heroCopy:
     'Stop chasing one-off deals. This module gives you the complete map — every way creators get paid, the five variables that actually set your rates, and an honest baseline on your own business. Whether you\'re at 15K or 300K, the variable was never your size.',
   coverImage: '/course/m1-cover.jpg',
@@ -53,6 +63,10 @@ export const module1: ModuleData = {
         'Most creators monetize a fraction of what\'s available. This segment maps all six revenue streams — sponsored content, affiliate, ambassadorships, gifting, licensing, and co-creation — so you can see exactly which doors you haven\'t opened yet.',
       duration: '11 min',
       videoEmbed: null,
+      pullQuote: {
+        text: 'The variable was never your size — it\'s whether you run partnerships like a business.',
+        highlight: 'business',
+      },
     },
     {
       id: 'seg-2',
@@ -62,6 +76,7 @@ export const module1: ModuleData = {
         'It\'s not your follower count. The five variables that determine what you can charge are niche authority, engagement quality, deliverable scope, usage rights, and exclusivity. This segment breaks each one down with real examples — and shows you which levers you can move right now.',
       duration: '14 min',
       videoEmbed: null,
+      factors: ['Engagement', 'Content quality', 'Professionalism', 'Track record', 'Audience understanding'],
     },
     {
       id: 'seg-3',
@@ -71,6 +86,15 @@ export const module1: ModuleData = {
         'Before you can raise your rates, you need to know where you stand. This segment walks you through an honest audit of your current deal history, deliverable mix, and rate consistency — the same audit that reveals your single biggest missed revenue opportunity.',
       duration: '10 min',
       videoEmbed: null,
+      dataNote: {
+        formula: 'ER = (likes + comments) ÷ followers × 100',
+        description: 'Five minutes with one recent post — your clearest proof of pricing power.',
+      },
+      benchmarks: [
+        { value: '2–3%', label: 'Average', variant: 'avg' },
+        { value: '3–5%', label: 'Good', variant: 'good' },
+        { value: '5%+', label: 'Excellent', variant: 'exc' },
+      ],
     },
     {
       id: 'seg-4',
