@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Latest Insights — Visual Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--neutral-100);
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 64px var(--gutter) 120px; }
+
+  /* ── Doc header ───────────────────────────────────────── */
+  .doc-head { margin-bottom: 16px; max-width: 800px; }
+  .doc-eyebrow {
+    font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700; color: var(--fg-3);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title {
+    font-family: var(--font-sans); font-weight: 800;
+    font-size: clamp(34px, 5vw, 52px); line-height: 1.04; letter-spacing: -0.025em;
+    margin: 0 0 18px; color: var(--fg-1); text-wrap: balance;
+  }
+  .doc-sub { font-size: 17px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 720px; }
+
+  /* ── Section scaffolding ──────────────────────────────── */
+  .dir { margin-top: 72px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+  .dir-tag {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--fg-3);
+    border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px;
+  }
+  .dir-name { font-size: 24px; font-weight: 800; letter-spacing: -0.015em; margin: 0; }
+  .dir-note { font-size: 15px; color: var(--fg-2); margin: 0; }
+
+  /* Frame that holds a live rendering of the section */
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); }
+  .frame.is-light { background: var(--neutral-0); }
+  .frame-tab {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 11px 18px; font-weight: 600;
+  }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ════════════ THE SECTION ITSELF ════════════ */
+  .ins {
+    background: var(--bg-1);
+    color: var(--fg-1);
+    padding: clamp(40px, 5vw, 64px) clamp(28px, 4vw, 56px);
+  }
+  .ins-head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 24px 40px; margin-bottom: 36px; flex-wrap: wrap;
+  }
+  .ins-eyebrow {
+    font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ins-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .ins-title { font-size: clamp(28px, 3.4vw, 38px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; margin: 0; max-width: 18ch; }
+  .ins-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .ins-head-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .ins-lead { font-size: 15px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 34ch; text-align: right; }
+  .ins-viewall {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    padding: 11px 18px; border-radius: var(--r-pill);
+    border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1);
+    font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap;
+    transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), gap var(--dur-fast) var(--ease-out);
+  }
+  .ins-viewall svg { width: 16px; height: 16px; }
+  .ins-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .ins-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .ins-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ── Grids ─────────────────────────────────────────────── */
+  .ins-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .ins-grid-3 { grid-template-columns: 1fr; } }
+  .ins-grid-lead { display: grid; grid-template-columns: 1.55fr 1fr; gap: 24px; align-items: stretch; }
+  @media (max-width: 880px) { .ins-grid-lead { grid-template-columns: 1fr; } }
+  .ins-stack { display: flex; flex-direction: column; gap: 24px; }
+
+  /* ════════════ ARTICLE CARD ════════════ */
+  .card {
+    position: relative; display: flex; flex-direction: column;
+    border-radius: var(--r-lg); overflow: hidden; text-decoration: none;
+    background: var(--bg-1); color: var(--fg-1);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .lmg-dark .card { background: var(--bg-3); }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .card:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--bg-1), 0 0 0 6px var(--lmg-yellow), var(--shadow-md); }
+
+  .card-cover { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--neutral-200); }
+  .card-cover img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center 32%;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .card:hover .card-cover img { transform: scale(1.045); }
+
+  /* Category chip — solid, sits over the photo */
+  .chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px; border-radius: var(--r-pill);
+    font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: 0.01em;
+    white-space: nowrap; backdrop-filter: saturate(1.1);
+    box-shadow: 0 2px 8px rgba(10,8,4,0.22);
+  }
+  .chip.on-cover { position: absolute; left: 16px; bottom: 16px; z-index: 2; }
+  .chip .chip-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.55; }
+  .chip.cat-strategy { background: var(--lmg-blue);   color: #fff; }
+  .chip.cat-platforms { background: var(--lmg-pink);  color: #fff; }
+  .chip.cat-industry { background: var(--lmg-yellow); color: var(--lmg-grey); }
+  /* soft variant — sits on a surface, not a photo */
+  .chip.soft.cat-strategy  { background: var(--lmg-blue-soft);  color: #0D5587; box-shadow: none; }
+  .chip.soft.cat-platforms { background: var(--lmg-pink-soft);  color: #99214C; box-shadow: none; }
+  .chip.soft.cat-industry  { background: var(--lmg-yellow-soft);color: #6B5500; box-shadow: none; }
+  .lmg-dark .chip.soft.cat-strategy  { background: rgba(58,175,244,0.16); color: #7FCBF8; }
+  .lmg-dark .chip.soft.cat-platforms { background: rgba(255,77,148,0.18); color: #FF93BD; }
+  .lmg-dark .chip.soft.cat-industry  { background: rgba(255,215,0,0.16);  color: #F0CB3C; }
+
+  .card-body { display: flex; flex-direction: column; gap: 10px; padding: 20px 22px 22px; flex: 1; }
+  .card-title {
+    font-family: var(--font-sans); font-weight: 700;
+    font-size: 19px; line-height: 1.28; letter-spacing: -0.012em;
+    margin: 0; color: var(--fg-1); text-wrap: pretty;
+  }
+  .card-excerpt {
+    font-size: 14.5px; line-height: 1.55; color: var(--fg-2); margin: 0;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-foot {
+    margin-top: auto; padding-top: 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .readtime {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--fg-2);
+  }
+  .readtime svg { width: 14px; height: 14px; opacity: 0.75; }
+  .readmore {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--font-ui); font-size: 13px; font-weight: 700; color: var(--fg-1);
+    transition: gap var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .readmore svg { width: 15px; height: 15px; }
+  .card:hover .readmore { gap: 10px; color: var(--lmg-pink); }
+
+  /* Lead (feature) card — larger type, taller cover */
+  .card.lead .card-cover { aspect-ratio: 16 / 9; }
+  .card.lead .card-body { padding: 26px 28px 28px; gap: 12px; }
+  .card.lead .card-title { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.18; font-weight: 800; letter-spacing: -0.02em; }
+  .card.lead .card-excerpt { font-size: 16px; -webkit-line-clamp: 2; max-width: 52ch; }
+
+  /* Compact (side) card — horizontal: thumb + text */
+  .card.compact { flex-direction: row; }
+  .card.compact .card-cover { aspect-ratio: auto; width: 42%; min-width: 42%; align-self: stretch; }
+  .card.compact .card-cover img { object-position: center; }
+  .card.compact .card-body { padding: 16px 18px; gap: 8px; }
+  .card.compact .card-title { font-size: 16px; line-height: 1.25; }
+  .card.compact .chip.on-cover { left: 12px; bottom: 12px; padding: 4px 9px; font-size: 11px; }
+  @media (max-width: 520px) { .card.compact { flex-direction: column; } .card.compact .card-cover { width: 100%; aspect-ratio: 16/10; } }
+
+  /* ════════════ ANATOMY STUDY ════════════ */
+  .study-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 880px) { .study-grid { grid-template-columns: 1fr; } }
+  .study-stage { background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-lg); padding: 22px; }
+  .study-stage.pick { box-shadow: 0 0 0 2px var(--lmg-yellow); border-color: transparent; }
+  .study-meta { padding: 16px 4px 0; }
+  .study-h { font-size: 15px; font-weight: 800; margin: 0 0 5px; display: flex; align-items: center; gap: 9px; letter-spacing: -0.01em; }
+  .study-d { font-size: 13px; color: var(--fg-2); margin: 0; line-height: 1.55; }
+  .pick-badge {
+    font-family: var(--font-ui); font-size: 9.5px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--lmg-grey); background: var(--lmg-yellow);
+    padding: 3px 8px; border-radius: var(--r-pill);
+  }
+
+  /* Anatomy variant B — meta row below cover (chip + read time), title, excerpt */
+  .card.varB .card-cover { aspect-ratio: 16/10; }
+  .card.varB .card-meta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
+  /* Anatomy variant C — split: chip bottom-left of cover, footer divider meta */
+  .card.varC .card-foot { border-top: 1px solid var(--border-1); }
+  .lmg-dark .card.varC .card-foot { border-top-color: var(--border-1); }
+
+  .miss-tag {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
+    font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); letter-spacing: 0.02em;
+  }
+  .miss-tag svg { width: 13px; height: 13px; }
+
+  /* ── Spec strip ───────────────────────────────────────── */
+  .spec { margin-top: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-1); border: 1px solid var(--border-1); border-radius: var(--r-md); overflow: hidden; }
+  @media (max-width: 720px) { .spec { grid-template-columns: repeat(2, 1fr); } }
+  .spec-cell { background: var(--neutral-50); padding: 14px 16px; }
+  .spec-k { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); margin-bottom: 6px; }
+  .spec-v { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-1); line-height: 1.5; }
+  .spec-v .chip-sw { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; border: 1px solid rgba(0,0,0,0.08); }
+
+  .note {
+    margin-top: 30px; font-size: 14.5px; line-height: 1.7; color: var(--fg-2);
+    border-left: 3px solid var(--lmg-yellow); padding: 6px 0 6px 18px; max-width: 860px;
+  }
+  .note strong { color: var(--fg-1); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §3</div>
+    <h1 class="doc-title">Latest Insights</h1>
+    <p class="doc-sub">An editorial "latest stories" strip that surfaces the three newest articles and routes into a 54-piece library. It belongs to the same launchpad family as the reach map and the industry browse above it — photography-led, accent-coded — but reads as a magazine's front-of-book, not a blog roll. The cover photo is the hero of every card; the category chip and read time are the only chrome. Explored in light and dark, with the card anatomy resolved first, then two layouts: an even three-up and a lead-plus-two.</p>
+  </header>
+
+  <!-- ════════ ANATOMY STUDY ════════ -->
+  <section class="dir" id="anatomy">
+    <div class="dir-label">
+      <span class="dir-tag">THE CARD</span>
+      <h2 class="dir-name">Chip &amp; read time, three ways</h2>
+      <p class="dir-note">Where the category and read time live — and how a card holds up when the excerpt is missing.</p>
+    </div>
+    <div class="study-grid">
+      <div class="study-col">
+        <div class="study-stage pick" id="anat-a"></div>
+        <div class="study-meta">
+          <h3 class="study-h">A · Chip on cover <span class="pick-badge">Recommended</span></h3>
+          <p class="study-d">Category rides the photo bottom-left, so the cover stays the hero and the body is pure editorial: title, excerpt, then a read-time + read-more footer. The footer pins to the bottom, so a missing excerpt never breaks the rhythm.</p>
+        </div>
+      </div>
+      <div class="study-col">
+        <div class="study-stage" id="anat-b"></div>
+        <div class="study-meta">
+          <h3 class="study-h">B · Meta row above title</h3>
+          <p class="study-d">Chip and read time share one row beneath the cover, above the title. Tidy and conventional, but it stacks two type rows before you reach the headline and leaves the photo plain.</p>
+        </div>
+      </div>
+      <div class="study-col">
+        <div class="study-stage" id="anat-c"></div>
+        <div class="study-meta">
+          <h3 class="study-h">C · Split footer</h3>
+          <p class="study-d">Chip on the cover, read time alone in a ruled footer. Clean, but the divider rule adds a line of chrome the editorial direction is trying to shed.</p>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-cell"><div class="spec-k">Cover</div><div class="spec-v">16:10 · object-cover · center 32%</div></div>
+      <div class="spec-cell"><div class="spec-k">Chips</div><div class="spec-v"><span class="chip-sw" style="background:#3AAFF4;"></span>Strategy <span class="chip-sw" style="background:#FF4D94;"></span>Platforms <span class="chip-sw" style="background:#FFD700;"></span>Industry</div></div>
+      <div class="spec-cell"><div class="spec-k">Read time</div><div class="spec-v">DM Sans 13px · grey --fg-2 · clock 14px</div></div>
+      <div class="spec-cell"><div class="spec-k">No excerpt</div><div class="spec-v">Body collapses · footer stays pinned</div></div>
+    </div>
+  </section>
+
+  <!-- ════════ DIRECTION A — EVEN THREE-UP ════════ -->
+  <section class="dir" id="threeup">
+    <div class="dir-label">
+      <span class="dir-tag">LAYOUT A</span>
+      <h2 class="dir-name">Even three-up</h2>
+      <p class="dir-note">Three equal cards in a row — democratic, scannable, scales to a 4-up on wide pages. The strip reads as "here are the latest, all current."</p>
+    </div>
+    <div class="frame is-light">
+      <div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div>
+      <div class="ins" id="three-light"></div>
+    </div>
+    <div class="frame is-dark">
+      <div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div>
+      <div class="ins lmg-dark" id="three-dark"></div>
+    </div>
+  </section>
+
+  <!-- ════════ DIRECTION B — LEAD + TWO ════════ -->
+  <section class="dir" id="lead">
+    <div class="dir-label">
+      <span class="dir-tag">LAYOUT B</span>
+      <h2 class="dir-name">Lead plus two</h2>
+      <p class="dir-note">The newest article runs large; the next two stack beside it as compact thumb-cards. More hierarchy, more "front page" — signals an editor's pick.</p>
+    </div>
+    <div class="frame is-light">
+      <div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Light</div>
+      <div class="ins" id="lead-light"></div>
+    </div>
+    <div class="frame is-dark">
+      <div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Dark · evening browsing</div>
+      <div class="ins lmg-dark" id="lead-dark"></div>
+    </div>
+  </section>
+
+  <p class="note"><strong>Recommendation:</strong> ship card treatment <strong>A (chip on cover)</strong> in the <strong>even three-up</strong> layout. It keeps the photography full-bleed and the body purely editorial, matches the rhythm of the industry-browse grid directly above without copying it, and treats all three latest posts as equally current — the honest read for a strip that updates weekly. <strong>Lead-plus-two</strong> is the alternate for moments when we want to feature an editor's pick. Category chips use the brand trio as accents — <strong>blue Strategy, pink Platforms, yellow Industry</strong> — extendable to the full category set. The <strong>"View all 54 articles →"</strong> control carries the depth signal; the count updates live. One component, one light/dark token swap, no author byline or view counts.</p>
+</div>
+
+<script>
+  const IMG = '../assets/';
+  const ICON_CLOCK = '<i data-lucide="clock"></i>';
+
+  // Category → brand accent mapping (chips are accents only)
+  const CAT = {
+    strategy:  { label: 'Strategy',  cls: 'cat-strategy'  },
+    platforms: { label: 'Platforms', cls: 'cat-platforms' },
+    industry:  { label: 'Industry',  cls: 'cat-industry'  },
+  };
+
+  // Three newest articles (no author byline, no view counts — by design)
+  const ARTICLES = [
+    {
+      cat: 'strategy',
+      title: 'The 2026 Playbook for Multi-City Creator Campaigns',
+      excerpt: 'How leading brands sequence launches across New York, London, and Dubai to compound reach without diluting the message.',
+      read: '8 min read',
+      img: 'hero-01-office.jpg', pos: 'center 28%',
+    },
+    {
+      cat: 'platforms',
+      title: 'TikTok vs Instagram in 2026: Where Spend Actually Converts',
+      excerpt: 'A data-backed look at platform ROI by vertical — and why, for most brands, the answer is rarely either/or.',
+      read: '6 min read',
+      img: 'hero-03-pinkhair-tablet.jpg', pos: 'center 22%',
+    },
+    {
+      cat: 'industry',
+      title: 'Inside the Macro-to-Micro Shift Reshaping Luxury Beauty',
+      excerpt: null, // deliberately absent — card must hold
+      read: '5 min read',
+      img: 'hero-04-networking.jpg', pos: 'center 30%',
+    },
+  ];
+
+  function chip(catKey, soft) {
+    const c = CAT[catKey];
+    return `<span class="chip ${soft ? 'soft' : 'on-cover'} ${c.cls}"><span class="chip-dot"></span>${c.label}</span>`;
+  }
+
+  // Treatment A — chip on cover, editorial body, pinned footer (the recommended card)
+  function cardA(a, extra = '') {
+    return `
+      <a class="card ${extra}" href="/blog" aria-label="${a.title}">
+        <div class="card-cover">
+          ${chip(a.cat, false)}
+          <img src="${IMG}${a.img}" alt="" style="object-position:${a.pos || 'center 32%'}">
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">${a.title}</h3>
+          ${a.excerpt ? `<p class="card-excerpt">${a.excerpt}</p>` : ''}
+          <div class="card-foot">
+            <span class="readtime">${ICON_CLOCK}${a.read}</span>
+            <span class="readmore">Read article <i data-lucide="arrow-right"></i></span>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  // Treatment B — meta row (chip + read time) below cover, above title
+  function cardB(a) {
+    return `
+      <a class="card varB" href="/blog" aria-label="${a.title}">
+        <div class="card-cover"><img src="${IMG}${a.img}" alt="" style="object-position:${a.pos || 'center 32%'}"></div>
+        <div class="card-body">
+          <div class="card-meta-row">${chip(a.cat, true)}<span class="readtime">${ICON_CLOCK}${a.read}</span></div>
+          <h3 class="card-title">${a.title}</h3>
+          ${a.excerpt ? `<p class="card-excerpt">${a.excerpt}</p>` : ''}
+        </div>
+      </a>`;
+  }
+
+  // Treatment C — chip on cover, ruled footer with read time only
+  function cardC(a) {
+    return `
+      <a class="card varC" href="/blog" aria-label="${a.title}">
+        <div class="card-cover">${chip(a.cat, false)}<img src="${IMG}${a.img}" alt="" style="object-position:${a.pos || 'center 32%'}"></div>
+        <div class="card-body">
+          <h3 class="card-title">${a.title}</h3>
+          ${a.excerpt ? `<p class="card-excerpt">${a.excerpt}</p>` : ''}
+          <div class="card-foot"><span class="readtime">${ICON_CLOCK}${a.read}</span><span class="readmore">Read <i data-lucide="arrow-right"></i></span></div>
+        </div>
+      </a>`;
+  }
+
+  // Compact side card for lead+two layout
+  function cardCompact(a) {
+    return `
+      <a class="card compact" href="/blog" aria-label="${a.title}">
+        <div class="card-cover">${chip(a.cat, false)}<img src="${IMG}${a.img}" alt="" style="object-position:${a.pos || 'center'}"></div>
+        <div class="card-body">
+          <h3 class="card-title">${a.title}</h3>
+          ${a.excerpt ? `<p class="card-excerpt">${a.excerpt}</p>` : ''}
+          <div class="card-foot"><span class="readtime">${ICON_CLOCK}${a.read}</span><span class="readmore">Read <i data-lucide="arrow-right"></i></span></div>
+        </div>
+      </a>`;
+  }
+
+  function header() {
+    return `
+      <div class="ins-head">
+        <div>
+          <p class="ins-eyebrow">Insights</p>
+          <h2 class="ins-title">The latest from our <span class="ital">desk</span></h2>
+        </div>
+        <div class="ins-head-right">
+          <a class="ins-viewall" href="/blog">View all <span class="count">54</span> articles <i data-lucide="arrow-right"></i></a>
+          <p class="ins-lead">Strategy, platform, and industry analysis — published weekly.</p>
+        </div>
+      </div>`;
+  }
+
+  function renderThreeUp(id) {
+    document.getElementById(id).innerHTML =
+      header() + `<div class="ins-grid-3">${ARTICLES.map(a => cardA(a)).join('')}</div>`;
+  }
+
+  function renderLead(id) {
+    const [lead, ...rest] = ARTICLES;
+    document.getElementById(id).innerHTML =
+      header() +
+      `<div class="ins-grid-lead">
+        ${cardA(lead, 'lead')}
+        <div class="ins-stack">${rest.map(cardCompact).join('')}</div>
+      </div>`;
+  }
+
+  // Anatomy study uses the Strategy article; the no-excerpt note is shown beneath each
+  const STUDY = ARTICLES[0];
+  document.getElementById('anat-a').innerHTML = cardA(STUDY) +
+    '<div class="miss-tag"><i data-lucide="check"></i>excerpt optional — footer pins to bottom</div>';
+  document.getElementById('anat-b').innerHTML = cardB(STUDY);
+  document.getElementById('anat-c').innerHTML = cardC(STUDY);
+
+  renderThreeUp('three-light');
+  renderThreeUp('three-dark');
+  renderLead('lead-light');
+  renderLead('lead-dark');
+
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

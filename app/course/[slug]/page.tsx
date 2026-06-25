@@ -39,15 +39,16 @@ export default async function CourseDocPage({
     // flex-1: fills the remaining height below the course layout's brand header
     <div className="flex flex-col flex-1 overflow-hidden">
       {/* Sub-nav: back link + doc label */}
-      <div className="shrink-0 flex items-center h-10 px-4 border-b border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
+      <div className="shrink-0 flex items-center h-10 px-4" style={{ borderBottom: '1px solid #E5E0D5', background: '#F5F2EC' }}>
         <Link
           href="/course"
-          className="flex items-center gap-1.5 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+          className="flex items-center gap-1.5 text-sm transition-colors"
+          style={{ color: '#78716C' }}
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Course
         </Link>
-        <span className="ml-4 text-sm text-[var(--color-text-secondary)]">{label}</span>
+        <span className="ml-4 text-sm" style={{ color: '#78716C' }}>{label}</span>
       </div>
       {/* iframe src points at the route handler — never a /public path */}
       <iframe

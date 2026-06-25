@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources §4 — Stacked blend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--neutral-100); color: var(--fg-1); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance; }
+  .doc-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 770px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  .dir { margin-top: 60px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--fg-3); border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px; }
+  .dir-tag.a { color: #6B5500; border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); }
+  .dir-tag.b { color: #0D5587; border-color: var(--lmg-blue); background: var(--lmg-blue-soft); }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 22px; max-width: 900px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2); background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm); padding: 7px 12px; }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); } .anno .inter svg { color: var(--lmg-blue); } .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); } .frame.is-light { background: var(--neutral-0); }
+  .frame-tab { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 18px; font-weight: 600; }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── Section shell ───────────────────────────────────── */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.4vw, 60px) clamp(26px, 3.4vw, 52px); }
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 36px; flex-wrap: wrap; }
+  .rs-eyebrow { font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; padding: 11px 18px; border-radius: var(--r-pill); border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap; transition: border-color .16s, background .16s, gap .16s; }
+  .rs-viewall svg { width: 16px; height: 16px; } .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* divider between stacked blocks */
+  .rs-div { height: 1px; background: var(--border-1); margin: clamp(34px,4vw,52px) 0; position: relative; }
+  .rs-div span { position: absolute; left: 0; top: 50%; transform: translateY(-50%); background: var(--bg-1); padding-right: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg-3); }
+
+  /* ════════════ COVER ENGINE ════════════ */
+  .cover { position: relative; container-type: inline-size; aspect-ratio: 3 / 4; width: 100%; border-radius: 2.4cqw; overflow: hidden; background: var(--neutral-300); box-shadow: 0 1cqw 3cqw rgba(12,10,8,.22), 0 0.3cqw 1cqw rgba(12,10,8,.16); user-select: none; }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  .cov-block { background: linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%), linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%); }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines { position: absolute; inset: 0; opacity: .9; pointer-events: none; background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%); }
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92; }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+  .cov-dl { position: absolute; left: 50%; bottom: 9cqw; transform: translate(-50%, 1.6cqw); display: inline-flex; align-items: center; gap: 1.6cqw; background: var(--lmg-yellow); color: #0A0A0A; border: 0; cursor: pointer; font-family: var(--font-ui); font-weight: 800; font-size: 3.7cqw; letter-spacing: -0.01em; padding: 2.6cqw 4.4cqw; border-radius: 99px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out), background .15s; box-shadow: 0 1.6cqw 4cqw rgba(0,0,0,.4); z-index: 5; }
+  .cov-dl i { width: 4.2cqw; height: 4.2cqw; }
+  .cov-dl:hover { background: #fff; }
+  .show-dl:hover .cov-dl, .cover.is-front .cov-dl { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+  /* ════════════ FULL-WIDTH FEATURED HERO ════════════ */
+  .featx { display: grid; grid-template-columns: 320px 1fr; gap: 52px; align-items: center; }
+  @media (max-width: 760px) { .featx { grid-template-columns: 1fr; gap: 30px; } }
+  .featx-cover { width: 320px; }
+  @media (max-width: 760px) { .featx-cover { width: 240px; } }
+  .featx-cover .cover { box-shadow: 0 30px 64px -16px rgba(12,10,8,.45), 0 8px 18px rgba(12,10,8,.2); }
+  .lmg-dark .featx-cover .cover { box-shadow: 0 34px 70px -16px rgba(0,0,0,.72); }
+  .featx-info { max-width: 620px; }
+  .featx-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 18px; }
+  .feat-flag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #6B5500; background: var(--lmg-yellow); padding: 6px 12px; border-radius: 99px; }
+  .feat-flag svg { width: 13px; height: 13px; }
+  .feat-course { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--lmg-pink); }
+  .feat-course svg { width: 14px; height: 14px; }
+  .feat-meta { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 12px; display: flex; align-items: center; gap: 9px; }
+  .feat-meta .ac-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .featx-title { font-size: clamp(28px, 3.2vw, 40px); font-weight: 800; letter-spacing: -0.026em; line-height: 1.06; margin: 0 0 16px; text-wrap: balance; }
+  .featx-desc { font-size: 16.5px; line-height: 1.66; color: var(--fg-2); margin: 0 0 26px; max-width: 60ch; }
+  .feat-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .btn-dl { display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 26px; border: 0; cursor: pointer; border-radius: var(--r-md); background: var(--lmg-yellow); color: #0A0A0A; font-family: var(--font-ui); font-weight: 800; font-size: 15.5px; transition: background .15s, transform .15s; text-decoration: none; }
+  .btn-dl:hover { background: var(--lmg-yellow-deep); transform: translateY(-1px); }
+  .btn-dl svg { width: 18px; height: 18px; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px; border: 1.5px solid var(--border-2); border-radius: var(--r-md); background: transparent; color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14.5px; cursor: pointer; text-decoration: none; transition: border-color .15s, color .15s; }
+  .btn-ghost:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* ════════════ FULL-WIDTH RIFFLE LIBRARY ════════════ */
+  .rffx { position: relative; }
+  .rffx-lead { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .rffx-lead h4 { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; margin: 0; }
+  .rffx-lead p { font-size: 14px; color: var(--fg-2); margin: 0; }
+  .rffx-stage { position: relative; height: 320px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); mask-image: linear-gradient(90deg, #000 90%, transparent); }
+  .rffx-track { position: absolute; inset: 0; }
+  .rffx-item { position: absolute; top: 50%; left: 0; width: 178px; margin-top: -118px; transform-origin: 50% 62%; cursor: pointer; will-change: transform, opacity; transition: transform .72s var(--ease-out), opacity .55s var(--ease-out), filter .55s var(--ease-out); }
+  .rffx-item .cover { box-shadow: 0 16px 38px -8px rgba(12,10,8,.4), 0 4px 10px rgba(12,10,8,.22); }
+  .lmg-dark .rffx-item .cover { box-shadow: 0 18px 42px -8px rgba(0,0,0,.7); }
+  .rffx-item.is-back { pointer-events: none; }
+
+  .rffx-bar { height: 3px; border-radius: 99px; background: var(--border-1); overflow: hidden; margin: 16px 2px 0; }
+  .rffx-bar-fill { height: 100%; width: 100%; background: var(--lmg-pink); transform-origin: left; transform: scaleX(0); }
+  .rffx.paused .rffx-bar-fill { background: var(--fg-3); }
+  .rffx-ctl { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-top: 14px; }
+  .rffx-cap { min-width: 0; }
+  .rffx-cap-type { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ac, var(--lmg-pink)); margin-bottom: 6px; }
+  .rffx-cap-type i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+  .rffx-cap-title { font-size: 18px; font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; margin: 0; text-wrap: balance; }
+  .rffx-nav { display: flex; align-items: center; gap: 10px; flex: none; }
+  .rffx-count { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--fg-2); min-width: 58px; text-align: center; }
+  .rffx-count b { color: var(--fg-1); }
+  .rffx-btn { width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s, background .15s, color .15s; }
+  .rffx-btn:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .rffx-btn svg { width: 18px; height: 18px; }
+  .rffx-pausetag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); opacity: 0; transition: opacity .2s; }
+  .rffx.paused .rffx-pausetag { opacity: 1; }
+  .rffx-pausetag svg { width: 12px; height: 12px; }
+  .rffx-static { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+  @media (max-width: 1100px) { .rffx-static { grid-template-columns: repeat(5, 1fr); } }
+
+  /* ── recommendation ───────────────────────────────────── */
+  .reco { margin-top: 64px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 38px clamp(26px,3.2vw,46px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 14px; font-weight: 800; display: flex; align-items: center; gap: 9px; }
+  .reco h3 svg { width: 16px; height: 16px; color: var(--lmg-yellow-deep); }
+  .reco .verdict { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-weight: 800; font-size: 13px; color: #6B5500; background: var(--lmg-yellow-soft); border: 1px solid var(--lmg-yellow); padding: 6px 13px; border-radius: 99px; margin-bottom: 18px; }
+  .reco .verdict svg { width: 15px; height: 15px; }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 940px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+
+  #toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); z-index: 999; display: flex; align-items: center; gap: 11px; background: #0A0A0A; color: #fff; padding: 13px 20px; border-radius: var(--r-pill); font-family: var(--font-ui); font-size: 14px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast svg { width: 17px; height: 17px; color: var(--lmg-yellow); } #toast b { color: var(--lmg-yellow); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4 · Stacked blend</div>
+    <h1 class="doc-title">Featured + Riffle, <span class="ital">stacked</span></h1>
+    <p class="doc-sub">Re-architected from side-by-side to <strong>vertical stack</strong> so neither half is squeezed: the featured hero gets the <strong>full section width</strong> for a roomy, un-cramped text block, and the riffling library spreads across the <strong>full width</strong> too — more covers visible, more depth, more room for the motion to breathe. Two stacking orders compared, both light and dark. Motion at full width is the <strong>bold auto-riffle</strong>, now fanned across the whole band. Reduced-motion falls back to a calm static gallery.</p>
+  </header>
+
+  <!-- ════════ ORDER A — Featured on top ════════ -->
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag a">ORDER A</span><h2 class="dir-name">Featured on top</h2></div>
+    <p class="dir-note">Lead with the flagship: full-width featured hero (large cover + roomy text), then the full-width riffling library beneath as the "browse the depth" coda. Natural reading order — <strong>announce, then invite exploration</strong>.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="layers"></i><b>Motion:</b>&nbsp;full-width auto-riffle — front cover peels off, fan flows across the band every 2.6s</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;hover-to-pause · click a cover to pull it front · prev/next · hover surfaces Download</span>
+      <span class="build"><i data-lucide="alert-triangle"></i><b>Build:</b>&nbsp;med-high — auto-riffle cheap; true grab-and-flick needs pointer-velocity/inertia</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Order A · Light</div><div class="rs" id="A-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Order A · Dark</div><div class="rs lmg-dark" id="A-dark"></div></div>
+  </section>
+
+  <!-- ════════ ORDER B — Featured below ════════ -->
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag b">ORDER B</span><h2 class="dir-name">Featured below</h2></div>
+    <p class="dir-note">Open with motion: the full-width riffling library leads, the featured hero anchors and <strong>closes</strong> the section beneath it. Leads with breadth and energy, lands on the flagship and its download.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="layers"></i><b>Motion:</b>&nbsp;same full-width auto-riffle, now the opening act</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;hover-to-pause · click-to-front · prev/next · hover surfaces Download</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;identical components, reordered</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Order B · Light</div><div class="rs" id="B-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Order B · Dark</div><div class="rs lmg-dark" id="B-dark"></div></div>
+  </section>
+
+  <!-- ════════ RECOMMENDATION ════════ -->
+  <div class="reco">
+    <h3><i data-lucide="scale"></i>Which order reads better?</h3>
+    <span class="verdict"><i data-lucide="check-circle-2"></i>Recommend Order A — Featured on top</span>
+    <p><strong>Order A wins for a homepage section.</strong> The eye enters at the top, so the flagship publication, its value, and the primary <strong>Download — Free PDF</strong> all land first — the section states what it is before it dazzles. The riffling library then reads as a natural "and there are 22 more" invitation, and its motion lives in the lower half where it pulls the scroll <em>downward</em> toward the next section rather than competing with the headline.</p>
+    <p><strong>Order B</strong> is the stronger choice only when breadth <em>is</em> the pitch — e.g. a dedicated <strong>/resources</strong> landing page or a returning-visitor surface, where opening on a wide wall of beautiful covers signals "deep library" instantly and the featured hero becomes a confident closing anchor. On the homepage, though, leading with motion risks the visitor riffling covers before they've registered the flagship or its free download.</p>
+    <p>Either way, stacking fixes the original problem: the featured text block is no longer cramped, and the library — now full width — fans more covers across the band with the motion given room to breathe. Covers stay the hero, the audience accent line holds the color code (blue brands · pink creators · yellow universal), and <strong>View all 23 resources →</strong> sits in the header on both.</p>
+  </div>
+</div>
+
+<div id="toast"><i data-lucide="check-circle-2"></i><span>Downloading <b id="toast-name">your PDF</b> — free, no email</span></div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FEATURED = PUBS[0];
+  const REST = PUBS.slice(1);
+  let uid = 0;
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  function featuredHTML() {
+    const aud = AUD[FEATURED.aud];
+    return `
+      <div class="featx">
+        <div class="featx-cover">${coverHTML(FEATURED)}</div>
+        <div class="featx-info">
+          <div class="featx-tags">
+            <span class="feat-flag"><i data-lucide="star"></i>Featured</span>
+            <span class="feat-course"><i data-lucide="layers"></i>Now a multi-part course</span>
+          </div>
+          <p class="feat-meta"><span class="ac-dot" style="background:${aud.line}"></span>${FEATURED.type} · ${FEATURED.level}</p>
+          <h3 class="featx-title">${FEATURED.title}</h3>
+          <p class="featx-desc">${FEATURED.desc} It is the flagship of the library — and is now expanding into a guided, multi-part course, with each module released as its own downloadable publication.</p>
+          <div class="feat-cta">
+            <button class="btn-dl" data-dl data-name="${FEATURED.title}"><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+            <a class="btn-ghost" href="/resources/${FEATURED.id}"><i data-lucide="arrow-up-right"></i>View details</a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function riffleShell() {
+    const id = 'rf' + (++uid);
+    const html = rm
+      ? `<div class="rffx" id="${id}">
+           <div class="rffx-lead"><h4>The full library</h4><p>22 more guides, reports &amp; toolkits — tap any cover to download free.</p></div>
+           <div class="rffx-static">${REST.slice(0,12).map(p => `<div class="show-dl">${coverHTML(p)}</div>`).join('')}</div>
+         </div>`
+      : `<div class="rffx" id="${id}">
+           <div class="rffx-lead"><h4>The full library, riffling</h4><p>22 more — the deck auto-advances; hover to pause and grab one.</p></div>
+           <div class="rffx-stage"><div class="rffx-track">${REST.map((p,i)=>`<div class="rffx-item show-dl" data-i="${i}">${coverHTML(p)}</div>`).join('')}</div></div>
+           <div class="rffx-bar"><div class="rffx-bar-fill"></div></div>
+           <div class="rffx-ctl">
+             <div class="rffx-cap"><span class="rffx-cap-type"></span><h4 class="rffx-cap-title"></h4></div>
+             <div class="rffx-nav">
+               <span class="rffx-pausetag"><i data-lucide="pause"></i>paused</span>
+               <span class="rffx-count"></span>
+               <button class="rffx-btn" data-prev aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+               <button class="rffx-btn" data-next aria-label="Next"><i data-lucide="chevron-right"></i></button>
+             </div>
+           </div>
+         </div>`;
+    return { id, html };
+  }
+
+  function wireRiffle(id) {
+    if (rm) return;
+    const root = el(id);
+    const items = [...root.querySelectorAll('.rffx-item')];
+    const fill = root.querySelector('.rffx-bar-fill');
+    const N = items.length;
+    let active = 0, timer = null, paused = false;
+    const K = 9, DUR = 2600, SP = 92, FX = 30;
+
+    function place(item, slot) {
+      let x, rot, scale, op, bright, z, back = false, y = 0;
+      if (slot === 0) { x = FX; rot = 0; scale = 1; op = 1; bright = 1; z = 100; }
+      else if (slot >= 1 && slot <= K) { x = 150 + slot * SP; rot = -(4 + slot * 1.8); scale = 0.97 - slot * 0.018; op = 1; bright = 1 - slot * 0.06; z = 100 - slot; }
+      else if (slot === N - 1) { x = -190; y = -26; rot = 12; scale = 1.06; op = 0; bright = 1; z = 60; back = true; }
+      else { x = 150 + (K + 1) * SP; rot = -(4 + (K + 1) * 1.8); scale = 0.97 - (K + 1) * 0.018; op = 0; bright = .4; z = 5; back = true; }
+      item.style.transform = `translateX(${x}px) translateY(${y}px) rotate(${rot}deg) scale(${scale})`;
+      item.style.opacity = op; item.style.filter = `brightness(${bright})`; item.style.zIndex = z;
+      item.classList.toggle('is-back', back); item.classList.toggle('is-front', slot === 0);
+    }
+    function layout() {
+      items.forEach((it, i) => place(it, ((i - active) % N + N) % N));
+      const p = REST[active];
+      const t = root.querySelector('.rffx-cap-type');
+      t.innerHTML = `${p.type}<i></i>${p.level}`; t.style.setProperty('--ac', AUD[p.aud].line);
+      root.querySelector('.rffx-cap-title').textContent = p.title;
+      root.querySelector('.rffx-count').innerHTML = `<b>${active + 1}</b> / ${N}`;
+    }
+    function runBar() {
+      if (paused) return;
+      fill.style.transition = 'none'; fill.style.transform = 'scaleX(0)';
+      requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.transition = `transform ${DUR}ms linear`; fill.style.transform = 'scaleX(1)'; }));
+    }
+    function go(n) { active = ((n) % N + N) % N; layout(); runBar(); }
+    function arm() { clearInterval(timer); timer = setInterval(() => { if (!paused) go(active + 1); }, DUR); }
+    items.forEach((it, i) => it.addEventListener('click', () => { go(i); arm(); }));
+    root.querySelector('[data-next]').addEventListener('click', () => { go(active + 1); arm(); });
+    root.querySelector('[data-prev]').addEventListener('click', () => { go(active - 1); arm(); });
+    const stage = root.querySelector('.rffx-stage');
+    function setPaused(v) { paused = v; root.classList.toggle('paused', v); if (v) fill.style.transition = 'none'; else runBar(); }
+    stage.addEventListener('mouseenter', () => setPaused(true));
+    stage.addEventListener('mouseleave', () => setPaused(false));
+    layout(); runBar(); arm();
+  }
+
+  function renderOrder(frameId, order) {
+    const rf = riffleShell();
+    const div = `<div class="rs-div"><span>The full library</span></div>`;
+    const blocks = order === 'A'
+      ? featuredHTML() + div + rf.html
+      : rf.html + `<div class="rs-div"><span>This week's lead release</span></div>` + featuredHTML();
+    el(frameId).innerHTML = secHead() + blocks;
+    wireRiffle(rf.id);
+  }
+
+  /* download toast */
+  const toast = el('toast'), toastName = el('toast-name');
+  let toastTimer = null;
+  document.addEventListener('click', e => {
+    const dl = e.target.closest('.cov-dl, [data-dl]');
+    if (!dl) return;
+    e.preventDefault();
+    const cover = dl.closest('.cover');
+    let name = dl.dataset.name;
+    if (!name && cover) { const p = PUBS.find(x => x.id === cover.dataset.id); name = p ? p.title : null; }
+    toastName.textContent = name || 'your PDF';
+    toast.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('on'), 2400);
+  });
+
+  renderOrder('A-light', 'A'); renderOrder('A-dark', 'A');
+  renderOrder('B-light', 'B'); renderOrder('B-dark', 'B');
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

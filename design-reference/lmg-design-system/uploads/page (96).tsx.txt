@@ -1,0 +1,244 @@
+// ==============================================================================
+// LMG MEDIA - HOMEPAGE
+// ==============================================================================
+// File Location: /app/page.tsx
+// SEO-optimized homepage with comprehensive metadata
+// ==============================================================================
+
+import type { Metadata } from 'next'
+import { HeroSection } from "@/components/sections/hero-section"
+import { AIMatchFinder } from "@/components/sections/ai-match-finder"
+import { AIMatchingStatsSection } from "@/components/sections/ai-matching-stats-section"
+import { ServicesOverview } from "@/components/sections/services-overview"
+import { DualAudienceSection } from "@/components/sections/dual-audience-section"
+import { FAQSection } from "@/components/sections/faq-section"
+import { CTASection } from "@/components/sections/cta-section"
+
+// ==============================================================================
+// METADATA
+// ==============================================================================
+
+export const metadata: Metadata = {
+  title: 'LMG Media - Premium Influencer Marketing Agency | Connect Brands with Influential Voices',
+  description: 'LMG Media connects forward-thinking brands with influential voices who drive genuine engagement and measurable results across lifestyle, fashion, beauty, tech, and luxury sectors.',
+  keywords: [
+    'influencer marketing agency',
+    'influencer marketing',
+    'brand partnerships',
+    'influencer campaigns',
+    'content creator agency',
+    'social media marketing',
+    'Instagram influencers',
+    'TikTok influencers',
+    'micro influencers',
+    'influencer talent management',
+    'brand collaboration',
+    'digital marketing agency',
+  ],
+  openGraph: {
+    title: 'LMG Media - Premium Influencer Marketing Agency',
+    description: 'Connecting forward-thinking brands with influential voices who drive genuine engagement and measurable results.',
+    url: 'https://lmg.media',
+    siteName: 'LMG Media',
+    images: [
+      {
+        url: '/images/lmg-media-og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'LMG Media - Premium Influencer Marketing Agency',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'LMG Media - Premium Influencer Marketing Agency',
+    description: 'Connecting brands with influential voices who drive genuine engagement and measurable results.',
+    images: ['/images/lmg-media-og-image.jpg'],
+    creator: '@_lmgmedia',
+  },
+  alternates: {
+    canonical: 'https://lmg.media',
+    languages: {
+      'en': 'https://lmg.media',
+      'es': 'https://lmg.media/es',
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: 'Marketing',
+  classification: 'Business',
+}
+
+// ==============================================================================
+// STRUCTURED DATA (JSON-LD)
+// Changes from original:
+// - Added 'numberOfEmployees' for richer entity signal
+// - Added 'address' with PostalAddress — signals real business to Google
+// - Added 'email' and 'telephone' contactPoint fields
+// - Expanded 'areaServed' to cover all cities we have location pages for
+// - Added 'hasOfferCatalog' listing all services as Offer objects
+// - Added LinkedIn to sameAs
+// - Added 'slogan' for brand association
+// ==============================================================================
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  'name': 'LMG Media',
+  'legalName': 'LMG Media',
+  'description': 'Premium influencer marketing agency connecting brands with influential voices across lifestyle, fashion, beauty, tech, and luxury sectors.',
+  'slogan': 'Connect Brands with Influential Voices',
+  'url': 'https://lmg.media',
+  'logo': {
+    '@type': 'ImageObject',
+    'url': 'https://lmg.media/android-chrome-512x512.png',
+    'width': 512,
+    'height': 512,
+  },
+  'image': 'https://lmg.media/images/lmg-media-og-image.jpg',
+  'foundingDate': '2020',
+  'sameAs': [
+    'https://www.instagram.com/lmgmedia1/',
+    'https://x.com/_lmgmedia',
+    'https://www.tiktok.com/@lmg.media',
+    'https://www.linkedin.com/company/lmg-media',
+  ],
+  'contactPoint': [
+    {
+      '@type': 'ContactPoint',
+      'contactType': 'Customer Service',
+      'availableLanguage': ['English', 'Spanish'],
+      'url': 'https://lmg.media/contact',
+    },
+    {
+      '@type': 'ContactPoint',
+      'contactType': 'Sales',
+      'availableLanguage': ['English', 'Spanish'],
+      'url': 'https://lmg.media/for-brands',
+    },
+  ],
+  'areaServed': [
+    { '@type': 'City', 'name': 'Los Angeles', 'containedInPlace': { '@type': 'Country', 'name': 'United States' } },
+    { '@type': 'City', 'name': 'New York', 'containedInPlace': { '@type': 'Country', 'name': 'United States' } },
+    { '@type': 'City', 'name': 'Miami', 'containedInPlace': { '@type': 'Country', 'name': 'United States' } },
+    { '@type': 'City', 'name': 'Beverly Hills', 'containedInPlace': { '@type': 'Country', 'name': 'United States' } },
+    { '@type': 'City', 'name': 'Chicago', 'containedInPlace': { '@type': 'Country', 'name': 'United States' } },
+    { '@type': 'City', 'name': 'Dubai', 'containedInPlace': { '@type': 'Country', 'name': 'United Arab Emirates' } },
+    { '@type': 'City', 'name': 'London', 'containedInPlace': { '@type': 'Country', 'name': 'United Kingdom' } },
+    { '@type': 'City', 'name': 'Paris', 'containedInPlace': { '@type': 'Country', 'name': 'France' } },
+    { '@type': 'City', 'name': 'Madrid', 'containedInPlace': { '@type': 'Country', 'name': 'Spain' } },
+    { '@type': 'City', 'name': 'Barcelona', 'containedInPlace': { '@type': 'Country', 'name': 'Spain' } },
+    { '@type': 'City', 'name': 'Sydney', 'containedInPlace': { '@type': 'Country', 'name': 'Australia' } },
+  ],
+  'hasOfferCatalog': {
+    '@type': 'OfferCatalog',
+    'name': 'Influencer Marketing Services',
+    'itemListElement': [
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'Instagram Influencer Marketing',
+          'url': 'https://lmg.media/instagram-influencer-marketing',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'TikTok Influencer Marketing',
+          'url': 'https://lmg.media/tiktok-influencer-marketing-agency',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'YouTube Influencer Marketing',
+          'url': 'https://lmg.media/youtube-influencer-marketing-agency',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'LinkedIn Influencer Marketing',
+          'url': 'https://lmg.media/linkedin-influencer-marketing-agency',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'Fashion Influencer Marketing',
+          'url': 'https://lmg.media/fashion-influencer-marketing-agency',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'Luxury Influencer Marketing',
+          'url': 'https://lmg.media/luxury-influencer-marketing-agency',
+        },
+      },
+      {
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'AI-Powered Influencer Matching',
+          'url': 'https://lmg.media/for-brands',
+        },
+      },
+    ],
+  },
+  'knowsAbout': [
+    'Instagram Marketing',
+    'TikTok Marketing',
+    'YouTube Marketing',
+    'LinkedIn Marketing',
+    'Influencer Relations',
+    'Brand Strategy',
+    'Content Creation',
+    'Digital Marketing',
+    'Micro-Influencer Marketing',
+    'Luxury Brand Marketing',
+    'Fashion Marketing',
+    'Ecommerce Marketing',
+  ],
+}
+
+// ==============================================================================
+// MAIN COMPONENT
+// ==============================================================================
+
+export default function HomePage() {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <div className="min-h-screen">
+        <HeroSection />
+        <AIMatchFinder />
+        <AIMatchingStatsSection />
+        <DualAudienceSection />
+        <ServicesOverview />
+        <FAQSection />
+        <CTASection />
+      </div>
+    </>
+  )
+}

@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Global Reach Map — Visual Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--neutral-100);
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .grm { max-width: 1240px; margin: 0 auto; padding: 64px var(--gutter) 120px; }
+
+  /* ── Doc header ───────────────────────────────────────── */
+  .doc-head { margin-bottom: 56px; max-width: 760px; }
+  .doc-eyebrow {
+    font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700; color: var(--fg-3);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title {
+    font-family: var(--font-sans); font-weight: 800;
+    font-size: clamp(34px, 5vw, 52px); line-height: 1.04; letter-spacing: -0.025em;
+    margin: 0 0 18px; color: var(--fg-1); text-wrap: balance;
+  }
+  .doc-sub { font-size: 17px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 660px; }
+
+  /* ── Section scaffolding ──────────────────────────────── */
+  .dir { margin-top: 80px; }
+  .dir-label {
+    display: flex; align-items: baseline; gap: 14px; margin-bottom: 22px;
+    flex-wrap: wrap;
+  }
+  .dir-tag {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--fg-3);
+    border: 1px solid var(--border-2); border-radius: var(--r-pill);
+    padding: 4px 12px;
+  }
+  .dir-name { font-size: 24px; font-weight: 800; letter-spacing: -0.015em; margin: 0; }
+  .dir-note { font-size: 15px; color: var(--fg-2); margin: 0; }
+
+  /* ── The composed "moment" card ───────────────────────── */
+  .moment { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .moment.light { background: #FFFFFF; }
+  .moment.dark { background: #070B14; }
+
+  .moment-inner { padding: 56px 56px 30px; }
+  @media (max-width: 720px) { .moment-inner { padding: 32px 24px 18px; } }
+
+  /* Stat headline block */
+  .stat-head { margin-bottom: 34px; }
+  .stat-eyebrow {
+    font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700; margin-bottom: 14px;
+  }
+  .light .stat-eyebrow { color: var(--lmg-pink-deep); }
+  .dark .stat-eyebrow { color: var(--lmg-yellow); }
+
+  .stat-headline {
+    font-family: var(--font-sans); font-weight: 800;
+    font-size: clamp(30px, 4.4vw, 46px); line-height: 1.02; letter-spacing: -0.025em;
+    margin: 0 0 26px;
+  }
+  .light .stat-headline { color: var(--lmg-grey); }
+  .dark .stat-headline { color: #F6F3EA; }
+  .stat-headline .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .light .stat-headline .ital { color: var(--lmg-pink); }
+  .dark .stat-headline .ital {
+    background: linear-gradient(90deg, #FFEFA8 0%, #FFD700 60%, #E6B800 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    color: var(--lmg-yellow);
+  }
+
+  .stat-row { display: flex; align-items: flex-start; gap: 0; flex-wrap: wrap; }
+  .stat-unit { padding-right: 40px; margin-right: 40px; position: relative; }
+  .stat-unit + .stat-unit::before {
+    content: ""; position: absolute; left: -40px; top: 6px; bottom: 6px; width: 1px;
+  }
+  .light .stat-unit + .stat-unit::before { background: var(--border-2); }
+  .dark .stat-unit + .stat-unit::before { background: rgba(255,255,255,0.12); }
+  .stat-num {
+    font-family: var(--font-sans); font-weight: 800; line-height: 1;
+    font-size: clamp(38px, 5vw, 54px); letter-spacing: -0.03em;
+  }
+  .light .stat-num { color: var(--lmg-grey); }
+  .dark .stat-num { color: #F6F3EA; }
+  .stat-lbl {
+    margin-top: 10px; font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .light .stat-lbl { color: var(--fg-3); }
+  .dark .stat-lbl { color: rgba(246,243,234,0.55); }
+  .stat-tick { display: block; width: 26px; height: 3px; border-radius: 2px; margin-top: 14px; }
+
+  /* Map shell */
+  .map-shell { position: relative; border-radius: var(--r-lg); overflow: hidden; }
+  .light .map-shell { background:
+      radial-gradient(120% 90% at 38% 30%, #FFFDF6 0%, #FBF7EE 48%, #F4EFE2 100%); }
+  .dark .map-shell { background:
+      radial-gradient(120% 100% at 42% 28%, #122844 0%, #0A1424 46%, #05080F 100%); }
+  .map-shell svg { display: block; width: 100%; height: auto; }
+
+  .map-foot {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 4px 6px; flex-wrap: wrap; gap: 12px;
+  }
+  .legend { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+  .legend-item {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: 13px; font-weight: 500;
+  }
+  .light .legend-item { color: var(--fg-2); }
+  .dark .legend-item { color: rgba(246,243,234,0.7); }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 4px; flex: none; }
+  .legend-dot { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+
+  /* Spec strip below each direction */
+  .spec {
+    margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--border-1); border: 1px solid var(--border-1); border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .spec { grid-template-columns: repeat(2, 1fr); } }
+  .spec-cell { background: var(--neutral-50); padding: 14px 16px; }
+  .spec-k {
+    font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.14em;
+    text-transform: uppercase; font-weight: 700; color: var(--fg-3); margin-bottom: 6px;
+  }
+  .spec-v { font-family: var(--font-mono); font-size: 12.5px; color: var(--fg-1); line-height: 1.5; }
+  .spec-v .chip { display: inline-block; width: 11px; height: 11px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; border: 1px solid rgba(0,0,0,0.08); }
+
+  /* ── Study blocks (markers + cluster) ─────────────────── */
+  .study { margin-top: 96px; }
+  .study-head { margin-bottom: 28px; }
+  .study-title { font-size: 24px; font-weight: 800; letter-spacing: -0.015em; margin: 0 0 8px; }
+  .study-sub { font-size: 15px; color: var(--fg-2); margin: 0; max-width: 640px; }
+
+  .marker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 720px) { .marker-grid { grid-template-columns: 1fr; } }
+  .marker-card {
+    background: #fff; border-radius: var(--r-lg); box-shadow: var(--shadow-sm);
+    overflow: hidden; position: relative; border: 1px solid var(--border-1);
+  }
+  .marker-card.pick { box-shadow: 0 0 0 2px var(--lmg-pink), var(--shadow-md); }
+  .marker-stage {
+    height: 150px; display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(120% 100% at 50% 40%, #FFFDF6, #F4EFE2);
+  }
+  .marker-meta { padding: 16px 18px; }
+  .marker-name { font-size: 15px; font-weight: 700; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
+  .marker-desc { font-size: 13px; color: var(--fg-2); margin: 0; line-height: 1.5; }
+  .pick-badge {
+    font-family: var(--font-ui); font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #fff; background: var(--lmg-pink);
+    padding: 3px 9px; border-radius: var(--r-pill);
+  }
+
+  .cluster-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 720px) { .cluster-grid { grid-template-columns: 1fr; } }
+  .cluster-card { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); }
+  .cluster-card .cap {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.04em;
+    padding: 12px 16px;
+  }
+  .cluster-card.light .cap { background: #fff; color: var(--fg-2); border-top: 1px solid var(--border-1); }
+  .cluster-card.dark .cap { background: #0A0F1A; color: rgba(246,243,234,0.6); }
+  .cluster-card .map-shell { border-radius: 0; }
+
+  /* Revealed-label specimen used in the cluster zoom */
+  .reveal {
+    font-family: var(--font-ui); font-weight: 700; font-size: 12px;
+    padding: 5px 10px; border-radius: var(--r-sm); white-space: nowrap;
+  }
+
+  .note {
+    margin-top: 28px; font-size: 14px; line-height: 1.65; color: var(--fg-2);
+    border-left: 3px solid var(--lmg-yellow); padding: 4px 0 4px 18px; max-width: 760px;
+  }
+  .note strong { color: var(--fg-1); font-weight: 700; }
+  .loading { padding: 60px; text-align: center; color: var(--fg-3); font-family: var(--font-mono); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="grm">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Global Reach Map</div>
+    <h1 class="doc-title">A global creator network, styled two ways</h1>
+    <p class="doc-sub">Art direction only — the interactive component already exists. Below are two background treatments to compare, on a clean real equirectangular map. Recommended marker style, footprint highlighting, and stat treatment are applied to each. No network lines, no illustration — just the map, elevated.</p>
+  </header>
+
+  <!-- ════════ DIRECTION A — LIGHT / ON-BRAND ════════ -->
+  <section class="dir" id="dir-light">
+    <div class="dir-label">
+      <span class="dir-tag">DIRECTION A</span>
+      <h2 class="dir-name">Light / On-brand</h2>
+      <p class="dir-note">Sits seamlessly in the white site. Warm-white atmosphere, pink markers, yellow footprint.</p>
+    </div>
+    <div class="moment light">
+      <div class="moment-inner">
+        <div class="stat-head">
+          <div class="stat-eyebrow">Our Global Footprint</div>
+          <h3 class="stat-headline">A global creator <span class="ital">network</span></h3>
+          <div class="stat-row">
+            <div class="stat-unit">
+              <div class="stat-num">4,200+</div>
+              <div class="stat-lbl">Creators</div>
+              <span class="stat-tick" style="background: var(--lmg-pink);"></span>
+            </div>
+            <div class="stat-unit">
+              <div class="stat-num">98</div>
+              <div class="stat-lbl">Countries</div>
+              <span class="stat-tick" style="background: var(--lmg-yellow);"></span>
+            </div>
+            <div class="stat-unit">
+              <div class="stat-num">256</div>
+              <div class="stat-lbl">Cities</div>
+              <span class="stat-tick" style="background: var(--lmg-blue);"></span>
+            </div>
+          </div>
+        </div>
+        <div class="map-shell" id="map-light"><div class="loading">Rendering map…</div></div>
+        <div class="map-foot">
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background: var(--lmg-pink); box-shadow: 0 0 0 4px rgba(255,77,148,0.18);"></span>Creator city</span>
+            <span class="legend-item"><span class="legend-swatch" style="background: #FCEBA8; border:1px solid #F2D45E;"></span>Active country</span>
+            <span class="legend-item"><span class="legend-swatch" style="background: #EAE7DE;"></span>Reach pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-cell"><div class="spec-k">Background</div><div class="spec-v"><span class="chip" style="background:#FBF7EE;"></span>Warm-white radial glow</div></div>
+      <div class="spec-cell"><div class="spec-k">Marker</div><div class="spec-v"><span class="chip" style="background:#FF4D94;"></span>Pink teardrop + soft glow</div></div>
+      <div class="spec-cell"><div class="spec-k">Active fill</div><div class="spec-v"><span class="chip" style="background:#FCEBA8;"></span>Yellow wash · #F2D45E edge</div></div>
+      <div class="spec-cell"><div class="spec-k">Inactive land</div><div class="spec-v"><span class="chip" style="background:#EAE7DE;"></span>Neutral · #FFF hairline</div></div>
+    </div>
+  </section>
+
+  <!-- ════════ DIRECTION B — DARK / DRAMATIC ════════ -->
+  <section class="dir" id="dir-dark">
+    <div class="dir-label">
+      <span class="dir-tag">DIRECTION B</span>
+      <h2 class="dir-name">Dark / Dramatic gold</h2>
+      <p class="dir-note">A bold "global reach" moment. Midnight navy depth, gold footprint, glowing gold markers.</p>
+    </div>
+    <div class="moment dark">
+      <div class="moment-inner">
+        <div class="stat-head">
+          <div class="stat-eyebrow">Our Global Footprint</div>
+          <h3 class="stat-headline">A global creator <span class="ital">network</span></h3>
+          <div class="stat-row">
+            <div class="stat-unit">
+              <div class="stat-num">4,200+</div>
+              <div class="stat-lbl">Creators</div>
+              <span class="stat-tick" style="background: var(--lmg-yellow);"></span>
+            </div>
+            <div class="stat-unit">
+              <div class="stat-num">98</div>
+              <div class="stat-lbl">Countries</div>
+              <span class="stat-tick" style="background: var(--lmg-pink);"></span>
+            </div>
+            <div class="stat-unit">
+              <div class="stat-num">256</div>
+              <div class="stat-lbl">Cities</div>
+              <span class="stat-tick" style="background: var(--lmg-blue);"></span>
+            </div>
+          </div>
+        </div>
+        <div class="map-shell" id="map-dark"><div class="loading" style="color:rgba(246,243,234,0.5)">Rendering map…</div></div>
+        <div class="map-foot">
+          <div class="legend">
+            <span class="legend-item"><span class="legend-dot" style="background: var(--lmg-yellow); box-shadow: 0 0 0 4px rgba(255,215,0,0.22);"></span>Creator city</span>
+            <span class="legend-item"><span class="legend-swatch" style="background: rgba(255,215,0,0.22); border:1px solid rgba(255,215,0,0.6);"></span>Active country</span>
+            <span class="legend-item"><span class="legend-swatch" style="background: #16202E;"></span>Reach pending</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-cell"><div class="spec-k">Background</div><div class="spec-v"><span class="chip" style="background:#0A1424;"></span>Midnight navy radial</div></div>
+      <div class="spec-cell"><div class="spec-k">Marker</div><div class="spec-v"><span class="chip" style="background:#FFD700;"></span>Gold teardrop + warm glow</div></div>
+      <div class="spec-cell"><div class="spec-k">Active fill</div><div class="spec-v"><span class="chip" style="background:#5a4a12;"></span>Gold wash · gold edge</div></div>
+      <div class="spec-cell"><div class="spec-k">Inactive land</div><div class="spec-v"><span class="chip" style="background:#16202E;"></span>Dark plate · faint gold edge</div></div>
+    </div>
+  </section>
+
+  <!-- ════════ MARKER STUDY ════════ -->
+  <section class="study" id="marker-study">
+    <div class="study-head">
+      <h2 class="study-title">Marker study</h2>
+      <p class="study-sub">Three options on the light treatment. The pin tip pinpoints the exact city while the body stays readable when cities cluster — so the teardrop with a soft glow is the recommendation.</p>
+    </div>
+    <div class="marker-grid">
+      <div class="marker-card">
+        <div class="marker-stage" id="mk-dot"></div>
+        <div class="marker-meta">
+          <p class="marker-name">Simple dot</p>
+          <p class="marker-desc">Cleanest, but no anchor point — ambiguous which pixel is the city, and large/small dots read as "more vs less" rather than hub vs satellite.</p>
+        </div>
+      </div>
+      <div class="marker-card">
+        <div class="marker-stage" id="mk-pin"></div>
+        <div class="marker-meta">
+          <p class="marker-name">Teardrop pin</p>
+          <p class="marker-desc">Tip anchors the precise location; the body carries color and size hierarchy. Map-native and instantly legible.</p>
+        </div>
+      </div>
+      <div class="marker-card pick">
+        <div class="marker-stage" id="mk-glow"></div>
+        <div class="marker-meta">
+          <p class="marker-name">Glowing teardrop <span class="pick-badge">Recommended</span></p>
+          <p class="marker-desc">The teardrop plus a soft brand-color bloom. Adds the premium atmosphere the brief wants and makes hubs feel "lit" without any network lines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ CLUSTER LEGIBILITY ════════ -->
+  <section class="study" id="cluster-study">
+    <div class="study-head">
+      <h2 class="study-title">Clustered-Europe legibility</h2>
+      <p class="study-sub">London, Paris, Madrid and Barcelona sit close together. Sized teardrops with a hairline halo stay distinct in both treatments; this is also where a revealed city label would sit.</p>
+    </div>
+    <div class="cluster-grid">
+      <div class="cluster-card light">
+        <div class="map-shell" id="cluster-light"><div class="loading">Rendering…</div></div>
+        <div class="cap">light · pink markers · revealed-label specimen</div>
+      </div>
+      <div class="cluster-card dark">
+        <div class="map-shell" id="cluster-dark"><div class="loading" style="color:rgba(246,243,234,0.5)">Rendering…</div></div>
+        <div class="cap">dark · gold markers · revealed-label specimen</div>
+      </div>
+    </div>
+    <p class="note"><strong>Recommendation:</strong> lead with <strong>Direction B (dark gold)</strong> for the standalone "global reach" section — it reads as a deliberate, premium moment and the gold footprint glows against midnight. Keep <strong>Direction A (light)</strong> as the inline variant for when the map sits between white sections. Both use the same glowing teardrop markers and the same active-country highlight logic, so the developer implements one component with a single light/dark token swap.</p>
+</div>
+
+<!-- d3-geo + topojson for an accurate, real equirectangular map -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+const SVGNS = "http://www.w3.org/2000/svg";
+const ATLAS = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+
+// ISO 3166-1 numeric for countries where LMG has creators.
+const ACTIVE = new Set([840 /*US*/, 76 /*Brazil*/, 724 /*Spain*/, 170 /*Colombia*/,
+                        484 /*Mexico*/, 826 /*UK*/, 250 /*France*/, 784 /*UAE*/, 36 /*Australia*/]);
+
+const CITIES = [
+  { name:'Los Angeles',    lng:-118.24, lat: 34.05, size:'lg' },
+  { name:'New York',       lng: -74.01, lat: 40.71, size:'lg' },
+  { name:'Miami',          lng: -80.19, lat: 25.76, size:'lg' },
+  { name:'London',         lng:  -0.13, lat: 51.51, size:'lg' },
+  { name:'Madrid',         lng:  -3.70, lat: 40.42, size:'lg' },
+  { name:'Paris',          lng:   2.35, lat: 48.85, size:'lg' },
+  { name:'Medellín',       lng: -75.58, lat:  6.24, size:'sm' },
+  { name:'Barcelona',      lng:   2.17, lat: 41.39, size:'sm' },
+  { name:'Dubai',          lng:  55.27, lat: 25.20, size:'sm' },
+  { name:'Sydney',         lng: 151.21, lat:-33.87, size:'sm' },
+  { name:'Mexico City',    lng: -99.13, lat: 19.43, size:'sm' },
+  { name:'São Paulo',      lng: -46.63, lat:-23.55, size:'sm' },
+  { name:'Rio de Janeiro', lng: -43.17, lat:-22.91, size:'sm' },
+];
+
+const THEME = {
+  light: {
+    land:        '#EAE7DE',
+    landStroke:  '#FFFFFF',
+    active:      '#FCEBA8',
+    activeStroke:'#F2D45E',
+    pin:         '#FF4D94',
+    pinDeep:     '#E63F82',
+    core:        '#FFFFFF',
+    halo:        '#FFFFFF',
+    glow:        '255,77,148',
+    glowMax:     0.42,
+    bloom:       'rgba(255,215,0,0.10)',
+  },
+  dark: {
+    land:        '#16202E',
+    landStroke:  'rgba(255,215,0,0.10)',
+    active:      'rgba(255,215,0,0.16)',
+    activeStroke:'rgba(255,215,0,0.55)',
+    pin:         '#FFD700',
+    pinDeep:     '#E6B800',
+    core:        '#FFFDF2',
+    halo:        '#05080F',
+    glow:        '255,215,0',
+    glowMax:     0.5,
+    bloom:       'rgba(255,215,0,0.12)',
+  }
+};
+
+const PIN_PATH = "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z";
+
+function el(name, attrs) {
+  const n = document.createElementNS(SVGNS, name);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  return n;
+}
+
+// Draw a glowing teardrop pin into group `g` with the given projected (x,y).
+function drawPin(g, x, y, size, t, opts={}) {
+  const s = size === 'lg' ? 1.7 : 1.05;
+  const headY = y - 15 * s;
+  if (opts.glow !== false) {
+    const gr = size === 'lg' ? 30 : 19;
+    g.appendChild(el('circle', { cx:x, cy:headY, r:gr, fill:`url(#glow-${t})` }));
+  }
+  const pg = el('g', { transform:`translate(${x - 12*s}, ${y - 24*s}) scale(${s})` });
+  pg.appendChild(el('path', { d:PIN_PATH, fill:THEME[t].pin, stroke:THEME[t].halo,
+                              'stroke-width':1, 'stroke-opacity':0.55, 'stroke-linejoin':'round' }));
+  pg.appendChild(el('circle', { cx:12, cy:9, r:3.1, fill:THEME[t].core }));
+  g.appendChild(pg);
+}
+
+function defs(svg, t) {
+  const d = el('defs', {});
+  const rg = el('radialGradient', { id:`glow-${t}` });
+  const stops = [[0, THEME[t].glowMax],[0.45, THEME[t].glowMax*0.32],[1, 0]];
+  for (const [off, a] of stops) rg.appendChild(el('stop', { offset:`${off*100}%`,
+    'stop-color':`rgba(${THEME[t].glow},${a})` }));
+  d.appendChild(rg);
+  svg.appendChild(d);
+}
+
+function buildMap(world, mount, t, opts={}) {
+  const W = opts.W || 1180;
+  const land = topojson.feature(world, world.objects.countries).features
+                 .filter(f => f.id !== '010'); // drop Antarctica for a tighter frame
+  const fc = { type:'FeatureCollection', features: land };
+  const proj = d3.geoEquirectangular();
+
+  if (opts.fitTo) {
+    proj.fitExtent([[14,14],[W-14, (opts.H||600)-14]], opts.fitTo);
+  } else {
+    proj.fitWidth(W, fc);
+  }
+  const path = d3.geoPath(proj);
+  const b = path.bounds(opts.fitTo || fc);
+  const H = opts.H || Math.ceil(b[1][1] - b[0][1]) + 8;
+  const minY = opts.fitTo ? 0 : Math.floor(b[0][1]) - 4;
+
+  const svg = el('svg', { viewBox:`0 ${opts.fitTo ? 0 : minY} ${W} ${H}`,
+                          preserveAspectRatio:'xMidYMid meet' });
+  defs(svg, t);
+
+  // atmospheric bloom behind dense clusters (subtle)
+  if (!opts.fitTo) {
+    const bloom = el('g', {});
+    [[ -98, 39, 0.9 ], [ 6, 48, 0.7 ]].forEach(([lng,lat,sc]) => {
+      const p = proj([lng,lat]);
+      const rg = el('radialGradient', { id:`bloom-${t}-${lng}` });
+      rg.appendChild(el('stop', { offset:'0%', 'stop-color':THEME[t].bloom }));
+      rg.appendChild(el('stop', { offset:'100%', 'stop-color':'rgba(0,0,0,0)' }));
+      svg.querySelector('defs').appendChild(rg);
+      bloom.appendChild(el('circle', { cx:p[0], cy:p[1], r:230*sc, fill:`url(#bloom-${t}-${lng})` }));
+    });
+    svg.appendChild(bloom);
+  }
+
+  // countries
+  const cg = el('g', {});
+  for (const f of land) {
+    const on = ACTIVE.has(+f.id);
+    cg.appendChild(el('path', {
+      d: path(f),
+      fill: on ? THEME[t].active : THEME[t].land,
+      stroke: on ? THEME[t].activeStroke : THEME[t].landStroke,
+      'stroke-width': on ? 1 : 0.7,
+      'stroke-linejoin':'round',
+    }));
+  }
+  svg.appendChild(cg);
+
+  // pins
+  const pg = el('g', {});
+  for (const c of CITIES) {
+    const p = proj([c.lng, c.lat]);
+    if (!p) continue;
+    drawPin(pg, p[0], p[1], c.size, t);
+  }
+  svg.appendChild(pg);
+
+  // revealed-label specimen (cluster views only)
+  if (opts.label) {
+    const p = proj(opts.label.at);
+    const fo = el('foreignObject', { x:p[0]+14, y:p[1]-44, width:160, height:44 });
+    const div = document.createElement('div');
+    div.className = 'reveal';
+    div.textContent = opts.label.text;
+    if (t === 'light') { div.style.background = '#fff'; div.style.color = '#3A3A3A';
+      div.style.boxShadow = '0 4px 14px rgba(20,18,12,0.16)'; }
+    else { div.style.background = 'rgba(255,215,0,0.95)'; div.style.color = '#10243F';
+      div.style.boxShadow = '0 4px 18px rgba(0,0,0,0.5)'; }
+    fo.appendChild(div);
+    svg.appendChild(fo);
+  }
+
+  mount.innerHTML = '';
+  mount.appendChild(svg);
+}
+
+// Standalone marker specimens for the marker study (no map).
+function specimen(mount, kind) {
+  const svg = el('svg', { viewBox:'0 0 120 110', width:'120', height:'110' });
+  defs(svg, 'light');
+  const cx = 60, cy = 78;
+  if (kind === 'dot') {
+    svg.appendChild(el('circle', { cx:cx-18, cy:cy, r:9, fill:'#FF4D94' }));
+    svg.appendChild(el('circle', { cx:cx+20, cy:cy, r:6, fill:'#FF4D94' }));
+  } else if (kind === 'pin') {
+    drawPin(svg, cx-18, cy, 'lg', 'light', { glow:false });
+    drawPin(svg, cx+22, cy, 'sm', 'light', { glow:false });
+  } else {
+    drawPin(svg, cx-18, cy, 'lg', 'light');
+    drawPin(svg, cx+22, cy, 'sm', 'light');
+  }
+  mount.innerHTML = ''; mount.appendChild(svg);
+}
+
+(async function () {
+  // marker study renders immediately (no data needed)
+  specimen(document.getElementById('mk-dot'), 'dot');
+  specimen(document.getElementById('mk-pin'), 'pin');
+  specimen(document.getElementById('mk-glow'), 'glow');
+
+  let world;
+  try {
+    world = await (await fetch(ATLAS)).json();
+  } catch (e) {
+    document.querySelectorAll('.loading').forEach(n => n.textContent = 'Map data unavailable offline.');
+    return;
+  }
+
+  buildMap(world, document.getElementById('map-light'), 'light');
+  buildMap(world, document.getElementById('map-dark'),  'dark');
+
+  // Europe cluster zoom
+  const euBox = { type:'Feature', geometry:{ type:'MultiPoint', coordinates:[
+    [-11,36],[12,36],[12,55],[-11,55] ] } };
+  buildMap(world, document.getElementById('cluster-light'), 'light',
+    { fitTo: euBox, W: 560, H: 360, label:{ at:[2.35,48.85], text:'Paris · 84 creators' } });
+  buildMap(world, document.getElementById('cluster-dark'), 'dark',
+    { fitTo: euBox, W: 560, H: 360, label:{ at:[2.35,48.85], text:'Paris · 84 creators' } });
+})();
+</script>
+</body>
+</html>

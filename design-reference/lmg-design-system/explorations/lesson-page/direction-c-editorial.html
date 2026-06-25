@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 · Editorial — LMG Playbook</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../components.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* ════ DIRECTION C — EDITORIAL / MAGAZINE ════
+     The lesson as a beautifully set long-form feature. Playfair display
+     headlines, drop cap, pull quotes, generous reading measure. Videos woven
+     inline as captioned figures. The written word is the first-class citizen. */
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin:0; background: #FBFAF6; color: var(--lmg-grey); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--lmg-yellow-soft); color: var(--lmg-grey); }
+
+  /* reading progress line */
+  .ed-progress { position: fixed; top:0; left:0; height:3px; width:0%; background: var(--lmg-pink); z-index:90; transition: width .1s linear; }
+
+  /* masthead */
+  .ed-mast { display:flex; align-items:center; justify-content:space-between; padding: 20px clamp(20px,5vw,56px); border-bottom:1px solid var(--border-1); position: sticky; top:0; background: rgba(251,250,246,.88); backdrop-filter: blur(12px); z-index:80; }
+  .ed-mast .back { display:inline-flex; align-items:center; gap:8px; color:var(--fg-2); text-decoration:none; font-size:13px; font-weight:600; }
+  .ed-mast .back:hover { color: var(--lmg-grey); }
+  .ed-mast .back i { width:15px; height:15px; }
+  .ed-mast .title { font-family: var(--font-display); font-style: italic; font-size: 16px; color: var(--fg-2); letter-spacing:.01em; }
+  .ed-wordmark { font-family: var(--font-display); font-weight:700; color: var(--lmg-yellow); font-size:19px; letter-spacing:.05em; }
+
+  .ed-wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  .ed-wide { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── Article header ── */
+  .ed-header { padding: clamp(56px,8vw,104px) 0 clamp(36px,5vw,56px); text-align:center; }
+  .ed-kicker { display:inline-flex; align-items:center; gap:12px; font-family:var(--font-ui); font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; color:var(--lmg-pink); margin-bottom:26px; }
+  .ed-kicker .ln { width:30px; height:1px; background: var(--lmg-pink); opacity:.5; }
+  .ed-header h1 { font-family: var(--font-display); font-weight:700; font-size: clamp(40px,7vw,84px); line-height:1.02; letter-spacing:-.01em; margin:0; text-wrap: balance; }
+  .ed-header h1 em { font-style: italic; color: var(--lmg-pink); }
+  .ed-standfirst { font-family: var(--font-display); font-style: italic; font-size: clamp(19px,2.4vw,26px); line-height:1.45; color: var(--fg-2); max-width: 34ch; margin: 26px auto 0; text-wrap: balance; }
+  .ed-byline { display:flex; align-items:center; justify-content:center; gap:16px; margin-top:32px; font-size:13px; color:var(--fg-2); font-weight:500; flex-wrap:wrap; }
+  .ed-byline .sep { width:4px; height:4px; border-radius:50%; background: var(--neutral-300); }
+  .ed-byline b { color: var(--lmg-grey); font-weight:700; }
+
+  /* lead figure */
+  .ed-leadfig { margin: clamp(20px,4vw,40px) auto clamp(40px,6vw,72px); }
+  .ed-leadfig .img { aspect-ratio: 21/9; border-radius: 4px; background-size:cover; background-position:center 28%; box-shadow: var(--shadow-md); }
+  .ed-leadfig .cap { font-size:12.5px; color:var(--fg-3); margin-top:12px; text-align:center; font-style:italic; font-family:var(--font-display); }
+
+  /* ── Body prose ── */
+  .ed-body { font-size: 19px; line-height: 1.72; color: #34322e; }
+  .ed-body p { margin: 0 0 26px; }
+  .ed-body p.first { text-indent: 0; }
+  .ed-body p.first::first-letter {
+    font-family: var(--font-display); font-weight:700; float:left; font-size: 4.4em;
+    line-height: .76; padding: 6px 12px 0 0; color: var(--lmg-pink);
+  }
+  .ed-body strong { font-weight:700; color: var(--lmg-grey); }
+  .ed-body em { font-style: italic; }
+  .ed-body a { color: var(--lmg-pink-deep); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+  /* section opener within article */
+  .ed-sec-label { font-family:var(--font-ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color: var(--lmg-pink); margin: clamp(48px,7vw,80px) 0 8px; display:flex; align-items:center; gap:12px; }
+  .ed-sec-label .no { font-family: var(--font-display); font-style:italic; font-size: 15px; color: var(--neutral-400); letter-spacing:0; text-transform:none; }
+  .ed-h2 { font-family: var(--font-display); font-weight:700; font-size: clamp(28px,4vw,44px); line-height:1.08; letter-spacing:-.01em; margin: 0 0 28px; color: var(--lmg-grey); text-wrap: balance; }
+
+  /* pull quote */
+  .ed-pull { margin: clamp(38px,5vw,56px) 0; padding-left: 28px; border-left: 3px solid var(--lmg-yellow); }
+  .ed-pull p { font-family: var(--font-display); font-weight:600; font-style: italic; font-size: clamp(24px,3.4vw,34px); line-height:1.28; color: var(--lmg-grey); margin:0; letter-spacing:-.01em; }
+  .ed-pull cite { display:block; font-family:var(--font-ui); font-style:normal; font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--fg-3); margin-top:16px; }
+
+  /* ── Inline video figure (woven into the read) ── */
+  .ed-figure { margin: clamp(36px,5vw,56px) 0; }
+  .ed-figure.bleed { max-width: 1080px; margin-left: 50%; transform: translateX(-50%); width: min(1080px, calc(100vw - 48px)); }
+  .ed-player { position: relative; aspect-ratio: 16/9; border-radius: 4px; overflow:hidden; background:#111; box-shadow: var(--shadow-lg); }
+  .ed-player .poster { position:absolute; inset:0; background-size:cover; background-position:center; filter: brightness(.72) saturate(1.03); transition: filter .4s, transform .8s var(--ease-out); }
+  .ed-player:hover .poster { filter: brightness(.8) saturate(1.06); transform: scale(1.03); }
+  .ed-player::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,0) 30%, rgba(0,0,0,.45)); }
+  .ed-player .top { position:absolute; top:16px; left:16px; right:16px; z-index:3; display:flex; justify-content:space-between; align-items:flex-start; }
+  .ed-vtag { display:inline-flex; align-items:center; gap:8px; background: rgba(251,250,246,.92); color: var(--lmg-grey); padding:7px 13px; border-radius:3px; font-family:var(--font-ui); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+  .ed-vtag i { width:13px; height:13px; }
+  .ed-vtag.soon { background: var(--lmg-yellow); }
+  .ed-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; width:72px; height:72px; border-radius:50%; background: rgba(251,250,246,.94); display:flex; align-items:center; justify-content:center; box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: transform .3s; }
+  .ed-player:hover .ed-play { transform: translate(-50%,-50%) scale(1.08); }
+  .ed-play i { width:26px; height:26px; color: var(--lmg-grey); margin-left:3px; }
+  .ed-figcap { display:flex; gap:12px; margin-top:14px; align-items:baseline; font-size:13px; }
+  .ed-figcap .fnum { font-family:var(--font-display); font-style:italic; color: var(--lmg-pink); font-size:15px; flex:none; }
+  .ed-figcap .ftxt { color: var(--fg-2); line-height:1.5; font-family:var(--font-display); font-style:italic; }
+  .ed-figcap .ftxt b { font-style:normal; font-family:var(--font-sans); color:var(--lmg-grey); font-weight:700; }
+
+  /* numbered editorial list */
+  .ed-list { margin: 8px 0 30px; counter-reset: edl; list-style:none; padding:0; }
+  .ed-list li { position:relative; padding: 16px 0 16px 56px; border-top:1px solid var(--border-1); }
+  .ed-list li:last-child { border-bottom:1px solid var(--border-1); }
+  .ed-list li::before { counter-increment: edl; content: counter(edl,decimal-leading-zero); position:absolute; left:0; top:16px; font-family:var(--font-display); font-style:italic; font-size:22px; color: var(--lmg-pink); }
+  .ed-list li b { font-weight:700; display:block; font-size:17px; margin-bottom:2px; color:var(--lmg-grey); }
+  .ed-list li span { font-size:15px; color:var(--fg-2); line-height:1.5; }
+
+  /* formula plate */
+  .ed-plate { margin: clamp(32px,4vw,48px) 0; padding: clamp(28px,4vw,44px); background: #fff; border:1px solid var(--border-1); border-radius:4px; text-align:center; box-shadow: var(--shadow-sm); }
+  .ed-plate .lab { font-family:var(--font-ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--fg-3); margin-bottom:20px; }
+  .ed-formula { display:inline-flex; align-items:center; gap:18px; flex-wrap:wrap; justify-content:center; font-family:var(--font-display); font-size: clamp(22px,3vw,34px); color:var(--lmg-grey); }
+  .ed-formula .frac { display:inline-flex; flex-direction:column; text-align:center; line-height:1.05; }
+  .ed-formula .frac .t { border-bottom:1.5px solid var(--lmg-grey); padding-bottom:4px; }
+  .ed-formula .frac .b { padding-top:4px; }
+  .ed-formula .op { color:var(--neutral-400); }
+  .ed-formula .res { color: var(--lmg-pink-deep); font-style:italic; }
+
+  /* rule divider */
+  .ed-rule { display:flex; align-items:center; justify-content:center; gap:14px; margin: clamp(44px,6vw,72px) 0; color: var(--neutral-300); }
+  .ed-rule span { width:5px; height:5px; border-radius:50%; background: var(--lmg-yellow); }
+  .ed-rule .l { width: 60px; height:1px; background: var(--border-2); }
+
+  /* ── Ebook callout (editorial aside) ── */
+  .ed-ebook { margin: clamp(48px,6vw,72px) 0; padding: clamp(28px,4vw,40px); background: var(--lmg-yellow-soft); border-radius:4px; display:grid; grid-template-columns: 1fr auto; gap:28px; align-items:center; }
+  @media (max-width:620px){ .ed-ebook { grid-template-columns:1fr; } }
+  .ed-ebook .lab { font-family:var(--font-ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color: #8a6d00; margin-bottom:10px; }
+  .ed-ebook h3 { font-family:var(--font-display); font-weight:700; font-size: clamp(24px,3vw,32px); line-height:1.1; margin:0 0 10px; color:var(--lmg-grey); }
+  .ed-ebook p { font-size:15px; line-height:1.6; color:#5a4e2a; margin:0 0 20px; max-width:46ch; }
+  .ed-ebook .cover { width:120px; aspect-ratio:3/4; border-radius:3px; background-size:cover; background-position:center; box-shadow: var(--shadow-md); flex:none; }
+
+  .ed-btn { display:inline-flex; align-items:center; gap:9px; height:48px; padding:0 22px; border-radius:4px; font-family:var(--font-ui); font-weight:700; font-size:14px; cursor:pointer; text-decoration:none; border:none; transition: all .2s; }
+  .ed-btn i { width:17px; height:17px; }
+  .ed-btn.dark { background: var(--lmg-grey); color:#fff; }
+  .ed-btn.dark:hover { background:#222; }
+  .ed-btn.pink { background: var(--lmg-pink); color:#fff; }
+  .ed-btn.pink:hover { background: var(--lmg-pink-deep); }
+  .ed-btn.outline { background:transparent; border:1.5px solid var(--lmg-grey); color:var(--lmg-grey); }
+  .ed-btn.outline:hover { background: var(--lmg-grey); color:#fff; }
+
+  /* ── Workbook CTA — full editorial band ── */
+  .ed-cta { margin-top: clamp(56px,7vw,88px); background: var(--lmg-grey); color:#fff; }
+  .ed-cta-inner { max-width: 720px; margin:0 auto; padding: clamp(48px,7vw,88px) 24px; text-align:center; }
+  .ed-cta .lab { font-family:var(--font-ui); font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; color: var(--lmg-yellow); margin-bottom:18px; }
+  .ed-cta h2 { font-family:var(--font-display); font-weight:700; font-size: clamp(30px,4.6vw,52px); line-height:1.06; margin:0 auto 18px; max-width: 18ch; }
+  .ed-cta h2 em { font-style:italic; color: var(--lmg-pink); }
+  .ed-cta p { font-size:16px; line-height:1.6; color: rgba(255,255,255,.78); max-width:50ch; margin:0 auto 32px; }
+  .ed-cta-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .ed-cta .ed-btn.pink:hover { background: var(--lmg-pink-deep); }
+  .ed-cta .ed-btn.outline { border-color: rgba(255,255,255,.45); color:#fff; }
+  .ed-cta .ed-btn.outline:hover { background: rgba(255,255,255,.12); }
+
+  /* ── Next module ── */
+  .ed-next { background: #FBFAF6; border-top: 1px solid var(--border-1); }
+  .ed-next-inner { max-width: 1080px; margin:0 auto; padding: clamp(40px,5vw,64px) 24px; }
+  .ed-next-card { display:grid; grid-template-columns: 240px 1fr; gap: clamp(20px,4vw,44px); align-items:center; text-decoration:none; color:inherit; }
+  @media (max-width:640px){ .ed-next-card { grid-template-columns:1fr; } }
+  .ed-next-card .img { aspect-ratio: 4/3; border-radius:4px; background-size:cover; background-position:center; box-shadow: var(--shadow-md); }
+  .ed-next-card .e { font-family:var(--font-ui); font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--lmg-pink); margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+  .ed-next-card h2 { font-family:var(--font-display); font-weight:700; font-size: clamp(26px,3.6vw,40px); line-height:1.06; margin:0 0 12px; }
+  .ed-next-card p { font-size:16px; line-height:1.55; color:var(--fg-2); margin:0 0 18px; max-width:46ch; }
+  .ed-next-card .go { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-ui); font-weight:700; font-size:14px; color:var(--lmg-grey); }
+  .ed-next-card .go i { width:16px; height:16px; transition: transform .2s; }
+  .ed-next-card:hover .go i { transform: translateX(5px); }
+
+  .ed-foot { text-align:center; padding:36px 24px; color:var(--fg-3); font-size:12px; border-top:1px solid var(--border-1); font-family:var(--font-display); font-style:italic; }
+
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<div class="ed-progress" id="edProgress"></div>
+
+<header class="ed-mast">
+  <a class="back" href="index.html"><i data-lucide="arrow-left"></i> All Modules</a>
+  <span class="title">The Complete Brand Partnership Playbook</span>
+  <span class="ed-wordmark">LMG</span>
+</header>
+
+<!-- ARTICLE HEADER -->
+<header class="ed-header">
+  <div class="ed-wrap">
+    <div class="ed-kicker"><span class="ln"></span> Module 01 · Lesson <span class="ln"></span></div>
+    <h1>The Partnership <em>Landscape</em></h1>
+    <p class="ed-standfirst">Every way creators get paid, the five things that set your rates, and an honest look at your own numbers.</p>
+    <div class="ed-byline">
+      <span>By <b>LMG Media</b></span><span class="sep"></span>
+      <span>5 video segments</span><span class="sep"></span>
+      <span>~30 min · read &amp; watch</span><span class="sep"></span>
+      <span>For Creators 10K–500K</span>
+    </div>
+  </div>
+</header>
+
+<figure class="ed-leadfig ed-wide">
+  <div class="img" style="background-image:url('../../assets/hero-02-rooftop-sign.jpg')"></div>
+  <figcaption class="cap">The creators who build reliable partnership income aren't always the biggest — they're the ones who understand the system.</figcaption>
+</figure>
+
+<!-- ARTICLE BODY -->
+<article class="ed-wrap ed-body">
+
+  <!-- INTRO -->
+  <div class="ed-sec-label"><span class="no">i.</span> Welcome</div>
+  <h2 class="ed-h2">What this playbook will do for you</h2>
+  <p class="first">Most creators operate reactively. They wait to be discovered. They quote a rate off the top of their head, or quietly accept whatever a brand offers — and then wonder why the income never feels stable.</p>
+  <p>This course replaces guesswork with a system. By the end, you'll know exactly what you offer, what it's worth, and how to ask for it without flinching. Module 1 is the foundation: the full map of how creator partnerships actually work, so every decision after this one has something solid to stand on.</p>
+
+  <figure class="ed-figure bleed">
+    <div class="ed-player">
+      <div class="poster" style="background-image:url('../../assets/hero-02-rooftop-sign.jpg')"></div>
+      <div class="top"><span class="ed-vtag soon"><i data-lucide="clapperboard"></i>Coming soon</span><span class="ed-vtag"><i data-lucide="clock"></i>4:10</span></div>
+      <div class="ed-play"><i data-lucide="play"></i></div>
+    </div>
+    <figcaption class="ed-figcap"><span class="fnum">Video 1</span><span class="ftxt"><b>Welcome to the Playbook.</b> A short orientation to how the next ten modules fit together. Premieres in about two weeks.</span></figcaption>
+  </figure>
+
+  <div class="ed-pull"><p>The creators who earn well aren't waiting to be discovered. They're running a business.</p><cite>The Partnership Landscape</cite></div>
+
+  <!-- SECTION 1: SIX WAYS -->
+  <div class="ed-sec-label"><span class="no">ii.</span> The money</div>
+  <h2 class="ed-h2">The six ways creators get paid</h2>
+  <p>Most creators know about sponsored posts, and maybe affiliate links. But there are <strong>six distinct revenue streams</strong>, and even established creators routinely leave several of them on the table — not because they're hard, but because no one ever laid them out in one place.</p>
+  <ol class="ed-list">
+    <li><b>Sponsored content</b><span>A flat fee to create a post, video, or story featuring a brand. The familiar one.</span></li>
+    <li><b>Affiliate partnerships</b><span>A commission on the sales you drive — usually 5–30% — that earns on autopilot.</span></li>
+    <li><b>Brand ambassadorships</b><span>A longer 6–12 month relationship where you become a recurring face. Usually the goal.</span></li>
+    <li><b>Product gifting</b><span>Free product in exchange for content. Good early for portfolio and relationships.</span></li>
+    <li><b>Content licensing</b><span>Getting paid again for work you already made — the most commonly missed stream.</span></li>
+    <li><b>Speaking &amp; UGC</b><span>Your expertise and your craft, sold directly — beyond your own feed.</span></li>
+  </ol>
+
+  <figure class="ed-figure bleed">
+    <div class="ed-player">
+      <div class="poster" style="background-image:url('../../assets/hero-01-office.jpg')"></div>
+      <div class="top"><span class="ed-vtag soon"><i data-lucide="clapperboard"></i>Coming soon</span><span class="ed-vtag"><i data-lucide="clock"></i>8:05</span></div>
+      <div class="ed-play"><i data-lucide="play"></i></div>
+    </div>
+    <figcaption class="ed-figcap"><span class="fnum">Video 2</span><span class="ftxt"><b>The six revenue streams, walked through.</b> Which to lead with at your stage, and how a healthy creator income blends several at once.</span></figcaption>
+  </figure>
+
+  <!-- SECTION 2: WHAT DRIVES RATES -->
+  <div class="ed-sec-label"><span class="no">iii.</span> The levers</div>
+  <h2 class="ed-h2">What actually drives your rates</h2>
+  <p>Here is the question that unlocks everything: if two creators have the same follower count, why does one command triple the rate? Because rates aren't set by size. They're set by <strong>five factors</strong> — and once you can see them, you stop competing on follower count and start competing on value.</p>
+  <ol class="ed-list">
+    <li><b>Engagement</b><span>Brands pay for an audience that interacts and buys, not one that scrolls past. The biggest lever.</span></li>
+    <li><b>Content quality</b><span>Your eye, your storytelling, your craft. Your calling card.</span></li>
+    <li><b>Professionalism</b><span>Reply on time, hit deadlines, be easy to work with. The most underrated lever — and the easiest to win on.</span></li>
+    <li><b>Track record</b><span>Results you've driven and words from past partners. It compounds with every deal.</span></li>
+    <li><b>Audience understanding</b><span>Not just how many follow you, but who they are and what they want. It ties everything together.</span></li>
+  </ol>
+
+  <div class="ed-pull"><p>Professionalism is the easiest lever to win on — and the one creators most often ignore.</p><cite>Chapter 1.2 · The levers</cite></div>
+
+  <figure class="ed-figure bleed">
+    <div class="ed-player">
+      <div class="poster" style="background-image:url('../../assets/hero-04-networking.jpg')"></div>
+      <div class="top"><span class="ed-vtag soon"><i data-lucide="clapperboard"></i>Coming soon</span><span class="ed-vtag"><i data-lucide="clock"></i>7:20</span></div>
+      <div class="ed-play"><i data-lucide="play"></i></div>
+    </div>
+    <figcaption class="ed-figcap"><span class="fnum">Video 3</span><span class="ftxt"><b>The five rate factors in depth.</b> Real examples of two same-sized creators, and why one charges three times more.</span></figcaption>
+  </figure>
+
+  <!-- SECTION 3: PRICING POWER -->
+  <div class="ed-sec-label"><span class="no">iv.</span> Your baseline</div>
+  <h2 class="ed-h2">Your pricing-power number</h2>
+  <p>You don't need a spreadsheet to find out where you stand. The fastest signal is your <strong>engagement rate</strong>, and it takes about five minutes. Take a typical recent post, add the likes and comments together, divide by your follower count, and multiply by one hundred.</p>
+
+  <div class="ed-plate">
+    <div class="lab">The engagement-rate formula</div>
+    <div class="ed-formula">
+      <span class="op">(</span>
+      <span class="frac"><span class="t">Likes + Comments</span><span class="b">Followers</span></span>
+      <span class="op">)</span><span class="op">×</span>100<span class="op">=</span><span class="res">Your rate</span>
+    </div>
+  </div>
+
+  <p>A creator at <strong>6%</strong> engagement can defend a meaningfully higher rate than a same-sized creator at <strong>1%</strong> — because the brand is paying for an audience that actually responds. Whatever your number is today, it's your honest baseline, and it's the first thing a brand should feel when they meet your work.</p>
+
+  <figure class="ed-figure bleed">
+    <div class="ed-player">
+      <div class="poster" style="background-image:url('../../assets/hero-03-pinkhair-tablet.jpg')"></div>
+      <div class="top"><span class="ed-vtag soon"><i data-lucide="clapperboard"></i>Coming soon</span><span class="ed-vtag"><i data-lucide="clock"></i>6:15</span></div>
+      <div class="ed-play"><i data-lucide="play"></i></div>
+    </div>
+    <figcaption class="ed-figcap"><span class="fnum">Video 4</span><span class="ftxt"><b>Calculating your number, live.</b> We run the math on three real accounts and read what each result actually means for pricing.</span></figcaption>
+  </figure>
+
+  <!-- SECTION 4: NEXT STEPS -->
+  <div class="ed-sec-label"><span class="no">v.</span> The work</div>
+  <h2 class="ed-h2">Your next steps</h2>
+  <p>You now have the full picture: every way you can get paid, the five levers that set your price, and an honest baseline. Before you move on to Module 2, do three things — list your current revenue streams, score yourself on the five factors, and calculate your engagement rate.</p>
+
+  <figure class="ed-figure bleed">
+    <div class="ed-player">
+      <div class="poster" style="background-image:url('../../assets/hero-05-la-balcony.jpg')"></div>
+      <div class="top"><span class="ed-vtag soon"><i data-lucide="clapperboard"></i>Coming soon</span><span class="ed-vtag"><i data-lucide="clock"></i>5:00</span></div>
+      <div class="ed-play"><i data-lucide="play"></i></div>
+    </div>
+    <figcaption class="ed-figcap"><span class="fnum">Video 5</span><span class="ftxt"><b>Your three-step homework.</b> A guided walk-through of the exercises that turn this lesson into your real numbers.</span></figcaption>
+  </figure>
+
+  <p>Bring real numbers to the workbook and the rest of the course gets sharp, fast. Everything from here — finding brands, setting rates, negotiating — builds directly on the foundation you just laid.</p>
+
+  <!-- EBOOK CALLOUT -->
+  <aside class="ed-ebook">
+    <div>
+      <div class="lab">The deep read</div>
+      <h3>The full chapter, in print</h3>
+      <p>The Module 1 ebook is the complete written reference — every revenue stream defined, the five factors broken down, and worked examples of the rate math you can keep on your desk.</p>
+      <a class="ed-btn dark" href="../../course/Module 1 - Ebook.html"><i data-lucide="book-open"></i> Read the Ebook</a>
+    </div>
+    <div class="cover" style="background-image:url('../../assets/m1-cover.jpg')"></div>
+  </aside>
+
+  <div class="ed-rule"><span></span><i class="l"></i><span></span></div>
+</article>
+
+<!-- WORKBOOK CTA -->
+<section class="ed-cta">
+  <div class="ed-cta-inner">
+    <div class="lab">Put it into practice</div>
+    <h2>Turn the reading into <em>your numbers</em></h2>
+    <p>The Module 1 Workbook maps your revenue streams, scores your five factors, and locks in your pricing-power baseline — the inputs every later module builds on.</p>
+    <div class="ed-cta-actions">
+      <a class="ed-btn pink" href="../../course/Module 1 - Workbook.html"><i data-lucide="pen-line"></i> Open the Workbook</a>
+      <a class="ed-btn outline" href="#top"><i data-lucide="arrow-up"></i> Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT MODULE -->
+<section class="ed-next">
+  <div class="ed-next-inner">
+    <a class="ed-next-card" href="index.html">
+      <div class="img" style="background-image:url('../../assets/m2-cover.jpg')"></div>
+      <div>
+        <div class="e"><i data-lucide="arrow-right"></i> Up next · Module 02</div>
+        <h2>Finding &amp; Attracting Brands</h2>
+        <p>Go on offense — build a pipeline of the specific brands you want, instead of waiting to be discovered.</p>
+        <span class="go">Continue reading <i data-lucide="arrow-right"></i></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer class="ed-foot">LMG Media · Where Quality Brands Meet Iconic Influence</footer>
+
+<script>
+  lucide.createIcons();
+  const prog = document.getElementById('edProgress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + '%';
+  }, { passive:true });
+</script>
+</body>
+</html>

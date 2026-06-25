@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Influencer Marketing by City — eBook" subtitle="28-page editorial eBook, all PDF content, all 8 city images, neutral LMG MEDIA header" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<base href="./" />
+<title>Influencer Marketing by City — LMG Media · Resource 08</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
+
+<style>
+/* ============================================================
+ * LMG Media — Resource 08 · Influencer Marketing by City
+ * Editorial Light direction · Sourced from design system tokens.
+ * ============================================================ */
+:root {
+  /* Brand */
+  --lmg-yellow:#FFD700; --lmg-yellow-deep:#E6B800; --lmg-yellow-soft:#FFF4B0;
+  --lmg-pink:#FF4D94;   --lmg-pink-deep:#E63F82;   --lmg-pink-soft:#FFD9E7;
+  --lmg-blue:#3AAFF4;   --lmg-blue-deep:#1E94DA;   --lmg-blue-soft:#D2EEFB;
+  --lmg-grey:#3A3A3A;
+  /* Neutrals */
+  --n-0:#fff; --n-50:#fafaf8; --n-100:#f4f3ef; --n-200:#e8e6df;
+  --n-300:#cfcdc4; --n-400:#9c9a91; --n-500:#6d6b65; --n-600:#4a4946;
+  --n-700:#3a3a3a; --n-800:#232323; --n-900:#121212;
+  /* Semantic */
+  --fg-1:var(--lmg-grey); --fg-2:var(--n-500); --fg-3:var(--n-400);
+  --bg-1:var(--n-0); --bg-2:var(--n-50); --bg-3:var(--n-100);
+  --border-1:var(--n-200); --border-2:var(--n-300);
+  /* Type */
+  --font-display:'Playfair Display','Didot',Georgia,serif;
+  --font-sans:'Manrope','DM Sans',ui-sans-serif,system-ui,sans-serif;
+  --font-ui:'DM Sans','Manrope',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg-2);font-family:var(--font-sans);color:var(--fg-1);-webkit-font-smoothing:antialiased;}
+body{display:flex;flex-direction:column;align-items:center;gap:28px;padding:28px 0 80px;}
+
+/* Toolbar (screen only) */
+.toolbar{position:sticky;top:18px;z-index:100;background:#fff;border-radius:999px;padding:10px 18px;display:flex;align-items:center;gap:18px;font-size:12px;box-shadow:0 12px 32px rgba(0,0,0,0.12);border:1px solid var(--border-1);}
+.toolbar .brand{font-family:var(--font-display);font-weight:700;font-size:13px;letter-spacing:0.08em;color:var(--fg-1);}
+.toolbar .brand .sub{font-family:var(--font-sans);font-weight:500;font-size:9px;letter-spacing:0.4em;color:var(--fg-2);margin-left:6px;}
+.toolbar .sep{color:var(--border-2);}
+.toolbar .meta{color:var(--fg-2);font-size:12px;}
+.toolbar .meta strong{color:var(--fg-1);font-weight:700;}
+.toolbar button{background:var(--lmg-yellow);color:var(--fg-1);border:none;padding:8px 16px;border-radius:999px;font-family:var(--font-sans);font-weight:800;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;}
+.toolbar button:hover{background:var(--lmg-yellow-deep);}
+
+/* ────── Print ────── */
+@page{size:letter portrait;margin:0;}
+@media print{
+  html,body{background:#fff;margin:0;padding:0;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body{gap:0;padding:0;}
+  .page{page-break-after:always;box-shadow:none;margin:0;break-inside:avoid;width:8.5in;height:11in;min-height:0;}
+  .page:last-child{page-break-after:auto;}
+  .screen-only{display:none!important;}
+}
+
+/* ────── Page shell ────── */
+.page{
+  width:816px; min-height:1056px;
+  background:var(--bg-1);
+  box-shadow:0 16px 50px rgba(0,0,0,0.10);
+  position:relative; display:flex; flex-direction:column;
+  font-family:var(--font-sans); color:var(--fg-1);
+  overflow:hidden;
+}
+
+/* ────── Neutral header / footer strips ────── */
+.pg-strip{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:18px 48px;
+  font-family:var(--font-sans); font-size:10px;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--fg-3); font-weight:600;
+  border-bottom:1px solid var(--border-1);
+}
+.pg-strip.foot{border-bottom:none; border-top:1px solid var(--border-1); margin-top:auto;}
+.pg-strip .lmg{
+  font-family:var(--font-display); font-weight:700;
+  font-size:15px; letter-spacing:0.12em;
+  color:var(--fg-1); text-transform:none;
+}
+.pg-strip .lmg .m{
+  font-family:var(--font-sans); font-weight:500; font-size:9px;
+  letter-spacing:0.42em; margin-left:6px; color:var(--fg-2);
+}
+.pg-strip .meta-r{display:inline-flex; gap:14px; align-items:center;}
+.pg-strip .meta-r span:not(:last-child)::after{content:'·'; margin-left:14px; color:var(--border-2);}
+.pg-strip.dark{background:var(--n-900); color:rgba(255,255,255,0.5); border-color:transparent;}
+.pg-strip.dark .lmg{color:#fff;} .pg-strip.dark .lmg .m{color:rgba(255,255,255,0.6);}
+.pg-strip.dark .meta-r span:not(:last-child)::after{color:rgba(255,255,255,0.25);}
+
+/* ────── Accent helpers ────── */
+.acc-y{ --acc:var(--lmg-yellow); --acc-deep:var(--lmg-yellow-deep); --acc-soft:var(--lmg-yellow-soft);}
+.acc-p{ --acc:var(--lmg-pink); --acc-deep:var(--lmg-pink-deep); --acc-soft:var(--lmg-pink-soft);}
+.acc-b{ --acc:var(--lmg-blue); --acc-deep:var(--lmg-blue-deep); --acc-soft:var(--lmg-blue-soft);}
+.acc-g{ --acc:var(--lmg-grey); --acc-deep:#1a1a1a; --acc-soft:var(--n-100);}
+.hl-y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 4px;}
+.hl-p{ color:var(--lmg-pink); }
+.hl-b{ color:var(--lmg-blue); }
+
+/* ════════════════════════════════════════════════════════════
+ * PAGE 01 · COVER
+ * ═══════════════════════════════════════════════════════════ */
+.cover{padding:0;background:var(--bg-1);}
+.cover .photo{
+  height:580px; width:100%;
+  background-image:url('assets/hero-02-rooftop-sign.jpg');
+  background-size:cover; background-position:center 22%;
+  position:relative;
+}
+.cover .photo::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,0) 50%,rgba(255,255,255,0.95) 100%);
+}
+.cover .top{
+  position:absolute; top:28px; left:48px; right:48px;
+  display:flex; justify-content:space-between; align-items:center; z-index:2;
+}
+.cover .top .pill{
+  background:#fff; color:var(--fg-1); padding:8px 16px; border-radius:999px;
+  font-weight:700; font-size:10px; letter-spacing:0.32em; text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+.cover .top .lmg{
+  font-family:var(--font-display); font-weight:700; font-size:18px; letter-spacing:0.12em;
+  color:#fff; text-shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+.cover .top .lmg .m{ font-family:var(--font-sans); font-weight:500; font-size:10px; letter-spacing:0.42em; margin-left:6px;}
+.cover .body{
+  padding:40px 56px 48px;
+  flex:1; display:flex; flex-direction:column; gap:24px;
+}
+.cover .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.cover h1{
+  font-family:var(--font-sans); font-weight:800;
+  font-size:84px; line-height:0.92; letter-spacing:-0.04em;
+  margin:0; color:var(--fg-1); text-wrap:balance;
+}
+.cover h1 .p{color:var(--lmg-pink);}
+.cover h1 .y{background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 6px;}
+.cover .sub{
+  font-size:17px; line-height:1.55; color:var(--fg-2); max-width:60ch; margin:0;
+}
+.cover .cities{
+  display:grid; grid-template-columns:repeat(6,1fr);
+  border-top:2px solid var(--fg-1); padding-top:18px; gap:10px;
+}
+.cover .cities .c{ padding-right:14px; border-right:1px solid var(--border-1);}
+.cover .cities .c:last-child{ border-right:none;}
+.cover .cities .num{ font-weight:900; font-size:28px; letter-spacing:-0.03em; color:var(--n-400);}
+.cover .cities .nm{ font-weight:700; font-size:14px; color:var(--fg-1); margin-top:4px;}
+.cover .cities .c:nth-child(1) .num{color:var(--lmg-yellow-deep);}
+.cover .cities .c:nth-child(2) .num{color:var(--lmg-blue);}
+.cover .cities .c:nth-child(3) .num{color:var(--fg-1);}
+.cover .cities .c:nth-child(4) .num{color:var(--lmg-pink);}
+.cover .cities .c:nth-child(5) .num{color:#FF8A4A;}
+.cover .cities .c:nth-child(6) .num{color:#C76B7B;}
+.cover .meta{
+  display:flex; justify-content:space-between; margin-top:auto; padding-top:18px;
+  font-weight:600; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--fg-3);
+}
+.cover .meta .l{color:var(--lmg-pink);}
+
+/* ════════════════════════════════════════════════════════════
+ * PAGE 02 · TITLE / INSIDE COVER
+ * ═══════════════════════════════════════════════════════════ */
+.title{padding:0;}
+.title .body{ padding:80px 64px 56px; flex:1; display:flex; flex-direction:column; gap:32px;}
+.title .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--fg-2);}
+.title h1{
+  font-family:var(--font-sans); font-weight:800;
+  font-size:60px; line-height:1; letter-spacing:-0.025em; margin:0;
+}
+.title h1 .p{color:var(--lmg-pink);}
+.title h1 .y{background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px;}
+.title .quote{
+  font-family:var(--font-display); font-weight:400; font-style:italic;
+  font-size:30px; line-height:1.3; color:var(--fg-1); max-width:32ch; margin:8px 0 0;
+}
+.title .quote .ulb{ border-bottom:3px solid var(--lmg-yellow); padding-bottom:2px;}
+.title .meta-grid{
+  margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+  border-top:1px solid var(--border-1); padding-top:24px;
+}
+.title .meta-grid div{padding-right:18px; border-right:1px solid var(--border-1);}
+.title .meta-grid div:last-child{border-right:none;}
+.title .meta-grid .k{font-weight:700; font-size:10px; letter-spacing:0.22em; text-transform:uppercase; color:var(--fg-3); margin-bottom:6px;}
+.title .meta-grid .v{font-weight:700; font-size:15px; color:var(--fg-1);}
+
+/* ════════════════════════════════════════════════════════════
+ * PAGE 03 · TABLE OF CONTENTS
+ * ═══════════════════════════════════════════════════════════ */
+.toc{padding:0;}
+.toc .body{padding:56px 56px 48px; flex:1; display:flex; flex-direction:column; gap:32px;}
+.toc .top-strip{ display:flex; justify-content:space-between; align-items:baseline; padding-bottom:18px; border-bottom:2px solid var(--fg-1);}
+.toc .top-strip .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.toc .top-strip .meta{ font-family:var(--font-mono); font-weight:600; font-size:12px; color:var(--fg-3);}
+.toc h2{
+  font-family:var(--font-sans); font-weight:800; font-size:64px;
+  line-height:0.95; letter-spacing:-0.03em; margin:0;
+}
+.toc h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 6px;}
+.toc-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:40px; flex:1;}
+.toc-cities, .toc-other{ display:flex; flex-direction:column;}
+.toc-h{ font-weight:700; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-3); padding-bottom:6px; margin-bottom:6px;}
+.toc-cities .item{ display:grid; grid-template-columns:48px 1fr auto; align-items:baseline; gap:14px; padding:14px 0; border-bottom:1px solid var(--border-1);}
+.toc-cities .item .num{ font-weight:900; font-size:28px; letter-spacing:-0.03em;}
+.toc-cities .item.y .num{color:var(--lmg-yellow-deep);}
+.toc-cities .item.b .num{color:var(--lmg-blue);}
+.toc-cities .item.g .num{color:var(--fg-1);}
+.toc-cities .item.p .num{color:var(--lmg-pink);}
+.toc-cities .item.c .num{color:#FF8A4A;}
+.toc-cities .item.r .num{color:#C76B7B;}
+.toc-cities .item .city{ font-weight:800; font-size:24px; letter-spacing:-0.018em;}
+.toc-cities .item .pg{ font-family:var(--font-mono); font-weight:600; font-size:13px; color:var(--fg-3);}
+.toc-cities .item .sub{ grid-column:2; font-size:13px; color:var(--fg-2); margin-top:2px;}
+.toc-other .item{ padding:14px 0; border-bottom:1px solid var(--border-1);}
+.toc-other .item:last-child{border-bottom:none;}
+.toc-other .item .row{ display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
+.toc-other .item .nm{ font-weight:800; font-size:16px;}
+.toc-other .item .pg{ font-family:var(--font-mono); font-weight:600; font-size:12px; color:var(--fg-3);}
+.toc-other .item .ds{ font-size:12px; line-height:1.5; color:var(--fg-2); margin-top:4px;}
+
+/* ════════════════════════════════════════════════════════════
+ * INTRODUCTION PAGES
+ * ═══════════════════════════════════════════════════════════ */
+.intro{padding:0;}
+.intro .img{
+  height:380px; width:100%;
+  background-image:url('assets/hero-01-office.jpg');
+  background-size:cover; background-position:center 28%;
+}
+.intro .body{ padding:40px 56px 48px; display:flex; flex-direction:column; gap:18px;}
+.intro .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.intro h2{
+  font-family:var(--font-sans); font-weight:800;
+  font-size:46px; line-height:0.98; letter-spacing:-0.028em;
+  margin:0; max-width:22ch;
+}
+.intro h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px;}
+.intro .col2{ columns:2; column-gap:36px; font-size:13.5px; line-height:1.65; margin-top:8px;}
+.intro .col2 p{ margin:0 0 12px; text-wrap:pretty;}
+
+.intro-cont{padding:0;}
+.intro-cont .body{ padding:48px 56px 48px; flex:1; display:flex; flex-direction:column; gap:20px;}
+.intro-cont .col2{ columns:2; column-gap:36px; font-size:13.5px; line-height:1.65;}
+.intro-cont .col2 p{ margin:0 0 12px;}
+.intro-cont .quote{
+  background:var(--bg-3); border-left:4px solid var(--lmg-yellow);
+  padding:24px 28px; margin:8px 0;
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  font-size:22px; line-height:1.4; color:var(--fg-1);
+}
+.intro-cont .quote .att{ display:block; font-family:var(--font-sans); font-style:normal; font-weight:700; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-2); margin-top:12px;}
+.intro-cont .promise{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:8px;
+}
+.intro-cont .promise .it{
+  background:var(--bg-2); border-radius:12px; padding:18px 18px 20px;
+  display:flex; flex-direction:column; gap:6px;
+}
+.intro-cont .promise .it .n{ font-family:var(--font-display); font-weight:700; font-size:32px; line-height:1; color:var(--lmg-yellow-deep);}
+.intro-cont .promise .it .h{ font-weight:800; font-size:13px;}
+.intro-cont .promise .it .d{ font-size:11.5px; line-height:1.45; color:var(--fg-2);}
+
+/* ════════════════════════════════════════════════════════════
+ * CITY OPENER PAGE
+ * ═══════════════════════════════════════════════════════════ */
+.city-opener{padding:0;}
+.city-opener .hero{
+  height:420px; width:100%;
+  background-size:cover; background-position:center;
+  position:relative;
+}
+.city-opener .hero::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0.30) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,0.55) 100%);
+}
+.city-opener .hero .market-pill{
+  position:absolute; top:24px; left:48px; z-index:2;
+  background:#fff; color:var(--fg-1); padding:7px 14px; border-radius:999px;
+  font-weight:700; font-size:10px; letter-spacing:0.28em; text-transform:uppercase;
+}
+.city-opener .hero .market-pill .dot{
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  background:var(--acc); margin-right:8px; vertical-align:middle;
+}
+.city-opener .hero .tag-tr{
+  position:absolute; top:24px; right:48px; z-index:2;
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  color:#fff; font-size:18px; letter-spacing:0.04em;
+  text-shadow:0 2px 12px rgba(0,0,0,0.5);
+}
+.city-opener .hero .name{
+  position:absolute; bottom:32px; left:48px; right:48px; z-index:2;
+  display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+}
+.city-opener .hero .name h1{
+  font-family:var(--font-sans); font-weight:800;
+  font-size:88px; line-height:0.85; letter-spacing:-0.04em;
+  margin:0; color:#fff; text-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.city-opener .hero .name .loc{
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  font-size:18px; color:rgba(255,255,255,0.92);
+  text-align:right; padding-bottom:14px;
+}
+.city-opener .hero .name .loc .num{ display:block; font-family:var(--font-sans); font-style:normal; font-weight:900; font-size:42px; color:var(--acc); line-height:1; margin-bottom:2px;}
+.city-opener .body{ padding:36px 56px 36px; display:flex; flex-direction:column; gap:18px; flex:1;}
+.city-opener .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--acc);}
+.city-opener h2{
+  font-family:var(--font-sans); font-weight:800;
+  font-size:32px; line-height:1.1; letter-spacing:-0.02em; margin:0; max-width:28ch;
+}
+.city-opener .lede{
+  font-size:15px; line-height:1.6; color:var(--fg-1); max-width:68ch; margin:0;
+  font-weight:500;
+}
+.city-opener .lede::first-letter{
+  font-family:var(--font-display); font-weight:700; font-size:48px;
+  float:left; line-height:0.95; margin:2px 8px 0 0; color:var(--acc);
+}
+.city-opener .col2{ columns:2; column-gap:36px; font-size:13px; line-height:1.65; color:var(--fg-1); margin-top:4px;}
+.city-opener .col2 p{ margin:0 0 10px; text-wrap:pretty;}
+
+/* ════════════════════════════════════════════════════════════
+ * CITY DETAIL PAGE — platform + cultural calendar
+ * ═══════════════════════════════════════════════════════════ */
+.city-detail{padding:0;}
+.city-detail .body{ padding:36px 56px 32px; display:flex; flex-direction:column; gap:22px; flex:1;}
+.city-detail h3{ margin:0; font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px;}
+.city-detail h3::before{ content:''; display:inline-block; width:24px; height:3px; background:var(--acc);}
+.city-detail .pcity{ font-family:var(--font-display); font-style:italic; font-weight:400; font-size:14px; color:var(--acc); }
+.city-detail .ph-row{ display:grid; grid-template-columns:1.05fr 1fr; gap:32px; align-items:start;}
+.city-detail .plat-list{ display:flex; flex-direction:column; gap:0;}
+.city-detail .plat{
+  display:grid; grid-template-columns:120px 1fr auto; gap:14px;
+  padding:13px 0; border-bottom:1px solid var(--border-1); align-items:baseline;
+}
+.city-detail .plat:last-child{ border-bottom:none;}
+.city-detail .plat .n{ font-weight:800; font-size:15px; color:var(--fg-1);}
+.city-detail .plat .d{ font-size:11.5px; line-height:1.5; color:var(--fg-2);}
+.city-detail .plat .tag{ font-family:var(--font-mono); font-weight:600; font-size:10px; color:var(--fg-3); letter-spacing:0.08em; text-transform:uppercase;}
+.city-detail .plat.dom .n{ color:var(--acc-deep); }
+.city-detail .plat.dom .tag{ background:var(--acc); color:var(--fg-1); padding:3px 8px; border-radius:4px;}
+.city-detail .acc-y .plat.dom .tag{color:var(--fg-1);} 
+.city-detail .culture h4{ margin:0 0 8px; font-weight:800; font-size:18px; letter-spacing:-0.015em;}
+.city-detail .culture p{ font-size:12.5px; line-height:1.65; margin:0 0 10px;}
+.city-detail .culture strong{ color:var(--fg-1); font-weight:700; background:var(--acc-soft); padding:0 4px; border-radius:3px;}
+.city-detail .photo-cap{
+  background:var(--bg-3); padding:14px 18px; border-radius:8px; margin-top:auto;
+  display:flex; align-items:center; gap:14px;
+}
+.city-detail .photo-cap .badge{
+  width:42px; height:42px; border-radius:12px; background:var(--acc);
+  display:flex; align-items:center; justify-content:center; flex:none;
+  color:var(--fg-1); font-family:var(--font-display); font-weight:700; font-size:18px;
+}
+.city-detail .acc-p .photo-cap .badge, .city-detail .acc-b .photo-cap .badge, .city-detail .acc-g .photo-cap .badge{color:#fff;}
+.city-detail .photo-cap .t{ font-weight:700; font-size:13px; color:var(--fg-1);}
+.city-detail .photo-cap .s{ font-size:11px; color:var(--fg-2); margin-top:2px;}
+
+/* Inset feature image variant */
+.city-feature{padding:0;}
+.city-feature .body{ padding:36px 56px 32px; display:flex; flex-direction:column; gap:24px;}
+.city-feature .img-wrap{
+  width:100%; height:300px; border-radius:12px; overflow:hidden;
+  background-size:cover; background-position:center;
+  position:relative;
+}
+.city-feature .img-wrap .cap{
+  position:absolute; bottom:14px; left:18px; right:18px;
+  font-family:var(--font-display); font-style:italic; font-weight:400; font-size:13px;
+  color:#fff; text-shadow:0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ════════════════════════════════════════════════════════════
+ * CITY SUMMARY PAGE — niches, regulator, right/wrong
+ * ═══════════════════════════════════════════════════════════ */
+.city-summary{padding:0;}
+.city-summary .body{ padding:36px 56px 32px; display:flex; flex-direction:column; gap:22px; flex:1;}
+.city-summary .niches{ display:flex; flex-wrap:wrap; gap:8px;}
+.city-summary .niche{
+  background:#fff; border:1px solid var(--border-1); border-radius:999px;
+  padding:8px 14px; font-size:12px; font-weight:600; color:var(--fg-1);
+  display:inline-flex; align-items:center; gap:8px;
+}
+.city-summary .niche::before{ content:''; width:6px; height:6px; border-radius:50%; background:var(--acc);}
+.city-summary .reg-block{
+  background:var(--bg-2); border-radius:12px; padding:20px 24px;
+  display:grid; grid-template-columns:200px 1fr; gap:24px; align-items:start;
+}
+.city-summary .reg-block .reg-key{
+  font-family:var(--font-display); font-weight:700; font-size:22px; line-height:1.1; color:var(--fg-1);
+}
+.city-summary .reg-block .reg-key .sub{ display:block; font-family:var(--font-sans); font-weight:700; font-size:10px; letter-spacing:0.24em; text-transform:uppercase; color:var(--acc-deep); margin-bottom:6px;}
+.city-summary .reg-block p{ font-size:12.5px; line-height:1.6; margin:0;}
+.city-summary .rw-grid{ display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+.city-summary .rw-grid h4{
+  margin:0 0 12px; padding-bottom:10px;
+  font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase;
+  display:flex; align-items:center; gap:10px;
+  border-bottom:2px solid var(--fg-1);
+}
+.city-summary .rw-grid .right h4{ color:var(--acc-deep); border-color:var(--acc);}
+.city-summary .rw-grid .wrong h4{ color:#a04040; border-color:#a04040;}
+.city-summary .rw-grid h4 .ico{ width:18px; height:18px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-weight:900; font-size:10px; }
+.city-summary .rw-grid .right h4 .ico{ background:var(--acc); color:var(--fg-1);}
+.city-summary .rw-grid .acc-p .right h4 .ico, .city-summary .rw-grid .acc-b .right h4 .ico, .city-summary .rw-grid .acc-g .right h4 .ico{color:#fff;}
+.city-summary .rw-grid .wrong h4 .ico{ background:#a04040; color:#fff;}
+.city-summary .rw-grid p{ font-size:12.5px; line-height:1.6; margin:0;}
+
+/* ════════════════════════════════════════════════════════════
+ * STRATEGY PAGE
+ * ═══════════════════════════════════════════════════════════ */
+.strat{padding:0;}
+.strat .top{ padding:48px 56px 36px; background:var(--n-900); color:#fff;}
+.strat .top .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-yellow);}
+.strat .top h2{ font-family:var(--font-sans); font-weight:800; font-size:48px; line-height:1; letter-spacing:-0.025em; margin:12px 0 0; max-width:22ch; color:#fff;}
+.strat .top h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px; color:var(--fg-1);}
+.strat .top p{ font-size:14.5px; line-height:1.6; color:rgba(255,255,255,0.85); margin:18px 0 0; max-width:62ch;}
+.strat .body{ padding:36px 56px 36px; display:flex; flex-direction:column; gap:22px; flex:1;}
+.strat .steps{ display:flex; flex-direction:column; gap:14px;}
+.strat .step{
+  display:grid; grid-template-columns:60px 1fr; gap:20px; align-items:start;
+  padding:18px 0; border-bottom:1px solid var(--border-1);
+}
+.strat .step:last-child{ border-bottom:none;}
+.strat .step .n{ font-family:var(--font-display); font-weight:700; font-size:48px; line-height:0.9; color:var(--lmg-yellow-deep);}
+.strat .step .nb{color:var(--lmg-blue);}
+.strat .step .np{color:var(--lmg-pink);}
+.strat .step h4{ margin:0 0 6px; font-weight:800; font-size:18px; letter-spacing:-0.015em;}
+.strat .step p{ font-size:12.5px; line-height:1.65; margin:0; color:var(--fg-2);}
+
+.coord{padding:0;}
+.coord .body{ padding:48px 56px 36px; display:flex; flex-direction:column; gap:22px; flex:1;}
+.coord .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.coord h2{ font-family:var(--font-sans); font-weight:800; font-size:42px; line-height:1; letter-spacing:-0.025em; margin:0; max-width:24ch;}
+.coord h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px;}
+.coord .intro{ font-size:14px; line-height:1.6; color:var(--fg-2); max-width:64ch; margin:0;}
+.coord .grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;}
+.coord .card{
+  background:var(--bg-2); border-radius:14px; padding:22px 24px;
+  display:flex; flex-direction:column; gap:8px;
+  border-left:4px solid var(--lmg-yellow);
+}
+.coord .card:nth-child(2){border-color:var(--lmg-blue);}
+.coord .card:nth-child(3){border-color:var(--lmg-pink);}
+.coord .card:nth-child(4){border-color:var(--fg-1);}
+.coord .card .ic{
+  font-family:var(--font-display); font-weight:700; font-size:18px; color:var(--lmg-yellow-deep);
+}
+.coord .card:nth-child(2) .ic{color:var(--lmg-blue-deep);}
+.coord .card:nth-child(3) .ic{color:var(--lmg-pink-deep);}
+.coord .card:nth-child(4) .ic{color:var(--fg-1);}
+.coord .card h4{ margin:0; font-weight:800; font-size:15px;}
+.coord .card p{ font-size:12px; line-height:1.55; margin:0; color:var(--fg-2);}
+
+/* ════════════════════════════════════════════════════════════
+ * COMPARISON TABLE
+ * ═══════════════════════════════════════════════════════════ */
+.compare{padding:0;}
+.compare .body{ padding:48px 48px 36px; display:flex; flex-direction:column; gap:22px; flex:1;}
+.compare .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.compare h2{ font-family:var(--font-sans); font-weight:800; font-size:42px; line-height:1; letter-spacing:-0.025em; margin:0;}
+.compare h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px;}
+.compare table{ width:100%; border-collapse:collapse; font-size:10.5px;}
+.compare th, .compare td{ text-align:left; padding:9px 8px; border-bottom:1px solid var(--border-1); vertical-align:top;}
+.compare th{ font-weight:800; font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:var(--fg-1); border-bottom:2px solid var(--fg-1);}
+.compare thead th{ background:var(--bg-2);}
+.compare td.cat{ font-weight:700; color:var(--fg-1); background:var(--bg-2);}
+.compare td.city-name{ font-weight:800; font-size:13px;}
+.compare td.city-name.y{color:var(--lmg-yellow-deep);}
+.compare td.city-name.b{color:var(--lmg-blue);}
+.compare td.city-name.g{color:var(--fg-1);}
+.compare td.city-name.p{color:var(--lmg-pink);}
+.compare td.city-name.c{color:#FF8A4A;}
+.compare td.city-name.r{color:#C76B7B;}
+.compare .legend{ display:flex; gap:18px; margin-top:8px; font-size:11px; color:var(--fg-2);}
+.compare .legend .lk{ display:inline-flex; align-items:center; gap:6px;}
+.compare .legend .lk .dot{ width:9px; height:9px; border-radius:50%;}
+
+/* ════════════════════════════════════════════════════════════
+ * ABOUT / CTA / BACK COVER
+ * ═══════════════════════════════════════════════════════════ */
+.about{padding:0;}
+.about .top{
+  height:380px; background-image:url('assets/city-sydney.jpg');
+  background-size:cover; background-position:center 30%; position:relative;
+}
+.about .top::after{ content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,0.10) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,0.50) 100%);}
+.about .top .tagline{
+  position:absolute; bottom:24px; left:48px; right:48px; z-index:2;
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  font-size:24px; color:#fff; max-width:30ch; line-height:1.3;
+  text-shadow:0 2px 12px rgba(0,0,0,0.4);
+}
+.about .top .global-pill{
+  position:absolute; top:24px; left:48px; z-index:2;
+  background:#fff; color:var(--fg-1); padding:7px 14px; border-radius:999px;
+  font-weight:700; font-size:10px; letter-spacing:0.28em; text-transform:uppercase;
+}
+.about .body{ padding:40px 56px 36px; display:flex; flex-direction:column; gap:18px;}
+.about .ey{ font-weight:700; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; color:var(--lmg-pink);}
+.about h2{ font-family:var(--font-sans); font-weight:800; font-size:42px; line-height:1.0; letter-spacing:-0.025em; margin:0; max-width:24ch;}
+.about h2 .y{ background:linear-gradient(180deg,transparent 60%,var(--lmg-yellow) 60%); padding:0 5px;}
+.about .col2{ columns:2; column-gap:36px; font-size:13px; line-height:1.65;}
+.about .col2 p{ margin:0 0 11px;}
+.about .cta-row{ display:flex; gap:14px; margin-top:8px; align-items:center;}
+.about .cta-row .btn{
+  height:48px; padding:0 22px; border-radius:12px;
+  font-family:var(--font-ui); font-weight:600; font-size:14px;
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--lmg-yellow); color:var(--fg-1); border:none;
+}
+.about .cta-row .btn.outline{ background:transparent; border:1px solid var(--border-2); color:var(--fg-1);}
+.about .cta-row .web{ margin-left:auto; font-family:var(--font-mono); font-weight:600; font-size:13px; color:var(--fg-2);}
+
+/* Back cover */
+.back{ background:var(--n-900); color:#fff; padding:0;}
+.back .body{ padding:80px 64px; flex:1; display:flex; flex-direction:column; gap:36px;}
+.back .lmg-mark{
+  font-family:var(--font-display); font-weight:700;
+  font-size:64px; line-height:0.9; color:var(--lmg-yellow); letter-spacing:0.02em;
+}
+.back .lmg-mark .m{ display:block; font-family:var(--font-sans); font-weight:500; font-size:14px; letter-spacing:0.42em; color:var(--lmg-yellow); margin-top:8px;}
+.back .tag{
+  font-family:var(--font-display); font-style:italic; font-weight:400;
+  font-size:38px; line-height:1.2; color:#fff; max-width:18ch; margin:0;
+}
+.back .tag .y{ color:var(--lmg-yellow);}
+.back .tag .p{ color:var(--lmg-pink);}
+.back .grid{
+  display:grid; grid-template-columns:repeat(6,1fr); gap:8px;
+  border-top:1px solid rgba(255,255,255,0.2); padding-top:24px; margin-top:auto;
+}
+.back .grid .c{ font-family:var(--font-display); font-style:italic; font-weight:400; font-size:14px; color:var(--lmg-yellow); padding-right:8px; border-right:1px solid rgba(255,255,255,0.15);}
+.back .grid .c:last-child{ border-right:none;}
+.back .meta{ display:flex; justify-content:space-between; align-items:baseline; padding-top:18px; border-top:1px solid rgba(255,255,255,0.15); font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.6); font-weight:600;}
+.back .meta .web{color:var(--lmg-yellow);}
+</style>
+</head>
+<body>
+
+<!-- Toolbar (screen only) -->
+<div class="toolbar screen-only">
+  <span class="brand">LMG MEDIA <span class="sub">RESOURCE 08</span></span>
+  <span class="sep">·</span>
+  <span class="meta"><strong>Influencer Marketing by City</strong></span>
+  <span class="sep">·</span>
+  <span class="meta">28 pp · Letter portrait</span>
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<!-- ════════════════ PAGE 01 · COVER ════════════════ -->
+<article class="page cover" data-screen-label="01 Cover">
+  <div class="photo">
+    <div class="top">
+      <span class="pill">Resource · 08</span>
+      <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">A Brand Guide · For Marketing Teams</span>
+    <h1>Influencer <span class="p">Marketing</span> by <span class="y">City</span>.</h1>
+    <p class="sub">A market-by-market intelligence report on six of the world's most important influencer marketing cities — the platforms, the cultural calendars, the regulations, and the creator communities that separate effective activation from a generic global playbook.</p>
+    <div class="cities">
+      <div class="c"><div class="num">01</div><div class="nm">Dubai</div></div>
+      <div class="c"><div class="num">02</div><div class="nm">London</div></div>
+      <div class="c"><div class="num">03</div><div class="nm">New York</div></div>
+      <div class="c"><div class="num">04</div><div class="nm">Los Angeles</div></div>
+      <div class="c"><div class="num">05</div><div class="nm">Miami</div></div>
+      <div class="c"><div class="num">06</div><div class="nm">Paris</div></div>
+    </div>
+    <div class="meta">
+      <span class="l">lmg.media</span>
+      <span>Resource Series · 2026</span>
+    </div>
+  </div>
+</article>
+
+<!-- ════════════════ PAGE 02 · TITLE / EPIGRAPH ════════════════ -->
+<article class="page title" data-screen-label="02 Title">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Resource 08</span><span>2026</span></span>
+  </header>
+  <div class="body">
+    <span class="ey">A Brand Guide to Key Global Markets</span>
+    <h1>Influencer <span class="p">Marketing</span><br/>by <span class="y">City</span>.</h1>
+    <p class="quote">"A creator who performs exceptionally well in London may be completely unknown in Dubai. The differences between markets are not cosmetic — they are <span class="ulb">structural.</span>"</p>
+    <div class="meta-grid">
+      <div><div class="k">Document</div><div class="v">Resource 08</div></div>
+      <div><div class="k">Markets Covered</div><div class="v">Six Global Cities</div></div>
+      <div><div class="k">Audience</div><div class="v">Brands & Marketing Teams</div></div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>02</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 03 · TABLE OF CONTENTS ════════════════ -->
+<article class="page toc" data-screen-label="03 Contents">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Contents</span><span>Pg 03</span></span>
+  </header>
+  <div class="body">
+    <div class="top-strip">
+      <span class="ey">Inside this guide</span>
+      <span class="meta">Six markets · Twenty-eight pages</span>
+    </div>
+    <h2>Contents.</h2>
+    <div class="toc-grid">
+      <div class="toc-cities">
+        <div class="toc-h">Markets</div>
+        <div class="item y"><div class="num">01</div><div class="city">Dubai</div><div class="pg">04</div><div class="sub">Luxury · Multicultural · Instagram-first</div></div>
+        <div class="item b"><div class="num">02</div><div class="city">London</div><div class="pg">07</div><div class="sub">Cultural credibility · ASA-regulated</div></div>
+        <div class="item g"><div class="num">03</div><div class="city">New York City</div><div class="pg">10</div><div class="sub">Professional capital of the creator economy</div></div>
+        <div class="item p"><div class="num">04</div><div class="city">Los Angeles & Beverly Hills</div><div class="pg">13</div><div class="sub">Entertainment crossover · Production-first</div></div>
+        <div class="item c"><div class="num">05</div><div class="city">Miami</div><div class="pg">17</div><div class="sub">Bilingual gateway to Latin America</div></div>
+        <div class="item r"><div class="num">06</div><div class="city">Paris</div><div class="pg">21</div><div class="sub">Aesthetic authority for luxury & fashion</div></div>
+      </div>
+      <div class="toc-other">
+        <div class="toc-h">Sections</div>
+        <div class="item"><div class="row"><span class="nm">Introduction</span><span class="pg">02</span></div><div class="ds">Why market-specific strategy matters.</div></div>
+        <div class="item"><div class="row"><span class="nm">Cross-Market Strategy</span><span class="pg">24</span></div><div class="ds">Sequencing market entry and coordinating multi-city campaigns.</div></div>
+        <div class="item"><div class="row"><span class="nm">Market Comparison</span><span class="pg">26</span></div><div class="ds">Six markets side-by-side: platform, niches, calendar, regulator.</div></div>
+        <div class="item"><div class="row"><span class="nm">About LMG Media</span><span class="pg">27</span></div><div class="ds">Active creator networks across all six markets covered — and beyond.</div></div>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>03</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 04 · INTRODUCTION ════════════════ -->
+<article class="page intro" data-screen-label="04 Intro">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Introduction</span><span>Pg 04</span></span>
+  </header>
+  <div class="img"></div>
+  <div class="body">
+    <span class="ey">Introduction</span>
+    <h2>Why market-specific <span class="y">strategy</span> matters.</h2>
+    <div class="col2">
+      <p>A creator who performs exceptionally well in London may be completely unknown in Dubai. A content format that goes viral on TikTok in New York may fall flat in Paris. A campaign that complies with ASA regulations in the UK may violate FTC requirements if the same content is repurposed for the US market.</p>
+      <p>The differences between influencer marketing markets are not cosmetic — they are structural, and they require genuine strategic adaptation rather than surface-level localisation.</p>
+      <p>This guide provides market-by-market intelligence for six of the world's most important influencer marketing cities. Use it to understand what makes each market distinctive, what the most effective strategies look like for that specific market, and what mistakes to avoid when activating in an unfamiliar city.</p>
+      <p>Each chapter covers the same four dimensions — market overview, platform landscape, cultural calendar and nuances, regulatory framework — so the markets can be read individually or compared side-by-side.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>04</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 05 · INTRODUCTION CONT'D ════════════════ -->
+<article class="page intro-cont" data-screen-label="05 Intro 2">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Introduction · continued</span><span>Pg 05</span></span>
+  </header>
+  <div class="body">
+    <div class="col2">
+      <p>The brands that consistently outperform globally treat each city not as a stop on an international media plan but as a discrete creative problem with its own platform behaviour, its own regulatory environment, and its own creator culture.</p>
+      <p>That principle compounds across markets. A brand that adapts intelligently to one city builds the muscle to adapt to the next; a brand that imposes a single global template gets diminishing returns the further it travels from its home market.</p>
+      <p>What you'll find in each market chapter: an overview of the market's structural conditions, the platforms that matter and the order they matter in, the cultural and calendar nuances brands must respect, the regulatory standards in force, and a frank account of what brands consistently get right — and consistently get wrong — when they activate in that city.</p>
+    </div>
+    <blockquote class="quote">
+      The most expensive mistake in international influencer marketing is the assumption that a global brief, translated, is a localised campaign.
+      <span class="att">— LMG Media Markets Desk</span>
+    </blockquote>
+    <div class="promise">
+      <div class="it"><span class="n">01</span><span class="h">Market overview</span><span class="d">Structural conditions, demographics, and creator-community character per city.</span></div>
+      <div class="it"><span class="n">02</span><span class="h">Platforms &amp; calendar</span><span class="d">Which platforms dominate, and the cultural moments that drive activation.</span></div>
+      <div class="it"><span class="n">03</span><span class="h">Regulator &amp; right/wrong</span><span class="d">Compliance requirements and the patterns of brand success and failure.</span></div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>05</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 01 · DUBAI (Yellow accent)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 06 · DUBAI OPENER ════════════ -->
+<article class="page city-opener acc-y" data-screen-label="06 Dubai">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 01</span><span>Dubai · UAE</span><span>Pg 06</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-dubai.jpg'); background-position:center 35%;">
+    <span class="market-pill"><span class="dot"></span>Market 01 · Luxury · Multicultural</span>
+    <span class="tag-tr">الإمارات العربية المتحدة</span>
+    <div class="name">
+      <h1>Dubai.</h1>
+      <div class="loc"><span class="num">01</span>United Arab Emirates</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>One of the most distinctive influencer marketing markets in the world.</h2>
+    <p class="lede">The UAE's extraordinary social media penetration rate — among the highest globally — combined with a young, affluent, internationally connected population creates a market where influencer marketing is not just effective but central to how brands reach consumers.</p>
+    <div class="col2">
+      <p>The city's creator community reflects its unique demographic composition: approximately 90% of the UAE population is expatriate, producing a multilingual, multicultural creator landscape that spans Arabic, English, Hindi, and other languages.</p>
+      <p>For brands, this diversity means that creator selection must be deliberately targeted — an English-language creator serving a Western expatriate audience is a fundamentally different proposition from an Arabic-language creator serving Gulf-native audiences.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>06 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 07 · DUBAI · PLATFORM + CALENDAR ════════════ -->
+<article class="page city-detail acc-y" data-screen-label="07 Dubai Platforms">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 01 · Dubai</span><span>Platform Landscape</span><span>Pg 07</span></span>
+  </header>
+  <div class="body">
+    <div class="ph-row">
+      <div>
+        <h3>Platform Landscape <span class="pcity">Dubai</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">Dominates the Dubai influencer market across all categories. The platform's visual format suits the city's extraordinary aesthetic environment, and its brand partnership infrastructure is mature and well-used by Dubai's creator community.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Grown rapidly in the UAE and now significant for brands targeting younger consumers — and for Arabic-language content that reaches across the Gulf region and the broader Arab world.</div><div class="tag">Rising</div></div>
+          <div class="plat"><div class="n">Snapchat</div><div class="d">Unusually high penetration in the Gulf compared to most Western markets. For brands targeting Gulf-native consumers specifically, Snapchat creator partnerships are an underutilised but valuable channel.</div><div class="tag">Underused</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Maintains importance for Arabic-language long-form content. Many of the region's most-followed creators built their initial audiences on YouTube.</div><div class="tag">Long-form</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Calendar</h3>
+        <h4>The luxury dimension is defining.</h4>
+        <p>Dubai's concentration of luxury retail, hospitality, automotive, and real estate creates a market where luxury brand associations are core cultural currency — not aspirational accessories. For luxury brands, Dubai is one of the most commercially valuable influencer markets globally.</p>
+        <p><strong>Ramadan</strong> is the most important marketing period of the year. The holy month shifts daily routines dramatically — greater evening activity, communal iftar gatherings, elevated charitable sentiment, and deeply engaged social media consumption. Brands that plan specifically for Ramadan — with content that genuinely acknowledges its cultural significance — consistently outperform those that ignore it or handle it superficially. Plan Ramadan content three to four months in advance.</p>
+        <p><strong>Eid Al-Fitr</strong> and <strong>Eid Al-Adha</strong> are significant commercial moments for fashion, beauty, hospitality, and gifting categories. Plan Eid campaigns with the same advance lead time as Ramadan.</p>
+        <p><strong>UAE National Day (December 2nd)</strong> generates strong consumer sentiment and is a natural activation moment for brands with genuine UAE market presence.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>07 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 08 · DUBAI · NICHES + REGULATIONS + R/W ════════════ -->
+<article class="page city-summary acc-y" data-screen-label="08 Dubai Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 01 · Dubai</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 08</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in Dubai</h3>
+      <div class="niches">
+        <span class="niche">Luxury lifestyle</span>
+        <span class="niche">Fashion</span>
+        <span class="niche">Beauty</span>
+        <span class="niche">Food &amp; hospitality</span>
+        <span class="niche">Fitness &amp; wellness</span>
+        <span class="niche">Family &amp; parenting</span>
+        <span class="niche">Real estate &amp; business</span>
+        <span class="niche">Travel &amp; tourism</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>National Media Council (UAE)</div>
+      <p>The National Media Council regulates commercial communications in the UAE. Influencer content must be clearly disclosed as paid. Content must comply with UAE cultural standards — overtly sexual content, alcohol promotion, and content conflicting with Islamic values is not appropriate for the UAE market. Brief all creators explicitly on local content standards before any campaign goes live.</p>
+    </div>
+    <div class="rw-grid acc-y">
+      <div class="right">
+        <h4><span class="ico">✓</span>What Brands Get Right</h4>
+        <p>Investing in the luxury dimension of the market, planning genuinely around Ramadan rather than treating it as a sensitivity to avoid, selecting creators who reflect the actual audience communities they want to reach (Arabic-speaking vs English-speaking expatriate), and leveraging the city's extraordinary visual environment for aspirational content.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Treating Dubai as a generic international market and applying their standard global playbook without adaptation. Using Western-only creator rosters to reach Gulf-native audiences. Ignoring the cultural calendar. Under-investing in Arabic-language content production.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>08 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 02 · LONDON (Blue accent)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 09 · LONDON OPENER ════════════ -->
+<article class="page city-opener acc-b" data-screen-label="09 London">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 02</span><span>London · UK</span><span>Pg 09</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-london.jpg'); background-position:center 35%;">
+    <span class="market-pill"><span class="dot"></span>Market 02 · Cultural Credibility</span>
+    <span class="tag-tr">The United Kingdom</span>
+    <div class="name">
+      <h1>London.</h1>
+      <div class="loc"><span class="num">02</span>United Kingdom</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>One of the world's most sophisticated and culturally influential creator markets.</h2>
+    <p class="lede">London's creator community produces content that punches significantly above the UK's population weight internationally — London-based creators in fashion, beauty, food, and lifestyle have audiences that extend across Europe, North America, and beyond.</p>
+    <div class="col2">
+      <p>The British creator community has a distinct cultural sensibility — a particular combination of authenticity, dry wit, and aesthetic confidence that is immediately recognisable and globally admired.</p>
+      <p>Brands that understand and respect this sensibility — and that brief accordingly — consistently produce better UK content than those that impose an international brand voice over it.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>09 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 10 · LONDON · PLATFORM + CALENDAR ════════════ -->
+<article class="page city-detail acc-b" data-screen-label="10 London Platforms">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 02 · London</span><span>Platform Landscape</span><span>Pg 10</span></span>
+  </header>
+  <div class="body">
+    <div class="ph-row">
+      <div>
+        <h3>Platform Landscape <span class="pcity">London</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">The primary platform for London influencer marketing across most categories. The UK has one of the most developed Instagram creator ecosystems globally, with mature brand partnership infrastructure and a sophisticated community of professional creators.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Grown rapidly in the UK and now essential for brands targeting under-35 consumers. UK TikTok creators frequently build audiences that extend well beyond the domestic market.</div><div class="tag">Essential</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Remains significant, particularly for tech, gaming, beauty, and finance categories. Several of the world's most-subscribed YouTube creators are British.</div><div class="tag">Strong</div></div>
+          <div class="plat"><div class="n">LinkedIn</div><div class="d">Highly relevant for B2B brands given London's concentration of financial services, technology, professional services, and media industries.</div><div class="tag">B2B</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Calendar</h3>
+        <h4>Authenticity and cultural credibility are highly valued.</h4>
+        <p>London creators who are genuinely embedded in the scenes they document — fashion, music, food, art — carry significantly more commercial weight than those who appear to be performing those worlds from the outside. Brands that earn genuine creator advocacy, rather than buying surface-level promotion, consistently outperform in the UK market.</p>
+        <p><strong>London Fashion Week</strong> (February for AW, September for SS) is the most significant annual creator activation opportunity for fashion and luxury brands in the UK. Plan creator invitations three to four months in advance.</p>
+        <p>The broader UK cultural calendar provides year-round opportunities: <strong>Wimbledon, Notting Hill Carnival, Chelsea Flower Show, Frieze Art Fair,</strong> and a constant stream of cultural openings and events that brands can naturally align around.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>10 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 11 · LONDON · NICHES + REG + R/W ════════════ -->
+<article class="page city-summary acc-b" data-screen-label="11 London Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 02 · London</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 11</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in London</h3>
+      <div class="niches">
+        <span class="niche">Fashion</span>
+        <span class="niche">Beauty</span>
+        <span class="niche">Food &amp; hospitality</span>
+        <span class="niche">Lifestyle &amp; home</span>
+        <span class="niche">Finance &amp; personal finance</span>
+        <span class="niche">Tech &amp; gaming</span>
+        <span class="niche">Sustainability</span>
+        <span class="niche">Arts &amp; culture</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>ASA (United Kingdom)</div>
+      <p>The ASA's influencer marketing guidelines are among the most clearly defined in the world. Disclosure must appear at the very start of captions and descriptions — before body copy. Acceptable labels: "Ad", "Advert", "Advertising", "Paid Partnership", "Sponsored". Gifted product requires disclosure if there is any expectation of coverage, explicit or implicit. Brand liability for non-compliant creator content is established and enforced.</p>
+    </div>
+    <div class="rw-grid acc-b">
+      <div class="right">
+        <h4><span class="ico">✓</span>What Brands Get Right</h4>
+        <p>Building genuine long-term creator relationships rather than transactional one-off partnerships, engaging authentically with London's cultural calendar, respecting the British creator's voice and aesthetic rather than over-scripting content, and investing in ASA compliance as a non-negotiable standard.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Applying US campaign templates without adaptation for British cultural sensibility. Under-investing in compliance management. Treating London as simply the UK — missing the city's specific cultural authority and the creator relationships that come with genuine London market presence.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>11 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 03 · NEW YORK CITY (Grey/Dark accent)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 12 · NYC OPENER ════════════ -->
+<article class="page city-opener acc-g" data-screen-label="12 NYC">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 03</span><span>New York City</span><span>Pg 12</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-nyc.jpg'); background-position:center 30%;">
+    <span class="market-pill"><span class="dot"></span>Market 03 · Professional Capital</span>
+    <span class="tag-tr">United States · East</span>
+    <div class="name">
+      <h1>New York.</h1>
+      <div class="loc"><span class="num">03</span>United States</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>The global capital of influencer marketing by most measures.</h2>
+    <p class="lede">Home to the highest concentration of professional content creators in the world, the most sophisticated brand partnership market anywhere, and cultural output that drives global trends across fashion, food, media, finance, and art simultaneously.</p>
+    <div class="col2">
+      <p>NYC creators approach brand partnerships with a level of commercial professionalism — formal representation, detailed contracts, clear rate cards, structured approval processes — that reflects the city's status as the home of the global media and advertising industries.</p>
+      <p>Brands entering the NYC creator market for the first time should expect to operate at the highest level of professional standards. The infrastructure is mature; the expectations of working creators are high.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>12 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 13 · NYC · PLATFORM + CALENDAR ════════════ -->
+<article class="page city-detail acc-g" data-screen-label="13 NYC Platforms">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 03 · NYC</span><span>Platform Landscape</span><span>Pg 13</span></span>
+  </header>
+  <div class="body">
+    <div class="ph-row">
+      <div>
+        <h3>Platform Landscape <span class="pcity">New York</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">The dominant consumer influencer platform in NYC, with a mature creator ecosystem that has been operating at a professional level for over a decade.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Grown rapidly in New York and now essential for brands targeting younger consumers. NYC TikTok creators have contributed significantly to the platform's most viral trends.</div><div class="tag">Essential</div></div>
+          <div class="plat"><div class="n">LinkedIn</div><div class="d">Highly relevant given New York's extraordinary concentration of financial services, media, advertising, fashion, and technology industries. NYC LinkedIn creators — particularly in finance, marketing, and media — have among the most commercially valuable professional audiences globally.</div><div class="tag">B2B</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Maintains importance for beauty, food, finance, and entertainment content.</div><div class="tag">Strong</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Calendar</h3>
+        <h4>Professional sophistication is the defining characteristic.</h4>
+        <p>NYC creators are commercially experienced, often represented, and operate within the framework of an industry that has been professionalising for over a decade. Brands that approach the market with clear commercial terms, professional contracts, and genuine creative collaboration consistently access better talent than those that approach it casually.</p>
+        <p><strong>New York Fashion Week</strong> (February for AW, September for SS) opens the international fashion week calendar and is the most significant US creator activation opportunity for fashion brands.</p>
+        <p>The NYC cultural calendar provides year-round opportunities: <strong>the Met Gala, New York Art Week, the US Open, Tribeca Film Festival,</strong> and a constant stream of openings and launches.</p>
+        <p><strong>FTC compliance</strong> is actively enforced in the US market, with brand liability established for non-compliant creator content. Compliance management is non-negotiable.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>13 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 14 · NYC · NICHES + REG + R/W ════════════ -->
+<article class="page city-summary acc-g" data-screen-label="14 NYC Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 03 · NYC</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 14</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in New York City</h3>
+      <div class="niches">
+        <span class="niche">Fashion</span>
+        <span class="niche">Food &amp; hospitality</span>
+        <span class="niche">Beauty</span>
+        <span class="niche">Finance &amp; personal finance</span>
+        <span class="niche">Ecommerce &amp; DTC</span>
+        <span class="niche">Arts &amp; culture</span>
+        <span class="niche">Media &amp; entertainment</span>
+        <span class="niche">B2B &amp; professional services</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>FTC + California State Law</div>
+      <p>The FTC requires clear and conspicuous disclosure of all material connections between creators and brands. Disclosure must be unavoidable — at the start of captions, visible without expanding truncated text, and stated verbally at the start of video content. The FTC extended brand liability for non-compliant creator content in its 2023 guidance update. California has additional state-level digital advertising legislation.</p>
+    </div>
+    <div class="rw-grid acc-g">
+      <div class="right">
+        <h4><span class="ico">✓</span>What Brands Get Right</h4>
+        <p>Operating at a professional level that matches NYC creator expectations, engaging with NYFW and the city's cultural calendar, investing in LinkedIn for B2B campaigns, and leveraging the city's visual identity as a global content asset.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Underestimating the commercial sophistication of NYC creators and their representatives. Approaching top-tier creators without professional contracts and clear commercial terms. Ignoring FTC compliance as a non-negotiable operating standard.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>14 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 04 · LOS ANGELES & BEVERLY HILLS (Pink accent)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 15 · LA OPENER ════════════ -->
+<article class="page city-opener acc-p" data-screen-label="15 LA">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 04</span><span>Los Angeles &amp; Beverly Hills</span><span>Pg 15</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-la-1.jpg'); background-position:center 35%;">
+    <span class="market-pill"><span class="dot"></span>Market 04 · Entertainment Crossover</span>
+    <span class="tag-tr">California · West Coast</span>
+    <div class="name">
+      <h1>Los Angeles.</h1>
+      <div class="loc"><span class="num">04</span>&amp; Beverly Hills</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>Where the creator economy was born — and where it remains most deeply embedded in the cultural infrastructure of a city.</h2>
+    <p class="lede">The entertainment industry ecosystem that has defined LA for a century extended naturally into the digital age, producing a creator community of extraordinary professional sophistication and scale.</p>
+    <div class="col2">
+      <p><strong>Beverly Hills</strong> is the luxury epicentre within the LA market — a distinct micro-market whose creator community produces ultra-luxury lifestyle content that has no equivalent anywhere in the world in terms of visual quality, audience affluence, and cultural authority.</p>
+      <p>The line between traditional celebrity and digital creator is thinner in LA than anywhere else. Many of LA's most commercially valuable creators have entertainment careers alongside their social media presence.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>15 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 16 · LA · FEATURE + PLATFORM ════════════ -->
+<article class="page city-feature acc-p" data-screen-label="16 LA Feature">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 04 · LA</span><span>Platform Landscape</span><span>Pg 16</span></span>
+  </header>
+  <div class="body">
+    <div class="img-wrap" style="background-image:url('assets/city-la-2.jpg'); background-position:center 40%;">
+      <div class="cap">Above — Los Angeles at golden hour. The city's visual environment is a deeply embedded content asset.</div>
+    </div>
+    <div class="ph-row" style="display:grid; grid-template-columns:1.05fr 1fr; gap:32px;">
+      <div>
+        <h3>Platform Landscape <span class="pcity">Los Angeles</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">The dominant platform for LA creator partnerships across fashion, beauty, lifestyle, and luxury categories. LA's visual culture — year-round sunshine, diverse landscapes, and architectural environment — is deeply embedded in Instagram.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Particularly deep roots in LA. The city produced many of YouTube's first major creators, and the platform remains highly important for long-form content across entertainment, beauty, lifestyle, and tech.</div><div class="tag">Deep roots</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Grown rapidly in LA and now essential for brands targeting younger consumers. LA's entertainment culture translates naturally into TikTok's entertainment-forward format.</div><div class="tag">Essential</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Nuances</h3>
+        <h4>Entertainment industry crossover is defining.</h4>
+        <p>Brands that access the intersection of traditional celebrity and digital creator — partnerships that carry entertainment industry credibility — access a uniquely powerful commercial combination.</p>
+        <p><strong>Beverly Hills luxury creator partnerships</strong> require the same approach as luxury influencer marketing globally — selectivity, aesthetic discipline, long-term relationship thinking — but with the added dimension of genuine celebrity-adjacent audience access that is uniquely available in this market.</p>
+        <p><strong>Production quality expectations are highest in LA.</strong> The city's entertainment infrastructure means that creator content produced here can reach advertising-standard production quality. Brands investing in LA campaigns should consider production support as part of their budget.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>16 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 17 · LA · NICHES + REG + R/W ════════════ -->
+<article class="page city-summary acc-p" data-screen-label="17 LA Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 04 · LA</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 17</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in LA &amp; Beverly Hills</h3>
+      <div class="niches">
+        <span class="niche">Luxury lifestyle (Beverly Hills)</span>
+        <span class="niche">Beauty</span>
+        <span class="niche">Fitness &amp; wellness</span>
+        <span class="niche">Entertainment &amp; pop culture</span>
+        <span class="niche">Fashion</span>
+        <span class="niche">Food &amp; restaurant content</span>
+        <span class="niche">Tech &amp; gaming</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>FTC + California State Law</div>
+      <p>FTC requirements apply as throughout the US market. California has additional state-level digital advertising legislation that may be relevant for data collection and targeted advertising associated with influencer campaigns. Treat compliance management as a non-negotiable operating standard, not a final-stage checklist item.</p>
+    </div>
+    <div class="rw-grid acc-p">
+      <div class="right">
+        <h4><span class="ico">✓</span>What Brands Get Right</h4>
+        <p>Leveraging the entertainment industry crossover, investing in production quality that matches the city's standards, engaging Beverly Hills creator relationships for luxury campaigns, and recognising the city's visual environment as a genuine content asset.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Underestimating the professional infrastructure of the LA creator market — the agency representation, the production expectations, and the commercial sophistication. Treating Beverly Hills luxury partnerships as simply expensive Instagram posts rather than strategic cultural positioning decisions.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>17 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 05 · MIAMI (Coral/orange accent)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 18 · MIAMI OPENER ════════════ -->
+<article class="page city-opener" style="--acc:#FF8A4A; --acc-deep:#E66B2A; --acc-soft:#FFE0CD;" data-screen-label="18 Miami">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 05</span><span>Miami · Florida</span><span>Pg 18</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-miami-1.jpg'); background-position:center 35%;">
+    <span class="market-pill"><span class="dot"></span>Market 05 · Bilingual Gateway</span>
+    <span class="tag-tr">Florida · Gulf Coast</span>
+    <div class="name">
+      <h1>Miami.</h1>
+      <div class="loc"><span class="num">05</span>United States · LATAM gateway</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>A unique strategic position — simultaneously a US city and a gateway to Latin America.</h2>
+    <p class="lede">Miami sits in a category of its own — a US influencer market with one of the most visually extraordinary environments on earth and an event calendar that attracts global brand and creator attention throughout the year.</p>
+    <div class="col2">
+      <p>The city's bilingual, bicultural character is its most distinctive commercial asset. Miami-based Spanish-language creators reach audiences across Colombia, Venezuela, Mexico, Argentina, and beyond.</p>
+      <p>For brands, this gives efficient access to Latin American consumer markets through US-based creator partnerships with familiar commercial frameworks — a combination available nowhere else.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>18 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 19 · MIAMI · FEATURE + PLATFORM ════════════ -->
+<article class="page city-feature" style="--acc:#FF8A4A; --acc-deep:#E66B2A; --acc-soft:#FFE0CD;" data-screen-label="19 Miami Feature">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 05 · Miami</span><span>Platform Landscape</span><span>Pg 19</span></span>
+  </header>
+  <div class="body">
+    <div class="img-wrap" style="background-image:url('assets/city-miami-2.jpg'); background-position:center 30%;">
+      <div class="cap">Above — Miami's bilingual creator community is the market's defining strategic asset.</div>
+    </div>
+    <div class="ph-row" style="display:grid; grid-template-columns:1.05fr 1fr; gap:32px;">
+      <div>
+        <h3>Platform Landscape <span class="pcity">Miami</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">The dominant platform for Miami lifestyle, fashion, and luxury content. The city's visual environment is among the most distinctive on the platform globally.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Significant for younger audiences and for Spanish-language content reaching Latin American markets. Miami-produced Spanish-language TikTok content reaches extraordinary audiences across the Western Hemisphere.</div><div class="tag">LATAM reach</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Important for Spanish-language long-form content with Latin American reach.</div><div class="tag">Long-form</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Nuances</h3>
+        <h4>The bilingual opportunity is the market's defining strategic asset.</h4>
+        <p>Brands targeting US Hispanic consumers and Latin American markets should treat Miami as their primary creator hub — the combination of US commercial infrastructure and genuine Latin American cultural authenticity is available nowhere else in the same way.</p>
+        <p><strong>Art Basel Miami Beach (December)</strong> is one of the most important global influencer marketing activation moments of the year — concentrating luxury, cultural, and creator attention in the city for one week. Plan activations three to four months in advance.</p>
+        <p><strong>Ultra Music Festival, Miami Grand Prix (F1),</strong> and <strong>Miami Swim Week</strong> provide additional premium activation opportunities throughout the year.</p>
+        <p><strong>Cultural authenticity in Spanish-language content is non-negotiable.</strong> Translated English content is immediately identifiable and performs poorly.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>19 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 20 · MIAMI · NICHES + REG + R/W ════════════ -->
+<article class="page city-summary" style="--acc:#FF8A4A; --acc-deep:#E66B2A; --acc-soft:#FFE0CD;" data-screen-label="20 Miami Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 05 · Miami</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 20</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in Miami</h3>
+      <div class="niches">
+        <span class="niche">Lifestyle &amp; travel</span>
+        <span class="niche">Fitness &amp; wellness</span>
+        <span class="niche">Fashion</span>
+        <span class="niche">Food &amp; hospitality</span>
+        <span class="niche">Latin lifestyle &amp; culture</span>
+        <span class="niche">Luxury &amp; automotive</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>FTC (US) + LATAM frameworks</div>
+      <p>FTC requirements apply as throughout the US market. For content targeting Latin American markets, the regulatory framework of the target country applies — seek advice on specific market requirements for major Latin American markets if running coordinated cross-border campaigns.</p>
+    </div>
+    <div class="rw-grid" style="--acc:#FF8A4A; --acc-deep:#E66B2A;">
+      <div class="right">
+        <h4 style="color:#E66B2A; border-color:#FF8A4A;"><span class="ico" style="background:#FF8A4A; color:#fff;">✓</span>What Brands Get Right</h4>
+        <p>Leveraging the bilingual creator community for Latin American market reach, planning around Art Basel and the Miami event calendar, and investing in the Miami lifestyle aesthetic for globally aspirational content.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Treating Miami as simply a warm-weather version of New York or LA — missing the bilingual market opportunity entirely. Producing translated English content rather than genuinely Spanish-language content for Latin American audiences.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>20 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════════════════════════════════════════════════
+ * MARKET 06 · PARIS (Rose accent — distinct from Pink)
+ * ═══════════════════════════════════════════════════════════ -->
+
+<!-- ════════════ PAGE 21 · PARIS OPENER ════════════ -->
+<article class="page city-opener" style="--acc:#C76B7B; --acc-deep:#A04A5C; --acc-soft:#F4D5DC;" data-screen-label="21 Paris">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 06</span><span>Paris · France</span><span>Pg 21</span></span>
+  </header>
+  <div class="hero" style="background-image:url('assets/city-paris.jpg'); background-position:center 30%;">
+    <span class="market-pill"><span class="dot"></span>Market 06 · Aesthetic Authority</span>
+    <span class="tag-tr">République Française</span>
+    <div class="name">
+      <h1>Paris.</h1>
+      <div class="loc"><span class="num">06</span>France</div>
+    </div>
+  </div>
+  <div class="body">
+    <span class="ey">Market Overview</span>
+    <h2>The world's most culturally authoritative influencer market for luxury, fashion, and beauty brands.</h2>
+    <p class="lede">Paris's creator community produces content with a distinctive aesthetic sensibility — understated, editorial, and elegant — that is recognised and aspired to globally and that carries cultural authority no other market can replicate.</p>
+    <div class="col2">
+      <p>For luxury and fashion brands specifically, Paris creator partnerships are a cultural positioning decision as much as a media investment. Being associated with the right Parisian creators signals brand alignment with the values of craft, taste, and elegance that define French cultural output at its best.</p>
+      <p>That alignment is earned, not bought. The brands that succeed in Paris build creator relationships year-round; the brands that fail try to compress the relationship into the week of Fashion Week itself.</p>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>21 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 22 · PARIS · PLATFORM + CALENDAR ════════════ -->
+<article class="page city-detail" style="--acc:#C76B7B; --acc-deep:#A04A5C; --acc-soft:#F4D5DC;" data-screen-label="22 Paris Platforms">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 06 · Paris</span><span>Platform Landscape</span><span>Pg 22</span></span>
+  </header>
+  <div class="body">
+    <div class="ph-row">
+      <div>
+        <h3>Platform Landscape <span class="pcity">Paris</span></h3>
+        <div class="plat-list">
+          <div class="plat dom"><div class="n">Instagram</div><div class="d">The primary platform for Paris influencer marketing across fashion, beauty, luxury, and lifestyle categories.</div><div class="tag">Dominant</div></div>
+          <div class="plat"><div class="n">TikTok</div><div class="d">Grown significantly in France and now important for younger consumer brands. French TikTok fashion and beauty content has a strong international following.</div><div class="tag">Rising</div></div>
+          <div class="plat"><div class="n">YouTube</div><div class="d">Maintains significance for long-form beauty, fashion, and lifestyle content. French YouTube creators in the beauty category have historically been among the platform's most-followed internationally.</div><div class="tag">Long-form</div></div>
+        </div>
+      </div>
+      <div class="culture">
+        <h3 style="margin-bottom:14px">Cultural Nuances</h3>
+        <h4>The Parisian aesthetic sensibility is the defining characteristic.</h4>
+        <p>French creator content favours understatement, editorial composition, and an effortless quality — the concept of <em>sprezzatura</em> applied to content creation. Brands that brief against this sensibility produce content that feels inauthentic to the French market.</p>
+        <p><strong>Paris Fashion Week</strong> (March for AW, October for SS) is the final and most prestigious event in the international fashion week calendar. Creator relationships for Paris Fashion Week must be built year-round — top creators are committed many months in advance. Plan PFW creator invitations a minimum of <strong>six months</strong> ahead.</p>
+        <p><strong>French regulatory compliance</strong> is mandatory and actively enforced. France's 2023 influencer marketing law is specific and comprehensive. Brand liability is explicitly established. Non-compliance carries real risk.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>22 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════ PAGE 23 · PARIS · NICHES + REG + R/W ════════════ -->
+<article class="page city-summary" style="--acc:#C76B7B; --acc-deep:#A04A5C; --acc-soft:#F4D5DC;" data-screen-label="23 Paris Summary">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market 06 · Paris</span><span>Niches · Regulator · Right &amp; Wrong</span><span>Pg 23</span></span>
+  </header>
+  <div class="body">
+    <div>
+      <h3 style="font-weight:800; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--fg-1); display:flex; align-items:center; gap:10px; margin:0 0 12px;"><span style="display:inline-block; width:24px; height:3px; background:var(--acc);"></span>Key Niches in Paris</h3>
+      <div class="niches">
+        <span class="niche">Fashion (global gold standard)</span>
+        <span class="niche">Luxury</span>
+        <span class="niche">Beauty (particularly skincare)</span>
+        <span class="niche">Food &amp; gastronomy</span>
+        <span class="niche">Lifestyle &amp; travel</span>
+        <span class="niche">Arts &amp; culture</span>
+      </div>
+    </div>
+    <div class="reg-block">
+      <div class="reg-key"><span class="sub">Regulator</span>ARPP · French Influence Law · GDPR</div>
+      <p>France's <em>Loi Encadrant l'Influence Commerciale</em> (2023) establishes specific obligations for both influencers and brands — disclosure as "Publicité" or "Collaboration commerciale", prohibition of certain financial product and aesthetic surgery promotion, and explicit brand liability for non-compliant content. The EU Digital Services Act adds additional transparency requirements. GDPR applies to all data collection. Seek French legal advice before running first-time Paris campaigns.</p>
+    </div>
+    <div class="rw-grid" style="--acc:#C76B7B; --acc-deep:#A04A5C;">
+      <div class="right">
+        <h4 style="color:#A04A5C; border-color:#C76B7B;"><span class="ico" style="background:#C76B7B; color:#fff;">✓</span>What Brands Get Right</h4>
+        <p>Building year-round creator relationships rather than transactional Paris Fashion Week activations, respecting the Parisian aesthetic sensibility in creative briefing, investing in genuine compliance management for French regulatory requirements, and leveraging the bilingual reach of Parisian creators to access both French and international English-speaking audiences simultaneously.</p>
+      </div>
+      <div class="wrong">
+        <h4><span class="ico">✕</span>What Brands Get Wrong</h4>
+        <p>Arriving at Paris Fashion Week without established creator relationships and expecting top-tier access. Over-scripting briefs in a way that conflicts with the French creator's aesthetic sensibility. Ignoring French regulatory requirements and assuming UK or US compliance standards are sufficient.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>23 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 24 · CROSS-MARKET STRATEGY (Sequencing) ════════════════ -->
+<article class="page strat" data-screen-label="24 Strategy 1">
+  <header class="pg-strip dark">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Cross-Market Strategy</span><span>Sequencing</span><span>Pg 24</span></span>
+  </header>
+  <div class="top">
+    <span class="ey">Cross-Market Strategy</span>
+    <h2>Building a multi-city <span class="y">programme.</span></h2>
+    <p>For brands building international influencer marketing programmes, market sequencing matters. A functioning programme in one market builds the muscle for the next; a global template applied uniformly gets diminishing returns the further it travels from the home market.</p>
+  </div>
+  <div class="body">
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <div>
+          <h4>Start with your primary consumer market.</h4>
+          <p>Build a functioning programme in your most important revenue market before expanding. Get the strategy, creator relationships, and operational infrastructure right in one market before replicating it elsewhere.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n nb">02</div>
+        <div>
+          <h4>Expand to adjacent markets with shared infrastructure.</h4>
+          <p>London and New York share language and broadly similar regulatory frameworks — brands active in one can expand to the other with less adaptation than entering Dubai or Paris simultaneously. Plan for shared learnings between adjacent markets explicitly.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="n np">03</div>
+        <div>
+          <h4>Enter culturally distinct markets with local expertise.</h4>
+          <p>Dubai, Paris, and Miami (for Spanish-language reach) require genuine local market knowledge. Partner with an agency that has active creator relationships and regulatory expertise in these markets rather than attempting to operate them from a distance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>24 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 25 · STRATEGY (Coordination) ════════════════ -->
+<article class="page coord" data-screen-label="25 Strategy 2">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Cross-Market Strategy</span><span>Coordination</span><span>Pg 25</span></span>
+  </header>
+  <div class="body">
+    <span class="ey">Cross-Market Strategy · Coordination</span>
+    <h2>Coordinating <span class="y">multi-city</span> campaigns.</h2>
+    <p class="intro">For brands running coordinated campaigns across multiple cities simultaneously — fashion week activations, global product launches — four operating principles consistently separate successful programmes from disappointing ones.</p>
+    <div class="grid">
+      <div class="card">
+        <div class="ic">01</div>
+        <h4>Lead market strategy</h4>
+        <p>Define which city drives the campaign direction, with other markets adapting rather than running independent campaigns in parallel. A clear lead market prevents brand voice fragmentation.</p>
+      </div>
+      <div class="card">
+        <div class="ic">02</div>
+        <h4>Creator network consistency</h4>
+        <p>Where possible, work with creators across markets who share aesthetic sensibility and audience demographic profile — the campaign reads as deliberate, not pieced together.</p>
+      </div>
+      <div class="card">
+        <div class="ic">03</div>
+        <h4>Compliance management</h4>
+        <p>Each market has distinct regulatory requirements — build a compliance checklist per market rather than applying a single global standard. The lowest-common-denominator standard is rarely sufficient anywhere.</p>
+      </div>
+      <div class="card">
+        <div class="ic">04</div>
+        <h4>Content localisation</h4>
+        <p>Adapt content for cultural context, language, and platform behaviour in each market — not just translation but genuine creative localisation. Translated copy and recycled assets read as exactly that.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>25 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 26 · MARKET COMPARISON ════════════════ -->
+<article class="page compare" data-screen-label="26 Comparison">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>Market Comparison</span><span>Pg 26</span></span>
+  </header>
+  <div class="body">
+    <span class="ey">Market Comparison Summary</span>
+    <h2>Six markets, <span class="y">side by side.</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th><span style="color:var(--lmg-yellow-deep)">Dubai</span></th>
+          <th><span style="color:var(--lmg-blue)">London</span></th>
+          <th>New York</th>
+          <th><span style="color:var(--lmg-pink)">Los Angeles</span></th>
+          <th><span style="color:#FF8A4A">Miami</span></th>
+          <th><span style="color:#C76B7B">Paris</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cat">Defining characteristic</td>
+          <td>Luxury + multicultural</td>
+          <td>Cultural credibility</td>
+          <td>Professional sophistication</td>
+          <td>Entertainment crossover</td>
+          <td>Bilingual + events</td>
+          <td>Aesthetic authority</td>
+        </tr>
+        <tr>
+          <td class="cat">Primary platform</td>
+          <td>Instagram</td>
+          <td>Instagram</td>
+          <td>Instagram</td>
+          <td>Instagram + YouTube</td>
+          <td>Instagram + TikTok</td>
+          <td>Instagram</td>
+        </tr>
+        <tr>
+          <td class="cat">Top niches</td>
+          <td>Luxury, lifestyle</td>
+          <td>Fashion, beauty, food</td>
+          <td>Fashion, food, finance</td>
+          <td>Luxury, beauty, fitness</td>
+          <td>Lifestyle, Latin culture</td>
+          <td>Fashion, luxury, beauty</td>
+        </tr>
+        <tr>
+          <td class="cat">Key annual moment</td>
+          <td>Ramadan</td>
+          <td>London Fashion Week</td>
+          <td>NYFW</td>
+          <td>Year-round</td>
+          <td>Art Basel Miami</td>
+          <td>Paris Fashion Week</td>
+        </tr>
+        <tr>
+          <td class="cat">Regulatory body</td>
+          <td>National Media Council</td>
+          <td>ASA (UK)</td>
+          <td>FTC (US)</td>
+          <td>FTC + California</td>
+          <td>FTC (US)</td>
+          <td>ARPP + French Law</td>
+        </tr>
+        <tr>
+          <td class="cat">Primary market challenge</td>
+          <td>Cultural calendar adaptation</td>
+          <td>ASA compliance</td>
+          <td>Professional creator expectations</td>
+          <td>Entertainment infrastructure</td>
+          <td>Bilingual content strategy</td>
+          <td>Regulatory compliance + aesthetic briefing</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="legend">
+      <span class="lk"><span class="dot" style="background:var(--lmg-yellow-deep)"></span>Dubai</span>
+      <span class="lk"><span class="dot" style="background:var(--lmg-blue)"></span>London</span>
+      <span class="lk"><span class="dot" style="background:var(--fg-1)"></span>New York</span>
+      <span class="lk"><span class="dot" style="background:var(--lmg-pink)"></span>Los Angeles</span>
+      <span class="lk"><span class="dot" style="background:#FF8A4A"></span>Miami</span>
+      <span class="lk"><span class="dot" style="background:#C76B7B"></span>Paris</span>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>26 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 27 · ABOUT / CTA ════════════════ -->
+<article class="page about" data-screen-label="27 About">
+  <header class="pg-strip">
+    <span class="lmg">LMG<span class="m">MEDIA</span></span>
+    <span class="meta-r"><span>About LMG Media</span><span>Pg 27</span></span>
+  </header>
+  <div class="top">
+    <span class="global-pill"><span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--lmg-pink); margin-right:8px; vertical-align:middle;"></span>Active in markets worldwide</span>
+    <p class="tagline">From the six in this guide — and the next six on the horizon.</p>
+  </div>
+  <div class="body">
+    <span class="ey">About LMG Media</span>
+    <h2>Where Quality Brands Meet <span class="y">Iconic Influence.</span></h2>
+    <div class="col2">
+      <p>LMG Media is an influencer marketing agency with active creator networks and campaign experience across all six markets covered in this guide. We connect brands with the right creators in <strong>Dubai, London, New York, Los Angeles, Beverly Hills, Miami,</strong> and <strong>Paris</strong> — navigating the cultural, regulatory, and commercial nuances of each market on behalf of brands operating locally and internationally.</p>
+      <p>Our network extends to additional markets including <strong>Sydney</strong> and other emerging influencer marketing capitals, with the same approach we bring to the six covered here: deep local relationships, fluency in the cultural calendar, and respect for the regulatory environment of every market we operate in.</p>
+      <p>If you would like support building a single-market or multi-city influencer marketing programme, get in touch.</p>
+      <p style="font-size:11px; color:var(--fg-3); font-style:italic;">Market data and regulatory information in this guide reflects LMG Media's research and campaign experience as of 2026. Regulatory requirements are subject to change — always verify current standards with qualified local legal counsel before launching campaigns in new markets.</p>
+    </div>
+    <div class="cta-row">
+      <a class="btn" href="https://lmg.media">Start Your Campaign →</a>
+      <a class="btn outline" href="https://lmg.media">Get in Touch</a>
+      <span class="web">lmg.media</span>
+    </div>
+  </div>
+  <footer class="pg-strip foot">
+    <span>lmg.media</span>
+    <span class="meta-r"><span>Where Quality Brands Meet Iconic Influence</span><span>27 / 28</span></span>
+  </footer>
+</article>
+
+<!-- ════════════════ PAGE 28 · BACK COVER ════════════════ -->
+<article class="page back" data-screen-label="28 Back">
+  <div class="body">
+    <div class="lmg-mark">LMG<span class="m">MEDIA</span></div>
+    <p class="tag">Where Quality Brands Meet <span class="y">Iconic</span> <span class="p">Influence</span>.</p>
+    <div class="grid">
+      <div class="c">Dubai</div>
+      <div class="c">London</div>
+      <div class="c">New York</div>
+      <div class="c">Los Angeles</div>
+      <div class="c">Miami</div>
+      <div class="c">Paris</div>
+    </div>
+    <div class="meta">
+      <span>Resource Series · 08 · 2026</span>
+      <span class="web">lmg.media</span>
+    </div>
+  </div>
+</article>
+
+</body>
+</html>

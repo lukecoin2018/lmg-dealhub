@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Colors" name="Semantic Colors" subtitle="Foreground / background / success / warning / danger tokens" viewport="700x320" --><html><head><meta charset="utf-8"><title>Semantic Colors</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .pair { display: flex; align-items: stretch; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-1); min-width: 200px; flex: 1; }
+  .pair .left { width: 8px; }
+  .pair .body { padding: 10px 14px; font-size: 12px; line-height: 1.35; flex: 1; }
+  .pair .name { font-weight: 600; color: var(--fg-1); }
+  .pair .var  { font-family: var(--font-mono); color: var(--fg-2); font-size: 11px; }
+</style>
+</head><body class="card">
+<div class="row">
+  <div class="pair"><div class="left" style="background: var(--fg-1)"></div><div class="body"><div class="name">Foreground · Primary</div><div class="var">--fg-1 → #3A3A3A</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--fg-2)"></div><div class="body"><div class="name">Foreground · Secondary</div><div class="var">--fg-2 → #6D6B65</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--fg-3)"></div><div class="body"><div class="name">Foreground · Muted</div><div class="var">--fg-3 → #9C9A91</div></div></div>
+</div>
+<div class="row">
+  <div class="pair"><div class="left" style="background: var(--bg-1); border-right: 1px solid var(--border-1)"></div><div class="body"><div class="name">Background · Page</div><div class="var">--bg-1 → #FFFFFF</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--bg-2)"></div><div class="body"><div class="name">Background · Alt section</div><div class="var">--bg-2 → #FAFAF8</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--bg-3)"></div><div class="body"><div class="name">Background · Card on alt</div><div class="var">--bg-3 → #F4F3EF</div></div></div>
+</div>
+<div class="row">
+  <div class="pair"><div class="left" style="background: var(--success)"></div><div class="body"><div class="name">Success</div><div class="var">--success → #2BB673</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--warning)"></div><div class="body"><div class="name">Warning</div><div class="var">--warning → #E6B800</div></div></div>
+  <div class="pair"><div class="left" style="background: var(--danger)"></div><div class="body"><div class="name">Danger</div><div class="var">--danger → #E04C4C</div></div></div>
+</div>
+</body></html>

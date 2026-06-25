@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Spacing Scale" subtitle="4-px base scale, –space-1 → –space-32" viewport="700x360" --><html><head><meta charset="utf-8"><title>Spacing</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .scale { display:flex; flex-direction:column; gap:8px; }
+  .row-s { display:flex; align-items:center; gap:14px; }
+  .row-s .bar { background: var(--lmg-yellow); height: 14px; border-radius: 3px; }
+  .row-s .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); width: 110px; }
+  .row-s .val { font-size: 11px; color: var(--fg-3); }
+</style>
+</head><body class="card">
+  <div class="scale">
+    <div class="row-s"><span class="lbl">--space-1</span><span class="bar" style="width:4px"></span><span class="val">4 px</span></div>
+    <div class="row-s"><span class="lbl">--space-2</span><span class="bar" style="width:8px"></span><span class="val">8 px</span></div>
+    <div class="row-s"><span class="lbl">--space-3</span><span class="bar" style="width:12px"></span><span class="val">12 px</span></div>
+    <div class="row-s"><span class="lbl">--space-4</span><span class="bar" style="width:16px"></span><span class="val">16 px · default</span></div>
+    <div class="row-s"><span class="lbl">--space-5</span><span class="bar" style="width:20px"></span><span class="val">20 px</span></div>
+    <div class="row-s"><span class="lbl">--space-6</span><span class="bar" style="width:24px"></span><span class="val">24 px · card padding</span></div>
+    <div class="row-s"><span class="lbl">--space-8</span><span class="bar" style="width:32px"></span><span class="val">32 px</span></div>
+    <div class="row-s"><span class="lbl">--space-10</span><span class="bar" style="width:40px"></span><span class="val">40 px</span></div>
+    <div class="row-s"><span class="lbl">--space-12</span><span class="bar" style="width:48px"></span><span class="val">48 px · section pad-y small</span></div>
+    <div class="row-s"><span class="lbl">--space-16</span><span class="bar" style="width:64px"></span><span class="val">64 px</span></div>
+    <div class="row-s"><span class="lbl">--space-20</span><span class="bar" style="width:80px"></span><span class="val">80 px</span></div>
+    <div class="row-s"><span class="lbl">--space-24</span><span class="bar" style="width:96px"></span><span class="val">96 px · between sections</span></div>
+    <div class="row-s"><span class="lbl">--space-32</span><span class="bar" style="width:128px"></span><span class="val">128 px · hero block</span></div>
+  </div>
+</body></html>

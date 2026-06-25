@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources §4 — Magazine pile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--neutral-100); color: var(--fg-1); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance; }
+  .doc-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 780px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  .dir { margin-top: 56px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--fg-3); border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px; }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 22px; max-width: 900px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2); background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm); padding: 7px 12px; }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); } .anno .inter svg { color: var(--lmg-blue); } .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); } .frame.is-light { background: var(--neutral-0); }
+  .frame-tab { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 18px; font-weight: 600; }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── Section shell ───────────────────────────────────── */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.4vw, 60px) clamp(26px, 3.4vw, 52px) clamp(26px,3vw,38px); }
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 8px; flex-wrap: wrap; }
+  .rs-eyebrow { font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; padding: 11px 18px; border-radius: var(--r-pill); border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap; transition: border-color .16s, background .16s, gap .16s; }
+  .rs-viewall svg { width: 16px; height: 16px; } .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ════════════ COVER ENGINE — magazine silhouette (SQUARE corners) ════════════ */
+  .cover { position: relative; container-type: inline-size; aspect-ratio: 3 / 4; width: 100%; border-radius: 1px; overflow: hidden; background: var(--neutral-300); user-select: none; }
+  /* crisp printed edge — a hairline, not a rounded glossy bevel */
+  .cover::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 6; box-shadow: inset 0 0 0 1px rgba(0,0,0,.05), inset 0 1px 0 0 rgba(255,255,255,.12); }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  .cov-block { background: linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%), linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%); }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines { position: absolute; inset: 0; opacity: .9; pointer-events: none; background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%); }
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92; }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+  .cov-dl { display: none; }
+
+  /* ════════════ THE PILE — contained, dense, centered ════════════ */
+  .stage-wrap { display: flex; justify-content: center; }
+  .stage { position: relative; width: min(740px, 100%); aspect-ratio: 740 / 470; margin: 8px auto 0; }
+  @media (max-width: 560px) { .stage { aspect-ratio: 360 / 470; } }
+  /* global pile scale — guarantees the wider fan still sits inside the stage with margin */
+  .pile { position: absolute; inset: 0; transform: scale(var(--pile-scale, .92)); transform-origin: 50% 50%; }
+  @media (max-width: 560px) { .pile { --pile-scale: .98; } }
+  /* soft contact shadow grounding the whole pile on the surface */
+  .pile-floor { position: absolute; left: 50%; bottom: 4%; width: 64%; height: 12%; transform: translateX(-50%); z-index: 0; border-radius: 50%; background: radial-gradient(closest-side, rgba(10,8,6,.30), transparent 78%); filter: blur(6px); }
+  .lmg-dark .pile-floor { background: radial-gradient(closest-side, rgba(0,0,0,.6), transparent 78%); }
+
+  .mag { position: absolute; cursor: pointer; text-decoration: none; will-change: transform;
+    transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl, 1));
+    transition: transform .36s var(--ease-out), filter .36s; }
+  .mag .cover {
+    /* page-block thickness (hard cream offsets) + soft drop shadow for real depth */
+    box-shadow:
+      1.5px 1.5px 0 0 #f1ead9,
+      3px 3px 0 0 #e7dfca,
+      4.5px 4.5px 0 0 #dcd3ba,
+      0 24px 38px -14px rgba(10,8,6,.5),
+      0 8px 16px -6px rgba(10,8,6,.34);
+    filter: brightness(var(--br, 1));
+    transition: box-shadow .36s, filter .36s;
+  }
+  .lmg-dark .mag .cover {
+    box-shadow:
+      1.5px 1.5px 0 0 #efe7d4,
+      3px 3px 0 0 #ddd4bd,
+      4.5px 4.5px 0 0 #c9c0a6,
+      0 26px 44px -14px rgba(0,0,0,.72),
+      0 8px 18px -6px rgba(0,0,0,.55);
+  }
+  .mag:hover { transform: translate(-50%, -56%) rotate(0deg) scale(1.08); z-index: 999 !important; }
+  .mag:hover .cover { filter: none; box-shadow: 1.5px 1.5px 0 0 #f1ead9, 3px 3px 0 0 #e7dfca, 4.5px 4.5px 0 0 #dcd3ba, 0 40px 64px -16px rgba(10,8,6,.6), 0 14px 26px rgba(10,8,6,.42); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mag { animation: settle .6s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+    /* opacity stays 1 — a frozen timeline can never hide a magazine. Only the drop-in moves. */
+    @keyframes settle {
+      from { transform: translate(-50%, calc(-50% - 34px)) rotate(var(--rot)) scale(calc(var(--scl, 1) * .96)); }
+      to   { transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl, 1)); }
+    }
+  }
+
+  /* ── bottom caption ── */
+  .pile-foot { display: flex; align-items: center; justify-content: space-between; gap: 18px 26px; flex-wrap: wrap; margin-top: clamp(18px,2.2vw,28px); padding-top: 22px; border-top: 1px solid var(--border-1); }
+  .pile-foot .cap { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--fg-2); }
+  .pile-foot .cap svg { width: 16px; height: 16px; color: var(--lmg-pink); }
+  .pile-foot .cap b { color: var(--fg-1); font-weight: 800; }
+  .pile-foot .cap .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--fg-3); display: inline-block; }
+  .pile-foot .seek { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-family: var(--font-ui); font-weight: 800; font-size: 14.5px; color: var(--fg-1); transition: gap .16s, color .16s; }
+  .pile-foot .seek:hover { gap: 13px; color: var(--lmg-pink); }
+  .pile-foot .seek svg { width: 17px; height: 17px; }
+
+  /* ── verdict ── */
+  .reco { margin-top: 60px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 38px clamp(26px,3.2vw,46px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 14px; font-weight: 800; display: flex; align-items: center; gap: 9px; }
+  .reco h3 svg { width: 16px; height: 16px; color: var(--lmg-yellow-deep); }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 940px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4 · Magazine-pile redo</div>
+    <h1 class="doc-title">A real <span class="ital">pile</span> of magazines</h1>
+    <p class="doc-sub">Rebuilt against the reference photos. The covers now have <strong>square paper corners</strong> (no card/app-icon rounding) and <strong>page-edge thickness</strong>, and they sit in a <strong>dense, tightly-clustered pile</strong> — a few covers fully on top, the rest implied by edges peeking out from underneath. The whole pile is a <strong>self-contained composition centered in the column</strong> with clear space around it: nothing is cut off at any edge — the "more underneath" feeling comes from covers overlapping each other, never from running off the frame. Hover lifts/straightens a magazine; clicking any cover opens <strong>/resources</strong>. Light and dark; reduced motion gives a still pile.</p>
+  </header>
+
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag">REDO · from references</span><h2 class="dir-name">Dense, contained, square-cornered</h2></div>
+    <p class="dir-note">3–5 covers read clearly (real titles: Strategy Framework, 2026 Industry Report, Negotiation Toolkit, TikTok Growth…); the rest are slivers and page-edges beneath them. Moderate angles (~±15°), heavy overlap, soft layered shadows for physical depth, grounded on a subtle surface. The audience color-code rides the thin accent line on each cover (blue brands · pink creators · yellow universal).</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="sparkles"></i><b>Motion:</b>&nbsp;magazines settle into the pile on load; hover lifts &amp; straightens one</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;hover to surface a cover, click any cover → <b>/resources</b>. A doorway, not a tool.</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — hand-composed static pile + CSS hover. No clipping, no carousel.</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="pile-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="pile-dark"></div></div>
+  </section>
+
+  <div class="reco">
+    <h3><i data-lucide="scale"></i>Reading against the references</h3>
+    <p>This matches the photos on the three things that matter: <strong>square corners</strong> so the covers read as printed magazines, a <strong>dense clustered pile</strong> (heavy overlap, casual angles, page-edge thickness and layered shadows for real depth) rather than a spread-out scatter, and a <strong>fully contained composition</strong> — every magazine sits wholly inside the section with clear margins around the pile, so nothing is sliced at an edge. Depth and abundance read from covers overlapping each other and the page-block edges peeking out beneath the top few.</p>
+    <p>It stays on-brief otherwise: no featured hero (the top covers are simply the top of the pile, not promoted), text only at the header and a one-line caption, and one destination — <strong>/resources</strong>. Dials if needed: add or remove a peeking cover, tighten the cluster further, or warm the surface tint. The ambitious next step is the same as before — <strong>drag-to-toss physics</strong> so a visitor can physically shove the pile around (higher build cost; the static pile here already sells the feel).</p>
+  </div>
+</div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  /* Hand-composed pile. x/y are % of the stage (anchor = magazine center).
+     z = stacking order (higher = on top). br = brightness (back = dimmer).
+     Prominent, readable covers carry the real flagship titles and sit on top;
+     lower-z items peek out as edges/page-blocks underneath. Positions chosen so
+     every magazine — including peekers — stays fully inside the stage. */
+  // Fanned-open hand: z is highest at center and decreases outward, so each side
+  // cover shows its OUTER portion (like the ELLE/Cosmo reference) — 7 covers each
+  // partially readable, still heavily overlapping as one group, + 3 peekers beneath
+  // for page-stack thickness. Global .pile scale keeps the wider spread contained.
+  const PILE = [
+    // id,                  x,    y,   rot,  w,   z,  br
+    ['measurement-framework',40, 59,  -9, 22, 2, .84], // lower-left peek (under the fan)
+    ['macro-micro',         60,  60,  12, 22, 2, .84], // lower-right peek
+    ['roi-calculator',      49,  61,   2, 23, 3, .90], // bottom-center peek
+    ['media-kit',           29,  52, -21, 23, 4, .90], // far left of fan — outer edge shows
+    ['tiktok-growth',       74,  53,  22, 23, 5, .92], // far right of fan — outer edge shows
+    ['platform-comparison', 38,  50, -13, 24, 6, .96], // left — partially readable
+    ['luxury-beauty',       67,  50,  15, 24, 7, .97], // right — partially readable
+    ['negotiation-toolkit', 45,  49,  -6, 25, 8, 1],   // center-left — readable
+    ['industry-report',     60,  49,   7, 25, 9, 1],   // center-right — readable
+    ['strategy-framework',  52,  49,  -1, 26, 10,1],   // center, top of the pile — fully visible
+  ];
+
+  function magHTML(seedBase) {
+    // small per-render jitter for organic feel, stable per seed
+    let s = seedBase; const j = (m) => { s = (s * 9301 + 49297) % 233280; return (s / 233280 - .5) * 2 * m; };
+    return PILE.map(([id, x, y, rot, w, z, br], i) => {
+      const p = PUBS.find(q => q.id === id) || PUBS[i];
+      const rr = (rot + j(2.2)).toFixed(1);
+      const dd = Math.round(((10 - z) * 38) + 40); // top covers settle last
+      return `<a class="mag" href="/resources" aria-label="${p.title} — browse all 23 resources"
+                style="left:${x}%; top:${y}%; width:${w}%; --rot:${rr}deg; --br:${br}; --d:${dd}ms; z-index:${z}">
+                ${coverHTML(p)}
+              </a>`;
+    }).join('');
+  }
+
+  function renderPile(id, seed) {
+    el(id).innerHTML = secHead() + `
+      <div class="stage-wrap">
+        <div class="stage">
+          <div class="pile-floor"></div>
+          <div class="pile">${magHTML(seed)}</div>
+        </div>
+      </div>
+      <div class="pile-foot">
+        <span class="cap"><i data-lucide="layers"></i>Rummage the pile — <b>23 publications</b><span class="sep"></span>free to download, no email</span>
+        <a class="seek" href="/resources">View all 23 resources <i data-lucide="arrow-right"></i></a>
+      </div>`;
+  }
+
+  renderPile('pile-light', 11);
+  renderPile('pile-dark', 29);
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

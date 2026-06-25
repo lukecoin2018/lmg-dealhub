@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Radii" subtitle="Corner radii from 4 px to pill" viewport="700x180" --><html><head><meta charset="utf-8"><title>Radii</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .r-row { display:flex; gap:20px; flex-wrap:wrap; }
+  .r-tile { width:100px; display:flex; flex-direction:column; gap:8px; align-items:center; }
+  .r-tile .box { width:80px; height:80px; background: var(--neutral-100); border: 1px solid var(--border-1); }
+  .r-tile .var { font-family: var(--font-mono); font-size: 11px; color: var(--fg-2); }
+  .r-tile .val { font-size: 11px; color: var(--fg-3); }
+</style>
+</head><body class="card">
+<div class="r-row">
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-xs)"></div><div class="var">--r-xs</div><div class="val">4 px</div></div>
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-sm)"></div><div class="var">--r-sm</div><div class="val">8 px</div></div>
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-md)"></div><div class="var">--r-md</div><div class="val">12 px · buttons</div></div>
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-lg)"></div><div class="var">--r-lg</div><div class="val">16 px · cards</div></div>
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-xl)"></div><div class="var">--r-xl</div><div class="val">24 px · hero</div></div>
+  <div class="r-tile"><div class="box" style="border-radius: var(--r-pill); width:120px"></div><div class="var">--r-pill</div><div class="val">999 px · pills</div></div>
+</div>
+</body></html>

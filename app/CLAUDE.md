@@ -69,6 +69,21 @@ _slated for removal/redirect to `/dashboard`, not yet done_), `/dashboard`, `/ca
 
 ---
 
+## Lesson Pages _(Module 1 complete; 2–10 not yet built)_
+Real Next.js lesson pages live at `/course/module-N`. Module 1 is at `app/course/module-1/page.tsx`.
+
+**Template:** `components/course/LessonLayout.tsx` (client) renders any module from a `ModuleData` object. To add modules 2–10: create a data object in `lib/course/moduleData.ts` matching the `ModuleData` type, then a page at `app/course/module-N/page.tsx` that imports it and renders `<LessonLayout data={moduleN} />`. No other files need touching.
+
+**Data structure (`lib/course/moduleData.ts`):** Each module has `number`, `slug`, `title`, `heroCopy`, `coverImage`, `outroImage`, `ebookSlug`, `workbookSlug`, `nextModule`, and `segments[]`. Each segment has `id`, `eyebrow`, `title`, `summary`, `duration`, and `videoEmbed` (null = IN PRODUCTION placeholder; set to embed URL to go live — one-line swap per segment).
+
+**Progress rail:** Completion stored in `localStorage` under `lmg-lesson-progress-v1-{slug}` (object of `segmentId → boolean`). Marked with a `// PHASE 2` comment in `LessonLayout.tsx` — swap the hook for a per-user API call when auth lands. Segment IDs are the stable keys for that API.
+
+**Styling:** All lesson-page CSS is in `styles/lesson.css` (design tokens + layout classes). Edit that file to restyle — no TSX changes needed. A follow-up restyle pass is planned to align the lesson visual language more closely with the ebook design (warmer, less editorial). The current style is intentionally not over-invested.
+
+**Course index link:** `app/course/page.tsx` shows a "Lesson" link for Module 1 (alongside Ebook/Workbook). Add equivalent links for future modules as they're built.
+
+---
+
 ## The Course _(in progress / planned)_
 "The Complete Brand Partnership Playbook" — 10 modules, each with an **Ebook** + an
 interactive **Workbook** (20 self-contained HTML docs). Built in Claude Design; delivered as

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Influencer Marketing by City — Design Directions" subtitle="Passport · Six Newspapers · Field Atlas — three concepts that USE the city theme as the system" -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Influencer Marketing by City — Bold Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,700;1,400&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&family=Special+Elite&family=JetBrains+Mono:wght@500;600&display=swap">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: 'Manrope', system-ui, sans-serif; }
+  .art {
+    --pink:#FF4D94; --yellow:#FFD700; --blue:#3AAFF4; --grey:#3A3A3A;
+    width:612px; height:792px; position:relative; overflow:hidden; box-sizing:border-box;
+  }
+  .art * { box-sizing:border-box; }
+
+  /* ============================================================
+   * D · THE PASSPORT — gov-document aesthetic
+   * Embossed cover · guilloché pages · entry stamps · MRZ codes
+   * ============================================================ */
+  .D { background:#15263d; color:#f3e9c8; font-family:'Manrope', sans-serif; }
+  .D-cov { height:100%; padding:48px 44px; display:flex; flex-direction:column;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(255,215,0,0.08), transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(255,215,0,0.05), transparent 60%),
+      linear-gradient(135deg, #1a2b48 0%, #15263d 50%, #0e1a2d 100%);
+    position:relative;
+  }
+  .D-cov::before { /* faint guilloché ring */
+    content:''; position:absolute; top:50%; left:50%; width:520px; height:520px;
+    transform:translate(-50%,-50%);
+    background:
+      repeating-conic-gradient(from 0deg, rgba(255,215,0,0.04) 0deg 2deg, transparent 2deg 4deg);
+    border-radius:50%;
+    mask: radial-gradient(circle, transparent 30%, black 35%, black 90%, transparent 100%);
+  }
+  .D-cov > * { position:relative; z-index:2; }
+  .D-cov-top { display:flex; justify-content:space-between; align-items:flex-start;
+    font-family:'Old Standard TT', serif; color:#d4b85a;
+    border-top:1px solid rgba(212,184,90,0.45); border-bottom:1px solid rgba(212,184,90,0.45);
+    padding:10px 0; font-size:9px; letter-spacing:0.35em; text-transform:uppercase;
+  }
+  .D-cov-mid { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center; }
+  .D-seal { width:108px; height:108px; border:2px solid #d4b85a; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    background:radial-gradient(circle, rgba(212,184,90,0.18), transparent 70%);
+  }
+  .D-seal::before { content:''; position:absolute; inset:6px; border:1px solid rgba(212,184,90,0.55); border-radius:50%; }
+  .D-seal .mark { font-family:'Playfair Display', serif; font-weight:900; font-size:34px; color:#d4b85a; letter-spacing:-0.02em; line-height:1; }
+  .D-seal .mark sub { display:block; font-family:'Manrope', sans-serif; font-weight:600; font-size:8px; letter-spacing:0.32em; margin-top:2px; }
+  .D-cov h1 {
+    font-family:'Old Standard TT', serif; font-weight:700;
+    font-size:46px; line-height:1.0; letter-spacing:0.02em;
+    margin:0; color:#f3e9c8; text-transform:uppercase;
+  }
+  .D-cov h1 em { font-style:italic; color:#d4b85a; font-weight:400; text-transform:none; letter-spacing:0; }
+  .D-cov .by { font-family:'Old Standard TT', serif; font-size:14px; color:#d4b85a; letter-spacing:0.32em; text-transform:uppercase; }
+  .D-cov-spec { display:grid; grid-template-columns:repeat(2,1fr); gap:6px 18px; font-size:9px;
+    letter-spacing:0.22em; text-transform:uppercase; color:#d4b85a; font-weight:600;
+    border-top:1px solid rgba(212,184,90,0.45); padding-top:14px; margin-top:8px; max-width:340px;
+  }
+  .D-cov-spec span:nth-child(even) { color:#f3e9c8; text-align:right; letter-spacing:0.12em; }
+  .D-cov-mrz {
+    font-family:'JetBrains Mono', monospace; font-weight:600; font-size:11px; color:#d4b85a;
+    letter-spacing:0.18em; border-top:1px dashed rgba(212,184,90,0.4); padding-top:12px;
+    word-spacing:0.1em;
+  }
+  .D-cov-mrz .ln { display:block; }
+  .D-cov-mrz .ln + .ln { margin-top:2px; }
+
+  /* D · spread — visa page */
+  .D-pg { background:#f3e9c8; color:#1c2a40; height:100%; position:relative; padding:38px 36px;
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(28,42,64,0.04) 1px, transparent 1.5px),
+      radial-gradient(circle at 50% 50%, rgba(28,42,64,0.03) 1px, transparent 1.5px);
+    background-size: 18px 18px, 6px 6px;
+    background-position: 0 0, 9px 9px;
+  }
+  .D-pg::after { /* security watermark "LMG" */
+    content:''; position:absolute; top:50%; right:-60px; width:520px; height:160px;
+    background:repeating-linear-gradient(135deg, transparent 0 30px, rgba(28,42,64,0.05) 30px 31px);
+    transform:translateY(-50%);
+  }
+  .D-pg > * { position:relative; z-index:2; }
+  .D-pg-top { display:flex; justify-content:space-between; align-items:flex-end;
+    border-bottom:2px solid #1c2a40; padding-bottom:10px;
+    font-family:'Old Standard TT', serif; font-size:10px; letter-spacing:0.3em; text-transform:uppercase;
+  }
+  .D-pg-top .l { display:flex; align-items:center; gap:10px; }
+  .D-pg-top .l .n { font-family:'Old Standard TT', serif; font-weight:700; font-size:34px; letter-spacing:-0.02em; line-height:0.9; }
+  .D-pg-body { display:grid; grid-template-columns:1.2fr 1fr; gap:24px; margin-top:18px; }
+  .D-stamp { position:absolute; top:38px; right:24px; width:154px; height:154px;
+    border:2px solid #b32028; color:#b32028; transform:rotate(-12deg);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    border-radius:50%; padding:8px;
+    font-family:'Old Standard TT', serif; text-align:center;
+  }
+  .D-stamp::before { content:''; position:absolute; inset:6px; border:1px dashed #b32028; border-radius:50%; }
+  .D-stamp .t { font-weight:700; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; line-height:1.2; }
+  .D-stamp .b { font-size:9px; letter-spacing:0.22em; margin-top:6px; padding-top:6px; border-top:1px solid #b32028; text-transform:uppercase; }
+  .D-pg h2 { font-family:'Old Standard TT', serif; font-weight:700; font-size:48px; line-height:0.92; margin:0; letter-spacing:0.01em; }
+  .D-pg h2 em { font-style:italic; font-weight:400; color:#b32028; }
+  .D-field { display:grid; grid-template-columns:120px 1fr; gap:0 14px; padding:7px 0;
+    border-bottom:1px dashed rgba(28,42,64,0.35); align-items:baseline;
+  }
+  .D-field .k { font-family:'Old Standard TT', serif; font-size:9px; letter-spacing:0.24em; text-transform:uppercase; color:#1c2a40; opacity:0.75; }
+  .D-field .v { font-weight:700; font-size:13px; color:#1c2a40; }
+  .D-foot { position:absolute; bottom:24px; left:36px; right:36px;
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:0.16em;
+    color:#1c2a40; border-top:1px dashed #1c2a40; padding-top:8px;
+  }
+  .D-foot .ln { display:block; }
+  .D-pg .copy p { font-family:'Old Standard TT', serif; font-size:11px; line-height:1.55; margin:0 0 10px; color:#1c2a40; }
+  .D-pg .copy p:first-letter { font-family:'Old Standard TT', serif; font-weight:700; font-size:34px; float:left; line-height:0.95; margin:2px 6px 0 0; color:#b32028; }
+  .D-pg .marker { background:#FFD700; padding:1px 5px; font-weight:700; letter-spacing:0.02em; }
+
+  /* ============================================================
+   * E · SIX NEWSPAPERS — each city is its own paper
+   * Cover: master masthead. Spread: Dubai = "The Gulf Tribune"
+   * ============================================================ */
+  .E { background:#f1ede2; }
+  .E-paper { background:#f7f3e8; height:100%; position:relative;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0 1px, transparent 1px 3px),
+      radial-gradient(circle at 20% 10%, rgba(180,120,40,0.06), transparent 50%);
+    padding:30px 32px; color:#1a1614;
+    font-family:'Old Standard TT', serif;
+  }
+  .E-paper::after { /* yellowed edge */
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(120,80,30,0.08), transparent 8%, transparent 92%, rgba(120,80,30,0.08));
+  }
+  .E-mast { border-top:3px double #1a1614; border-bottom:3px double #1a1614; padding:12px 0;
+    text-align:center; position:relative; }
+  .E-mast .top-strap { display:flex; justify-content:space-between; align-items:center;
+    font-family:'Manrope', sans-serif; font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+    color:#5a4a30; padding:0 4px 8px; border-bottom:1px solid #1a1614; margin-bottom:8px; font-weight:700;
+  }
+  .E-mast h1 {
+    font-family:'Old Standard TT', serif; font-weight:700;
+    font-size:64px; line-height:0.95; letter-spacing:-0.01em;
+    margin:0; color:#1a1614;
+  }
+  .E-mast h1 em { font-style:italic; font-weight:400; color:#9a1a1a; }
+  .E-mast .sub { font-family:'Caveat', cursive; font-size:18px; color:#5a4a30; margin-top:4px; }
+  .E-mast-row { display:flex; justify-content:space-between; padding-top:8px; margin-top:8px;
+    border-top:1px solid #1a1614;
+    font-family:'Manrope', sans-serif; font-size:8.5px; letter-spacing:0.18em; text-transform:uppercase; color:#5a4a30; font-weight:700;
+  }
+  .E-cov-lead { padding:18px 0 14px; border-bottom:1px solid #1a1614; }
+  .E-cov-lead .kicker { font-family:'Manrope', sans-serif; font-weight:800; font-size:10px;
+    letter-spacing:0.28em; text-transform:uppercase; color:#9a1a1a; }
+  .E-cov-lead h2 { font-family:'Old Standard TT', serif; font-weight:700;
+    font-size:34px; line-height:1.05; margin:6px 0 0; letter-spacing:-0.01em; }
+  .E-cov-lead h2 em { font-style:italic; color:#9a1a1a; font-weight:700; }
+  .E-cov-lead .by { font-family:'Manrope', sans-serif; font-size:9px; color:#5a4a30; margin-top:6px;
+    letter-spacing:0.2em; text-transform:uppercase; font-weight:700; }
+  .E-cov-papers { padding:16px 0; display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; }
+  .E-cov-papers .p {
+    border:1px solid #1a1614; padding:8px 10px; background:#fff; min-height:104px;
+    display:flex; flex-direction:column; gap:4px;
+    transform:rotate(var(--r,0deg)); position:relative;
+  }
+  .E-cov-papers .p .pname { font-family:'Old Standard TT', serif; font-weight:700; font-size:13px; line-height:1; border-bottom:1px solid #1a1614; padding-bottom:4px; }
+  .E-cov-papers .p .pname em { font-style:italic; color:#9a1a1a; }
+  .E-cov-papers .p .lede { font-family:'Old Standard TT', serif; font-size:8.5px; line-height:1.35; color:#1a1614; }
+  .E-cov-papers .p .city { font-family:'Manrope', sans-serif; font-weight:800; font-size:7.5px; letter-spacing:0.24em; text-transform:uppercase; color:#9a1a1a; margin-top:auto; }
+  .E-cov-papers .p:nth-child(1) { --r:-1deg; }
+  .E-cov-papers .p:nth-child(2) { --r:0.6deg; }
+  .E-cov-papers .p:nth-child(3) { --r:-0.4deg; }
+  .E-cov-papers .p:nth-child(4) { --r:0.8deg; }
+  .E-cov-papers .p:nth-child(5) { --r:-0.6deg; }
+  .E-cov-papers .p:nth-child(6) { --r:0.4deg; }
+  .E-cov-foot { border-top:3px double #1a1614; padding-top:8px; margin-top:6px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Manrope', sans-serif; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:#1a1614; font-weight:800;
+  }
+  .E-cov-foot .gold { color:#b8861a; }
+
+  /* E · Dubai spread = "The Gulf Herald" */
+  .E-gh { padding:24px 28px; }
+  .E-gh .strap { display:flex; justify-content:space-between; padding-bottom:6px;
+    font-family:'Manrope', sans-serif; font-size:8.5px; letter-spacing:0.3em; text-transform:uppercase; color:#5a4a30; font-weight:700;
+  }
+  .E-gh-mast { border-top:4px solid #b8861a; border-bottom:1px solid #1a1614; padding:8px 0 6px; text-align:center; position:relative; }
+  .E-gh-mast h1 { font-family:'Cormorant Garamond', serif; font-weight:700; font-size:54px; line-height:0.95; margin:0; color:#1a1614; letter-spacing:-0.01em; }
+  .E-gh-mast h1 em { font-style:italic; font-weight:500; color:#b8861a; }
+  .E-gh-mast .ar { font-family:'Old Standard TT', serif; font-size:11px; color:#b8861a; letter-spacing:0.3em; margin-top:2px; text-transform:uppercase; }
+  .E-gh-info { display:flex; justify-content:space-between; padding:6px 0; border-bottom:2px solid #1a1614;
+    font-family:'Manrope', sans-serif; font-size:8px; letter-spacing:0.22em; text-transform:uppercase; color:#1a1614; font-weight:800;
+  }
+  .E-gh-body { display:grid; grid-template-columns:1.4fr 1fr; gap:18px; padding-top:16px; }
+  .E-gh-lead h2 { font-family:'Old Standard TT', serif; font-weight:700; font-size:30px; line-height:1.0; margin:0 0 10px; letter-spacing:-0.005em; }
+  .E-gh-lead h2 em { font-style:italic; color:#9a1a1a; }
+  .E-gh-lead .by { font-family:'Manrope', sans-serif; font-size:8px; color:#5a4a30; letter-spacing:0.24em; text-transform:uppercase; font-weight:800; margin-bottom:10px; }
+  .E-gh-lead p { font-family:'Old Standard TT', serif; font-size:10.5px; line-height:1.55; margin:0 0 8px; column-count:2; column-gap:12px; }
+  .E-gh-lead p:first-of-type::first-letter { font-family:'Cormorant Garamond', serif; font-weight:700; font-size:42px; float:left; line-height:0.9; margin:4px 6px 0 0; color:#b8861a; }
+  .E-gh-side h3 { font-family:'Old Standard TT', serif; font-weight:700; font-size:14px; margin:0 0 6px; border-bottom:1px solid #1a1614; padding-bottom:4px; text-transform:uppercase; letter-spacing:0.04em; }
+  .E-gh-side .row { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px dotted #1a1614; font-family:'Old Standard TT', serif; font-size:10px; }
+  .E-gh-side .row .n { font-weight:700; }
+  .E-gh-side .row.dom .n { color:#9a1a1a; }
+  .E-gh-side .box { background:#1a1614; color:#f7f3e8; padding:10px; margin-top:10px;
+    font-family:'Manrope', sans-serif; font-size:9px; line-height:1.4; }
+  .E-gh-side .box .h { font-weight:800; letter-spacing:0.2em; text-transform:uppercase; font-size:8.5px; color:#b8861a; margin-bottom:4px; }
+  .E-gh-photo { margin-top:14px; height:120px; border:1px solid #1a1614;
+    background-image:linear-gradient(135deg,#d4a574,#9a6b3f); position:relative;
+    filter:sepia(0.25) contrast(1.05);
+  }
+  .E-gh-photo::after { content:'PHOTOGRAPH · LMG MEDIA'; position:absolute; bottom:4px; left:6px; font-family:'Manrope', sans-serif; font-size:7px; letter-spacing:0.2em; color:#fff; text-transform:uppercase; font-weight:700; }
+  .E-gh-cap { font-family:'Old Standard TT', serif; font-style:italic; font-size:9.5px; color:#1a1614; margin-top:4px; }
+
+  /* ============================================================
+   * F · THE FIELD ATLAS — taped photos, kraft paper, handwriting
+   * ============================================================ */
+  .F { 
+    background:#dcc8a8;
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(120,80,40,0.12), transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(120,80,40,0.10), transparent 40%),
+      repeating-linear-gradient(95deg, rgba(80,50,20,0.025) 0 2px, transparent 2px 4px),
+      linear-gradient(135deg, #e6d5b5 0%, #d4bf99 100%);
+    color:#3a2a18; padding:32px 30px; position:relative;
+  }
+  .F::after { /* paper grain */
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background-image:radial-gradient(circle at 50% 50%, rgba(70,40,10,0.04) 1px, transparent 1.5px);
+    background-size:5px 5px;
+  }
+  .F > * { position:relative; z-index:2; }
+  .F-cov { display:flex; flex-direction:column; gap:14px; height:100%; }
+  .F-cov-top { display:flex; justify-content:space-between; align-items:center;
+    font-family:'Special Elite', monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:#5a3e1a;
+    border-bottom:1px solid rgba(90,62,26,0.35); padding-bottom:8px;
+  }
+  .F-cov-top .seal { background:#FFD700; color:#3a2a18; padding:3px 9px; border-radius:50%;
+    font-family:'Playfair Display', serif; font-weight:900; font-size:12px; }
+  .F-cov-title { transform:rotate(-1.2deg); margin:10px 0 8px; }
+  .F-cov-title .tape {
+    position:relative; display:inline-block; padding:14px 22px;
+    background:rgba(255,215,0,0.65);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    transform:rotate(0.8deg);
+  }
+  .F-cov-title .tape::before, .F-cov-title .tape::after { /* tape ends */
+    content:''; position:absolute; top:50%; width:36px; height:30px;
+    background:rgba(255,215,0,0.45); transform:translateY(-50%);
+  }
+  .F-cov-title .tape::before { left:-22px; border-radius:0 6px 6px 0; }
+  .F-cov-title .tape::after { right:-22px; border-radius:6px 0 0 6px; }
+  .F-cov-title h1 {
+    font-family:'Caveat', cursive; font-weight:700;
+    font-size:64px; line-height:0.9; letter-spacing:-0.01em;
+    margin:0; color:#1a1408;
+  }
+  .F-cov-title h1 .b { font-family:'Playfair Display', serif; font-style:italic; font-weight:900; font-size:48px; display:block; margin-top:-6px; color:#5a1a1a; }
+  .F-polaroid {
+    background:#fff; padding:10px 10px 36px; box-shadow:0 6px 18px rgba(0,0,0,0.18);
+    transform:rotate(-3deg); position:relative; align-self:flex-start; max-width:300px;
+  }
+  .F-polaroid .img { width:280px; height:180px; background-size:cover; background-position:center; filter:contrast(1.05) saturate(1.1); }
+  .F-polaroid .cap { position:absolute; bottom:6px; left:12px; right:12px;
+    font-family:'Caveat', cursive; font-size:18px; color:#1a1408; }
+  .F-polaroid::before { /* washi tape */
+    content:''; position:absolute; top:-10px; left:50%; width:80px; height:22px;
+    background:rgba(58,175,244,0.55); transform:translateX(-50%) rotate(-2deg);
+    background-image:repeating-linear-gradient(45deg, transparent 0 4px, rgba(255,255,255,0.3) 4px 6px);
+  }
+  .F-cov-row { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; margin-top:6px; }
+  .F-cov-note { background:#FFE57A; padding:14px 14px 16px; box-shadow:0 4px 10px rgba(0,0,0,0.12);
+    transform:rotate(2.5deg); max-width:200px; font-family:'Caveat', cursive; }
+  .F-cov-note .h { font-family:'Manrope', sans-serif; font-weight:800; font-size:9px; letter-spacing:0.24em; text-transform:uppercase; color:#5a3e1a; margin-bottom:6px; }
+  .F-cov-note p { margin:0; font-size:15px; line-height:1.25; color:#1a1408; }
+  .F-cov-bottom { margin-top:auto; display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
+    padding-top:14px; border-top:1px dashed rgba(90,62,26,0.4);
+  }
+  .F-cov-bottom .who {
+    font-family:'Special Elite', monospace; font-size:11px; letter-spacing:0.04em; color:#3a2a18;
+  }
+  .F-cov-bottom .who strong { font-family:'Playfair Display', serif; font-style:italic; font-weight:900; color:#5a1a1a; font-size:18px; display:block; }
+  .F-cov-bottom .stamp { width:80px; height:80px; border:3px double #5a1a1a; color:#5a1a1a;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    border-radius:50%; transform:rotate(8deg);
+    font-family:'Special Elite', monospace; font-size:8px; letter-spacing:0.16em; text-align:center; text-transform:uppercase;
+    background:rgba(255,255,255,0.1);
+  }
+  .F-cov-bottom .stamp .y { font-family:'Playfair Display', serif; font-weight:900; font-size:18px; letter-spacing:0; margin:2px 0; }
+
+  /* F · Dubai spread */
+  .F-pg { display:flex; flex-direction:column; gap:12px; height:100%; }
+  .F-pg-top { display:flex; justify-content:space-between; align-items:center;
+    font-family:'Special Elite', monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:#5a3e1a; }
+  .F-pg-top .pg { font-family:'Playfair Display', serif; font-weight:900; font-size:14px; }
+  .F-pg-title { display:flex; align-items:baseline; gap:14px; border-bottom:2px solid #1a1408; padding-bottom:6px; }
+  .F-pg-title .n { font-family:'Playfair Display', serif; font-weight:900; font-size:46px; line-height:0.85; color:#5a1a1a; letter-spacing:-0.02em; }
+  .F-pg-title h2 { font-family:'Caveat', cursive; font-weight:700; font-size:52px; line-height:0.9; margin:0; color:#1a1408; }
+  .F-pg-title .ar { margin-left:auto; font-family:'Old Standard TT', serif; font-size:14px; color:#5a3e1a; letter-spacing:0.12em; }
+  .F-pg-grid { display:grid; grid-template-columns:1.05fr 1fr; gap:18px; flex:1; }
+  .F-pg-grid .col { display:flex; flex-direction:column; gap:10px; }
+  .F-pg-photo {
+    background:#fff; padding:8px 8px 26px; box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    transform:rotate(-1.5deg); align-self:flex-start;
+  }
+  .F-pg-photo .img { width:100%; height:140px; background:linear-gradient(135deg,#d4a574,#9a6b3f); filter:contrast(1.05) saturate(1.05); }
+  .F-pg-photo .cap { font-family:'Caveat', cursive; font-size:16px; color:#1a1408; margin-top:4px; padding:0 4px; }
+  .F-pg-photo::before { content:''; position:absolute; top:-6px; left:30px; width:60px; height:14px; background:rgba(255,77,148,0.55); transform:rotate(-3deg); }
+  .F-pg-typed { background:rgba(255,255,255,0.5); padding:12px 14px; box-shadow:0 2px 6px rgba(0,0,0,0.06); }
+  .F-pg-typed p { font-family:'Special Elite', monospace; font-size:10px; line-height:1.55; margin:0 0 8px; color:#1a1408; }
+  .F-pg-typed p:last-child { margin-bottom:0; }
+  .F-pg-typed .hl { background:#FFD700; padding:1px 4px; }
+  .F-pg-side h3 { font-family:'Caveat', cursive; font-weight:700; font-size:24px; margin:0 0 4px; color:#5a1a1a; transform:rotate(-1deg); display:inline-block; }
+  .F-pg-list { display:flex; flex-direction:column; gap:0; }
+  .F-pg-list .item { display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:baseline; padding:6px 0; border-bottom:1px dashed rgba(90,62,26,0.4);
+    font-family:'Special Elite', monospace;
+  }
+  .F-pg-list .item .n { font-weight:700; font-size:12px; color:#1a1408; }
+  .F-pg-list .item .d { font-size:9.5px; color:#3a2a18; line-height:1.35; }
+  .F-pg-list .item .r { font-family:'Caveat', cursive; font-weight:700; font-size:18px; color:#5a1a1a; }
+  .F-pg-list .item.dom .n { color:#9a1a1a; }
+  .F-pg-stick { background:#FF4D94; color:#fff; padding:12px 14px; box-shadow:0 4px 10px rgba(0,0,0,0.18);
+    transform:rotate(-2deg); margin-top:6px;
+  }
+  .F-pg-stick .h { font-family:'Manrope', sans-serif; font-weight:800; font-size:9px; letter-spacing:0.24em; text-transform:uppercase; margin-bottom:4px; }
+  .F-pg-stick p { font-family:'Caveat', cursive; font-size:18px; line-height:1.1; margin:0; }
+
+  /* NOTES card */
+  .notes { width:280px; padding:22px 24px; background:#fef4a8; border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08); font-family:'Manrope', sans-serif; color:#4a3d10; }
+  .notes h4 { margin:0 0 8px; font-weight:900; font-size:14px; line-height:1.2; }
+  .notes .tag { display:inline-block; background:#fff; padding:2px 8px; border-radius:999px;
+    font-weight:800; font-size:9px; letter-spacing:0.16em; text-transform:uppercase; margin-bottom:10px; }
+  .notes p { font-size:11.5px; line-height:1.55; margin:0 0 8px; }
+  .notes ul { padding-left:16px; margin:0; font-size:11px; line-height:1.5; }
+  .notes ul li { margin-bottom:4px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="../design-canvas.jsx"></script>
+<script type="text/babel">
+function App() {
+  return (
+    <DesignCanvas title="Influencer Marketing by City — Bolder Concepts" subtitle="Three concepts that USE the 'by city' idea as the design system, not just a chapter heading. Each shown as Cover + Dubai spread. Open any artboard fullscreen.">
+
+      {/* ============ D · PASSPORT ============ */}
+      <DCSection id="D" title="D · The City Passport" subtitle="The ebook IS a passport. Navy + gold cover with embossed crest. Inside pages have entry stamps, security guilloché, MRZ codes, and visa-style entry data per city. The 'by city' theme made literal.">
+
+        <DCArtboard id="d-cov" label="Cover" width={612} height={792}>
+          <div className="art D">
+            <div className="D-cov">
+              <div className="D-cov-top">
+                <span>LMG Media · Bureau of Influence</span>
+                <span>Issue MMXXVI</span>
+              </div>
+              <div className="D-cov-mid">
+                <div className="D-seal"><div className="mark">LMG<sub>MEDIA</sub></div></div>
+                <div className="by">Brand Passport</div>
+                <h1>Influencer Marketing<br/><em>by City.</em></h1>
+                <div className="D-cov-spec">
+                  <span>Document</span><span>Resource · 08</span>
+                  <span>Markets</span><span>06</span>
+                  <span>Issued</span><span>2026</span>
+                  <span>Bearer</span><span>For Brands & Teams</span>
+                </div>
+              </div>
+              <div className="D-cov-mrz">
+                <span className="ln">P&lt;LMG&lt;INFLUENCER&lt;&lt;MARKETING&lt;&lt;BY&lt;CITY&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span>
+                <span className="ln">R08&lt;2026LMG&lt;&lt;DXB&lt;LON&lt;NYC&lt;LAX&lt;MIA&lt;CDG&lt;&lt;&lt;&lt;&lt;&lt;&lt;1</span>
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <DCArtboard id="d-spr" label="Dubai · Entry" width={612} height={792}>
+          <div className="art D">
+            <div className="D-pg">
+              <div className="D-pg-top">
+                <div className="l"><span className="n">01</span><span>Market of Entry</span></div>
+                <div>Folio 04 / 24</div>
+              </div>
+              <div className="D-stamp">
+                <div className="t">Entry<br/>Granted</div>
+                <div className="b">DXB · UAE</div>
+              </div>
+              <div className="D-pg-body">
+                <div>
+                  <h2><em>Dubai.</em></h2>
+                  <div className="D-field"><div className="k">Bearer</div><div className="v">Luxury · Lifestyle Brands</div></div>
+                  <div className="D-field"><div className="k">Primary Platform</div><div className="v">Instagram</div></div>
+                  <div className="D-field"><div className="k">Population</div><div className="v">~90% Expatriate</div></div>
+                  <div className="D-field"><div className="k">Languages</div><div className="v">AR · EN · HI · UR</div></div>
+                  <div className="D-field"><div className="k">Key Moment</div><div className="v">Ramadan · 3–4 mo lead</div></div>
+                  <div className="D-field"><div className="k">Regulator</div><div className="v">National Media Council</div></div>
+                </div>
+                <div className="copy">
+                  <p>One of the most distinctive influencer marketing markets in the world. The UAE's social media penetration is among the highest globally, and a young, internationally connected population makes influencer marketing <span className="marker">central, not optional.</span></p>
+                  <p>Approximately 90% of the population is expatriate — a multilingual creator landscape spanning Arabic, English, Hindi and more. Selection must be deliberately targeted.</p>
+                </div>
+              </div>
+              <div className="D-foot">
+                <span className="ln">&lt;&lt;&lt;DUBAI&lt;&lt;UAE&lt;&lt;ARABIC&lt;&lt;ENGLISH&lt;&lt;HINDI&lt;&lt;LUXURY&lt;&lt;INSTAGRAM&lt;&lt;&lt;&lt;&lt;</span>
+                <span className="ln">26R08001M&lt;&lt;LMG&lt;&lt;MARKET&lt;1&lt;OF&lt;6&lt;&lt;ISSUED&lt;LMG.MEDIA&lt;&lt;2026&lt;&lt;&lt;4</span>
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <div className="notes">
+          <div className="tag" style={{background:'#15263d', color:'#d4b85a'}}>Direction D</div>
+          <h4>The City Passport</h4>
+          <p>Each city is a visa entry. Stamps, security patterns, MRZ codes, fielded entry data. The design literally is the metaphor.</p>
+          <ul>
+            <li><strong>Personality:</strong> Official document × travel memoir</li>
+            <li><strong>City photos:</strong> rendered as "passport photo" inset on each visa page</li>
+            <li><strong>Best for:</strong> distinctive, share-worthy, premium giveaway</li>
+            <li><strong>Risk:</strong> requires holding the metaphor — every page is "in character"</li>
+          </ul>
+        </div>
+      </DCSection>
+
+      {/* ============ E · SIX NEWSPAPERS ============ */}
+      <DCSection id="E" title="E · Six Newspapers" subtitle="Each city chapter is laid out as that market's own front page — different masthead, different typography, different cultural sensibility. The cover is the wall of papers. Bold, fashion-week-press-kit energy.">
+
+        <DCArtboard id="e-cov" label="Cover · Wall" width={612} height={792}>
+          <div className="art E">
+            <div className="E-paper">
+              <div className="E-mast">
+                <div className="top-strap"><span>Special Edition · LMG Media</span><span>Resource 08 · 2026</span></div>
+                <h1>The <em>City</em> Press.</h1>
+                <div className="sub">Six markets. Six papers. Six playbooks.</div>
+                <div className="E-mast-row"><span>Volume VIII</span><span>Influencer Marketing by City</span><span>For Brands & Teams</span></div>
+              </div>
+              <div className="E-cov-lead">
+                <div className="kicker">Inside this edition</div>
+                <h2>A creator who's <em>everything</em> in London is unknown in Dubai. Here's the only guide that takes that seriously.</h2>
+                <div className="by">By the LMG Media Markets Desk</div>
+              </div>
+              <div className="E-cov-papers">
+                <div className="p"><div className="pname">The Gulf <em>Herald</em></div><div className="lede">Ramadan plans the year. Instagram dominates. Why Snapchat is the channel Western brands keep missing.</div><div className="city">01 · Dubai</div></div>
+                <div className="p"><div className="pname">The London <em>Standard</em></div><div className="lede">Authenticity reads as accent. The ASA reads everything. Brief British, brief well.</div><div className="city">02 · London</div></div>
+                <div className="p"><div className="pname">The New York <em>Ledger</em></div><div className="lede">The most professionalised creator market on earth. Show up with contracts or stay home.</div><div className="city">03 · NYC</div></div>
+                <div className="p"><div className="pname">The Pacific <em>Beacon</em></div><div className="lede">Where the creator economy was born. Production quality is the price of entry. Beverly Hills sets the ceiling.</div><div className="city">04 · LA / BH</div></div>
+                <div className="p"><div className="pname">El Miami <em>Times</em></div><div className="lede">Bilingual is the asset. Art Basel sets the calendar. Translated copy fools nobody.</div><div className="city">05 · Miami</div></div>
+                <div className="p"><div className="pname">Le <em>Parisien</em> Mode</div><div className="lede">Cultural authority. Sprezzatura applied to content. PFW invitations begin six months out.</div><div className="city">06 · Paris</div></div>
+              </div>
+              <div className="E-cov-foot"><span>lmg.media</span><span className="gold">Where Quality Brands Meet Iconic Influence</span><span>11 min read</span></div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <DCArtboard id="e-spr" label="Dubai · Gulf Herald" width={612} height={792}>
+          <div className="art E">
+            <div className="E-paper E-gh">
+              <div className="strap"><span>Founded MMXXVI</span><span>Late Edition · Dubai</span><span>Pg 04</span></div>
+              <div className="E-gh-mast">
+                <h1>The Gulf <em>Herald</em>.</h1>
+                <div className="ar">جريدة الخليج · The market that doesn't sleep</div>
+              </div>
+              <div className="E-gh-info"><span>Vol. I — No. 01</span><span>Dubai · United Arab Emirates</span><span>One Dirham</span></div>
+              <div className="E-gh-body">
+                <div className="E-gh-lead">
+                  <div className="by">Markets Desk — Dubai Bureau</div>
+                  <h2>The luxury market where influence is <em>central</em>, not optional.</h2>
+                  <p>One of the most distinctive influencer marketing markets in the world. The UAE's extraordinary social media penetration — among the highest globally — combined with a young, affluent, internationally connected population creates a market where influencer marketing is central to how brands reach consumers. The city's creator community reflects its demographic composition: approximately 90% of the UAE population is expatriate, producing a multilingual creator landscape spanning Arabic, English, Hindi and more. Selection must be deliberately targeted — Western-expatriate and Gulf-native audiences are fundamentally different propositions.</p>
+                  <div className="E-gh-photo"></div>
+                  <div className="E-gh-cap">Above — the LMG Media bureau, Dubai. Photograph by the agency.</div>
+                </div>
+                <div className="E-gh-side">
+                  <h3>Platform Landscape</h3>
+                  <div className="row dom"><span className="n">Instagram</span><span>Dominant</span></div>
+                  <div className="row"><span className="n">TikTok</span><span>Rising</span></div>
+                  <div className="row"><span className="n">Snapchat</span><span>Underused</span></div>
+                  <div className="row"><span className="n">YouTube</span><span>Arabic LF</span></div>
+                  <div className="box">
+                    <div className="h">Calendar Watch</div>
+                    Ramadan is the most important marketing period of the year — plan content 3–4 months ahead. Eid Al-Fitr and UAE National Day (Dec 2) are activation moments.
+                  </div>
+                  <h3 style={{marginTop:'12px'}}>Regulator</h3>
+                  <div className="row"><span className="n">NMC (UAE)</span><span>Strict</span></div>
+                  <div className="row"><span className="n">Disclosure</span><span>Mandatory</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <div className="notes" style={{background:'#f7f3e8'}}>
+          <div className="tag" style={{background:'#9a1a1a', color:'#fff'}}>Direction E</div>
+          <h4>Six Newspapers</h4>
+          <p>Each city gets its own paper — its own masthead, headline voice, and typographic personality. The brand's voice is "we know each market well enough to publish in it."</p>
+          <ul>
+            <li><strong>Personality:</strong> Monocle × FT × Vogue Business</li>
+            <li><strong>City photos:</strong> sepia photojournalism — caption-led, "above:"</li>
+            <li><strong>Best for:</strong> demonstrating market authority — the format proves the thesis</li>
+            <li><strong>Risk:</strong> dense; rewards slow reading</li>
+          </ul>
+        </div>
+      </DCSection>
+
+      {/* ============ F · FIELD ATLAS ============ */}
+      <DCSection id="F" title="F · The Field Atlas" subtitle="Travel-journal aesthetic — kraft paper, washi tape, polaroids, handwritten captions, typewriter copy, ink stamps. The agency's field notes from six cities. Tactile and analog — the antidote to slick decks.">
+
+        <DCArtboard id="f-cov" label="Cover" width={612} height={792}>
+          <div className="art F">
+            <div className="F-cov">
+              <div className="F-cov-top">
+                <span>LMG · Field Atlas</span>
+                <span className="seal">08</span>
+              </div>
+              <div className="F-cov-title">
+                <div className="tape">
+                  <h1>Influencer Marketing,<span className="b">by City.</span></h1>
+                </div>
+              </div>
+              <div className="F-cov-row">
+                <div className="F-polaroid">
+                  <div className="img" style={{backgroundImage:"url('../assets/hero-05-la-balcony.png')"}}></div>
+                  <div className="cap">L.A., sunset — first day of fieldwork</div>
+                </div>
+                <div className="F-cov-note">
+                  <div className="h">Bureau memo</div>
+                  <p>Six cities. Six playbooks. Three months of fieldwork — what the slick global decks never tell you.</p>
+                </div>
+              </div>
+              <div className="F-cov-bottom">
+                <div className="who">issued by<strong>LMG Media</strong>resource 08 · MMXXVI</div>
+                <div className="stamp">Bureau<div className="y">LMG</div>of Influence</div>
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <DCArtboard id="f-spr" label="Dubai · Field Notes" width={612} height={792}>
+          <div className="art F">
+            <div className="F-pg">
+              <div className="F-pg-top"><span>Field Notes — Bureau No. 01</span><span className="pg">04 / 24</span></div>
+              <div className="F-pg-title">
+                <div className="n">01</div>
+                <h2>Dubai.</h2>
+                <span className="ar">دبي · United Arab Emirates</span>
+              </div>
+              <div className="F-pg-grid">
+                <div className="col">
+                  <div className="F-pg-photo">
+                    <div className="img"></div>
+                    <div className="cap">Marina, golden hour — Instagram's home court</div>
+                  </div>
+                  <div className="F-pg-typed">
+                    <p>One of the most distinctive influencer marketing markets in the world. Social media penetration is among the highest globally — a young, affluent, internationally connected population. Influencer marketing here is <span className="hl">central, not optional.</span></p>
+                    <p>~90% of the population is expatriate. The creator community is multilingual — Arabic, English, Hindi, Urdu. Selection must be deliberately targeted.</p>
+                  </div>
+                </div>
+                <div className="col">
+                  <h3>Platforms.</h3>
+                  <div className="F-pg-list">
+                    <div className="item dom"><span className="n">Instagram</span><span className="d">Dominates all categories.</span><span className="r">★</span></div>
+                    <div className="item"><span className="n">TikTok</span><span className="d">Gulf-wide Arabic reach.</span><span className="r">↑</span></div>
+                    <div className="item"><span className="n">Snapchat</span><span className="d">Underused goldmine.</span><span className="r">!</span></div>
+                    <div className="item"><span className="n">YouTube</span><span className="d">Arabic long-form.</span><span className="r">·</span></div>
+                  </div>
+                  <div className="F-pg-stick">
+                    <div className="h">Ramadan!</div>
+                    <p>Plan 3–4 months out. Iftar = evening = peak engagement. Don't treat as "a sensitivity to avoid" — plan into it.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+
+        <div className="notes" style={{background:'#ffe57a'}}>
+          <div className="tag" style={{background:'#3a2a18', color:'#FFD700'}}>Direction F</div>
+          <h4>The Field Atlas</h4>
+          <p>Hand-assembled, tactile, analog. Polaroids, washi tape, sticky notes, typewriter copy. Reads as a senior planner's actual notebook.</p>
+          <ul>
+            <li><strong>Personality:</strong> Apartamento × Wes Anderson × Kinfolk</li>
+            <li><strong>City photos:</strong> taped-in polaroids — your AI images shine here</li>
+            <li><strong>Best for:</strong> warmth, authority through specificity, gift-able PDF</li>
+            <li><strong>Risk:</strong> brand colors used less directly; more LMG-as-curator than LMG-as-shouter</li>
+          </ul>
+        </div>
+      </DCSection>
+
+    </DesignCanvas>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

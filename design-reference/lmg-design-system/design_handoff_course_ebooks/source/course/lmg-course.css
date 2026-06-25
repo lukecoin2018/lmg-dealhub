@@ -1,0 +1,1425 @@
+/* ============================================================
+ * LMG Media — Course Design System
+ * "The Complete Brand Partnership Playbook"
+ * ONE visual system for all 10 module ebooks + workbooks.
+ * Pink-led (For Influencers) · yellow highlights · blue data ·
+ * LMG grey type on warm white. No black, no emoji.
+ * US Letter, print-ready, digitally fillable.
+ * ============================================================ */
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:root {
+  --pink:       #FF4D94;
+  --pink-deep:  #E63F82;
+  --pink-soft:  #FFE4EF;
+  --pink-tint:  #FFF1F6;
+  --yellow:     #FFD700;
+  --yellow-deep:#E6B800;
+  --yellow-soft:#FFF6C2;
+  --yellow-tint:#FFFBE3;
+  --blue:       #3AAFF4;
+  --blue-deep:  #1E94DA;
+  --blue-soft:  #E1F2FC;
+  --blue-tint:  #F0F8FE;
+  --green:      #2BB673;
+  --green-soft: #E7F7EE;
+
+  --grey:   #3A3A3A;   /* primary text */
+  --grey-2: #5a5a5a;
+  --grey-3: #8a8a8a;
+  --grey-4: #b8b8b8;
+  --grey-5: #d8d6d0;
+
+  --paper:   #ffffff;
+  --paper-2: #faf9f6;
+  --paper-3: #f3f1ea;
+  --line:    #ece9e2;
+  --line-2:  #d8d5cc;
+
+  --sans: 'Manrope', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --display: 'Playfair Display', 'Didot', 'Bodoni 72', Georgia, serif;
+
+  --page-w: 816px;
+  --page-h: 1056px;
+}
+
+* { box-sizing: border-box; }
+
+/* ─── Print ──────────────────────────────────────────────── */
+@page { size: letter portrait; margin: 0; }
+@media print {
+  /* Force browsers to KEEP background colors, gradients & photos in the PDF */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  html, body { background: #fff !important; margin: 0; padding: 0; }
+  body { gap: 0 !important; padding: 0 !important; display: block !important; }
+  .page {
+    page-break-after: always; break-inside: avoid;
+    box-shadow: none !important; margin: 0 auto !important;
+    width: var(--page-w); height: var(--page-h); min-height: var(--page-h);
+  }
+  .page:last-child { page-break-after: auto; }
+  .screen-only { display: none !important; }
+}
+
+/* ─── Page shell ─────────────────────────────────────────── */
+html, body {
+  margin: 0; padding: 0;
+  background: var(--paper-3);
+  font-family: var(--sans);
+  color: var(--grey);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+body {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 30px; padding: 30px 0 90px;
+}
+.page {
+  width: var(--page-w);
+  min-height: var(--page-h);
+  background: var(--paper);
+  box-shadow: 0 18px 54px rgba(40,34,20,0.13);
+  position: relative;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── Toolbar (screen only) ──────────────────────────────── */
+.toolbar {
+  position: sticky; top: 18px; z-index: 200;
+  background: #fff; color: var(--grey);
+  border-radius: 999px; padding: 9px 12px 9px 18px;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--sans); font-size: 12.5px;
+  box-shadow: 0 14px 38px rgba(40,34,20,0.18);
+  border: 1px solid var(--line);
+}
+.toolbar .brand { display: inline-flex; align-items: center; gap: 9px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; font-size: 10.5px; color: var(--grey); }
+.toolbar .brand .d { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); }
+.toolbar .sep { color: var(--line-2); }
+.toolbar .meta { color: var(--grey-2); font-size: 11.5px; }
+.toolbar .meta strong { color: var(--grey); font-weight: 700; }
+.toolbar button {
+  background: var(--pink); color: #fff; border: none;
+  padding: 8px 16px; border-radius: 999px;
+  font-family: var(--sans); font-weight: 800; font-size: 11px;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  transition: background 160ms;
+}
+.toolbar button:hover { background: var(--pink-deep); }
+.toolbar button.ghost { background: var(--paper-2); color: var(--grey-2); }
+.toolbar button.ghost:hover { background: var(--paper-3); color: var(--grey); }
+
+/* ─── Brand wordmark ─────────────────────────────────────── */
+/* ─── Brand wordmark — Playfair serif "LMG" + wide-tracked sans "MEDIA" (matches Resource 08) ─── */
+.lmg-brand { font-family: var(--display); font-weight: 700; color: var(--grey); letter-spacing: 0.12em; font-size: 15px; white-space: nowrap; }
+.lmg-brand .m { font-family: var(--sans); font-weight: 500; font-size: 0.62em; letter-spacing: 0.42em; margin-left: 6px; color: var(--grey-3); text-transform: uppercase; }
+.on-photo .lmg-brand, .lmg-brand.on-photo { color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,0.4); }
+.on-photo .lmg-brand .m, .lmg-brand.on-photo .m { color: rgba(255,255,255,0.82); }
+
+/* ─── Shared type helpers ────────────────────────────────── */
+.ey {
+  font-family: var(--sans); font-weight: 800; font-size: 11px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--pink);
+}
+.ey.b { color: var(--blue-deep); }
+.ey.y { color: var(--yellow-deep); }
+.ey.g { color: var(--grey-3); }
+.hl-y { background: linear-gradient(180deg, transparent 58%, var(--yellow) 58%); padding: 0 5px; }
+.hl-p { color: var(--pink); }
+.hl-b { color: var(--blue-deep); }
+
+/* ─── Generic page strip / footer ────────────────────────── */
+.pg-foot {
+  margin-top: auto;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 44px;
+  font-family: var(--sans); font-weight: 700; font-size: 9.5px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey-3);
+  border-top: 1px solid var(--line);
+}
+.pg-foot .lmg-brand { font-size: 13px; color: var(--grey); }
+.pg-foot .mono { font-family: var(--mono); letter-spacing: 0.04em; }
+
+/* ════════════════════════════════════════════════════════════
+ * EBOOK COMPONENTS  (prefix: eb-)
+ * ════════════════════════════════════════════════════════════ */
+
+/* Cover */
+.eb-cover { padding: 0; }
+.eb-cover-photo {
+  height: 524px; width: 100%;
+  background-size: cover; background-position: center 14%;
+  position: relative;
+}
+.eb-cover-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,16,30,0.34) 0%, rgba(20,16,30,0) 28%, rgba(255,255,255,0.5) 70%, rgba(255,255,255,0.97) 90%, #fff 100%);
+}
+.eb-cover-photo .top {
+  position: absolute; top: 24px; left: 44px; right: 44px; z-index: 2;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.eb-cover-photo .top .lmg-brand { font-size: 18px; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,0.45); }
+.eb-cover-photo .top .lmg-brand .m { color: rgba(255,255,255,0.82); }
+.eb-cover-photo .top .pill {
+  background: var(--pink); color: #fff; white-space: nowrap;
+  padding: 7px 15px; border-radius: 999px;
+  font-family: var(--sans); font-weight: 800; font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.eb-cover-body { padding: 24px 48px 44px; flex: 1; display: flex; flex-direction: column; gap: 18px; position: relative; z-index: 3; }
+.eb-cover-body .course {
+  font-family: var(--sans); font-weight: 800; font-size: 11px;
+  letter-spacing: 0.26em; text-transform: uppercase; color: var(--pink);
+}
+.eb-cover-body .modnum {
+  font-family: var(--sans); font-weight: 900; font-size: 15px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3);
+  display: flex; align-items: center; gap: 12px;
+}
+.eb-cover-body .modnum::after { content: ''; flex: 1; height: 2px; background: var(--line); }
+.eb-cover-body h1 {
+  font-family: var(--sans); font-weight: 800;
+  font-size: 74px; line-height: 0.92; letter-spacing: -0.04em;
+  margin: 0; color: var(--grey); text-wrap: balance;
+}
+.eb-cover-body h1 .p { color: var(--pink); }
+.eb-cover-body .sub {
+  font-family: var(--sans); font-weight: 400; font-size: 16.5px; line-height: 1.55;
+  color: var(--grey-2); max-width: 60ch; margin: 0;
+}
+.eb-cover-meta {
+  margin-top: auto; padding-top: 22px; border-top: 2px solid var(--grey);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--sans); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-3);
+}
+.eb-cover-meta .l { color: var(--pink); }
+
+/* Standard content page */
+.eb { padding: 0; }
+.eb-head {
+  padding: 46px 48px 0;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.eb-head .kicker { display: flex; align-items: center; gap: 12px; }
+.eb-head .kicker .ey { color: var(--pink); }
+.eb-head .kicker .rule { flex: 1; height: 1px; background: var(--line); }
+.eb-head .kicker .chap { font-family: var(--mono); font-weight: 600; font-size: 11px; color: var(--grey-3); }
+.eb-head h2 {
+  font-family: var(--sans); font-weight: 800;
+  font-size: 46px; line-height: 0.98; letter-spacing: -0.03em;
+  margin: 0; max-width: 20ch; color: var(--grey);
+}
+.eb-body { padding: 24px 48px 0; flex: 1; }
+.eb-body.cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 38px; align-items: start; }
+.eb-body p {
+  font-family: var(--sans); font-size: 13px; line-height: 1.68;
+  color: var(--grey); margin: 0 0 13px; text-wrap: pretty;
+}
+.eb-body p.lead { font-size: 15px; line-height: 1.6; color: var(--grey); }
+.eb-body p.lead strong, .eb-body p strong { font-weight: 800; }
+.eb-body h3 {
+  font-family: var(--sans); font-weight: 800; font-size: 16px;
+  letter-spacing: -0.01em; margin: 18px 0 6px; color: var(--grey);
+  break-after: avoid;
+}
+
+/* Yellow statement stripe */
+.eb-stripe {
+  background: var(--yellow); color: var(--grey);
+  margin: 22px 48px 0; padding: 18px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--sans); font-weight: 700; font-size: 15px; line-height: 1.4;
+  text-wrap: pretty;
+}
+.eb-stripe.p { background: var(--pink); color: #fff; }
+.eb-stripe.b { background: var(--blue); color: #fff; }
+.eb-stripe .ar { font-weight: 900; font-size: 22px; color: var(--pink); flex: none; }
+.eb-stripe.p .ar, .eb-stripe.b .ar { color: #fff; }
+.eb-stripe em { font-style: normal; border-bottom: 2px solid currentColor; padding-bottom: 1px; }
+
+/* Pull quote */
+.eb-quote { padding: 26px 48px; }
+.eb-quote .mark { font-family: var(--sans); font-weight: 900; font-size: 56px; line-height: 0.4; color: var(--pink); }
+.eb-quote .body {
+  font-family: var(--sans); font-weight: 700; font-size: 24px; line-height: 1.22;
+  letter-spacing: -0.015em; max-width: 26ch; color: var(--grey); margin-top: 14px; text-wrap: balance;
+}
+.eb-quote .body em {
+  font-style: normal;
+  background: linear-gradient(180deg, transparent 58%, var(--yellow) 58%); padding: 0 5px;
+}
+
+/* Six-stream / numbered tile grid */
+.eb-grid { padding: 22px 48px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eb-tile {
+  border: 1.5px solid var(--line-2); border-radius: 14px;
+  padding: 18px 20px 18px; position: relative;
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--paper);
+}
+.eb-tile .tnum {
+  position: absolute; top: 16px; right: 18px;
+  font-family: var(--sans); font-weight: 900; font-size: 30px;
+  line-height: 1; letter-spacing: -0.04em; color: var(--grey-5);
+}
+.eb-tile .ttag {
+  font-family: var(--sans); font-weight: 800; font-size: 9.5px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+}
+.eb-tile h3 { font-family: var(--sans); font-weight: 800; font-size: 19px; letter-spacing: -0.02em; margin: 0; color: var(--grey); }
+.eb-tile p { font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.5; color: var(--grey-2); margin: 0; }
+.eb-tile .meta { font-family: var(--mono); font-weight: 600; font-size: 10px; color: var(--grey-3); margin-top: auto; padding-top: 6px; letter-spacing: 0.02em; }
+.eb-tile.p { border-color: var(--pink); } .eb-tile.p .ttag { color: var(--pink); }
+.eb-tile.y { border-color: var(--yellow-deep); } .eb-tile.y .ttag { color: var(--yellow-deep); }
+.eb-tile.b { border-color: var(--blue); } .eb-tile.b .ttag { color: var(--blue-deep); }
+.eb-tile.g { border-color: var(--grey); } .eb-tile.g .ttag { color: var(--grey); }
+
+/* Numbered factor rows */
+.eb-rows { padding: 8px 48px 0; }
+.eb-row {
+  display: grid; grid-template-columns: 70px 1fr; gap: 18px; align-items: start;
+  padding: 16px 0; border-top: 1px solid var(--line);
+}
+.eb-row:last-child { border-bottom: 1px solid var(--line); }
+.eb-row .num { font-family: var(--sans); font-weight: 900; font-size: 34px; line-height: 0.9; letter-spacing: -0.05em; }
+.eb-row.p .num { color: var(--pink); } .eb-row.y .num { color: var(--yellow-deep); }
+.eb-row.b .num { color: var(--blue-deep); } .eb-row.g .num { color: var(--grey); }
+.eb-row h3 { font-family: var(--sans); font-weight: 800; font-size: 17px; letter-spacing: -0.01em; margin: 4px 0 5px; }
+.eb-row .tag { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-3); }
+.eb-row p { font-family: var(--sans); font-weight: 500; font-size: 12.5px; line-height: 1.58; color: var(--grey-2); margin: 0; }
+
+/* Formula / pricing block */
+.eb-formula {
+  margin: 22px 48px 0; border: 2px solid var(--grey); border-radius: 18px; overflow: hidden;
+}
+.eb-formula .fbar {
+  background: var(--grey); color: #fff; padding: 14px 24px;
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--sans); font-weight: 800; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.eb-formula .fbar .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--pink); }
+.eb-formula .calc {
+  padding: 26px 24px; text-align: center;
+  font-family: var(--sans); font-weight: 800; font-size: 26px; letter-spacing: -0.01em; color: var(--grey);
+  display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;
+}
+.eb-formula .calc .op { color: var(--grey-4); font-weight: 700; }
+.eb-formula .calc .res { color: var(--pink); }
+.eb-formula .frac { display: inline-flex; flex-direction: column; text-align: center; font-size: 19px; line-height: 1.15; }
+.eb-formula .frac .top { border-bottom: 2px solid var(--grey); padding: 0 8px 3px; }
+.eb-formula .frac .bot { padding: 3px 8px 0; }
+.eb-bench { margin: 14px 48px 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.eb-bench .b {
+  border-radius: 12px; padding: 14px 16px; text-align: center;
+  border: 1.5px solid var(--line-2);
+}
+.eb-bench .b .v { font-family: var(--sans); font-weight: 900; font-size: 24px; letter-spacing: -0.02em; }
+.eb-bench .b .l { font-family: var(--sans); font-weight: 700; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); margin-top: 4px; }
+.eb-bench .b.avg .v { color: var(--grey-3); }
+.eb-bench .b.good { border-color: var(--blue); background: var(--blue-tint); } .eb-bench .b.good .v { color: var(--blue-deep); }
+.eb-bench .b.exc { border-color: var(--pink); background: var(--pink-tint); } .eb-bench .b.exc .v { color: var(--pink); }
+
+/* Worked example callout */
+.eb-example {
+  margin: 16px 48px 0; background: var(--paper-2); border-left: 4px solid var(--yellow);
+  padding: 16px 22px; border-radius: 0 10px 10px 0;
+}
+.eb-example .l { font-family: var(--sans); font-weight: 900; font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow-deep); }
+.eb-example p { font-family: var(--sans); font-weight: 500; font-size: 12.5px; line-height: 1.55; color: var(--grey); margin: 6px 0 0; }
+.eb-example .num { font-family: var(--mono); font-weight: 700; color: var(--grey); }
+
+/* Roadmap list */
+.eb-road { padding: 16px 48px 0; display: flex; flex-direction: column; }
+.eb-road .it {
+  display: grid; grid-template-columns: 54px 1fr; gap: 16px; align-items: baseline;
+  padding: 10px 0; border-top: 1px solid var(--line);
+}
+.eb-road .it.now { background: var(--pink-tint); margin: 0 -16px; padding: 12px 16px; border-radius: 10px; border-top-color: transparent; }
+.eb-road .it .m { font-family: var(--sans); font-weight: 900; font-size: 18px; letter-spacing: -0.02em; color: var(--grey-4); }
+.eb-road .it.now .m { color: var(--pink); }
+.eb-road .it .t { display: block; font-family: var(--sans); font-weight: 800; font-size: 14px; letter-spacing: -0.01em; color: var(--grey); }
+.eb-road .it .d { display: block; font-family: var(--sans); font-weight: 500; font-size: 11.5px; color: var(--grey-2); margin-top: 2px; }
+.eb-road .it.now .t::after { content: 'YOU ARE HERE'; margin-left: 10px; font-family: var(--sans); font-weight: 900; font-size: 8.5px; letter-spacing: 0.14em; color: #fff; background: var(--pink); padding: 3px 8px; border-radius: 999px; vertical-align: middle; }
+
+/* Outro / CTA */
+.eb-outro-img {
+  height: 300px; width: 100%; background-size: cover; background-position: center; position: relative;
+}
+.eb-outro-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,16,30,0.1) 0%, rgba(20,16,30,0.55) 100%); }
+.eb-outro-img .top { position: absolute; top: 24px; left: 44px; right: 44px; z-index: 2; display: flex; justify-content: space-between; align-items: center; }
+.eb-outro-img .top .lmg-brand { color: #fff; font-size: 18px; } .eb-outro-img .top .lmg-brand .m { color: rgba(255,255,255,0.82); }
+.eb-outro-body { flex: 1; padding: 34px 48px 0; display: flex; flex-direction: column; gap: 16px; }
+.eb-cta {
+  margin: 4px 48px 40px; background: var(--pink); color: #fff;
+  border-radius: 18px; padding: 26px 30px;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px;
+}
+.eb-cta h3 { font-family: var(--sans); font-weight: 800; font-size: 22px; letter-spacing: -0.018em; margin: 0 0 5px; }
+.eb-cta p { font-family: var(--sans); font-weight: 500; font-size: 13px; line-height: 1.5; margin: 0; color: rgba(255,255,255,0.92); }
+.eb-cta .arrow {
+  background: var(--yellow); color: var(--grey); text-decoration: none;
+  padding: 15px 24px; border-radius: 10px;
+  font-family: var(--sans); font-weight: 800; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+}
+.eb-cta .arrow .ar { font-size: 18px; }
+
+/* ════════════════════════════════════════════════════════════
+ * WORKBOOK COMPONENTS  (prefix: wb-)
+ * ════════════════════════════════════════════════════════════ */
+
+/* Cover */
+.wb-cover { padding: 0; }
+.wb-cover-photo {
+  height: 356px; width: 100%; background-size: cover; background-position: center 24%; position: relative;
+}
+.wb-cover-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,16,30,0.34) 0%, rgba(20,16,30,0) 30%, rgba(255,255,255,0.55) 72%, rgba(255,255,255,0.97) 90%, #fff 100%);
+}
+.wb-cover-photo .top { position: absolute; top: 24px; left: 44px; right: 44px; z-index: 2; display: flex; justify-content: space-between; align-items: center; }
+.wb-cover-photo .top .lmg-brand { color: #fff; font-size: 17px; } .wb-cover-photo .top .lmg-brand .m { color: rgba(255,255,255,0.82); }
+.wb-cover-photo .top .pill { background: var(--yellow); color: var(--grey); padding: 7px 15px; border-radius: 999px; font-family: var(--sans); font-weight: 800; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+.wb-cover-body { padding: 26px 48px 40px; flex: 1; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 3; }
+.wb-cover-body .course { font-family: var(--sans); font-weight: 800; font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--pink); }
+.wb-cover-body .modnum { font-family: var(--sans); font-weight: 900; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-3); display: flex; align-items: center; gap: 12px; }
+.wb-cover-body .modnum::after { content: ''; flex: 1; height: 2px; background: var(--line); }
+.wb-cover-body h1 { font-family: var(--sans); font-weight: 800; font-size: 60px; line-height: 0.94; letter-spacing: -0.035em; margin: 0; color: var(--grey); text-wrap: balance; }
+.wb-cover-body h1 .p { color: var(--pink); }
+.wb-cover-body .promise {
+  background: var(--yellow-soft); border-left: 4px solid var(--yellow);
+  padding: 16px 20px; border-radius: 0 10px 10px 0;
+  font-family: var(--sans); font-weight: 600; font-size: 14px; line-height: 1.5; color: var(--grey); max-width: 58ch;
+}
+.wb-cover-body .promise b { font-weight: 800; }
+
+/* Progress dots 1-10 */
+.wb-dots { display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+.wb-dots .lab { font-family: var(--sans); font-weight: 800; font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-3); margin-right: 6px; }
+.wb-dots .dot {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-weight: 800; font-size: 11px;
+  border: 1.5px solid var(--line-2); color: var(--grey-4);
+}
+.wb-dots .dot.active { background: var(--pink); border-color: var(--pink); color: #fff; box-shadow: 0 0 0 4px var(--pink-soft); }
+.wb-dots .dot.done { background: var(--grey); border-color: var(--grey); color: #fff; }
+
+/* Section header */
+.wb-sec { padding: 24px 48px 0; }
+.wb-sec.tight { padding-top: 10px; }
+.wb-sec-head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 6px; border-bottom: 2px solid var(--grey); }
+.wb-sec-head .letter {
+  font-family: var(--sans); font-weight: 900; font-size: 20px; letter-spacing: 0.02em;
+  background: var(--pink); color: #fff; width: 38px; height: 38px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center; flex: none; align-self: center;
+}
+.wb-sec-head.y .letter { background: var(--yellow); color: var(--grey); }
+.wb-sec-head.b .letter { background: var(--blue); color: #fff; }
+.wb-sec-head.g .letter { background: var(--grey); color: #fff; }
+.wb-sec-head h2 { font-family: var(--sans); font-weight: 800; font-size: 25px; letter-spacing: -0.02em; margin: 0; color: var(--grey); }
+.wb-sec-head .pg { margin-left: auto; font-family: var(--mono); font-weight: 600; font-size: 11px; color: var(--grey-3); align-self: center; }
+.wb-purpose { font-family: var(--sans); font-weight: 500; font-size: 12.5px; line-height: 1.5; color: var(--grey-2); margin: 8px 0 0; max-width: 70ch; }
+.wb-purpose b { font-weight: 800; color: var(--grey); }
+.wb-instruct { font-family: var(--sans); font-weight: 600; font-size: 12px; line-height: 1.5; color: var(--grey-3); margin: 6px 0 0; font-style: italic; }
+
+/* Field block */
+.wb-q { margin-top: 12px; }
+.wb-q .lbl { font-family: var(--sans); font-weight: 700; font-size: 13px; line-height: 1.4; color: var(--grey); display: block; margin-bottom: 8px; }
+.wb-q .lbl .qn { font-weight: 900; color: var(--pink); margin-right: 7px; }
+.wb-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+
+/* Inputs — short line */
+.wb-line {
+  width: 100%; border: none; border-bottom: 1.5px solid var(--line-2);
+  background: var(--paper); font-family: var(--sans); font-size: 13px; color: var(--grey);
+  padding: 6px 2px; outline: none; transition: border-color 160ms;
+}
+.wb-line:focus { border-bottom-color: var(--pink); }
+.wb-line::placeholder { color: var(--grey-4); font-weight: 400; }
+
+/* Long box */
+.wb-box {
+  width: 100%; border: 1.5px solid var(--line-2); border-radius: 10px;
+  background: var(--paper); font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--grey);
+  padding: 12px 14px; outline: none; resize: none; transition: border-color 160ms;
+}
+.wb-box:focus { border-color: var(--pink); }
+.wb-box::placeholder { color: var(--grey-4); font-weight: 400; }
+
+/* Number field */
+.wb-numwrap { display: inline-flex; align-items: center; border: 1.5px solid var(--line-2); border-radius: 10px; background: var(--paper); overflow: hidden; transition: border-color 160ms; }
+.wb-numwrap:focus-within { border-color: var(--pink); }
+.wb-numwrap .sym { padding: 0 0 0 14px; font-family: var(--sans); font-weight: 800; font-size: 16px; color: var(--grey-3); }
+.wb-numwrap .sym.suf { padding: 0 14px 0 0; }
+.wb-num { border: none; background: transparent; font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--grey); padding: 11px 14px; outline: none; width: 100%; }
+.wb-num.lg { font-size: 22px; padding: 14px; }
+.wb-num::placeholder { color: var(--grey-4); font-weight: 500; }
+.wb-numwrap.full { display: flex; }
+
+/* Checkbox group */
+.wb-checks { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 18px; }
+.wb-check { display: flex; align-items: center; gap: 10px; cursor: pointer; font-family: var(--sans); font-weight: 600; font-size: 12.5px; color: var(--grey); }
+.wb-check input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-check .bx { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--line-2); flex: none; display: inline-flex; align-items: center; justify-content: center; transition: all 140ms; background: var(--paper); }
+.wb-check .bx::after { content: '✓'; font-size: 14px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-check input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-check input:checked + .bx::after { opacity: 1; }
+.wb-check input:checked ~ .tx { color: var(--grey); font-weight: 800; }
+
+/* Circle-one pills */
+.wb-pills { display: flex; flex-wrap: wrap; gap: 9px; }
+.wb-pill { position: relative; cursor: pointer; }
+.wb-pill input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-pill .p {
+  display: inline-block; padding: 9px 16px; border-radius: 999px;
+  border: 1.5px solid var(--line-2); background: var(--paper);
+  font-family: var(--sans); font-weight: 700; font-size: 12.5px; color: var(--grey-2);
+  transition: all 140ms;
+}
+.wb-pill input:checked + .p { border-color: var(--pink); background: var(--pink); color: #fff; box-shadow: 0 0 0 4px var(--pink-soft); }
+.wb-pills.y .wb-pill input:checked + .p { border-color: var(--yellow-deep); background: var(--yellow); color: var(--grey); box-shadow: 0 0 0 4px var(--yellow-soft); }
+.wb-pills.b .wb-pill input:checked + .p { border-color: var(--blue); background: var(--blue); color: #fff; box-shadow: 0 0 0 4px var(--blue-soft); }
+
+/* Data table */
+.wb-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.wb-table tr { border-bottom: 1px solid var(--line); }
+.wb-table tr:last-child { border-bottom: none; }
+.wb-table td { padding: 7px 0; vertical-align: middle; }
+.wb-table td.k { font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey); }
+.wb-table tr.total td.k { font-weight: 900; }
+.wb-table tr.total { background: var(--paper-2); }
+.wb-table tr.total td { padding: 10px 8px; }
+.wb-table td.v { width: 180px; text-align: right; }
+.wb-table td.v .wb-numwrap { display: flex; }
+
+/* Computed / hero field */
+.wb-computed {
+  margin-top: 14px; border: 2px solid var(--pink); border-radius: 16px; overflow: hidden;
+  display: grid; grid-template-columns: 1fr auto;
+}
+.wb-computed .formula { padding: 18px 22px; display: flex; flex-direction: column; gap: 8px; justify-content: center; }
+.wb-computed .formula .fl { font-family: var(--sans); font-weight: 800; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pink); }
+.wb-computed .formula .expr { font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--grey); }
+.wb-computed .formula .expr .op { color: var(--grey-4); }
+.wb-computed .result {
+  background: var(--pink); color: #fff; padding: 18px 28px; min-width: 168px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+}
+.wb-computed .result .rl { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.9; }
+.wb-computed .result .rv { font-family: var(--sans); font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -0.03em; }
+.wb-computed .result .rv .small { font-size: 24px; }
+
+/* Quick-win callout */
+.wb-win {
+  margin-top: 8px; background: var(--pink-tint); border: 1.5px solid var(--pink-soft);
+  border-radius: 14px; padding: 11px 18px; display: flex; gap: 14px; align-items: flex-start;
+}
+.wb-win .badge { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #fff; background: var(--pink); padding: 6px 11px; border-radius: 999px; flex: none; margin-top: 1px; }
+.wb-win p { font-family: var(--sans); font-weight: 600; font-size: 12.5px; line-height: 1.55; color: var(--grey); margin: 0; }
+.wb-win p b { font-weight: 800; }
+
+/* Reference / example callout */
+.wb-ref {
+  margin-top: 12px; background: var(--paper-2); border: 1px dashed var(--line-2);
+  border-radius: 12px; padding: 13px 18px;
+}
+.wb-ref .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-3); }
+.wb-ref p { font-family: var(--sans); font-weight: 500; font-size: 12px; line-height: 1.5; color: var(--grey-2); margin: 5px 0 0; }
+.wb-ref .num { font-family: var(--mono); font-weight: 700; color: var(--grey); }
+
+/* Gap visual (current vs target) */
+.wb-gap { display: grid; grid-template-columns: 1fr 44px 1fr; align-items: stretch; gap: 0; margin-top: 14px; }
+.wb-gap .cell { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 14px 18px; text-align: center; }
+.wb-gap .cell .l { font-family: var(--sans); font-weight: 800; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-3); }
+.wb-gap .cell.target { border-color: var(--pink); background: var(--pink-tint); }
+.wb-gap .cell.target .l { color: var(--pink); }
+.wb-gap .arrow { display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 900; color: var(--pink); }
+
+/* Completion gate */
+.wb-gate {
+  margin: 0 48px; background: var(--grey); color: #fff; border-radius: 18px; padding: 28px 32px;
+}
+.wb-gate .h { font-family: var(--sans); font-weight: 900; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--yellow); margin: 0 0 16px; }
+.wb-gate .h .step { color: #fff; }
+.wb-gate-checks { display: flex; flex-direction: column; gap: 12px; }
+.wb-gate .wb-check { color: #fff; font-size: 14px; font-weight: 700; }
+.wb-gate .wb-check .bx { border-color: rgba(255,255,255,0.4); background: transparent; }
+.wb-gate .wb-check input:checked + .bx { background: var(--yellow); border-color: var(--yellow); }
+.wb-gate .wb-check input:checked + .bx::after { color: var(--grey); }
+.wb-gate .note { font-family: var(--sans); font-weight: 500; font-size: 12.5px; line-height: 1.55; color: rgba(255,255,255,0.82); margin: 18px 0 0; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.16); }
+.wb-gate .note b { color: #fff; font-weight: 800; }
+
+/* Sign / date line */
+.wb-sign { margin: 22px 48px 0; display: grid; grid-template-columns: 1fr 200px; gap: 28px; align-items: end; }
+.wb-sign .f { display: flex; flex-direction: column; gap: 6px; }
+.wb-sign .f .l { font-family: var(--sans); font-weight: 800; font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey-3); }
+
+/* Next-module handoff banner */
+.wb-next {
+  margin: 22px 48px 0; background: var(--pink-tint); border-radius: 14px; padding: 18px 24px;
+  display: flex; align-items: center; gap: 16px;
+}
+.wb-next .ar { font-size: 24px; font-weight: 900; color: var(--pink); flex: none; }
+.wb-next .t { font-family: var(--sans); font-weight: 800; font-size: 15px; color: var(--grey); letter-spacing: -0.01em; }
+.wb-next .t small { display: block; font-weight: 600; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); margin-bottom: 2px; }
+
+/* ── Module 1 pull-forward flag chip ───────────────────────── */
+.wb-flag {
+  display: inline-flex; align-items: center; gap: 5px; vertical-align: middle;
+  font-family: var(--sans); font-weight: 800; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--blue-deep); background: var(--blue-tint); border: 1px solid var(--blue-soft);
+  padding: 3px 8px; border-radius: 999px; margin-left: 8px;
+}
+.wb-flag::before { content: '↩'; font-size: 10px; }
+
+/* ── Three-channel self-audit scales (Part A) ──────────────── */
+.wb-scales { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+.wb-scale {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px;
+  border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 16px 12px 18px;
+  border-left-width: 4px;
+}
+.wb-scale.p { border-left-color: var(--pink); }
+.wb-scale.y { border-left-color: var(--yellow-deep); }
+.wb-scale.b { border-left-color: var(--blue); }
+.wb-scale .ch { font-family: var(--sans); }
+.wb-scale .ch .t { display: block; font-weight: 800; font-size: 14px; letter-spacing: -0.01em; color: var(--grey); }
+.wb-scale .ch .d { display: block; font-weight: 500; font-size: 11px; color: var(--grey-2); margin-top: 1px; }
+.wb-scale .wb-pills { flex-wrap: nowrap; }
+.wb-scale .wb-pill .p { padding: 7px 14px; font-size: 11.5px; }
+
+/* ── Target-brand list data table (Part B) ─────────────────── */
+.wb-datatable { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-datatable thead th {
+  font-family: var(--sans); font-weight: 800; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey-2); text-align: left; padding: 0 8px 8px; vertical-align: bottom; line-height: 1.25;
+  border-bottom: 2px solid var(--grey);
+}
+.wb-datatable thead th .sub { display: block; font-weight: 600; font-size: 8.5px; letter-spacing: 0.02em; text-transform: none; color: var(--grey-3); margin-top: 2px; }
+.wb-datatable thead th.c { text-align: center; }
+.wb-datatable tbody td { padding: 0; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.wb-datatable tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-datatable .rn { width: 26px; text-align: center; font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--grey-4); }
+.wb-datatable input[type="text"] {
+  width: 100%; border: none; background: transparent; outline: none;
+  font-family: var(--sans); font-weight: 600; font-size: 12px; color: var(--grey);
+  padding: 11px 8px;
+}
+.wb-datatable input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-datatable input:focus { background: var(--pink-tint); }
+.wb-datatable td.c { text-align: center; }
+.wb-datatable .warm { width: 60px; }
+.wb-datatable .warm input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-datatable .warm .bx {
+  width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid var(--line-2);
+  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 140ms; background: var(--paper);
+}
+.wb-datatable .warm .bx::after { content: '✓'; font-size: 12px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-datatable .warm input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-datatable .warm input:checked + .bx::after { opacity: 1; }
+.wb-datatable .prio { width: 56px; }
+.wb-datatable .prio input { text-align: center; font-weight: 800; color: var(--pink); padding: 11px 4px; }
+.wb-cols-key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; }
+.wb-cols-key span { font-family: var(--sans); font-weight: 600; font-size: 10.5px; color: var(--grey-3); }
+.wb-cols-key b { font-weight: 800; color: var(--grey-2); }
+
+/* numbered short lines (B2 / D2 focus brands) */
+.wb-numlines { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+.wb-numline { display: grid; grid-template-columns: 28px 1fr; align-items: center; gap: 10px; }
+.wb-numline .n {
+  font-family: var(--sans); font-weight: 900; font-size: 13px; color: #fff; background: var(--pink);
+  width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+}
+.wb-numline.y .n { background: var(--yellow); color: var(--grey); }
+.wb-numline.b .n { background: var(--blue); }
+
+/* ── Media-kit content builder (Part C) ────────────────────── */
+.wb-kit { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+.wb-kitrow {
+  display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start;
+  border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 16px;
+}
+.wb-kitrow .ck { position: relative; padding-top: 2px; }
+.wb-kitrow .ck input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-kitrow .ck .bx { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 140ms; background: var(--paper); }
+.wb-kitrow .ck .bx::after { content: '✓'; font-size: 13px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-kitrow .ck input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-kitrow .ck input:checked + .bx::after { opacity: 1; }
+.wb-kitrow .body { min-width: 0; }
+.wb-kitrow .klbl { font-family: var(--sans); font-weight: 800; font-size: 12.5px; color: var(--grey); display: block; margin-bottom: 7px; }
+.wb-kitrow .klbl .hint { font-weight: 500; color: var(--grey-3); }
+.wb-kitrow .wb-box, .wb-kitrow .wb-line { font-size: 12px; }
+.wb-kitrow .wb-box { padding: 9px 12px; }
+
+/* ── Weekly pipeline habit (Part D) ────────────────────────── */
+.wb-habit {
+  margin-top: 14px; background: var(--pink); color: #fff; border-radius: 16px; padding: 20px 26px;
+}
+.wb-habit .badge { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; background: var(--yellow); color: var(--grey); padding: 5px 11px; border-radius: 999px; }
+.wb-habit .stmt {
+  font-family: var(--sans); font-weight: 700; font-size: 18px; line-height: 1.5; letter-spacing: -0.01em;
+  margin: 14px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+}
+.wb-habit .stmt .hnum {
+  width: 64px; border: none; border-bottom: 2.5px solid rgba(255,255,255,0.6); background: transparent;
+  font-family: var(--sans); font-weight: 900; font-size: 20px; color: #fff; text-align: center; outline: none;
+  padding: 2px 4px; margin: 0 2px;
+}
+.wb-habit .stmt .hnum::placeholder { color: rgba(255,255,255,0.5); }
+.wb-habit .stmt .hnum:focus { border-bottom-color: var(--yellow); }
+.wb-habit .note { font-family: var(--sans); font-weight: 600; font-size: 12px; color: rgba(255,255,255,0.9); margin: 14px 0 0; font-style: italic; }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 3 — Vetting / "Your Deal Filter"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Deal-being-evaluated line ─────────────────────────────── */
+.wb-dealline { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; margin-top: 10px; background: var(--paper-2); border: 1.5px solid var(--line-2); border-radius: 12px; padding: 10px 16px; }
+.wb-dealline .l { font-family: var(--sans); font-weight: 900; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-3); white-space: nowrap; }
+.wb-dealline input { border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--grey); padding: 5px 2px; outline: none; }
+.wb-dealline input:focus { border-bottom-color: var(--pink); }
+.wb-dealline input::placeholder { color: var(--grey-4); font-weight: 500; }
+
+/* ── Opportunity scorecard ─────────────────────────────────── */
+.wb-scorecard { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 10px; }
+.wb-scorecard thead th { font-family: var(--sans); font-weight: 800; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 10px 8px; border-bottom: 2px solid var(--grey); }
+.wb-scorecard thead th.sc { text-align: center; width: 92px; }
+.wb-scorecard tbody td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-scorecard .crit { padding: 6px 10px; font-family: var(--sans); font-weight: 700; font-size: 12.5px; line-height: 1.3; color: var(--grey); }
+.wb-scorecard .crit .cn { font-weight: 900; color: var(--grey-3); margin-right: 8px; }
+.wb-scorecard .crit .db { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle; font-family: var(--sans); font-weight: 900; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); background: var(--pink-tint); border: 1px solid var(--pink-soft); padding: 2px 7px; border-radius: 999px; }
+.wb-scorecard td.sc { text-align: center; }
+.wb-scorecard td.sc input { width: 52px; text-align: center; border: 1.5px solid var(--line-2); border-radius: 9px; background: var(--paper); font-family: var(--sans); font-weight: 900; font-size: 16px; color: var(--pink); padding: 6px 0; outline: none; transition: border-color 140ms; }
+.wb-scorecard td.sc input:focus { border-color: var(--pink); }
+.wb-scorecard td.sc input::placeholder { color: var(--grey-5); font-weight: 600; }
+.wb-scorecard tr.db-row td.sc input { border-color: var(--pink-soft); }
+.wb-scorecard tr.totrow td { border-bottom: none; padding-top: 8px; }
+.wb-scorecard tr.totrow .crit { font-weight: 900; font-size: 14px; color: var(--grey); }
+.wb-scorecard .totbox { display: inline-flex; align-items: baseline; gap: 3px; background: var(--grey); color: #fff; border-radius: 10px; padding: 8px 16px; }
+.wb-scorecard .totbox .tv { font-family: var(--sans); font-weight: 900; font-size: 24px; line-height: 1; letter-spacing: -0.02em; }
+.wb-scorecard .totbox .tm { font-family: var(--sans); font-weight: 700; font-size: 12px; opacity: 0.7; }
+
+/* ── Score interpretation bands ────────────────────────────── */
+.wb-bands { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 12px; }
+.wb-band { display: flex; align-items: center; gap: 11px; border: 1.5px solid var(--line-2); border-left-width: 5px; border-radius: 10px; padding: 8px 14px; transition: all 160ms; }
+.wb-band .rng { font-family: var(--sans); font-weight: 900; font-size: 14px; letter-spacing: -0.01em; white-space: nowrap; }
+.wb-band .txt { font-family: var(--sans); font-weight: 600; font-size: 11px; line-height: 1.3; color: var(--grey-2); }
+.wb-band .txt b { font-weight: 800; color: var(--grey); }
+.wb-band.yes { border-left-color: var(--blue); } .wb-band.yes .rng { color: var(--blue-deep); }
+.wb-band.proceed { border-left-color: var(--yellow-deep); } .wb-band.proceed .rng { color: var(--yellow-deep); }
+.wb-band.no { border-left-color: var(--grey-3); } .wb-band.no .rng { color: var(--grey-3); }
+.wb-band.decline { border-left-color: var(--pink); } .wb-band.decline .rng { color: var(--pink); }
+.wb-band.on { box-shadow: 0 0 0 3px var(--paper-2), 0 8px 20px rgba(20,16,30,0.1); border-color: currentColor; transform: translateY(-1px); }
+.wb-band.yes.on { background: var(--blue-tint); }
+.wb-band.proceed.on { background: var(--yellow-soft); }
+.wb-band.no.on { background: var(--paper-3); }
+.wb-band.decline.on { background: var(--pink-tint); }
+
+/* ── Two-layer audience-fit compare ────────────────────────── */
+.wb-compare { display: grid; grid-template-columns: 1fr 1fr; border: 1.5px solid var(--line-2); border-radius: 12px; overflow: hidden; margin-top: 10px; }
+.wb-compare .col { padding: 12px 14px; }
+.wb-compare .col + .col { border-left: 1.5px solid var(--line-2); }
+.wb-compare .hd { font-family: var(--sans); font-weight: 800; font-size: 10.5px; line-height: 1.3; color: var(--grey); margin-bottom: 8px; display: block; }
+.wb-compare .col.brand { background: var(--paper-2); }
+.wb-compare .col.mine .hd { color: var(--blue-deep); }
+.wb-compare .col textarea { width: 100%; border: none; background: transparent; font-family: var(--sans); font-size: 12px; line-height: 1.5; color: var(--grey); resize: none; outline: none; }
+.wb-compare .col textarea::placeholder { color: var(--grey-4); }
+
+/* ════════════════════════════════════════════════════════════
+ * EBOOK — three-deal walkthrough cards (Module 3)
+ * ════════════════════════════════════════════════════════════ */
+.eb-deals { padding: 20px 48px 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.eb-deal { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 9px; }
+.eb-deal.yes { border-color: var(--blue); } .eb-deal.no { border-color: var(--pink); } .eb-deal.maybe { border-color: var(--yellow-deep); }
+.eb-deal .verdict { align-self: flex-start; font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; padding: 5px 11px; border-radius: 999px; }
+.eb-deal.yes .verdict { background: var(--blue); } .eb-deal.no .verdict { background: var(--pink); } .eb-deal.maybe .verdict { background: var(--yellow); color: var(--grey); }
+.eb-deal .name { font-family: var(--sans); font-weight: 800; font-size: 14px; letter-spacing: -0.01em; color: var(--grey); line-height: 1.2; }
+.eb-deal .total { display: flex; align-items: baseline; gap: 4px; }
+.eb-deal .total .tv { font-family: var(--sans); font-weight: 900; font-size: 34px; line-height: 0.9; letter-spacing: -0.03em; }
+.eb-deal.yes .total .tv { color: var(--blue-deep); } .eb-deal.no .total .tv { color: var(--pink); } .eb-deal.maybe .total .tv { color: var(--yellow-deep); }
+.eb-deal .total .tm { font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey-3); }
+.eb-deal .take { font-family: var(--sans); font-weight: 500; font-size: 11px; line-height: 1.45; color: var(--grey-2); margin: 0; padding-top: 7px; border-top: 1px solid var(--line); }
+.eb-deal .take b { font-weight: 800; color: var(--grey); }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 4 — Pricing / "Your Numbers, Locked In"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Rate Calculator CTA (ebook + workbook) ────────────────── */
+.calc-cta { margin: 20px 48px 0; background: var(--grey); color: #fff; border-radius: 16px; padding: 20px 26px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 22px; }
+.calc-cta.inwb { margin: 12px 0 0; padding: 15px 22px; }
+.calc-cta .lt { display: flex; flex-direction: column; gap: 4px; }
+.calc-cta .lt .ey { font-family: var(--sans); font-weight: 900; font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); }
+.calc-cta .lt .ti { font-family: var(--sans); font-weight: 800; font-size: 18px; letter-spacing: -0.015em; color: #fff; }
+.calc-cta .lt .sb { font-family: var(--sans); font-weight: 500; font-size: 12px; color: rgba(255,255,255,0.7); }
+.calc-cta .btn { background: var(--yellow); color: var(--grey); text-decoration: none; padding: 13px 22px; border-radius: 10px; font-family: var(--sans); font-weight: 800; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap; }
+.calc-cta .btn .ar { font-size: 16px; }
+
+/* ── Content-type multiplier cards (ebook Step 2) ──────────── */
+.eb-mult { padding: 20px 48px 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.eb-mult .m { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.eb-mult .m .x { font-family: var(--sans); font-weight: 900; font-size: 30px; letter-spacing: -0.03em; line-height: 1; }
+.eb-mult .m .nm { font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey); margin-top: 4px; }
+.eb-mult .m .ds { font-family: var(--sans); font-weight: 500; font-size: 11px; line-height: 1.4; color: var(--grey-2); }
+.eb-mult .m.base { border-color: var(--grey); } .eb-mult .m.base .x { color: var(--grey); }
+.eb-mult .m.up { border-color: var(--pink); } .eb-mult .m.up .x { color: var(--pink); }
+.eb-mult .m.down { border-color: var(--blue); } .eb-mult .m.down .x { color: var(--blue-deep); }
+
+/* ── Workbook step block (Part B) ──────────────────────────── */
+.wb-step { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 11px 16px; margin-top: 8px; }
+.wb-step .sh { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.wb-step .sh .sn { font-family: var(--sans); font-weight: 900; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; background: var(--pink); padding: 4px 10px; border-radius: 999px; }
+.wb-step .sh .st { font-family: var(--sans); font-weight: 800; font-size: 14px; letter-spacing: -0.01em; color: var(--grey); }
+.wb-step .row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+.wb-step .fld { display: flex; align-items: center; gap: 8px; }
+.wb-step .fld > .k { font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey-2); white-space: nowrap; }
+.wb-step .inl { border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey); padding: 4px 2px; outline: none; }
+.wb-step .inl:focus { border-bottom-color: var(--pink); }
+.wb-step .inl::placeholder { color: var(--grey-4); font-weight: 500; }
+.wb-step .inl.w70 { width: 70px; } .wb-step .inl.w120 { width: 120px; } .wb-step .inl.w90 { width: 90px; }
+.wb-step .qlbl { font-family: var(--sans); font-weight: 700; font-size: 11.5px; color: var(--grey-2); margin-right: 4px; }
+.wb-step .wb-pill .p { padding: 6px 12px; font-size: 11.5px; }
+.wb-step .flag-perp { color: var(--pink); font-weight: 900; }
+
+/* mini deliverables table */
+.wb-mini { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 8px; table-layout: fixed; }
+.wb-mini th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-3); text-align: left; padding: 0 8px 5px; border-bottom: 1.5px solid var(--line-2); }
+.wb-mini th.q { width: 56px; text-align: center; }
+.wb-mini td { border-bottom: 1px solid var(--line); padding: 0; }
+.wb-mini input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 12px; color: var(--grey); padding: 8px; outline: none; }
+.wb-mini input:focus { background: var(--pink-tint); }
+.wb-mini input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-mini td.q input { text-align: center; }
+
+/* ── Presentable range hero (Part C) ───────────────────────── */
+.wb-range { margin-top: 12px; border: 2px solid var(--pink); border-radius: 16px; overflow: hidden; }
+.wb-range .rtop { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+.wb-range .rcell { padding: 16px 20px; text-align: center; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+.wb-range .rcell .l { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey-3); }
+.wb-range .rcell .inwrap { display: inline-flex; align-items: center; justify-content: center; }
+.wb-range .rcell .sym { font-family: var(--sans); font-weight: 800; font-size: 20px; color: var(--pink); }
+.wb-range .rcell input { border: none; background: transparent; font-family: var(--sans); font-weight: 900; font-size: 30px; color: var(--pink); text-align: center; width: 120px; outline: none; letter-spacing: -0.02em; }
+.wb-range .rcell input::placeholder { color: var(--grey-5); }
+.wb-range .rcell.lo input { color: var(--grey); } .wb-range .rcell.lo .sym { color: var(--grey-3); }
+.wb-range .rarrow { display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 900; color: var(--pink); padding: 0 4px; }
+.wb-range .rpitch { background: var(--pink); color: #fff; padding: 16px 22px; }
+.wb-range .rpitch .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.8); margin-bottom: 5px; }
+.wb-range .rpitch .sentence { font-family: var(--sans); font-weight: 700; font-size: 16px; line-height: 1.4; }
+.wb-range .rpitch .sentence input { border: none; border-bottom: 2px solid rgba(255,255,255,0.55); background: transparent; color: #fff; font-family: var(--sans); font-weight: 800; font-size: 16px; padding: 1px 4px; outline: none; min-width: 90px; }
+.wb-range .rpitch .sentence input::placeholder { color: rgba(255,255,255,0.6); }
+.wb-range .rpitch .sentence input:focus { border-bottom-color: var(--yellow); }
+.wb-range .rpitch .sentence b { font-weight: 900; }
+
+/* floor line */
+.wb-floor { margin-top: 12px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; background: var(--paper-2); border: 1.5px dashed var(--grey-4); border-radius: 12px; padding: 14px 18px; }
+.wb-floor .lt .l { font-family: var(--sans); font-weight: 900; font-size: 13px; color: var(--grey); display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 8px; }
+.wb-floor .lt .l .lock { font-size: 12px; }
+.wb-floor .lt .d { font-family: var(--sans); font-weight: 500; font-size: 11px; color: var(--grey-2); margin-top: 2px; }
+.wb-floor .fv { display: inline-flex; align-items: center; border: 1.5px solid var(--grey); border-radius: 10px; background: #fff; padding: 0 4px 0 12px; }
+.wb-floor .fv .sym { font-family: var(--sans); font-weight: 800; font-size: 16px; color: var(--grey-3); }
+.wb-floor .fv input { border: none; background: transparent; font-family: var(--sans); font-weight: 900; font-size: 18px; color: var(--grey); padding: 10px 8px; width: 100px; outline: none; }
+
+/* ── Rate card (Part D) ────────────────────────────────────── */
+.wb-ratecard { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-ratecard th { font-family: var(--sans); font-weight: 800; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 10px 8px; border-bottom: 2px solid var(--grey); }
+.wb-ratecard th.n { width: 132px; } .wb-ratecard th.note { width: auto; }
+.wb-ratecard td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-ratecard tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-ratecard .dv { padding: 11px 10px; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey); }
+.wb-ratecard td.num { width: 132px; }
+.wb-ratecard td .nwrap { display: flex; align-items: center; padding-left: 8px; }
+.wb-ratecard td .nwrap .sym { font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey-4); }
+.wb-ratecard input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey); padding: 10px 6px; outline: none; }
+.wb-ratecard input:focus { background: var(--pink-tint); }
+.wb-ratecard input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-ratecard td.note input { font-weight: 500; }
+
+/* deal-health strip */
+.wb-dealhealth { margin-top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; background: var(--blue-tint); border: 1px solid var(--blue-soft); border-radius: 10px; padding: 11px 16px; }
+.wb-dealhealth .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-deep); }
+.wb-dealhealth .it { font-family: var(--sans); font-weight: 700; font-size: 11.5px; color: var(--grey); }
+.wb-dealhealth .it b { color: var(--blue-deep); }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 5 — The Perfect Pitch / "Build & Send Your Pitch"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Templates-pack CTA (reuses calc-cta dark box) ─────────── */
+/* use .calc-cta / .calc-cta.inwb with templates copy */
+
+/* ── Ebook · six-part pitch anatomy ────────────────────────── */
+.eb-anatomy { padding: 18px 48px 0; display: flex; flex-direction: column; gap: 8px; }
+.eb-anat { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: stretch; }
+.eb-anat .n { font-family: var(--sans); font-weight: 900; font-size: 15px; color: #fff; background: var(--pink); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.eb-anat:nth-child(2) .n { background: var(--pink); }
+.eb-anat .bd { border: 1.5px solid var(--line-2); border-radius: 10px; padding: 10px 16px; display: grid; grid-template-columns: 168px 1fr; gap: 16px; align-items: baseline; }
+.eb-anat .bd .pt { font-family: var(--sans); font-weight: 800; font-size: 13.5px; letter-spacing: -0.01em; color: var(--grey); }
+.eb-anat .bd .pt .role { display: block; font-weight: 700; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); margin-bottom: 2px; }
+.eb-anat .bd .ds { font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.45; color: var(--grey-2); }
+.eb-anat .bd .ds b { font-weight: 800; color: var(--grey); }
+
+/* ── Ebook · timing calendar ───────────────────────────────── */
+.eb-timing { padding: 18px 48px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.eb-tcard { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 5px; }
+.eb-tcard .season { font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey); }
+.eb-tcard .when { font-family: var(--sans); font-weight: 900; font-size: 11px; letter-spacing: 0.04em; color: var(--pink); }
+.eb-tcard .note { font-family: var(--sans); font-weight: 500; font-size: 10.5px; line-height: 1.4; color: var(--grey-2); }
+
+/* ── Ebook · follow-up sequence timeline ───────────────────── */
+.eb-seq { padding: 20px 48px 0; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 0; }
+.eb-seqstep { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 14px 18px; display: flex; flex-direction: column; gap: 5px; }
+.eb-seqstep .d { font-family: var(--mono); font-weight: 700; font-size: 10px; letter-spacing: 0.04em; color: var(--pink); text-transform: uppercase; }
+.eb-seqstep .t { font-family: var(--sans); font-weight: 800; font-size: 14px; color: var(--grey); }
+.eb-seqstep .x { font-family: var(--sans); font-weight: 500; font-size: 11px; line-height: 1.4; color: var(--grey-2); }
+.eb-seqstep.stop { border-color: var(--grey); border-style: dashed; }
+.eb-seqstep.stop .d { color: var(--grey-3); }
+.eb-seq .arr { display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: var(--pink); padding: 0 10px; }
+
+/* ── Ebook · before/after teardown ─────────────────────────── */
+.eb-ba { padding: 18px 48px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eb-bacol { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; }
+.eb-bacol.before { border-color: var(--line-2); background: var(--paper-2); }
+.eb-bacol.after { border-color: var(--pink); }
+.eb-bacol .tag { display: inline-block; font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; margin-bottom: 10px; }
+.eb-bacol.before .tag { background: var(--grey-5); color: var(--grey); }
+.eb-bacol.after .tag { background: var(--pink); color: #fff; }
+.eb-bacol .subj { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); line-height: 1.3; }
+.eb-bacol .subj small { display: block; font-weight: 700; font-size: 8.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 3px; }
+.eb-bacol .em { font-family: var(--sans); font-weight: 500; font-size: 11px; line-height: 1.5; color: var(--grey-2); margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--line); }
+.eb-bacol .em b { font-weight: 800; color: var(--grey); }
+.eb-bacol .diag { font-family: var(--sans); font-weight: 600; font-size: 10.5px; line-height: 1.4; color: var(--pink); margin: 8px 0 0; font-style: italic; }
+.eb-bacol.before .diag { color: var(--grey-3); }
+
+/* ── Workbook · research hooks ─────────────────────────────── */
+.wb-hooks { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.wb-hook { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 11px 16px; }
+.wb-hook .hl { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; margin-bottom: 6px; }
+.wb-hook.gold { border-color: var(--yellow); background: var(--yellow-soft); }
+.wb-hook.gold .hl { color: var(--grey); }
+.wb-hook .star { color: var(--yellow-deep); font-weight: 900; margin-right: 4px; }
+.wb-hook .feeds { display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 8.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); background: var(--pink-tint); border: 1px solid var(--pink-soft); padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+
+/* ── Workbook · pitch builder ──────────────────────────────── */
+.wb-builder { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+.wb-block { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; border: 1.5px solid var(--line-2); border-radius: 12px; padding: 9px 15px; }
+.wb-block .bn { font-family: var(--sans); font-weight: 900; font-size: 13px; color: #fff; background: var(--pink); width: 26px; height: 26px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+.wb-block .bbody { min-width: 0; }
+.wb-block .blbl { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); display: block; margin-bottom: 6px; }
+.wb-block .blbl .src { display: inline-block; font-family: var(--sans); font-weight: 700; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-deep); background: var(--blue-tint); border: 1px solid var(--blue-soft); padding: 2px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+.wb-block .blbl .hint { font-weight: 500; color: var(--grey-3); }
+.wb-block .wb-box, .wb-block .wb-line { font-size: 12px; }
+.wb-block .wb-box { padding: 8px 12px; }
+
+/* ── Workbook · brainstorm list ────────────────────────────── */
+.wb-brain { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.wb-brainrow { display: grid; grid-template-columns: 26px 1fr auto; gap: 11px; align-items: center; }
+.wb-brainrow .n { font-family: var(--sans); font-weight: 900; font-size: 13px; color: var(--grey-3); text-align: center; }
+.wb-brainrow .star { position: relative; display: inline-flex; }
+.wb-brainrow .star input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-brainrow .star .bx { display: inline-flex; align-items: center; gap: 5px; border: 1.5px solid var(--line-2); border-radius: 999px; padding: 5px 12px 5px 10px; cursor: pointer; font-family: var(--sans); font-weight: 800; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey-3); transition: all 140ms; white-space: nowrap; }
+.wb-brainrow .star .bx::before { content: '★'; font-size: 13px; color: var(--grey-5); }
+.wb-brainrow .star input:checked + .bx { border-color: var(--yellow-deep); background: var(--yellow-soft); color: var(--grey); }
+.wb-brainrow .star input:checked + .bx::before { color: var(--yellow-deep); }
+
+/* ── Workbook · follow-up scheduler ────────────────────────── */
+.wb-sched { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; margin-top: 10px; }
+.wb-schedstep { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 14px; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.wb-schedstep .l { font-family: var(--sans); font-weight: 800; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); }
+.wb-schedstep .l b { color: var(--pink); }
+.wb-schedstep input { border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey); text-align: center; padding: 5px 2px; outline: none; }
+.wb-schedstep input:focus { border-bottom-color: var(--pink); }
+.wb-schedstep input::placeholder { color: var(--grey-5); font-weight: 500; }
+.wb-sched .arr { display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--pink); padding: 0 8px; }
+.wb-sched-after { margin-top: 9px; display: flex; align-items: center; gap: 8px; background: var(--paper-2); border: 1.5px dashed var(--grey-4); border-radius: 10px; padding: 9px 14px; font-family: var(--sans); font-weight: 600; font-size: 11px; color: var(--grey-2); }
+.wb-sched-after b { font-weight: 800; color: var(--grey); }
+.wb-sched-after .ar { color: var(--grey-3); font-weight: 900; }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 6 — Negotiating / "Negotiate From Strength"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Anchor / Target / Floor ladder (ebook + workbook) ─────── */
+.atf { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 12px; }
+.atf .cell { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 13px 16px; display: flex; flex-direction: column; gap: 5px; position: relative; }
+.atf .cell .lab { font-family: var(--sans); font-weight: 900; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; }
+.atf .cell .sub { font-family: var(--sans); font-weight: 600; font-size: 10.5px; line-height: 1.35; color: var(--grey-2); }
+.atf .cell.anchor { border-color: var(--blue-soft); } .atf .cell.anchor .lab { color: var(--blue-deep); }
+.atf .cell.target { border-color: var(--line-2); } .atf .cell.target .lab { color: var(--grey-3); }
+.atf .cell.floor { border-color: var(--pink); border-width: 2px; background: var(--pink-tint); } .atf .cell.floor .lab { color: var(--pink); }
+/* ebook static value */
+.atf .cell .val { font-family: var(--sans); font-weight: 900; font-size: 22px; letter-spacing: -0.02em; color: var(--grey); }
+.atf .cell.floor .val { color: var(--pink); }
+/* workbook fillable */
+.atf .cell .nwrap { display: flex; align-items: center; border-bottom: 1.5px solid var(--line-2); }
+.atf .cell.floor .nwrap { border-bottom-color: var(--pink); }
+.atf .cell .nwrap .sym { font-family: var(--sans); font-weight: 800; font-size: 17px; color: var(--grey-4); }
+.atf .cell.floor .nwrap .sym { color: var(--pink); }
+.atf .cell .nwrap input { border: none; background: transparent; font-family: var(--sans); font-weight: 900; font-size: 20px; color: var(--grey); padding: 4px 4px; width: 100%; outline: none; }
+.atf .cell.floor .nwrap input { color: var(--pink); }
+.atf .cell .nwrap input::placeholder { color: var(--grey-5); }
+
+/* ── Ebook · seven objections (brand says / you say) ───────── */
+.eb-obj { padding: 16px 48px 0; display: flex; flex-direction: column; gap: 7px; }
+.eb-objrow { display: grid; grid-template-columns: 240px 1fr; gap: 14px; align-items: stretch; }
+.eb-objrow .says { background: var(--paper-2); border: 1.5px solid var(--line-2); border-radius: 10px; padding: 9px 14px; display: flex; align-items: center; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey); font-style: italic; }
+.eb-objrow .says::before { content: '\201C'; font-weight: 900; color: var(--grey-4); margin-right: 2px; }
+.eb-objrow .resp { border: 1.5px solid var(--line-2); border-left: 4px solid var(--pink); border-radius: 10px; padding: 9px 14px; font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.4; color: var(--grey-2); display: flex; align-items: center; }
+.eb-objrow .resp b { font-weight: 800; color: var(--grey); }
+.eb-objrow.stall .resp { border-left-color: var(--grey-3); }
+
+/* ── Workbook · objection rehearsal table ──────────────────── */
+.wb-objtable { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.wb-objrow { display: grid; grid-template-columns: 210px 1fr; gap: 12px; align-items: stretch; }
+.wb-objrow .brand { background: var(--grey); color: #fff; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; font-family: var(--sans); font-weight: 700; font-size: 12px; line-height: 1.3; }
+.wb-objrow.stall .brand { background: var(--grey-3); }
+.wb-objrow .brand .q { color: var(--yellow); font-weight: 900; margin-right: 4px; }
+.wb-objrow .mine { border: 1.5px solid var(--line-2); border-radius: 10px; padding: 0; }
+.wb-objrow .mine textarea { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.45; color: var(--grey); padding: 9px 13px; resize: none; outline: none; min-height: 44px; }
+.wb-objrow .mine textarea:focus { background: var(--pink-tint); border-radius: 9px; }
+.wb-objrow .mine textarea::placeholder { color: var(--grey-5); font-weight: 400; }
+
+/* ── Workbook · trade checkboxes + tactic pills ────────────── */
+.wb-trade { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.wb-trade label { position: relative; display: inline-flex; }
+.wb-trade label input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-trade label .bx { display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid var(--line-2); border-radius: 999px; padding: 7px 14px 7px 11px; cursor: pointer; font-family: var(--sans); font-weight: 700; font-size: 11.5px; color: var(--grey-2); transition: all 140ms; }
+.wb-trade label .bx::before { content: ''; width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid var(--line-2); display: inline-block; flex: none; transition: all 140ms; }
+.wb-trade label input:checked + .bx { border-color: var(--pink); background: var(--pink-tint); color: var(--grey); }
+.wb-trade label input:checked + .bx::before { background: var(--pink); border-color: var(--pink); box-shadow: inset 0 0 0 2px #fff; }
+
+/* ── Workbook · non-negotiable policy blocks ───────────────── */
+.wb-policy { display: flex; flex-direction: column; gap: 9px; margin-top: 12px; }
+.wb-polrow { display: grid; grid-template-columns: 188px 1fr; gap: 12px; align-items: stretch; border: 1.5px solid var(--line-2); border-radius: 12px; overflow: hidden; }
+.wb-polrow .pl { background: var(--paper-2); padding: 11px 14px; display: flex; flex-direction: column; justify-content: center; gap: 2px; border-right: 1.5px solid var(--line-2); }
+.wb-polrow .pl .t { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); line-height: 1.2; }
+.wb-polrow .pl .h { font-family: var(--sans); font-weight: 600; font-size: 9.5px; line-height: 1.3; color: var(--grey-3); }
+.wb-polrow .pl .h .src { color: var(--blue-deep); font-weight: 800; }
+.wb-polrow .pi { padding: 0; }
+.wb-polrow .pi textarea { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.45; color: var(--grey); padding: 10px 13px; resize: none; outline: none; min-height: 46px; }
+.wb-polrow .pi textarea:focus { background: var(--blue-tint); }
+.wb-polrow .pi textarea::placeholder { color: var(--grey-5); font-weight: 400; }
+
+/* ── Workbook · red-flag watchlist ─────────────────────────── */
+.wb-redflags { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 12px; }
+.wb-redflag { display: flex; align-items: flex-start; gap: 11px; border: 1.5px solid var(--line-2); border-left: 4px solid var(--pink); border-radius: 10px; padding: 11px 15px; }
+.wb-redflag .fl { font-size: 15px; line-height: 1; flex: none; margin-top: 1px; }
+.wb-redflag .tx { font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.4; color: var(--grey); }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 7 — Contracts / "Lock It Down"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Required / Optional flags ─────────────────────────────── */
+.req-flag, .opt-flag { display: inline-block; font-family: var(--sans); font-weight: 900; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; vertical-align: middle; }
+.req-flag { color: #fff; background: var(--pink); }
+.opt-flag { color: var(--grey-2); background: var(--paper-3); border: 1px solid var(--line-2); }
+
+/* ── Disclaimer strip (ebook + workbook) ───────────────────── */
+.legal-strip { margin: 14px 48px 0; background: var(--paper-2); border: 1px solid var(--line-2); border-radius: 10px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+.legal-strip.inwb { margin: 12px 0 0; }
+.legal-strip .ic { font-size: 13px; flex: none; }
+.legal-strip .tx { font-family: var(--sans); font-weight: 600; font-size: 10.5px; line-height: 1.4; color: var(--grey-2); }
+.legal-strip .tx b { font-weight: 800; color: var(--grey); }
+
+/* ── Ebook · eight contract sections ───────────────────────── */
+.eb-sections { padding: 16px 48px 0; display: flex; flex-direction: column; gap: 8px; }
+.eb-secrow { display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: stretch; }
+.eb-secrow .n { font-family: var(--sans); font-weight: 900; font-size: 15px; color: #fff; background: var(--grey); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.eb-secrow.req .n { background: var(--pink); }
+.eb-secrow .bd { border: 1.5px solid var(--line-2); border-radius: 10px; padding: 10px 16px; }
+.eb-secrow .bd .hd { display: flex; align-items: center; gap: 9px; margin-bottom: 3px; }
+.eb-secrow .bd .hd .nm { font-family: var(--sans); font-weight: 800; font-size: 13.5px; letter-spacing: -0.01em; color: var(--grey); }
+.eb-secrow .bd .ds { font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.45; color: var(--grey-2); }
+.eb-secrow .bd .ds b { font-weight: 800; color: var(--grey); }
+.eb-secrow.crit .bd { border-color: var(--pink); }
+
+/* ── FTC four rules + format table (ebook + workbook) ──────── */
+.ftc-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.ftc-rules.eb { padding: 16px 48px 0; }
+.ftc-rule { border: 1.5px solid var(--line-2); border-left: 4px solid var(--blue); border-radius: 10px; padding: 11px 15px; }
+.ftc-rule .t { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); display: block; margin-bottom: 3px; }
+.ftc-rule .d { font-family: var(--sans); font-weight: 500; font-size: 10.5px; line-height: 1.4; color: var(--grey-2); }
+.ftc-rule .yes { color: var(--blue-deep); font-weight: 800; } .ftc-rule .no { color: var(--pink); font-weight: 800; }
+
+.ftc-table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+.ftc-table.eb { margin: 16px 48px 0; width: calc(100% - 96px); }
+.ftc-table th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 12px 7px; border-bottom: 2px solid var(--grey); }
+.ftc-table th.f { width: 150px; }
+.ftc-table td { border-bottom: 1px solid var(--line); padding: 8px 12px; vertical-align: middle; }
+.ftc-table tbody tr:nth-child(even) td { background: var(--paper-2); }
+.ftc-table .fmt { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); }
+.ftc-table .rule { font-family: var(--sans); font-weight: 500; font-size: 11px; line-height: 1.4; color: var(--grey-2); }
+.ftc-table .rule b { font-weight: 700; color: var(--grey); }
+
+/* ── Workbook · 8-section review checklist ─────────────────── */
+.wb-review { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.wb-reviewrow { display: grid; grid-template-columns: 30px 1fr 150px; gap: 11px; align-items: stretch; border: 1.5px solid var(--line-2); border-radius: 10px; padding: 9px 13px; }
+.wb-reviewrow.opt { border-style: dashed; }
+.wb-reviewrow .sn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.wb-reviewrow .sn .num { font-family: var(--sans); font-weight: 900; font-size: 14px; color: #fff; background: var(--pink); width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+.wb-reviewrow.opt .sn .num { background: var(--grey-3); }
+.wb-reviewrow .mid { min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.wb-reviewrow .mid .nm { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); display: flex; align-items: center; gap: 7px; }
+.wb-reviewrow .mid .cf { font-family: var(--sans); font-weight: 500; font-size: 10px; line-height: 1.35; color: var(--grey-2); margin-top: 2px; }
+.wb-reviewrow .rt { display: flex; align-items: center; gap: 8px; }
+.wb-reviewrow .rt .lock { position: relative; display: inline-flex; flex: none; }
+.wb-reviewrow .rt .lock input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-reviewrow .rt .lock .bx { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 140ms; background: var(--paper); }
+.wb-reviewrow .rt .lock .bx::after { content: '✓'; font-size: 13px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-reviewrow .rt .lock input:checked + .bx { background: var(--blue); border-color: var(--blue); }
+.wb-reviewrow .rt .lock input:checked + .bx::after { opacity: 1; }
+.wb-reviewrow .rt input[type="text"] { width: 100%; border: none; border-bottom: 1px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 600; font-size: 10.5px; color: var(--grey); padding: 4px 2px; outline: none; }
+.wb-reviewrow .rt input[type="text"]:focus { border-bottom-color: var(--pink); }
+.wb-reviewrow .rt input[type="text"]::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-review-split { display: flex; align-items: center; gap: 10px; margin: 8px 0 2px; }
+.wb-review-split .l { font-family: var(--sans); font-weight: 800; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); white-space: nowrap; }
+.wb-review-split .rule { flex: 1; height: 1px; background: var(--line-2); }
+
+/* ── Workbook · business-basics checklist ──────────────────── */
+.wb-bizgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 18px; margin-top: 10px; }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 8 — Delivering Results & Reporting / "Deliver Like a Partner"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Ebook · vendor vs partner ─────────────────────────────── */
+.eb-vp { padding: 18px 48px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eb-vpcol { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; }
+.eb-vpcol.vendor { background: var(--paper-2); }
+.eb-vpcol.partner { border-color: var(--pink); }
+.eb-vpcol .tag { display: inline-block; font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; margin-bottom: 10px; }
+.eb-vpcol.vendor .tag { background: var(--grey-5); color: var(--grey); }
+.eb-vpcol.partner .tag { background: var(--pink); color: #fff; }
+.eb-vpcol .ln { font-family: var(--sans); font-weight: 500; font-size: 12px; line-height: 1.5; color: var(--grey-2); margin: 0; }
+.eb-vpcol .ln + .ln { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--line); }
+.eb-vpcol .ln b { font-weight: 800; color: var(--grey); }
+
+/* ── Ebook · report anatomy (numbered) ─────────────────────── */
+.eb-report { padding: 16px 48px 0; display: flex; flex-direction: column; gap: 8px; }
+.eb-reprow { display: grid; grid-template-columns: 34px 1fr; gap: 13px; align-items: stretch; }
+.eb-reprow .n { font-family: var(--sans); font-weight: 900; font-size: 14px; color: #fff; background: var(--pink); border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.eb-reprow .bd { border: 1.5px solid var(--line-2); border-radius: 10px; padding: 10px 16px; display: grid; grid-template-columns: 150px 1fr; gap: 14px; align-items: baseline; }
+.eb-reprow .bd .t { font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey); }
+.eb-reprow .bd .t small { display: block; font-weight: 700; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pink); margin-bottom: 2px; }
+.eb-reprow .bd .ds { font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.45; color: var(--grey-2); }
+.eb-reprow .bd .ds b { font-weight: 800; color: var(--grey); }
+
+/* ── Workbook · content brief ──────────────────────────────── */
+.wb-brief { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.wb-briefrow { border: 1.5px solid var(--line-2); border-radius: 11px; padding: 9px 14px; }
+.wb-briefrow .bl { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; margin-bottom: 5px; }
+.wb-briefrow .bl .h { font-weight: 500; color: var(--grey-3); }
+.wb-briefrow textarea, .wb-briefrow input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.45; color: var(--grey); resize: none; outline: none; padding: 0; }
+.wb-briefrow textarea::placeholder, .wb-briefrow input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-briefrow.ftc { border-color: var(--pink); background: var(--pink-tint); }
+.wb-briefrow.ftc .bl { color: var(--grey); }
+.wb-briefrow.ftc .flag { color: var(--pink); font-weight: 900; margin-right: 4px; }
+.wb-brief-meta { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 10px; }
+.wb-brief-meta .f { display: flex; flex-direction: column; gap: 3px; }
+.wb-brief-meta .f .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); }
+.wb-brief-meta .f input { border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey); padding: 4px 2px; outline: none; }
+.wb-brief-meta .f input:focus { border-bottom-color: var(--pink); }
+
+/* caption draft + inline checks */
+.wb-caption { margin-top: 12px; border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 15px; }
+.wb-caption .ch { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; margin-bottom: 7px; }
+.wb-caption textarea { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.5; color: var(--grey); resize: none; outline: none; min-height: 60px; }
+.wb-caption textarea::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-caption .checks { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--line); }
+.wb-caption .checks label { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.wb-caption .checks input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-caption .checks .bx { width: 15px; height: 15px; border-radius: 4px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; transition: all 140ms; }
+.wb-caption .checks .bx::after { content: '✓'; font-size: 10px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-caption .checks input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-caption .checks input:checked + .bx::after { opacity: 1; }
+.wb-caption .checks .tx { font-family: var(--sans); font-weight: 700; font-size: 11px; color: var(--grey-2); }
+
+/* ── Workbook · shot list ──────────────────────────────────── */
+.wb-shot { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-shot th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 10px 7px; border-bottom: 2px solid var(--grey); }
+.wb-shot th.n { width: 28px; text-align: center; } .wb-shot th.ty { width: 168px; } .wb-shot th.ck { width: 40px; text-align: center; }
+.wb-shot td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-shot tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-shot .rn { text-align: center; font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--grey-4); }
+.wb-shot .ty { font-family: var(--sans); font-weight: 700; font-size: 11px; color: var(--grey); padding: 9px 10px; }
+.wb-shot .ty input { font-weight: 700; color: var(--grey); }
+.wb-shot input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 11.5px; color: var(--grey); padding: 9px 10px; outline: none; }
+.wb-shot input:focus { background: var(--pink-tint); }
+.wb-shot input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-shot td.ck { text-align: center; }
+.wb-shot td.ck label { position: relative; display: inline-flex; }
+.wb-shot td.ck input { position: absolute; opacity: 0; pointer-events: none; width: auto; }
+.wb-shot td.ck .bx { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 140ms; background: var(--paper); }
+.wb-shot td.ck .bx::after { content: '✓'; font-size: 11px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-shot td.ck input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-shot td.ck input:checked + .bx::after { opacity: 1; }
+
+/* ── Workbook · production self-audit (4 pillars) ──────────── */
+.wb-audit { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.wb-auditcol { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 15px; border-top: 4px solid var(--pink); }
+.wb-auditcol:nth-child(2) { border-top-color: var(--yellow-deep); }
+.wb-auditcol:nth-child(3) { border-top-color: var(--blue); }
+.wb-auditcol:nth-child(4) { border-top-color: var(--grey); }
+.wb-auditcol .pn { font-family: var(--sans); font-weight: 800; font-size: 13px; letter-spacing: -0.01em; color: var(--grey); display: block; margin-bottom: 9px; }
+.wb-auditcol label { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; padding: 4px 0; }
+.wb-auditcol label input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-auditcol label .bx { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--line-2); flex: none; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 140ms; }
+.wb-auditcol label .bx::after { content: '✓'; font-size: 10px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-auditcol label input:checked + .bx { background: var(--grey); border-color: var(--grey); }
+.wb-auditcol label input:checked + .bx::after { opacity: 1; }
+.wb-auditcol label .tx { font-family: var(--sans); font-weight: 600; font-size: 11px; line-height: 1.35; color: var(--grey); }
+
+/* ── Workbook · posting-day timeline ───────────────────────── */
+.wb-posting { display: flex; flex-direction: column; gap: 7px; margin-top: 12px; }
+.wb-postrow { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--line-2); border-radius: 10px; padding: 10px 15px; }
+.wb-postrow .st { font-family: var(--sans); font-weight: 900; font-size: 11px; color: #fff; background: var(--pink); width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.wb-postrow.posted .st { background: var(--blue); }
+.wb-postrow .lbl { position: relative; display: inline-flex; align-items: center; cursor: pointer; flex: 1; }
+.wb-postrow .lbl input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-postrow .lbl .bx { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid var(--line-2); flex: none; display: inline-flex; align-items: center; justify-content: center; margin-right: 11px; transition: all 140ms; }
+.wb-postrow .lbl .bx::after { content: '✓'; font-size: 11px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-postrow .lbl input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-postrow .lbl input:checked + .bx::after { opacity: 1; }
+.wb-postrow .lbl .tx { font-family: var(--sans); font-weight: 600; font-size: 12px; color: var(--grey); }
+.wb-postrow .lbl .tx b { font-weight: 800; }
+
+/* ── Workbook · performance report deliverable ─────────────── */
+.wb-report { margin-top: 12px; border: 2px solid var(--grey); border-radius: 16px; overflow: hidden; }
+.wb-report .rhead { background: var(--grey); color: #fff; padding: 12px 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; }
+.wb-report .rhead .f { display: flex; align-items: center; gap: 8px; }
+.wb-report .rhead .f .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.65); white-space: nowrap; }
+.wb-report .rhead .f input { flex: 1; border: none; border-bottom: 1px solid rgba(255,255,255,0.35); background: transparent; color: #fff; font-family: var(--sans); font-weight: 700; font-size: 12px; padding: 3px 2px; outline: none; }
+.wb-report .rhead .f input::placeholder { color: rgba(255,255,255,0.45); font-weight: 500; }
+.wb-report .rbody { padding: 14px 18px; }
+.wb-report .rpart { margin-bottom: 12px; }
+.wb-report .rpart:last-child { margin-bottom: 0; }
+.wb-report .rpart .rl { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; margin-bottom: 6px; }
+.wb-report .rpart .rl .n { color: var(--pink); font-weight: 900; margin-right: 6px; }
+.wb-report .rpart .rl .h { font-weight: 500; color: var(--grey-3); }
+.wb-report .rpart textarea { width: 100%; border: 1.5px solid var(--line-2); border-radius: 9px; background: var(--paper); font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.45; color: var(--grey); resize: none; outline: none; padding: 8px 11px; }
+.wb-report .rpart textarea:focus { border-color: var(--pink); }
+.wb-report .rpart textarea::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-metrics { width: 100%; border-collapse: separate; border-spacing: 0; }
+.wb-metrics td { border-bottom: 1px solid var(--line); padding: 0; }
+.wb-metrics .mk { font-family: var(--sans); font-weight: 700; font-size: 11px; color: var(--grey-2); padding: 7px 10px; width: 56%; }
+.wb-metrics input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 700; font-size: 11.5px; color: var(--grey); padding: 7px 10px; outline: none; }
+.wb-metrics input:focus { background: var(--pink-tint); }
+.wb-metrics input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-report .rprompt { background: var(--pink-tint); border: 1px solid var(--pink-soft); border-radius: 10px; padding: 10px 14px; font-family: var(--sans); font-weight: 700; font-size: 11.5px; line-height: 1.45; color: var(--grey); font-style: italic; }
+.wb-report .rprompt .l { display: block; font-style: normal; font-weight: 900; font-size: 8.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink); margin-bottom: 4px; }
+.wb-report .scrnshot { display: inline-flex; align-items: center; gap: 7px; margin-top: 8px; font-family: var(--sans); font-weight: 700; font-size: 10.5px; color: var(--grey-2); }
+.wb-report .scrnshot input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-report .scrnshot .bx { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; }
+.wb-report .scrnshot .bx::after { content: '✓'; font-size: 10px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-report .scrnshot input:checked + .bx { background: var(--grey); border-color: var(--grey); }
+.wb-report .scrnshot input:checked + .bx::after { opacity: 1; }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 9 — Long-Term Partnerships / "Turn Deals Into a Business"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Ebook · one-off vs retainer ───────────────────────────── */
+.eb-or { padding: 18px 48px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eb-orcol { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; }
+.eb-orcol.oneoff { background: var(--paper-2); }
+.eb-orcol.retainer { border-color: var(--pink); }
+.eb-orcol .tag { display: inline-block; font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; padding: 5px 11px; border-radius: 999px; margin-bottom: 10px; }
+.eb-orcol.oneoff .tag { background: var(--grey-5); color: var(--grey); }
+.eb-orcol.retainer .tag { background: var(--pink); color: #fff; }
+.eb-orcol .ln { font-family: var(--sans); font-weight: 500; font-size: 12px; line-height: 1.5; color: var(--grey-2); margin: 0; }
+.eb-orcol .ln + .ln { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--line); }
+.eb-orcol .ln b { font-weight: 800; color: var(--grey); }
+
+/* ── Ebook · the retainer math ─────────────────────────────── */
+.eb-retmath { padding: 18px 48px 0; }
+.eb-retmath .bar { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 0; }
+.eb-retmath .cell { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 14px 18px; text-align: center; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+.eb-retmath .cell .l { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); }
+.eb-retmath .cell .v { font-family: var(--sans); font-weight: 900; font-size: 26px; letter-spacing: -0.02em; color: var(--grey); line-height: 1; }
+.eb-retmath .cell.result { border-color: var(--pink); background: var(--pink-tint); }
+.eb-retmath .cell.result .v { color: var(--pink); }
+.eb-retmath .op { display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-weight: 900; font-size: 18px; color: var(--pink); padding: 0 12px; }
+.eb-retmath .cap { font-family: var(--sans); font-weight: 500; font-size: 11px; color: var(--grey-3); text-align: center; margin: 10px 0 0; font-style: italic; }
+
+/* ── Workbook · retainer pricing calculator (Part D) ───────── */
+.wb-retcalc { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-retcalc th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 10px 7px; border-bottom: 2px solid var(--grey); }
+.wb-retcalc th.q { width: 76px; text-align: center; } .wb-retcalc th.r { width: 104px; } .wb-retcalc th.s { width: 110px; text-align: right; }
+.wb-retcalc td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-retcalc tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-retcalc input { width: 100%; border: none; background: transparent; font-family: var(--sans); font-weight: 600; font-size: 12px; color: var(--grey); padding: 9px 10px; outline: none; }
+.wb-retcalc input:focus { background: var(--pink-tint); }
+.wb-retcalc input::placeholder { color: var(--grey-5); font-weight: 400; }
+.wb-retcalc td.q input { text-align: center; font-weight: 800; }
+.wb-retcalc td.r .rw { display: flex; align-items: center; padding-left: 8px; } .wb-retcalc td.r .rw .sym { font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey-4); }
+.wb-retcalc td.r input { font-weight: 700; }
+.wb-retcalc td.s { text-align: right; padding: 9px 12px; font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey); }
+.wb-retcalc td.s .muted { color: var(--grey-5); font-weight: 600; }
+.wb-retcalc tr.sumrow td { border-bottom: none; padding-top: 10px; }
+.wb-retcalc tr.sumrow .lbl { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); padding: 0 10px; }
+.wb-retcalc tr.sumrow .val { text-align: right; padding: 0 12px; }
+.wb-retcalc tr.sumrow .val .box { display: inline-flex; align-items: baseline; gap: 3px; }
+.wb-retcalc tr.sumrow .val .box .v { font-family: var(--sans); font-weight: 900; font-size: 17px; color: var(--grey); letter-spacing: -0.01em; }
+
+.wb-retresult { margin-top: 12px; border: 2px solid var(--pink); border-radius: 16px; overflow: hidden; }
+.wb-retresult .ctrls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; padding: 14px 18px; }
+.wb-retresult .ctrls .f { display: flex; flex-direction: column; gap: 6px; }
+.wb-retresult .ctrls .f > .l { font-family: var(--sans); font-weight: 900; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); }
+.wb-retresult .big { background: var(--pink); color: #fff; padding: 16px 22px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 18px; }
+.wb-retresult .big .blk .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.78); margin-bottom: 4px; }
+.wb-retresult .big .blk .num { display: inline-flex; align-items: baseline; }
+.wb-retresult .big .blk .num .sym { font-family: var(--sans); font-weight: 800; font-size: 20px; }
+.wb-retresult .big .blk input { border: none; border-bottom: 2px solid rgba(255,255,255,0.55); background: transparent; color: #fff; font-family: var(--sans); font-weight: 900; font-size: 30px; letter-spacing: -0.02em; padding: 2px 4px; outline: none; width: 130px; }
+.wb-retresult .big .blk input::placeholder { color: rgba(255,255,255,0.5); }
+.wb-retresult .big .blk input:focus { border-bottom-color: var(--yellow); }
+.wb-retresult .big .blk.tcv { border-left: 1px solid rgba(255,255,255,0.3); padding-left: 18px; }
+.wb-retresult .big .blk.tcv .v { font-family: var(--sans); font-weight: 900; font-size: 26px; letter-spacing: -0.02em; }
+
+/* ── Workbook · maintenance calendar (Part E) ──────────────── */
+.wb-cal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+.wb-calcard { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 12px 14px; border-top: 4px solid var(--pink); text-align: center; }
+.wb-calcard.renew { border-top-color: var(--yellow-deep); }
+.wb-calcard .mn { font-family: var(--sans); font-weight: 900; font-size: 11px; letter-spacing: 0.04em; color: var(--grey); }
+.wb-calcard .ds { font-family: var(--sans); font-weight: 600; font-size: 9.5px; color: var(--grey-3); margin: 3px 0 8px; }
+.wb-calcard input { width: 100%; border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 12px; color: var(--grey); text-align: center; padding: 5px 2px; outline: none; }
+.wb-calcard input:focus { border-bottom-color: var(--pink); }
+
+/* ════════════════════════════════════════════════════════════
+ * MODULE 10 — Protect & Scale (Capstone) / "Protect & Scale Your Business"
+ * ════════════════════════════════════════════════════════════ */
+
+/* ── Cover · capstone "Complete" badge ─────────────────────── */
+.wb-dots .dot.complete-all { background: var(--blue); color: #fff; }
+.wb-complete-chip { display: inline-flex; align-items: center; gap: 6px; font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey); background: var(--yellow); padding: 5px 12px; border-radius: 999px; margin-left: 10px; vertical-align: middle; }
+
+/* ── Ebook · 90-day plan (3 blocks) ────────────────────────── */
+.eb-plan { padding: 18px 48px 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.eb-plancol { border: 1.5px solid var(--line-2); border-radius: 14px; padding: 16px 18px; border-top: 4px solid var(--pink); }
+.eb-plancol:nth-child(2) { border-top-color: var(--yellow-deep); }
+.eb-plancol:nth-child(3) { border-top-color: var(--blue); }
+.eb-plancol .ph { font-family: var(--sans); font-weight: 900; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); }
+.eb-plancol:nth-child(2) .ph { color: var(--yellow-deep); }
+.eb-plancol:nth-child(3) .ph { color: var(--blue-deep); }
+.eb-plancol .pt { font-family: var(--sans); font-weight: 800; font-size: 15px; letter-spacing: -0.01em; color: var(--grey); margin: 3px 0 10px; }
+.eb-plancol ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.eb-plancol li { font-family: var(--sans); font-weight: 500; font-size: 11.5px; line-height: 1.4; color: var(--grey-2); padding-left: 16px; position: relative; }
+.eb-plancol li::before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--pink); }
+.eb-plancol:nth-child(2) li::before { background: var(--yellow-deep); }
+.eb-plancol:nth-child(3) li::before { background: var(--blue); }
+.eb-plancol li b { font-weight: 800; color: var(--grey); }
+
+/* ── Workbook · red-flags grouped watchlist (Part A) ───────── */
+.wb-flags { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.wb-flaggroup { border: 1.5px solid var(--line-2); border-radius: 12px; padding: 11px 15px; border-left: 4px solid var(--pink); }
+.wb-flaggroup.span2 { grid-column: 1 / -1; }
+.wb-flaggroup .gl { font-family: var(--sans); font-weight: 800; font-size: 12px; color: var(--grey); display: block; margin-bottom: 8px; }
+.wb-flaggroup label { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; padding: 3px 0; }
+.wb-flaggroup label input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-flaggroup label .bx { width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--line-2); flex: none; display: inline-flex; align-items: center; justify-content: center; margin-top: 1px; transition: all 140ms; }
+.wb-flaggroup label .bx::after { content: '✓'; font-size: 9px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-flaggroup label input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-flaggroup label input:checked + .bx::after { opacity: 1; }
+.wb-flaggroup label .tx { font-family: var(--sans); font-weight: 600; font-size: 10.5px; line-height: 1.35; color: var(--grey); }
+.wb-flaggroup.span2 .items { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 18px; }
+
+/* ── Workbook · decline email mock (Part B) ────────────────── */
+.wb-emailmock { margin-top: 10px; border: 1.5px solid var(--line-2); border-radius: 14px; overflow: hidden; }
+.wb-emailmock .bar { background: var(--paper-2); border-bottom: 1.5px solid var(--line-2); padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+.wb-emailmock .bar .dots { display: flex; gap: 5px; }
+.wb-emailmock .bar .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+.wb-emailmock .bar .ttl { font-family: var(--sans); font-weight: 700; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--grey-3); }
+.wb-emailmock .body { padding: 13px 20px; font-family: var(--sans); font-weight: 500; font-size: 12px; line-height: 1.55; color: var(--grey); }
+.wb-emailmock .body .ins { background: var(--yellow-soft); border-bottom: 2px solid var(--yellow); font-weight: 700; padding: 1px 5px; border-radius: 3px; }
+.wb-reasons { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-reasons th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 12px 7px; border-bottom: 2px solid var(--grey); }
+.wb-reasons th.sc { width: 200px; }
+.wb-reasons td { border-bottom: 1px solid var(--line); padding: 7px 12px; vertical-align: top; }
+.wb-reasons tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-reasons .sn { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); }
+.wb-reasons .rl { font-family: var(--sans); font-weight: 500; font-size: 11.5px; color: var(--grey-2); font-style: italic; }
+
+/* ── Workbook · business audit (Part C, live weakest-link) ── */
+.wb-audittable { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 12px; table-layout: fixed; }
+.wb-audittable th { font-family: var(--sans); font-weight: 800; font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--grey-2); text-align: left; padding: 0 10px 7px; border-bottom: 2px solid var(--grey); }
+.wb-audittable th.n { width: 26px; text-align: center; } .wb-audittable th.sc { width: 152px; text-align: center; }
+.wb-audittable td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-audittable tbody tr:nth-child(even) td { background: var(--paper-2); }
+.wb-audittable tbody tr.weakest td { background: var(--pink-tint); }
+.wb-audittable .rn { text-align: center; font-family: var(--mono); font-weight: 700; font-size: 11px; color: var(--grey-4); }
+.wb-audittable .sys { font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.3; color: var(--grey); padding: 6px 10px; }
+.wb-audittable .sys .mod { font-weight: 800; color: var(--grey-3); }
+.wb-audittable td.sc { text-align: center; padding: 4px 8px; }
+.wb-audittable .scale { display: inline-flex; gap: 4px; }
+.wb-audittable .scale label { position: relative; cursor: pointer; }
+.wb-audittable .scale label input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-audittable .scale label .d { width: 22px; height: 22px; border-radius: 6px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; font-family: var(--sans); font-weight: 800; font-size: 11px; color: var(--grey-3); transition: all 130ms; }
+.wb-audittable .scale label input:checked + .d { background: var(--pink); border-color: var(--pink); color: #fff; }
+.wb-weaklink { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; background: var(--paper-2); border: 1.5px solid var(--line-2); border-radius: 12px; padding: 11px 18px; }
+.wb-weaklink .f { display: flex; flex-direction: column; gap: 5px; }
+.wb-weaklink .f .l { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); }
+.wb-weaklink .f .auto { font-family: var(--sans); font-weight: 800; font-size: 13px; color: var(--grey); min-height: 18px; }
+.wb-weaklink .f input { border: none; border-bottom: 1.5px solid var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 13px; color: var(--grey); padding: 3px 2px; outline: none; }
+.wb-weaklink .f input:focus { border-bottom-color: var(--pink); }
+
+/* ── Workbook · 90-day plan (Part D) ───────────────────────── */
+.wb-plan { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.wb-planblock { border: 1.5px solid var(--line-2); border-radius: 12px; overflow: hidden; }
+.wb-planblock .ph { padding: 8px 16px; display: flex; align-items: baseline; gap: 10px; color: #fff; flex-wrap: wrap; }
+.wb-planblock.b1 .ph { background: var(--pink); } .wb-planblock.b2 .ph { background: var(--yellow-deep); } .wb-planblock.b3 .ph { background: var(--blue); }
+.wb-planblock .ph .days { font-family: var(--sans); font-weight: 900; font-size: 11px; letter-spacing: 0.06em; white-space: nowrap; }
+.wb-planblock .ph .nm { font-family: var(--sans); font-weight: 700; font-size: 12px; opacity: 0.92; white-space: nowrap; }
+.wb-plantable { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+.wb-plantable td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: middle; }
+.wb-plantable tr:last-child td { border-bottom: none; }
+.wb-plantable .ck { width: 40px; text-align: center; }
+.wb-plantable .ck label { position: relative; display: inline-flex; }
+.wb-plantable .ck input { position: absolute; opacity: 0; pointer-events: none; }
+.wb-plantable .ck .bx { width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid var(--line-2); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: all 140ms; }
+.wb-plantable .ck .bx::after { content: '✓'; font-size: 11px; font-weight: 900; color: #fff; opacity: 0; }
+.wb-plantable .ck input:checked + .bx { background: var(--pink); border-color: var(--pink); }
+.wb-plantable .ck input:checked + .bx::after { opacity: 1; }
+.wb-plantable .act { font-family: var(--sans); font-weight: 600; font-size: 11.5px; line-height: 1.35; color: var(--grey); padding: 9px 10px; }
+.wb-plantable .act .mod { font-weight: 800; color: var(--grey-3); }
+.wb-plantable .dt { width: 96px; }
+.wb-plantable .dt input { width: 100%; border: none; border-bottom: 1px dashed var(--line-2); background: transparent; font-family: var(--sans); font-weight: 700; font-size: 11px; color: var(--grey); text-align: center; padding: 7px 4px; outline: none; }
+.wb-plantable .dt input:focus { border-bottom-color: var(--pink); border-bottom-style: solid; }
+.wb-plantable .dt input::placeholder { color: var(--grey-5); font-weight: 500; }
+.wb-plan-target { margin-top: 12px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; background: var(--grey); color: #fff; border-radius: 12px; padding: 14px 20px; }
+.wb-plan-target .lt .l { font-family: var(--sans); font-weight: 900; font-size: 13px; }
+.wb-plan-target .lt .d { font-family: var(--sans); font-weight: 500; font-size: 10.5px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.wb-plan-target .iv { display: inline-flex; align-items: center; background: rgba(255,255,255,0.12); border-radius: 10px; padding: 0 6px 0 14px; }
+.wb-plan-target .iv .sym { font-family: var(--sans); font-weight: 800; font-size: 16px; color: var(--yellow); }
+.wb-plan-target .iv input { border: none; background: transparent; font-family: var(--sans); font-weight: 900; font-size: 18px; color: #fff; padding: 10px 8px; width: 120px; outline: none; }
+.wb-plan-target .iv input::placeholder { color: rgba(255,255,255,0.4); }
+
+/* ── Workbook · master toolkit centerpiece (Part E) ────────── */
+.wb-toolkit { margin-top: 12px; border: 2px solid var(--grey); border-radius: 16px; overflow: hidden; }
+.wb-toolkit .tkhead { background: var(--grey); color: #fff; padding: 12px 20px; display: flex; align-items: baseline; justify-content: space-between; }
+.wb-toolkit .tkhead .t { font-family: var(--sans); font-weight: 800; font-size: 14px; letter-spacing: -0.01em; }
+.wb-toolkit .tkhead .s { font-family: var(--sans); font-weight: 600; font-size: 10.5px; color: rgba(255,255,255,0.65); }
+.wb-toolkit .tkbody { padding: 14px 18px; }
+.wb-tksub { font-family: var(--sans); font-weight: 900; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); margin: 0 0 8px; }
+.wb-tksub.mt { margin-top: 14px; }
+.wb-wblist { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 22px; }
+.wb-wblist .w { display: flex; align-items: flex-start; gap: 8px; font-family: var(--sans); font-size: 11px; line-height: 1.25; color: var(--grey); padding: 1px 0; }
+.wb-wblist .w .n { font-family: var(--sans); font-weight: 900; font-size: 10px; color: var(--pink); width: 16px; flex: none; line-height: 1.4; }
+.wb-wblist .w b { font-weight: 700; }
+.wb-wblist .w.done .n { color: var(--blue); }
+.wb-tkcards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; }
+.wb-tkcard { border: 1.5px solid var(--line-2); border-radius: 11px; padding: 11px 13px; }
+.wb-tkcard.tool { border-color: var(--pink-soft); background: var(--pink-tint); }
+.wb-tkcard.pack { border-color: var(--blue-soft); background: var(--blue-tint); }
+.wb-tkcard .cn { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; }
+.wb-tkcard .cd { font-family: var(--sans); font-weight: 500; font-size: 9.5px; line-height: 1.35; color: var(--grey-2); margin-top: 3px; }

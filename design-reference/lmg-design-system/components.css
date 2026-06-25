@@ -1,0 +1,182 @@
+/* Shared component styles for LMG Media UI — buttons, inputs, cards, badges, etc.
+ * Depends on colors_and_type.css for tokens.
+ */
+
+/* ─── Buttons ──────────────────────────────────────────── */
+.lmg-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 48px; padding: 0 22px;
+  border-radius: var(--r-md);
+  font-family: var(--font-ui);
+  font-weight: 600; font-size: 15px;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--fg-1);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+}
+.lmg-btn .lmg-icon { width: 18px; height: 18px; flex: none; }
+.lmg-btn:hover { transform: translateY(-1px); }
+.lmg-btn:active { transform: translateY(0); }
+.lmg-btn:focus-visible { outline: none; box-shadow: var(--shadow-glow-yellow); }
+
+.lmg-btn.lmg-btn-primary { background: var(--lmg-yellow); color: var(--lmg-grey); }
+.lmg-btn.lmg-btn-primary:hover { background: var(--lmg-yellow-deep); }
+.lmg-btn.lmg-btn-primary:focus-visible { box-shadow: var(--shadow-glow-yellow); }
+
+.lmg-btn.lmg-btn-secondary { background: var(--lmg-pink); color: #fff; }
+.lmg-btn.lmg-btn-secondary:hover { background: var(--lmg-pink-deep); }
+.lmg-btn.lmg-btn-secondary:focus-visible { box-shadow: var(--shadow-glow-pink); }
+
+.lmg-btn.lmg-btn-blue { background: var(--lmg-blue); color: #fff; }
+.lmg-btn.lmg-btn-blue:hover { background: var(--lmg-blue-deep); }
+
+.lmg-btn.lmg-btn-ghost { color: var(--fg-1); background: transparent; }
+.lmg-btn.lmg-btn-ghost:hover { background: var(--neutral-100); }
+
+.lmg-btn.lmg-btn-outline { border-color: var(--border-2); color: var(--fg-1); background: var(--bg-1); }
+.lmg-btn.lmg-btn-outline:hover { background: var(--neutral-50); }
+
+.lmg-btn.lmg-btn-dark { background: var(--neutral-900); color: #fff; }
+.lmg-btn.lmg-btn-dark:hover { background: var(--neutral-800); }
+
+.lmg-btn.lmg-btn-sm { height: 36px; padding: 0 14px; font-size: 13px; border-radius: var(--r-sm); }
+.lmg-btn.lmg-btn-lg { height: 56px; padding: 0 28px; font-size: 17px; }
+
+/* ─── Inputs ───────────────────────────────────────────── */
+.lmg-field { display: flex; flex-direction: column; gap: 6px; }
+.lmg-field label { font-size: 13px; color: var(--fg-2); font-weight: 500; }
+.lmg-input, .lmg-textarea, .lmg-select {
+  height: 48px; padding: 0 14px;
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-md);
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+}
+.lmg-input::placeholder, .lmg-textarea::placeholder { color: var(--fg-3); }
+.lmg-input:hover, .lmg-textarea:hover, .lmg-select:hover { border-color: var(--border-2); }
+.lmg-input:focus, .lmg-textarea:focus, .lmg-select:focus { outline: none; border-color: var(--lmg-yellow); box-shadow: var(--shadow-glow-yellow); }
+.lmg-textarea { height: auto; min-height: 120px; padding: 12px 14px; resize: vertical; }
+
+/* ─── Badges / chips ───────────────────────────────────── */
+.lmg-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
+  background: var(--neutral-100); color: var(--fg-1);
+  border: 1px solid transparent;
+}
+.lmg-badge.yellow { background: var(--lmg-yellow-soft); color: #6B5500; }
+.lmg-badge.pink   { background: var(--lmg-pink-soft); color: #99214C; }
+.lmg-badge.blue   { background: var(--lmg-blue-soft); color: #0D5587; }
+.lmg-badge.dark   { background: var(--neutral-900); color: #fff; }
+.lmg-badge.outline{ background: transparent; border-color: var(--border-2); color: var(--fg-1); }
+
+/* ─── Cards ────────────────────────────────────────────── */
+.lmg-card {
+  background: var(--bg-1);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+}
+.lmg-card.flat { box-shadow: none; border: 1px solid var(--border-1); }
+
+/* ─── Stat tile (signature) ────────────────────────────── */
+.lmg-stat {
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  padding: 16px 24px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 160px;
+}
+.lmg-stat .num { font-family: var(--font-sans); font-weight: 800; font-size: 30px; line-height: 1; letter-spacing: -0.02em; }
+.lmg-stat .lbl { font-size: 13px; color: var(--fg-2); margin-top: 4px; }
+.lmg-stat.blue  .num { color: var(--lmg-blue); }
+.lmg-stat.pink  .num { color: var(--lmg-pink); }
+.lmg-stat.yellow .num { color: var(--lmg-yellow-deep); }
+
+/* ─── Inline stat (icon + value) ───────────────────────── */
+.lmg-inline-stat {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--fg-1); font-weight: 500;
+}
+.lmg-inline-stat .lmg-icon { width: 18px; height: 18px; }
+.lmg-inline-stat.blue .lmg-icon { color: var(--lmg-blue); }
+.lmg-inline-stat.pink .lmg-icon { color: var(--lmg-pink); }
+.lmg-inline-stat.yellow .lmg-icon { color: var(--lmg-yellow-deep); }
+
+/* ─── Photo Service Card (audience color-coded) ────────
+ * Matches the For Brands / For Influencers service grids on lmg.media.
+ * Full-width photo + audience pill, badge icon, key-features list, dual CTA.
+ * Set --audience to var(--audience-brand) or var(--audience-influencer) on the card.
+ */
+.lmg-svc-card {
+  --audience: var(--audience-brand);
+  --audience-soft: var(--audience-brand-soft);
+  --audience-deep: var(--audience-brand-deep);
+  background: var(--bg-2);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+}
+.lmg-svc-card.audience-influencer { --audience: var(--audience-influencer); --audience-soft: var(--audience-influencer-soft); --audience-deep: var(--audience-influencer-deep); }
+.lmg-svc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.lmg-svc-photo { position: relative; aspect-ratio: 4/3; background: var(--neutral-300); background-size: cover; background-position: center; }
+.lmg-svc-photo .lmg-pill {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--audience); color: #fff;
+  padding: 6px 12px; border-radius: var(--r-pill);
+  font-size: 12px; font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.lmg-svc-body { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.lmg-svc-head { display: flex; align-items: center; gap: 14px; }
+.lmg-svc-badge {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--audience-soft); color: var(--audience-deep);
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+}
+.lmg-svc-title { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.25; margin: 0; flex: 1; }
+.lmg-svc-desc { font-size: 14px; line-height: 1.6; color: var(--fg-2); margin: 0; }
+.lmg-svc-features { margin: 4px 0 0; padding: 0 0 0 14px; border-left: 3px solid var(--audience); }
+.lmg-svc-features .lbl { font-size: 13px; font-weight: 700; color: var(--fg-1); margin-bottom: 8px; }
+.lmg-svc-features ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.lmg-svc-features li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--fg-1); line-height: 1.5; }
+.lmg-svc-features li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--audience); margin-top: 8px; flex: none; }
+.lmg-svc-more { color: var(--audience); font-size: 13px; font-weight: 600; text-decoration: none; }
+.lmg-svc-ctas { display: flex; gap: 10px; margin-top: auto; padding-top: 8px; }
+.lmg-svc-ctas .lmg-btn { flex: 1; }
+.lmg-svc-ctas .lmg-btn-primary { background: var(--audience); color: #fff; }
+.lmg-svc-ctas .lmg-btn-primary:hover { background: var(--audience-deep); }
+.lmg-svc-ctas .lmg-btn-outline { border-color: var(--audience); color: var(--audience); background: transparent; }
+.lmg-svc-ctas .lmg-btn-outline:hover { background: var(--audience-soft); }
+
+/* ─── Niche chip (large) ───────────────────────────────── */
+.lmg-niche {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  background: #fff;
+  border: 1px solid var(--border-1);
+  border-radius: var(--r-pill);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.lmg-niche:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); }
+.lmg-niche .dot { width:8px; height:8px; border-radius: 50%; background: var(--lmg-yellow); }
+.lmg-niche.pink .dot { background: var(--lmg-pink); }
+.lmg-niche.blue .dot { background: var(--lmg-blue); }
+.lmg-niche.dark .dot { background: var(--lmg-grey); }

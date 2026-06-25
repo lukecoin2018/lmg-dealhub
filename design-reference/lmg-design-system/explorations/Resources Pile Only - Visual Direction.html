@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources §4 — The pile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--neutral-100); color: var(--fg-1); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance; }
+  .doc-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 780px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  .dir { margin-top: 56px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--fg-3); border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px; }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 22px; max-width: 900px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2); background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm); padding: 7px 12px; }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); } .anno .inter svg { color: var(--lmg-blue); } .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); } .frame.is-light { background: var(--neutral-0); }
+  .frame-tab { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 18px; font-weight: 600; }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── Section shell ───────────────────────────────────── */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.4vw, 60px) clamp(26px, 3.4vw, 52px) clamp(26px,3vw,38px); }
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 12px; flex-wrap: wrap; }
+  .rs-eyebrow { font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; padding: 11px 18px; border-radius: var(--r-pill); border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap; transition: border-color .16s, background .16s, gap .16s; }
+  .rs-viewall svg { width: 16px; height: 16px; } .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ════════════ COVER ENGINE — magazine silhouette ════════════
+     Strict 3:4 portrait, near-square corners so it reads as a printed
+     publication, not a playing card / app icon. */
+  .cover { position: relative; container-type: inline-size; aspect-ratio: 3 / 4; width: 100%; border-radius: 0.7cqw; overflow: hidden; background: var(--neutral-300); box-shadow: 0 1cqw 3cqw rgba(12,10,8,.22), 0 0.3cqw 1cqw rgba(12,10,8,.16); user-select: none; }
+  /* a hairline spine + page-edge highlight to sell "printed cover" */
+  .cover::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 6;
+    box-shadow: inset 0.5cqw 0 1.4cqw -0.6cqw rgba(255,255,255,.22), inset -0.5cqw 0 1.6cqw -0.8cqw rgba(0,0,0,.28); }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  .cov-block { background: linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%), linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%); }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines { position: absolute; inset: 0; opacity: .9; pointer-events: none; background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%); }
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92; }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+  /* download pill is unused in the pile (covers route to /resources) — keep hidden + click-through */
+  .cov-dl { display: none; }
+
+  /* ════════════ THE PILE (all 23, strewn as equals) ════════════ */
+  .table { position: relative; height: 680px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 4%, #000 90%, transparent), linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(180deg, transparent 0, #000 4%, #000 90%, transparent), linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-composite: intersect; }
+  @media (max-width: 900px) { .table { height: 1180px; } }
+  @media (max-width: 600px) { .table { height: 1600px; } }
+
+  .pile { position: absolute; inset: 0; }
+  .pile-item { position: absolute; width: 196px; text-decoration: none; cursor: pointer; will-change: transform;
+    transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl));
+    transition: transform .34s var(--ease-out), filter .34s; }
+  @media (max-width: 600px) { .pile-item { width: 150px; } }
+  .pile-item .cover { filter: brightness(var(--br, 1)) blur(var(--bl, 0px)); box-shadow: 0 14px 30px -8px rgba(10,8,6,.5), 0 4px 9px rgba(10,8,6,.34); transition: box-shadow .34s; }
+  .lmg-dark .pile-item .cover { box-shadow: 0 16px 34px -8px rgba(0,0,0,.74), 0 4px 9px rgba(0,0,0,.5); }
+  .pile-item:hover { transform: translate(-50%, -58%) rotate(0deg) scale(1.16); z-index: 900 !important; }
+  .pile-item:hover .cover { filter: none; box-shadow: 0 36px 66px -12px rgba(10,8,6,.62), 0 12px 22px rgba(10,8,6,.42); }
+  @media (prefers-reduced-motion: no-preference) {
+    .pile-item { animation: pileIn .66s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+    /* opacity stays 1 throughout — a frozen/throttled timeline can never hide a cover */
+    @keyframes pileIn {
+      from { transform: translate(-50%, calc(-50% - 48px)) rotate(0deg) scale(.82); }
+      to   { transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl)); }
+    }
+  }
+
+  /* ── bottom caption (the only center-area text, pinned low) ── */
+  .pile-foot { display: flex; align-items: center; justify-content: space-between; gap: 18px 26px; flex-wrap: wrap; margin-top: clamp(20px,2.4vw,30px); padding-top: 22px; border-top: 1px solid var(--border-1); }
+  .pile-foot .cap { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--fg-2); }
+  .pile-foot .cap svg { width: 16px; height: 16px; color: var(--lmg-pink); }
+  .pile-foot .cap b { color: var(--fg-1); font-weight: 800; }
+  .pile-foot .cap .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--fg-3); display: inline-block; }
+  .pile-foot .seek { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; font-family: var(--font-ui); font-weight: 800; font-size: 14.5px; color: var(--fg-1); transition: gap .16s, color .16s; }
+  .pile-foot .seek:hover { gap: 13px; color: var(--lmg-pink); }
+  .pile-foot .seek svg { width: 17px; height: 17px; }
+
+  /* ── verdict ──────────────────────────────────────────── */
+  .reco { margin-top: 60px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 38px clamp(26px,3.2vw,46px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 14px; font-weight: 800; display: flex; align-items: center; gap: 9px; }
+  .reco h3 svg { width: 16px; height: 16px; color: var(--lmg-yellow-deep); }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 940px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4 · Pile, covers-only</div>
+    <h1 class="doc-title">The whole <span class="ital">pile</span></h1>
+    <p class="doc-sub">No hero, no promoted publication — §4 is now <strong>just the pile</strong>: all 23 covers strewn across the table as equals. Text retreats to the <strong>top (header) and a thin bottom caption</strong>, so the covers own the center entirely. And the covers are re-cut as <strong>real magazine silhouettes</strong> — strict 3:4 portrait with near-square corners — so the "pile of publications" reading actually lands instead of looking like playing cards. Hover lifts and straightens a cover; clicking any cover opens <strong>/resources</strong>. Shown light and dark; reduced motion gives a still-but-still-messy pile.</p>
+  </header>
+
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag">REVISION</span><h2 class="dir-name">One uniform messy pile</h2></div>
+    <p class="dir-note">Covers strewn at wildly varied angles, heavily overlapping, dimmed toward the back and crisp on top, spread full-width and bleeding off every edge so the abundance is unmistakable. <strong>No carousel chrome, no grid, no row.</strong> The pile is a doorway — a single destination, <strong>/resources</strong>.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="sparkles"></i><b>Motion:</b>&nbsp;covers toss onto the table on load (staggered); hover lifts &amp; straightens</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;rummage — hover to surface a cover, click any cover → <b>/resources</b></span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — static scattered layout + CSS hover. Optional drag-to-toss physics = med.</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="pile-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="pile-dark"></div></div>
+  </section>
+
+  <div class="reco">
+    <h3><i data-lucide="scale"></i>Reading against the goal</h3>
+    <p>Dropping the hero removes the last "big thing + small things" tension — it's now one uniform, abundant pile, which is more on-concept and lets the artwork do all the talking. The <strong>silhouette fix is what makes it land</strong>: the same covers, re-cut to a tall 3:4 with crisp corners, instantly read as printed magazines and reports rather than app icons, so a strewn stack of them feels like a real table you'd rummage.</p>
+    <p>Text lives only at the edges — header up top, a one-line caption at the bottom — so nothing floats in the middle competing with the covers. The pile bleeds off all four edges to imply it continues, and every cover is one tap from the full library at <strong>/resources</strong>. Still pushed intentionally messy per the brief; angle range (±20°), overlap density, and back-of-pile dim are the dials to tame later. The bold optional next step remains <strong>drag-to-toss</strong> physics so visitors can physically shove covers around.</p>
+  </div>
+</div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  /* Seeded RNG → messy but stable across reloads */
+  function rng(seed) { let s = seed; return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+
+  /* Jittered 6×4 grid → guarantees full-width coverage AND heavy overlap,
+     then jittered hard so it reads as a strewn pile, not a grid. */
+  function pileHTML(seedBase) {
+    const r = rng(seedBase);
+    const between = (a, b) => a + r() * (b - a);
+    const COLS = 6, ROWS = 4;
+    const cells = [];
+    for (let row = 0; row < ROWS; row++)
+      for (let col = 0; col < COLS; col++)
+        cells.push({ col, row });
+    // shuffle, then drop one so we place exactly 23
+    for (let i = cells.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [cells[i], cells[j]] = [cells[j], cells[i]]; }
+    cells.length = 23;
+
+    const cellW = 96 / COLS;                 // x span 2..98
+    const placements = cells.map(({ col, row }) => {
+      const cx = 2 + (col + 0.5) * cellW + between(-cellW * 0.5, cellW * 0.5);
+      const cy = 60 + row * 168 + between(-72, 72);   // rows overlap heavily
+      return { x: Math.max(-3, Math.min(103, cx)), y: cy };
+    });
+    // depth: lower on the table (higher y) sits in front
+    placements.sort((a, b) => a.y - b.y);
+    const n = placements.length;
+
+    return placements.map((pl, i) => {
+      const p = PUBS[i % PUBS.length];
+      const rot = between(-20, 20).toFixed(1);
+      const scl = (0.84 + (i / (n - 1)) * 0.28 + between(-0.05, 0.05)).toFixed(3);
+      const z = 4 + i;
+      const depth = 1 - i / (n - 1);          // 1 = far back
+      const br = (1 - depth * 0.26).toFixed(3);
+      const bl = (depth * 1.4).toFixed(2);
+      const d = Math.round(between(0, 560));
+      return `<a class="pile-item" href="/resources" aria-label="${p.title} — browse all 23 resources"
+                style="left:${pl.x.toFixed(2)}%; top:${pl.y.toFixed(0)}px; --rot:${rot}deg; --scl:${scl}; --br:${br}; --bl:${bl}px; --d:${d}ms; z-index:${z}">
+                ${coverHTML(p)}
+              </a>`;
+    }).join('');
+  }
+
+  function renderPile(id, seed) {
+    el(id).innerHTML = secHead() + `
+      <div class="table"><div class="pile">${pileHTML(seed)}</div></div>
+      <div class="pile-foot">
+        <span class="cap"><i data-lucide="layers"></i>Rummage the pile — <b>23 publications</b><span class="sep"></span>free to download, no email</span>
+        <a class="seek" href="/resources">View all 23 resources <i data-lucide="arrow-right"></i></a>
+      </div>`;
+  }
+
+  renderPile('pile-light', 11);
+  renderPile('pile-dark', 29);
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

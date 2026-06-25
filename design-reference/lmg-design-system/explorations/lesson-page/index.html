@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson Page — Directions · LMG Playbook</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../components.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; background: var(--paper-3,#f3f1ea); color: var(--lmg-grey); font-family: var(--font-sans); -webkit-font-smoothing:antialiased; }
+  .hub-top { display:flex; align-items:center; justify-content:space-between; padding: 20px clamp(20px,5vw,56px); }
+  .hub-wordmark { font-family:var(--font-display); font-weight:700; color:var(--lmg-yellow); font-size:20px; letter-spacing:.05em; }
+  .hub-top .ctx { font-size:13px; color:var(--fg-2); font-weight:600; }
+  .hub-head { max-width: 1180px; margin: 0 auto; padding: clamp(28px,5vw,56px) clamp(20px,5vw,56px) clamp(20px,3vw,36px); }
+  .hub-head .e { font-family:var(--font-ui); font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; color:var(--lmg-pink); margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+  .hub-head .e .ln { width:34px; height:1px; background:var(--lmg-pink); opacity:.5; }
+  .hub-head h1 { font-size: clamp(34px,5.4vw,60px); font-weight:800; letter-spacing:-.03em; line-height:1; margin:0 0 18px; max-width:20ch; }
+  .hub-head p { font-size:17px; line-height:1.6; color:var(--fg-2); max-width:64ch; margin:0; }
+  .hub-head p b { color:var(--lmg-grey); font-weight:700; }
+
+  .hub-grid { max-width:1180px; margin:0 auto; padding: 8px clamp(20px,5vw,56px) 80px; display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  @media (max-width:980px){ .hub-grid { grid-template-columns:1fr; max-width:560px; } }
+
+  .hub-card { background:#fff; border-radius: var(--r-xl); overflow:hidden; box-shadow: var(--shadow-sm); border:1px solid var(--border-1); display:flex; flex-direction:column; text-decoration:none; color:inherit; transition: transform .25s var(--ease-out), box-shadow .25s; }
+  .hub-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .hub-preview { aspect-ratio: 4/3; position:relative; overflow:hidden; }
+  .hub-preview .frame { position:absolute; inset:0; transform-origin: top left; }
+  .hub-preview iframe { width: 1280px; height: 960px; border:0; transform: scale(.3125); transform-origin: top left; pointer-events:none; background:#fff; }
+  .hub-preview .veil { position:absolute; inset:0; z-index:2; background:transparent; }
+  .hub-tag { position:absolute; top:14px; left:14px; z-index:3; display:inline-flex; align-items:center; gap:7px; padding:6px 12px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:.04em; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); box-shadow: var(--shadow-sm); }
+  .hub-tag .dot { width:8px; height:8px; border-radius:50%; }
+  .hub-body { padding: 22px 24px 24px; display:flex; flex-direction:column; flex:1; }
+  .hub-body .ttl { font-size:13px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--fg-3); margin-bottom:7px; }
+  .hub-body h2 { font-size:23px; font-weight:800; letter-spacing:-.015em; line-height:1.1; margin:0 0 10px; }
+  .hub-body p { font-size:14.5px; line-height:1.55; color:var(--fg-2); margin:0 0 18px; flex:1; }
+  .hub-meta { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:20px; }
+  .hub-meta span { font-size:11.5px; font-weight:600; color:var(--fg-2); background:var(--neutral-100); padding:5px 10px; border-radius:999px; }
+  .hub-open { display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:700; align-self:flex-start; }
+  .hub-open i { width:16px; height:16px; transition: transform .2s; }
+  .hub-card:hover .hub-open i { transform: translateX(4px); }
+  .hub-card.a .hub-open { color:#1a1a1a; }
+  .hub-card.b .hub-open { color: var(--lmg-pink); }
+  .hub-card.c .hub-open { color: var(--lmg-pink-deep); }
+  .hub-card.d .hub-open { color: var(--lmg-pink); }
+
+  /* Featured (Direction D) */
+  .hub-card.featured { grid-column: 1 / -1; flex-direction:row; border:1.5px solid var(--lmg-pink); box-shadow: var(--shadow-md); }
+  .hub-card.featured .hub-preview { aspect-ratio:auto; flex:0 0 46%; min-height:340px; }
+  .hub-card.featured .hub-body { justify-content:center; padding: clamp(26px,3vw,44px); }
+  .hub-card.featured .star { position:absolute; top:14px; right:14px; z-index:3; display:inline-flex; align-items:center; gap:6px; background: var(--lmg-pink); color:#fff; font-size:11px; font-weight:700; letter-spacing:.04em; padding:6px 12px; border-radius:999px; box-shadow: var(--shadow-sm); }
+  .hub-card.featured .star i { width:13px; height:13px; }
+  .hub-card.featured h2 { font-size: clamp(26px,3vw,34px); }
+  .hub-card.featured p { font-size:15.5px; max-width:54ch; flex:0; }
+  @media (max-width:880px){ .hub-card.featured { flex-direction:column; } .hub-card.featured .hub-preview { flex:none; width:100%; aspect-ratio:16/10; min-height:0; } }
+  .hub-foot { text-align:center; color:var(--fg-3); font-size:12px; padding:0 24px 60px; }
+</style>
+</head>
+<body>
+<header class="hub-top">
+  <span class="hub-wordmark">LMG<span style="font-weight:400;letter-spacing:.3em;font-size:.5em;"> MEDIA</span></span>
+  <span class="ctx">Design Exploration · Course Lesson Page</span>
+</header>
+
+<div class="hub-head">
+  <div class="e"><span class="ln"></span> Module 01 · The Partnership Landscape</div>
+  <h1>One lesson page, four design philosophies.</h1>
+  <p>Three genuinely distinct directions plus a <b>refined merge (Direction D)</b> that combines Direction A's cinematic premium feel with Direction B's progress structure — in light mode, with dark used only for the hero and "watch" moments. All use the same Module 1 content, brand system, and a "coming soon" player state for the unproduced videos.</p>
+</div>
+
+<div class="hub-grid">
+  <!-- D — FEATURED MERGE -->
+  <a class="hub-card featured d" href="direction-d-refined.html">
+    <div class="hub-preview">
+      <span class="hub-tag"><span class="dot" style="background:var(--lmg-pink);"></span> Direction D</span>
+      <span class="star"><i data-lucide="sparkles"></i> Refined merge</span>
+      <div class="frame"><iframe src="direction-d-refined.html" scrolling="no" loading="lazy"></iframe></div>
+      <div class="veil"></div>
+    </div>
+    <div class="hub-body">
+      <div class="ttl">Premium × Structured · Light</div>
+      <h2>The cinematic course path</h2>
+      <p>A's bold display hero and "each segment is a chapter" drama, fused with B's sticky progress rail and per-segment completion — rebuilt on LMG's warm-light base. Dark is used only where it earns its place: the hero and the framed video "watch" moments. Rhythm of dark watch / light read.</p>
+      <div class="hub-meta"><span>Light base</span><span>Progress rail</span><span>Dark video frames</span><span>Playfair display</span></div>
+      <span class="hub-open">View Direction D <i data-lucide="arrow-right"></i></span>
+    </div>
+  </a>
+
+  <!-- A -->
+  <a class="hub-card a" href="direction-a-cinematic.html">
+    <div class="hub-preview">
+      <span class="hub-tag"><span class="dot" style="background:#08080A;"></span> Direction A</span>
+      <div class="frame"><iframe src="direction-a-cinematic.html" scrolling="no" loading="lazy"></iframe></div>
+      <div class="veil"></div>
+    </div>
+    <div class="hub-body">
+      <div class="ttl">Cinematic / Immersive</div>
+      <h2>Video-first &amp; bold</h2>
+      <p>Full-bleed players, huge type, generous black space. Each segment is a chapter of a documentary. Apple-product-page energy — the scroll is a journey.</p>
+      <div class="hub-meta"><span>Dark theme</span><span>Full-bleed video</span><span>Minimal chrome</span></div>
+      <span class="hub-open">View Direction A <i data-lucide="arrow-right"></i></span>
+    </div>
+  </a>
+
+  <!-- B -->
+  <a class="hub-card b" href="direction-b-progress.html">
+    <div class="hub-preview">
+      <span class="hub-tag"><span class="dot" style="background:var(--lmg-pink);"></span> Direction B</span>
+      <div class="frame"><iframe src="direction-b-progress.html" scrolling="no" loading="lazy"></iframe></div>
+      <div class="veil"></div>
+    </div>
+    <div class="hub-body">
+      <div class="ttl">Structured / Progress-driven</div>
+      <h2>A visible learning path</h2>
+      <p>A sticky rail tracks the five segments and where you are. Each is a completable step with its own "mark complete." Built for the satisfying feeling of progress.</p>
+      <div class="hub-meta"><span>Sidebar rail</span><span>Completion state</span><span>Trackable</span></div>
+      <span class="hub-open">View Direction B <i data-lucide="arrow-right"></i></span>
+    </div>
+  </a>
+
+  <!-- C -->
+  <a class="hub-card c" href="direction-c-editorial.html">
+    <div class="hub-preview">
+      <span class="hub-tag"><span class="dot" style="background:var(--lmg-yellow);"></span> Direction C</span>
+      <div class="frame"><iframe src="direction-c-editorial.html" scrolling="no" loading="lazy"></iframe></div>
+      <div class="veil"></div>
+    </div>
+    <div class="hub-body">
+      <div class="ttl">Editorial / Magazine</div>
+      <h2>A long-form feature</h2>
+      <p>Serif headlines, a drop cap, pull quotes, and a real reading measure. Videos are woven inline as captioned figures. The written word is the first-class citizen.</p>
+      <div class="hub-meta"><span>Serif display</span><span>Pull quotes</span><span>Inline figures</span></div>
+      <span class="hub-open">View Direction C <i data-lucide="arrow-right"></i></span>
+    </div>
+  </a>
+</div>
+
+<div class="hub-foot">LMG Media · The Complete Brand Partnership Playbook · Pick freely across all four — we'll refine from there.</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

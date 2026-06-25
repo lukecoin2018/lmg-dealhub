@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Influencer Marketing by City — Design Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@500;600&display=swap">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; font-family: 'Manrope', system-ui, sans-serif; }
+
+  /* ============================================================
+   * SHARED — design tokens used across all three directions
+   * ============================================================ */
+  .ebook-art { 
+    --pink: #FF4D94; --pink-deep: #E63F82; --pink-soft: #FFE4EF;
+    --yellow: #FFD700; --yellow-deep: #E6B800; --yellow-soft: #FFF6C2;
+    --blue: #3AAFF4; --blue-deep: #1E94DA; --blue-soft: #E1F2FC;
+    --grey: #3A3A3A; --grey-2: #5a5a5a; --grey-3: #8a8a8a; --grey-4: #b8b8b8;
+    --paper: #ffffff; --paper-2: #fafaf8;
+    --line: #ebe9e3; --line-2: #d8d6d0;
+    --sans: 'Manrope', system-ui, sans-serif;
+    --serif: 'Playfair Display', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--sans); color: var(--grey);
+    width: 612px; height: 792px;
+    position: relative; overflow: hidden;
+    box-sizing: border-box;
+  }
+  .ebook-art * { box-sizing: border-box; }
+
+  /* ============================================================
+   * DIRECTION A — EDITORIAL LIGHT
+   * White paper, pink+yellow+blue accents, generous whitespace.
+   * The current direction (existing ebook-08.html).
+   * ============================================================ */
+  .dirA { background: var(--paper); display: flex; flex-direction: column; }
+
+  /* A · COVER */
+  .dirA-cover-photo {
+    height: 405px; width: 100%;
+    background-image: url('../assets/hero-02-rooftop-sign.png');
+    background-size: cover; background-position: center 20%;
+    position: relative;
+  }
+  .dirA-cover-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.95) 100%);
+  }
+  .dirA-cover-top {
+    position: absolute; top: 16px; left: 24px; right: 24px;
+    display: flex; justify-content: space-between; align-items: center; z-index: 2;
+  }
+  .dirA-pill {
+    background: var(--yellow); color: var(--grey);
+    padding: 5px 11px; border-radius: 999px;
+    font-weight: 800; font-size: 9px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .dirA-brand { font-weight: 800; font-size: 13px; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+  .dirA-brand .y { color: var(--yellow); font-weight: 900; }
+  .dirA-cover-body { padding: 26px 32px 30px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .dirA-ey { font-weight: 800; font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--pink); }
+  .dirA-cover h1 {
+    font-weight: 800; font-size: 56px; line-height: 0.92; letter-spacing: -0.04em;
+    margin: 0; color: var(--grey); text-wrap: balance;
+  }
+  .dirA-cover h1 .p { color: var(--pink); }
+  .dirA-cover h1 .y { background: linear-gradient(180deg, transparent 60%, var(--yellow) 60%); padding: 0 5px; }
+  .dirA-cover-sub { font-size: 12px; line-height: 1.55; color: var(--grey-2); margin: 0; max-width: 52ch; }
+  .dirA-cities {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    border-top: 2px solid var(--grey); padding-top: 12px; gap: 8px;
+  }
+  .dirA-cities .c { padding-right: 8px; border-right: 1px solid var(--line); }
+  .dirA-cities .c:last-child { border-right: none; }
+  .dirA-cities .num { font-weight: 900; font-size: 21px; letter-spacing: -0.03em; color: var(--grey-4); }
+  .dirA-cities .nm { font-weight: 800; font-size: 10px; color: var(--grey); margin-top: 3px; }
+  .dirA-cities .c:nth-child(1) .num { color: var(--yellow-deep); }
+  .dirA-cities .c:nth-child(2) .num { color: var(--blue); }
+  .dirA-cities .c:nth-child(3) .num { color: var(--grey); }
+  .dirA-cities .c:nth-child(4) .num { color: var(--pink); }
+  .dirA-cities .c:nth-child(5) .num { color: #FF6B4A; }
+  .dirA-cities .c:nth-child(6) .num { color: #C76B7B; }
+  .dirA-cover-meta {
+    display: flex; justify-content: space-between; margin-top: auto; padding-top: 14px;
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--grey-3); font-weight: 700;
+  }
+  .dirA-cover-meta .l { color: var(--pink); }
+
+  /* A · DUBAI SPREAD */
+  .dirA-pg { display: flex; flex-direction: column; height: 100%; }
+  .dirA-pg-strip {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 13px 26px; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--grey-3); font-weight: 700; border-bottom: 1px solid var(--line);
+  }
+  .dirA-pg-strip.foot { border-bottom: none; border-top: 1px solid var(--line); margin-top: auto; }
+  .dirA-pg-strip .lmg-brand { font-size: 10px; letter-spacing: 0.06em; color: var(--grey); font-weight: 800; }
+  .dirA-pg-strip .lmg-brand .y { color: var(--yellow-deep); font-weight: 900; }
+  .dirA-pg-strip .meta-r { display: inline-flex; gap: 10px; }
+  .dirA-pg-strip .meta-r span:not(:last-child)::after { content: '·'; margin-left: 10px; color: var(--line-2); }
+  .dirA-hero-band {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .dirA-hero-band .photo {
+    background: linear-gradient(135deg, #d4a574 0%, #c89060 50%, #9a6b3f 100%);
+    background-size: cover; background-position: center;
+    min-height: 220px; position: relative;
+  }
+  .dirA-hero-band .photo::after {
+    content: 'DUBAI · UAE'; position: absolute; bottom: 14px; left: 14px;
+    color: #fff; font-weight: 800; font-size: 10px; letter-spacing: 0.3em;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .dirA-hero-band .meta { padding: 20px 22px; display: flex; flex-direction: column; gap: 9px; justify-content: center; }
+  .dirA-hero-band .num {
+    font-weight: 900; font-size: 56px; line-height: 0.85;
+    letter-spacing: -0.04em; color: var(--yellow-deep);
+  }
+  .dirA-hero-band .ey { font-weight: 800; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--grey-3); }
+  .dirA-hero-band .city { font-weight: 800; font-size: 32px; line-height: 1; letter-spacing: -0.025em; }
+  .dirA-hero-band .tag {
+    display: inline-block; background: var(--yellow-soft); color: var(--grey);
+    padding: 3px 9px; border-radius: 4px; font-weight: 700; font-size: 9px;
+    width: fit-content; letter-spacing: 0.06em;
+  }
+  .dirA-pg-body { padding: 18px 26px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; flex: 1; }
+  .dirA-pg-body .col { display: flex; flex-direction: column; gap: 10px; }
+  .dirA-pg-body h3 { font-weight: 800; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0; color: var(--grey); }
+  .dirA-pg-body h3::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--yellow); margin-right: 8px; vertical-align: middle; }
+  .dirA-pg-body p { font-size: 9.5px; line-height: 1.55; margin: 0; color: var(--grey-2); }
+  .dirA-pg-body .plat-list { display: flex; flex-direction: column; gap: 6px; }
+  .dirA-pg-body .plat {
+    display: grid; grid-template-columns: 56px 1fr; gap: 8px; align-items: baseline;
+    padding: 5px 0; border-bottom: 1px solid var(--line);
+  }
+  .dirA-pg-body .plat .n { font-weight: 800; font-size: 10px; color: var(--grey); }
+  .dirA-pg-body .plat .d { font-size: 9px; line-height: 1.4; color: var(--grey-2); }
+  .dirA-pg-body .plat.dom .n { color: var(--pink); }
+
+  /* ============================================================
+   * DIRECTION B — MAXIMALIST COLOR-BLOCK
+   * Bold flat fields of pink+yellow+blue with full-bleed photography.
+   * Asserts the brand — matches "maximalist mode" from guide.
+   * ============================================================ */
+  .dirB { background: #0a0a0a; display: flex; flex-direction: column; }
+
+  /* B · COVER — split fields */
+  .dirB-cover {
+    height: 100%; display: grid;
+    grid-template-rows: 60px 1fr auto;
+  }
+  .dirB-cover-top {
+    background: var(--yellow); display: flex; align-items: center; justify-content: space-between;
+    padding: 0 28px; color: #1a1a1a;
+  }
+  .dirB-cover-top .brand { font-weight: 900; font-size: 14px; letter-spacing: 0.02em; }
+  .dirB-cover-top .brand .x { font-family: var(--serif); font-style: italic; font-weight: 900; }
+  .dirB-cover-top .num { font-family: var(--mono); font-weight: 600; font-size: 11px; letter-spacing: 0.2em; }
+  .dirB-cover-main {
+    display: grid; grid-template-columns: 1fr 0.85fr; min-height: 0;
+  }
+  .dirB-cover-left {
+    background: var(--pink); padding: 32px 28px; color: #fff;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .dirB-cover-left .ey {
+    font-weight: 800; font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: #fff; opacity: 0.85;
+  }
+  .dirB-cover-left h1 {
+    font-weight: 900; font-size: 64px; line-height: 0.86; letter-spacing: -0.045em;
+    margin: 0; color: #fff;
+  }
+  .dirB-cover-left h1 .y { color: var(--yellow); }
+  .dirB-cover-left .sub {
+    font-size: 11px; line-height: 1.5; margin: 0;
+    color: #fff; opacity: 0.92;
+    border-top: 2px solid #fff; padding-top: 14px;
+  }
+  .dirB-cover-left .cta {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-weight: 800; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .dirB-cover-right {
+    background-image: url('../assets/hero-04-networking.png');
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .dirB-cover-right::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(58,175,244,0.25), transparent 50%, rgba(255,77,148,0.20));
+  }
+  .dirB-cover-cities {
+    background: var(--blue); color: #fff; padding: 14px 28px;
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px;
+  }
+  .dirB-cover-cities .c { font-weight: 800; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .dirB-cover-cities .c .n { display: block; font-family: var(--mono); font-size: 9px; opacity: 0.7; margin-bottom: 2px; font-weight: 600; }
+
+  /* B · DUBAI SPREAD */
+  .dirB-spread { background: #fafaf8; height: 100%; display: flex; flex-direction: column; }
+  .dirB-pg-strip {
+    background: #0a0a0a; color: #fff; padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700;
+  }
+  .dirB-pg-strip .brand { color: var(--yellow); }
+  .dirB-hero {
+    height: 280px; position: relative; overflow: hidden;
+    display: grid; grid-template-columns: 0.4fr 0.6fr;
+  }
+  .dirB-hero-color {
+    background: var(--pink); padding: 24px 22px; color: #fff;
+    display: flex; flex-direction: column; gap: 8px; justify-content: flex-end;
+  }
+  .dirB-hero-color .label {
+    font-weight: 800; font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+    opacity: 0.9;
+  }
+  .dirB-hero-color .city {
+    font-weight: 900; font-size: 64px; line-height: 0.85;
+    letter-spacing: -0.045em; margin: 0;
+    font-family: var(--serif);
+  }
+  .dirB-hero-color .num {
+    font-family: var(--mono); font-weight: 600; font-size: 10px;
+    letter-spacing: 0.18em; opacity: 0.9; margin-top: 4px;
+  }
+  .dirB-hero-photo {
+    background: linear-gradient(135deg, #d4a574 0%, #c89060 50%, #9a6b3f 100%);
+  }
+  .dirB-body { padding: 22px 24px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .dirB-tagline {
+    font-weight: 800; font-size: 18px; line-height: 1.2; letter-spacing: -0.015em;
+    color: var(--grey); margin: 0; max-width: 38ch;
+  }
+  .dirB-tagline .y { background: var(--yellow); padding: 0 4px; }
+  .dirB-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-top: 2px solid #0a0a0a; padding-top: 12px; }
+  .dirB-row .cell { padding-right: 12px; border-right: 1px solid var(--line); }
+  .dirB-row .cell:last-child { border-right: none; }
+  .dirB-row .h {
+    font-weight: 800; font-size: 8.5px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: #0a0a0a; margin-bottom: 6px;
+  }
+  .dirB-row .v { font-weight: 700; font-size: 11px; line-height: 1.35; color: var(--grey); }
+  .dirB-plats { display: flex; flex-direction: column; gap: 0; }
+  .dirB-plat {
+    display: grid; grid-template-columns: 70px 1fr 16px; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid var(--line); align-items: baseline;
+  }
+  .dirB-plat .n { font-weight: 900; font-size: 11px; letter-spacing: 0.04em; }
+  .dirB-plat .d { font-size: 9.5px; line-height: 1.45; color: var(--grey-2); }
+  .dirB-plat .r { font-family: var(--mono); font-size: 9px; font-weight: 600; color: var(--grey-3); text-align: right; }
+  .dirB-plat.dom .n { color: var(--pink); }
+  .dirB-plat.dom .r { color: var(--pink); }
+
+  /* ============================================================
+   * DIRECTION C — DARK LUXURY EDITORIAL
+   * Black paper, Playfair serif, gold-yellow type, restrained color.
+   * "Vogue Business" — for the luxury Dubai/Paris/LA story.
+   * ============================================================ */
+  .dirC { background: #0e0e0e; color: #f0eee9; display: flex; flex-direction: column; font-family: var(--sans); }
+
+  /* C · COVER */
+  .dirC-cover { height: 100%; padding: 0; display: flex; flex-direction: column; }
+  .dirC-cover-top {
+    padding: 22px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .dirC-brand { font-family: var(--serif); font-weight: 900; font-size: 18px; color: var(--yellow); letter-spacing: 0.02em; }
+  .dirC-brand .m { font-family: var(--sans); font-weight: 300; font-size: 10px; letter-spacing: 0.4em; color: var(--yellow); display: inline-block; vertical-align: 6px; margin-left: 6px; }
+  .dirC-cover-top .meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: rgba(255,255,255,0.5); }
+  .dirC-cover-photo {
+    height: 290px; background-image: url('../assets/hero-05-la-balcony.png');
+    background-size: cover; background-position: center 30%;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .dirC-cover-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(14,14,14,0.55) 0%, rgba(14,14,14,0.2) 50%, rgba(14,14,14,0.9) 100%);
+  }
+  .dirC-cover-photo .frame {
+    position: absolute; inset: 18px; border: 1px solid rgba(255,215,0,0.35);
+    pointer-events: none;
+  }
+  .dirC-cover-photo .corner {
+    position: absolute; bottom: 18px; left: 18px;
+    color: var(--yellow); font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em;
+    padding: 8px 12px;
+  }
+  .dirC-cover-body { padding: 28px 32px 22px; flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .dirC-ey { font-weight: 800; font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--yellow); }
+  .dirC-cover h1 {
+    font-family: var(--serif); font-weight: 900;
+    font-size: 60px; line-height: 0.92; letter-spacing: -0.025em;
+    margin: 0; color: #f5f1e0;
+  }
+  .dirC-cover h1 .it { font-style: italic; font-weight: 400; color: var(--yellow); }
+  .dirC-cover .sub {
+    font-size: 11.5px; line-height: 1.55; color: rgba(245,241,224,0.7);
+    max-width: 50ch; margin: 0;
+    border-top: 1px solid rgba(255,255,255,0.15); padding-top: 12px;
+  }
+  .dirC-cities {
+    margin-top: auto; padding-top: 14px;
+    border-top: 1px solid rgba(255,215,0,0.35);
+    display: flex; flex-wrap: wrap; gap: 0;
+  }
+  .dirC-cities .c {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 16px; color: var(--yellow);
+    padding: 0 12px; border-right: 1px solid rgba(255,215,0,0.25);
+  }
+  .dirC-cities .c:first-child { padding-left: 0; }
+  .dirC-cities .c:last-child { border-right: none; }
+
+  /* C · DUBAI SPREAD */
+  .dirC-spread { background: #0e0e0e; height: 100%; display: flex; flex-direction: column; color: #f0eee9; }
+  .dirC-pg-strip {
+    padding: 14px 28px; display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700;
+    color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .dirC-pg-strip .brand { color: var(--yellow); font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 13px; letter-spacing: 0.02em; text-transform: none; }
+  .dirC-hero { padding: 28px 32px 18px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; border-bottom: 1px solid rgba(255,215,0,0.35); }
+  .dirC-hero .label { font-weight: 800; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--yellow); margin-bottom: 8px; }
+  .dirC-hero .city {
+    font-family: var(--serif); font-weight: 900; font-size: 72px;
+    line-height: 0.85; letter-spacing: -0.025em; margin: 0; color: #f5f1e0;
+  }
+  .dirC-hero .city .it { font-style: italic; font-weight: 400; color: var(--yellow); }
+  .dirC-hero .nm { font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.5); text-align: right; }
+  .dirC-hero .nm .lg { display: block; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 32px; color: var(--yellow); margin-top: 4px; }
+  .dirC-body { padding: 22px 32px; flex: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; }
+  .dirC-body h3 {
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 16px; color: var(--yellow); margin: 0 0 8px;
+  }
+  .dirC-body p { font-size: 10px; line-height: 1.65; color: rgba(245,241,224,0.78); margin: 0 0 10px; }
+  .dirC-stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,215,0,0.2); }
+  .dirC-stat .v { font-family: var(--serif); font-weight: 900; font-size: 28px; color: #f5f1e0; line-height: 1; }
+  .dirC-stat .l { font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 4px; font-weight: 700; }
+  .dirC-plats { display: flex; flex-direction: column; }
+  .dirC-plat { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; }
+  .dirC-plat:last-child { border-bottom: none; }
+  .dirC-plat .n { font-family: var(--serif); font-weight: 700; font-size: 13px; color: #f5f1e0; }
+  .dirC-plat.dom .n { color: var(--yellow); }
+  .dirC-plat .d { font-size: 9.5px; line-height: 1.45; color: rgba(245,241,224,0.6); }
+  .dirC-foot {
+    padding: 12px 32px; border-top: 1px solid rgba(255,255,255,0.12);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 700;
+  }
+  .dirC-foot .pg { color: var(--yellow); font-family: var(--mono); }
+
+  /* NOTES card style — small notes alongside artboards */
+  .notes-card {
+    width: 280px; padding: 22px 24px; background: #fef4a8;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    font-family: 'Manrope', system-ui, sans-serif; color: #4a3d10;
+    border-radius: 6px;
+  }
+  .notes-card h4 {
+    margin: 0 0 8px; font-weight: 900; font-size: 14px;
+    letter-spacing: 0.01em; line-height: 1.2;
+  }
+  .notes-card .tag {
+    display: inline-block; background: #fff; padding: 2px 8px; border-radius: 999px;
+    font-weight: 800; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .notes-card p { font-size: 11.5px; line-height: 1.55; margin: 0 0 8px; }
+  .notes-card ul { padding-left: 16px; margin: 0; font-size: 11px; line-height: 1.5; }
+  .notes-card ul li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="../design-canvas.jsx"></script>
+
+  <script type="text/babel">
+    const { useEffect } = React;
+
+    function App() {
+      return (
+        <DesignCanvas title="Influencer Marketing by City — Design Directions" subtitle="Three directions × cover + Dubai sample spread. Pick one (or mix elements) and I'll build the full ~24-page ebook.">
+
+          {/* ===================== DIRECTION A ===================== */}
+          <DCSection id="dirA" title="A · Editorial Light" subtitle="White paper, restrained, pink + yellow + blue accent words. Most magazine-like — clearest reading experience. (This matches the existing ebook-08.html direction.)">
+
+            <DCArtboard id="a-cover" label="Cover" width={612} height={792}>
+              <div className="ebook-art dirA">
+                <div className="dirA-cover-photo">
+                  <div className="dirA-cover-top">
+                    <div className="dirA-pill">Resource · 08</div>
+                    <div className="dirA-brand">LM<span className="y">G</span> MEDIA</div>
+                  </div>
+                </div>
+                <div className="dirA-cover-body">
+                  <div className="dirA-ey">For Brands & Marketing Teams</div>
+                  <h1>Influencer <span className="p">Marketing</span> by <span className="y">City</span></h1>
+                  <p className="dirA-cover-sub">A brand guide to six of the world's most important influencer marketing markets — the platforms, the calendars, the regulations, and the cultural nuances that separate effective activation from generic global playbook.</p>
+                  <div className="dirA-cities">
+                    <div className="c"><div className="num">01</div><div className="nm">Dubai</div></div>
+                    <div className="c"><div className="num">02</div><div className="nm">London</div></div>
+                    <div className="c"><div className="num">03</div><div className="nm">New York</div></div>
+                    <div className="c"><div className="num">04</div><div className="nm">LA / BH</div></div>
+                    <div className="c"><div className="num">05</div><div className="nm">Miami</div></div>
+                    <div className="c"><div className="num">06</div><div className="nm">Paris</div></div>
+                  </div>
+                  <div className="dirA-cover-meta">
+                    <span className="l">lmg.media</span>
+                    <span>Resource Series · 2026</span>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <DCArtboard id="a-dubai" label="Dubai Spread" width={612} height={792}>
+              <div className="ebook-art dirA">
+                <div className="dirA-pg">
+                  <div className="dirA-pg-strip">
+                    <div className="lmg-brand">LM<span className="y">G</span> MEDIA</div>
+                    <div className="meta-r"><span>Market 01</span><span>Dubai · UAE</span><span>Pg 04</span></div>
+                  </div>
+                  <div className="dirA-hero-band">
+                    <div className="photo"></div>
+                    <div className="meta">
+                      <div className="num">01</div>
+                      <div className="ey">Market One</div>
+                      <div className="city">Dubai</div>
+                      <div className="tag">Luxury · Multicultural · Instagram-first</div>
+                    </div>
+                  </div>
+                  <div className="dirA-pg-body">
+                    <div className="col">
+                      <h3>Market Overview</h3>
+                      <p>One of the most distinctive influencer marketing markets in the world. Extraordinary social media penetration, a young, affluent, internationally connected population — and a creator community where ~90% of the UAE population is expatriate, producing a multilingual landscape spanning Arabic, English, Hindi and more.</p>
+                      <h3>Cultural Calendar</h3>
+                      <p><strong>Ramadan</strong> is the most important marketing period of the year — plan content 3–4 months in advance. <strong>Eid Al-Fitr</strong> and <strong>Eid Al-Adha</strong> are significant commercial moments. <strong>UAE National Day</strong> (Dec 2) is a natural activation moment.</p>
+                    </div>
+                    <div className="col">
+                      <h3>Platform Landscape</h3>
+                      <div className="plat-list">
+                        <div className="plat dom"><div className="n">Instagram</div><div className="d">Dominates across all categories. Mature partnership infrastructure.</div></div>
+                        <div className="plat"><div className="n">TikTok</div><div className="d">Rapid growth. Arabic-language reach across Gulf and broader Arab world.</div></div>
+                        <div className="plat"><div className="n">Snapchat</div><div className="d">Unusually high Gulf penetration. Underutilised by Western brands.</div></div>
+                        <div className="plat"><div className="n">YouTube</div><div className="d">Arabic long-form content with region-wide audiences.</div></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dirA-pg-strip foot">
+                    <div className="lmg-brand">Where Quality Brands Meet <span style={{color: 'var(--pink)'}}>Iconic Influence</span></div>
+                    <div className="meta-r"><span>lmg.media</span><span>04 / 24</span></div>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <div className="notes-card">
+              <div className="tag" style={{background: '#FFD700'}}>Direction A</div>
+              <h4>Editorial Light</h4>
+              <p>Closest to a Vogue Business article. White paper, generous whitespace, brand colors used as accent words and section markers — never as backgrounds.</p>
+              <ul>
+                <li><strong>Best for:</strong> readability, print, executive audience</li>
+                <li><strong>Personality:</strong> McKinsey deck × magazine</li>
+                <li><strong>City photos:</strong> photo-band hero per chapter, body type-led</li>
+                <li><strong>Page count:</strong> ~24 pages</li>
+              </ul>
+            </div>
+          </DCSection>
+
+          {/* ===================== DIRECTION B ===================== */}
+          <DCSection id="dirB" title="B · Maximalist Color-Block" subtitle="Pink, yellow, blue used as full-bleed fields. Big serif-italic city names. Confident, image-forward, designed to stop scrollers — the brand asserts itself.">
+
+            <DCArtboard id="b-cover" label="Cover" width={612} height={792}>
+              <div className="ebook-art dirB">
+                <div className="dirB-cover">
+                  <div className="dirB-cover-top">
+                    <div className="brand">LMG <span className="x">Media</span></div>
+                    <div className="num">Resource · 08 · 2026</div>
+                  </div>
+                  <div className="dirB-cover-main">
+                    <div className="dirB-cover-left">
+                      <div className="ey">For Brands & Marketing Teams</div>
+                      <h1>Influencer Marketing <span className="y">by City.</span></h1>
+                      <p className="sub">Six markets. Six playbooks. The platforms, calendars, and creators that make Dubai different from Paris — and why your global template is leaving money in every one of them.</p>
+                      <div className="cta">
+                        <span>Read inside →</span>
+                        <span>11 min</span>
+                      </div>
+                    </div>
+                    <div className="dirB-cover-right"></div>
+                  </div>
+                  <div className="dirB-cover-cities">
+                    <div className="c"><span className="n">01</span>Dubai</div>
+                    <div className="c"><span className="n">02</span>London</div>
+                    <div className="c"><span className="n">03</span>NYC</div>
+                    <div className="c"><span className="n">04</span>LA</div>
+                    <div className="c"><span className="n">05</span>Miami</div>
+                    <div className="c"><span className="n">06</span>Paris</div>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <DCArtboard id="b-dubai" label="Dubai Spread" width={612} height={792}>
+              <div className="ebook-art dirB">
+                <div className="dirB-spread">
+                  <div className="dirB-pg-strip">
+                    <span className="brand">LMG Media</span>
+                    <span>Market 01 · Dubai</span>
+                    <span>04 / 24</span>
+                  </div>
+                  <div className="dirB-hero">
+                    <div className="dirB-hero-color">
+                      <div className="label">Market 01</div>
+                      <h2 className="city">Dubai.</h2>
+                      <div className="num">UAE · Instagram-first · Luxury</div>
+                    </div>
+                    <div className="dirB-hero-photo"></div>
+                  </div>
+                  <div className="dirB-body">
+                    <p className="dirB-tagline">A market where influencer marketing is <span className="y">central</span> to how brands reach consumers — not optional.</p>
+                    <div className="dirB-row">
+                      <div className="cell">
+                        <div className="h">Population</div>
+                        <div className="v">~90% expatriate. Multilingual creator landscape.</div>
+                      </div>
+                      <div className="cell">
+                        <div className="h">Key Moment</div>
+                        <div className="v">Ramadan. Plan 3–4 months ahead.</div>
+                      </div>
+                      <div className="cell">
+                        <div className="h">Regulator</div>
+                        <div className="v">National Media Council. Disclosure mandatory.</div>
+                      </div>
+                    </div>
+                    <div className="dirB-plats">
+                      <div className="dirB-plat dom">
+                        <div className="n">Instagram</div>
+                        <div className="d">Dominates across all categories. Mature brand-partnership infrastructure, well-used by Dubai's creator community.</div>
+                        <div className="r">★ Dom</div>
+                      </div>
+                      <div className="dirB-plat">
+                        <div className="n">TikTok</div>
+                        <div className="d">Rapid growth. Arabic-language content reaches across the Gulf and broader Arab world.</div>
+                        <div className="r">↑</div>
+                      </div>
+                      <div className="dirB-plat">
+                        <div className="n">Snapchat</div>
+                        <div className="d">Unusually high penetration in the Gulf — underutilised but valuable for Gulf-native audiences.</div>
+                        <div className="r">·</div>
+                      </div>
+                      <div className="dirB-plat">
+                        <div className="n">YouTube</div>
+                        <div className="d">Arabic long-form. Many of the region's most-followed creators built audiences here first.</div>
+                        <div className="r">·</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <div className="notes-card" style={{background: '#FFD7E5'}}>
+              <div className="tag" style={{background: '#FF4D94', color: '#fff'}}>Direction B</div>
+              <h4>Maximalist Color-Block</h4>
+              <p>Loud, branded, scrollable. Each city chapter uses one of the brand colors as a full-bleed field. Serif italic city names give a fashion-week feel.</p>
+              <ul>
+                <li><strong>Best for:</strong> social distribution, sales-led downloads</li>
+                <li><strong>Personality:</strong> i-D × Bloomberg Businessweek</li>
+                <li><strong>City photos:</strong> half-bleed with color field beside</li>
+                <li><strong>Risk:</strong> heavier read on small screens</li>
+              </ul>
+            </div>
+          </DCSection>
+
+          {/* ===================== DIRECTION C ===================== */}
+          <DCSection id="dirC" title="C · Dark Luxury Editorial" subtitle="Black paper, Playfair serif, gold-yellow accents, hairline gold rules. Reads as a luxury monograph — Vogue Business cover story, not a marketing PDF.">
+
+            <DCArtboard id="c-cover" label="Cover" width={612} height={792}>
+              <div className="ebook-art dirC">
+                <div className="dirC-cover">
+                  <div className="dirC-cover-top">
+                    <div className="dirC-brand">LMG<span className="m">MEDIA</span></div>
+                    <div className="meta">RESOURCE 08 · MMXXVI</div>
+                  </div>
+                  <div className="dirC-cover-photo">
+                    <div className="frame"></div>
+                    <div className="corner">DUBAI · LONDON · NEW YORK · LOS ANGELES · MIAMI · PARIS</div>
+                  </div>
+                  <div className="dirC-cover-body">
+                    <div className="dirC-ey">A Brand Guide</div>
+                    <h1>Influencer Marketing,<br/><span className="it">by City.</span></h1>
+                    <p className="sub">Six markets where influence is local. The platforms, calendars, and creators that separate effective activation from a generic global playbook — by the agency that runs campaigns in every one of them.</p>
+                    <div className="dirC-cities">
+                      <div className="c">Dubai</div>
+                      <div className="c">London</div>
+                      <div className="c">New York</div>
+                      <div className="c">Los Angeles</div>
+                      <div className="c">Miami</div>
+                      <div className="c">Paris</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <DCArtboard id="c-dubai" label="Dubai Spread" width={612} height={792}>
+              <div className="ebook-art dirC">
+                <div className="dirC-spread">
+                  <div className="dirC-pg-strip">
+                    <span className="brand">LMG <em>Media</em></span>
+                    <span>Market 01 · Dubai</span>
+                  </div>
+                  <div className="dirC-hero">
+                    <div>
+                      <div className="label">Market One</div>
+                      <h2 className="city"><span className="it">Dubai.</span></h2>
+                    </div>
+                    <div className="nm">United Arab Emirates<span className="lg">01</span></div>
+                  </div>
+                  <div className="dirC-body">
+                    <div>
+                      <h3>An Instagram-first luxury market.</h3>
+                      <p>One of the most distinctive influencer marketing markets in the world. The UAE's extraordinary social media penetration — among the highest globally — combined with a young, affluent, internationally connected population creates a market where influencer marketing is central, not optional.</p>
+                      <p>Approximately 90% of the UAE population is expatriate, producing a multilingual creator landscape spanning Arabic, English, Hindi and beyond. Creator selection must be deliberately targeted — Western-expatriate audiences and Gulf-native audiences are fundamentally different propositions.</p>
+                      <div className="dirC-stat-row">
+                        <div className="dirC-stat">
+                          <div className="v">~90<span style={{fontSize: '18px', fontWeight: 400}}>%</span></div>
+                          <div className="l">Expatriate population</div>
+                        </div>
+                        <div className="dirC-stat">
+                          <div className="v">3–4<span style={{fontSize: '14px', fontWeight: 400, marginLeft: 4}}>mo</span></div>
+                          <div className="l">Ramadan lead time</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3>Platform landscape.</h3>
+                      <div className="dirC-plats">
+                        <div className="dirC-plat dom">
+                          <div className="n">Instagram</div>
+                          <div className="d">Dominates across all categories. Mature partnership infrastructure.</div>
+                        </div>
+                        <div className="dirC-plat">
+                          <div className="n">TikTok</div>
+                          <div className="d">Arabic-language reach across the Gulf and the broader Arab world.</div>
+                        </div>
+                        <div className="dirC-plat">
+                          <div className="n">Snapchat</div>
+                          <div className="d">Unusually high Gulf penetration. Underutilised by Western brands.</div>
+                        </div>
+                        <div className="dirC-plat">
+                          <div className="n">YouTube</div>
+                          <div className="d">Arabic long-form with region-wide audiences.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dirC-foot">
+                    <span>Where Quality Brands Meet Iconic Influence</span>
+                    <span className="pg">04 / 24</span>
+                  </div>
+                </div>
+              </div>
+            </DCArtboard>
+
+            <div className="notes-card" style={{background: '#1a1a1a', color: '#f0eee9'}}>
+              <div className="tag" style={{background: '#FFD700', color: '#1a1a1a'}}>Direction C</div>
+              <h4 style={{color: '#FFD700', fontFamily: 'Playfair Display, serif', fontStyle: 'italic', fontWeight: 400}}>Dark Luxury Editorial</h4>
+              <p>Premium monograph. Black paper, gold-yellow type, Playfair serif. The brand's "evening browsing elegance" pulled forward as the primary mode.</p>
+              <ul>
+                <li><strong>Best for:</strong> luxury brand audience (Dubai, Paris, LA / BH)</li>
+                <li><strong>Personality:</strong> Vogue Business cover story</li>
+                <li><strong>City photos:</strong> full-bleed with gold-rule borders</li>
+                <li><strong>Risk:</strong> heavier on ink to print; mostly digital read</li>
+              </ul>
+            </div>
+          </DCSection>
+
+        </DesignCanvas>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

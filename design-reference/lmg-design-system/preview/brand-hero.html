@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Brand" name="Hero Layout" subtitle="Hero treatment with silk background + dual CTA" viewport="700x400" --><html><head><meta charset="utf-8"><title>Hero treatment</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  body { padding: 0; min-height: 100vh; }
+  .hero {
+    position: relative; min-height: 380px; padding: 60px 48px; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 20px;
+    background-image: url('../assets/hero-silk-bg.jpg');
+    background-size: cover; background-position: center;
+  }
+  .hero::before { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35)); }
+  .hero > * { position: relative; z-index: 1; }
+  .hero h1 { font-size: 44px; line-height: 1.05; letter-spacing: -0.02em; font-weight: 800; margin:0; max-width: 760px; }
+  .hero .sub { color: var(--fg-2); max-width: 540px; font-size: 16px; }
+  .cta-row { display:flex; gap: 12px; }
+</style>
+</head><body>
+<div class="hero">
+  <h1>Where Quality Brands Meet <span class="lmg-accent-yellow">Iconic</span> <span class="lmg-accent-pink">Influence</span></h1>
+  <div class="sub">Connecting visionary brands with influential voices in lifestyle, luxury, fashion, wellness and travel.</div>
+  <div class="cta-row">
+    <button class="lmg-btn lmg-btn-primary">Start Your Campaign →</button>
+    <button class="lmg-btn lmg-btn-blue">Join as Influencer</button>
+  </div>
+</div>
+</body></html>

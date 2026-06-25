@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Components" name="Service Cards · Audience" subtitle="Photo card pattern — pink (Influencer) + blue (Brand) variants" viewport="900x700" --><html><head><meta charset="utf-8"><title>Service Cards · Audience</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../components.css">
+<link rel="stylesheet" href="_card.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>body{ background: var(--bg-2); padding: 24px; gap: 24px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+</style>
+</head><body class="card">
+<div class="grid">
+  <article class="lmg-svc-card audience-influencer">
+    <div class="lmg-svc-photo" style="background-image: url('../assets/svc-inf-deal-flow.jpg')">
+      <span class="lmg-pill">For Influencers</span>
+    </div>
+    <div class="lmg-svc-body">
+      <div class="lmg-svc-head">
+        <div class="lmg-svc-badge"><i data-lucide="briefcase"></i></div>
+        <h3 class="lmg-svc-title">Brand Opportunities &amp; Deal Flow</h3>
+      </div>
+      <p class="lmg-svc-desc">Exclusive access to premium brand partnerships tailored to your niche and audience.</p>
+      <div class="lmg-svc-features">
+        <div class="lbl">Key Features:</div>
+        <ul>
+          <li>Exclusive access to premium brand partnerships</li>
+          <li>Personalized opportunity matching</li>
+          <li>Competitive rate negotiation</li>
+        </ul>
+      </div>
+      <div class="lmg-svc-ctas">
+        <button class="lmg-btn lmg-btn-primary">Learn More <i data-lucide="arrow-right"></i></button>
+        <button class="lmg-btn lmg-btn-outline">Apply Now</button>
+      </div>
+    </div>
+  </article>
+
+  <article class="lmg-svc-card">
+    <div class="lmg-svc-photo" style="background-image: url('../assets/svc-brd-strategy.jpg')">
+      <span class="lmg-pill">For Brands</span>
+    </div>
+    <div class="lmg-svc-body">
+      <div class="lmg-svc-head">
+        <div class="lmg-svc-badge"><i data-lucide="target"></i></div>
+        <h3 class="lmg-svc-title">Influencer Marketing Strategy</h3>
+      </div>
+      <p class="lmg-svc-desc">Data-driven strategies that identify the perfect creators for your brand.</p>
+      <div class="lmg-svc-features">
+        <div class="lbl">Key Features:</div>
+        <ul>
+          <li>Data-driven creator identification and vetting</li>
+          <li>Audience demographic analysis</li>
+          <li>Platform &amp; channel optimization</li>
+        </ul>
+      </div>
+      <div class="lmg-svc-ctas">
+        <button class="lmg-btn lmg-btn-primary">Learn More <i data-lucide="arrow-right"></i></button>
+        <button class="lmg-btn lmg-btn-outline">Get Quote</button>
+      </div>
+    </div>
+  </article>
+</div>
+<script>lucide.createIcons();</script>
+</body></html>

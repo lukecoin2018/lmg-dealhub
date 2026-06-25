@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!-- @dsCard group="Spacing" name="Shadows" subtitle="Warm-grey ambient shadows + accent focus rings" viewport="700x260" --><html><head><meta charset="utf-8"><title>Shadows</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  body { background: var(--bg-2); }
+  .s-row { display:flex; gap:24px; flex-wrap:wrap; }
+  .s-tile { width:140px; height:90px; background: #fff; border-radius: var(--r-lg); display:flex; align-items:flex-end; padding: 10px 12px; font-family: var(--font-mono); font-size:10px; color: var(--fg-2); }
+</style>
+</head><body class="card">
+<div class="s-row">
+  <div class="s-tile" style="box-shadow: var(--shadow-xs)">shadow-xs</div>
+  <div class="s-tile" style="box-shadow: var(--shadow-sm)">shadow-sm</div>
+  <div class="s-tile" style="box-shadow: var(--shadow-md)">shadow-md · cards</div>
+  <div class="s-tile" style="box-shadow: var(--shadow-lg)">shadow-lg · modals</div>
+</div>
+<div class="s-row" style="margin-top:8px">
+  <div class="s-tile" style="box-shadow: var(--shadow-glow-yellow); border: 1px solid var(--lmg-yellow)">focus · yellow</div>
+  <div class="s-tile" style="box-shadow: var(--shadow-glow-pink); border: 1px solid var(--lmg-pink)">focus · pink</div>
+</div>
+</body></html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources §4 — Messy pile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--neutral-100); color: var(--fg-1); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--fg-3); display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance; }
+  .doc-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 780px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  .dir { margin-top: 56px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--fg-3); border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px; }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 22px; max-width: 900px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2); background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm); padding: 7px 12px; }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); } .anno .inter svg { color: var(--lmg-blue); } .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); } .frame.is-light { background: var(--neutral-0); }
+  .frame-tab { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 18px; font-weight: 600; }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── Section shell ───────────────────────────────────── */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.4vw, 60px) clamp(26px, 3.4vw, 52px) 0; }
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 18px; flex-wrap: wrap; }
+  .rs-eyebrow { font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; padding: 11px 18px; border-radius: var(--r-pill); border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap; transition: border-color .16s, background .16s, gap .16s; }
+  .rs-viewall svg { width: 16px; height: 16px; } .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ════════════ COVER ENGINE ════════════ */
+  .cover { position: relative; container-type: inline-size; aspect-ratio: 3 / 4; width: 100%; border-radius: 2.4cqw; overflow: hidden; background: var(--neutral-300); box-shadow: 0 1cqw 3cqw rgba(12,10,8,.22), 0 0.3cqw 1cqw rgba(12,10,8,.16); user-select: none; }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  .cov-block { background: linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%), linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%); }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines { position: absolute; inset: 0; opacity: .9; pointer-events: none; background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%); }
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92; }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+  .cov-dl { position: absolute; left: 50%; bottom: 9cqw; transform: translate(-50%, 1.6cqw); display: inline-flex; align-items: center; gap: 1.6cqw; background: var(--lmg-yellow); color: #0A0A0A; border: 0; cursor: pointer; font-family: var(--font-ui); font-weight: 800; font-size: 3.7cqw; letter-spacing: -0.01em; padding: 2.6cqw 4.4cqw; border-radius: 99px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out), background .15s; box-shadow: 0 1.6cqw 4cqw rgba(0,0,0,.4); z-index: 5; }
+  .cov-dl i { width: 4.2cqw; height: 4.2cqw; }
+  .cov-dl:hover { background: #fff; }
+  .show-dl:hover .cov-dl { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+  /* ════════════ THE TABLE (featured hero on a messy pile) ════════════ */
+  .table { position: relative; min-height: 700px; overflow: hidden; padding-bottom: 20px;
+    -webkit-mask-image: linear-gradient(180deg, #000 88%, transparent), linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    -webkit-mask-composite: source-in; mask-image: linear-gradient(180deg, #000 88%, transparent), linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent); mask-composite: intersect; }
+  @media (max-width: 860px) { .table { min-height: 1080px; } }
+
+  /* — pile (the other 22, strewn) — */
+  .pile { position: absolute; inset: 0; z-index: 1; }
+  .pile-item { position: absolute; width: 184px; text-decoration: none; cursor: pointer; will-change: transform;
+    transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl));
+    transition: transform .34s var(--ease-out), filter .34s, z-index 0s; }
+  .pile-item .cover { filter: brightness(var(--br, 1)) blur(var(--bl, 0px)); box-shadow: 0 14px 30px -8px rgba(10,8,6,.5), 0 4px 9px rgba(10,8,6,.34); transition: box-shadow .34s; }
+  .lmg-dark .pile-item .cover { box-shadow: 0 16px 34px -8px rgba(0,0,0,.74), 0 4px 9px rgba(0,0,0,.5); }
+  .pile-item:hover { transform: translate(-50%, -60%) rotate(0deg) scale(1.14); z-index: 900 !important; }
+  .pile-item:hover .cover { filter: none; box-shadow: 0 34px 64px -12px rgba(10,8,6,.6), 0 10px 20px rgba(10,8,6,.4); }
+  @media (prefers-reduced-motion: no-preference) {
+    .pile-item { animation: pileIn .64s var(--ease-out) both; animation-delay: var(--d, 0ms); }
+    /* opacity stays 1 throughout so a frozen/throttled timeline never hides a cover —
+       the entrance only tosses the cover down into place from a raised, upright start. */
+    @keyframes pileIn {
+      from { transform: translate(-50%, calc(-50% - 46px)) rotate(0deg) scale(.84); }
+      to   { transform: translate(-50%, -50%) rotate(var(--rot)) scale(var(--scl)); }
+    }
+  }
+
+  /* — featured magazine, resting ON the pile (z above) — */
+  .featured { position: relative; z-index: 80; display: grid; grid-template-columns: 300px 1fr; gap: 50px; align-items: start; padding: 4px 0 0; pointer-events: none; max-width: 1000px; }
+  @media (max-width: 860px) { .featured { grid-template-columns: 1fr; gap: 26px; } }
+  .featured > * { pointer-events: auto; }
+  .featured-cover { width: 300px; transform: rotate(-2.4deg); }
+  .featured-cover .cover { box-shadow: 0 34px 70px -14px rgba(10,8,6,.5), 0 10px 22px rgba(10,8,6,.3); }
+  .lmg-dark .featured-cover .cover { box-shadow: 0 38px 78px -14px rgba(0,0,0,.78); }
+  .featx-info { max-width: 600px; position: relative; }
+  /* soft halo so the hero text always sits cleanly above any stray cover edge */
+  .featx-info::before { content: ""; position: absolute; inset: -26px -40px -30px -34px; z-index: -1; border-radius: 40px;
+    background: radial-gradient(120% 116% at 26% 34%, var(--bg-1) 56%, color-mix(in srgb, var(--bg-1) 0%, transparent) 100%); }
+  .featx-tags { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 14px; margin-bottom: 18px; }
+  .start-here { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #6B5500; background: var(--lmg-yellow); padding: 6px 12px; border-radius: 99px; }
+  .start-here svg { width: 13px; height: 13px; }
+  .feat-course { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--lmg-pink); }
+  .feat-course svg { width: 14px; height: 14px; }
+  .feat-meta { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 12px; display: flex; align-items: center; gap: 9px; }
+  .feat-meta .ac-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .featx-title { font-size: clamp(27px, 3vw, 38px); font-weight: 800; letter-spacing: -0.026em; line-height: 1.06; margin: 0 0 14px; text-wrap: balance; }
+  .featx-desc { font-size: 16px; line-height: 1.64; color: var(--fg-2); margin: 0 0 24px; max-width: 56ch; }
+  .feat-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .btn-dl { display: inline-flex; align-items: center; gap: 9px; height: 52px; padding: 0 26px; border: 0; cursor: pointer; border-radius: var(--r-md); background: var(--lmg-yellow); color: #0A0A0A; font-family: var(--font-ui); font-weight: 800; font-size: 15.5px; transition: background .15s, transform .15s; text-decoration: none; }
+  .btn-dl:hover { background: var(--lmg-yellow-deep); transform: translateY(-1px); }
+  .btn-dl svg { width: 18px; height: 18px; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px; border: 1.5px solid var(--border-2); border-radius: var(--r-md); background: transparent; color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14.5px; cursor: pointer; text-decoration: none; transition: border-color .15s, color .15s; }
+  .btn-ghost:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* rummage hint, floating low on the pile */
+  .rummage { position: absolute; left: clamp(26px,3.4vw,52px); bottom: 30px; z-index: 200; display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+    font-family: var(--font-ui); font-size: 13px; font-weight: 700; color: var(--fg-1); text-decoration: none;
+    background: color-mix(in srgb, var(--bg-1) 84%, transparent); border: 1px solid var(--border-1); border-radius: 99px; padding: 9px 16px; backdrop-filter: blur(8px); box-shadow: var(--shadow-sm);
+    transition: gap .16s, border-color .16s; }
+  .rummage:hover { gap: 13px; border-color: var(--lmg-pink); }
+  .rummage svg { width: 16px; height: 16px; color: var(--lmg-pink); }
+  .rummage b { color: var(--lmg-pink); }
+
+  /* ── verdict ──────────────────────────────────────────── */
+  .reco { margin-top: 60px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 38px clamp(26px,3.2vw,46px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 14px; font-weight: 800; display: flex; align-items: center; gap: 9px; }
+  .reco h3 svg { width: 16px; height: 16px; color: var(--lmg-yellow-deep); }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 940px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+
+  #toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); z-index: 999; display: flex; align-items: center; gap: 11px; background: #0A0A0A; color: #fff; padding: 13px 20px; border-radius: var(--r-pill); font-family: var(--font-ui); font-size: 14px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast svg { width: 17px; height: 17px; color: var(--lmg-yellow); } #toast b { color: var(--lmg-yellow); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4 · Messy-pile revision</div>
+    <h1 class="doc-title">One messy <span class="ital">table</span></h1>
+    <p class="doc-sub">The stacked carousel got too tidy — and read as two segments. This revision brings back Direction 3's physical "magazines spread on a table" feeling and pushes it: the other 22 covers are <strong>strewn in a real pile</strong> — wildly varied angles, irregular overlap, depth from soft shadows and dimming, some cut off at the edges so the pile clearly continues. The flagship <strong>rests on top of that same pile</strong>, no divider, no seam. The concept: <strong>"here's a great one to read first — and look, there's a whole pile of others."</strong> The pile is a teaser and a doorway, not a selector — hover lifts a cover; clicking any cover opens <strong>/resources</strong>. Nothing swaps the hero.</p>
+  </header>
+
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag">REVISION</span><h2 class="dir-name">Featured magazine on a strewn pile</h2></div>
+    <p class="dir-note">Featured stays the fixed flagship with full detail and a one-tap <strong>Download — Free PDF</strong>. Beneath and around it, the library is a rummage-able pile — <strong>no progress bar, no prev/next</strong>. The hero's cover edge overlaps the pile so the two zones read as one continuous table.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="sparkles"></i><b>Motion:</b>&nbsp;covers toss onto the table on load (staggered); hover lifts &amp; straightens a cover</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;rummage — hover to surface, click any pile cover → <b>/resources</b>. Hero is fixed.</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — static scattered layout + CSS hover; no carousel state. Optional drag-to-toss = med.</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="pile-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="pile-dark"></div></div>
+  </section>
+
+  <div class="reco">
+    <h3><i data-lucide="scale"></i>Reading against the goal</h3>
+    <p><strong>Does the featured read as "start here" while the pile pulls you to explore?</strong> Yes — the hero is the only crisp, upright-ish, fully-captioned object with the bright yellow Download, so the eye resolves it first; everything else is deliberately tilted, overlapped, and dimmed toward the back, which reads as "more, lots more" rather than competing choices. Because the pile literally underlaps the hero's cover and there's no rule between them, it scans as <strong>one messy table</strong>, not two stacked blocks.</p>
+    <p><strong>Guardrails kept:</strong> the hero text rides a soft halo so it stays legible no matter what cover edges sit behind it; the pile is a doorway (one destination, <strong>/resources</strong>) not an on-page selector, so it never fights the hero for "which do I pick." This is intentionally pushed <em>too</em> messy per the brief — easy dials to tame later: reduce angle range (±20°→±12°), thin the overlap, or lighten the back-of-pile dim. The bold next step, if wanted, is <strong>drag-to-toss</strong> physics so a visitor can actually shove covers around — higher build cost (pointer velocity + collision), noted but not required.</p>
+  </div>
+</div>
+
+<div id="toast"><i data-lucide="check-circle-2"></i><span>Downloading <b id="toast-name">your PDF</b> — free, no email</span></div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+  const FEATURED = PUBS[0];
+  const REST = PUBS.slice(1);
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  function featuredHTML() {
+    const aud = AUD[FEATURED.aud];
+    return `
+      <div class="featured">
+        <div class="featured-cover show-dl">${coverHTML(FEATURED)}</div>
+        <div class="featx-info">
+          <div class="featx-tags">
+            <span class="start-here"><i data-lucide="arrow-down"></i>Start here</span>
+            <span class="feat-course"><i data-lucide="layers"></i>Now a multi-part course</span>
+          </div>
+          <p class="feat-meta"><span class="ac-dot" style="background:${aud.line}"></span>${FEATURED.type} · ${FEATURED.level}</p>
+          <h3 class="featx-title">${FEATURED.title}</h3>
+          <p class="featx-desc">${FEATURED.desc} It is the flagship of the library — and is now expanding into a guided, multi-part course, each module a downloadable publication of its own.</p>
+          <div class="feat-cta">
+            <button class="btn-dl" data-dl data-name="${FEATURED.title}"><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+            <a class="btn-ghost" href="/resources/${FEATURED.id}"><i data-lucide="arrow-up-right"></i>View details</a>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* Seeded RNG so the scatter is messy but stable across reloads */
+  function rng(seed) { let s = seed; return () => { s = (s * 9301 + 49297) % 233280; return s / 233280; }; }
+
+  /* Build the strewn pile. Centers in % (x) and px (y). Avoids the hero text box. */
+  function pileHTML(seedBase) {
+    const r = rng(seedBase);
+    const between = (a, b) => a + r() * (b - a);
+    const placements = [];
+    // a) peekers tucked behind / around the hero cover (left), poking up
+    const left = [ [9, 250], [15, 360], [7, 430], [20, 300], [12, 510] ];
+    left.forEach(([x, y]) => placements.push({ x: x + between(-2, 3), y: y + between(-20, 20), band: 'back' }));
+    // b) the dense lower pile — full width, bleeding off the bottom
+    for (let i = 0; i < 17; i++) {
+      // bias x across full width with clustering; keep some off both edges
+      let x = between(4, 97);
+      let y = between(430, 700);
+      // right side may ride a touch higher (next to the hero text), left of hero stays lower-only handled above
+      if (x > 64 && y < 470) y = between(470, 690);
+      placements.push({ x, y, band: 'front' });
+    }
+    // assign depth: lower on the table (higher y) sits more in front
+    placements.sort((a, b) => a.y - b.y);
+    const n = placements.length;
+    return placements.map((pl, i) => {
+      const p = REST[i % REST.length];
+      const rot = (between(-20, 20)).toFixed(1);
+      const scl = (0.8 + (i / n) * 0.26 + between(-0.04, 0.05)).toFixed(3); // bigger toward front
+      const z = 4 + i;                       // back→front
+      const depth = 1 - i / (n - 1);          // 1 = far back
+      const br = (1 - depth * 0.22).toFixed(3);
+      const bl = (depth * 1.15).toFixed(2);
+      const d = Math.round(between(0, 520));  // toss-in stagger
+      return `<a class="pile-item" href="/resources" aria-label="Browse all 23 resources"
+                style="left:${pl.x.toFixed(2)}%; top:${pl.y.toFixed(0)}px; --rot:${rot}deg; --scl:${scl}; --br:${br}; --bl:${bl}px; --d:${d}ms; z-index:${z}">
+                ${coverHTML(p)}
+              </a>`;
+    }).join('');
+  }
+
+  function renderPile(id, seed) {
+    el(id).innerHTML = secHead() + `
+      <div class="table">
+        <div class="pile">${pileHTML(seed)}</div>
+        ${featuredHTML()}
+        <a class="rummage" href="/resources"><i data-lucide="layers"></i>Rummage the pile — <b>22 more</b> to browse</a>
+      </div>`;
+  }
+
+  /* download toast (hero only — pile covers route to /resources) */
+  const toast = el('toast'), toastName = el('toast-name');
+  let toastTimer = null;
+  document.addEventListener('click', e => {
+    const dl = e.target.closest('.cov-dl, [data-dl]');
+    if (!dl) return;
+    // pile covers are wrapped in <a href="/resources"> and carry no [data-dl]; let them navigate
+    e.preventDefault();
+    const cover = dl.closest('.cover');
+    let name = dl.dataset.name;
+    if (!name && cover) { const p = PUBS.find(x => x.id === cover.dataset.id); name = p ? p.title : null; }
+    toastName.textContent = name || 'your PDF';
+    toast.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('on'), 2400);
+  });
+
+  renderPile('pile-light', 7);
+  renderPile('pile-dark', 23);
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

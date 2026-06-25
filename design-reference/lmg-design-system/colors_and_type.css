@@ -1,0 +1,254 @@
+/* LMG Media — Colors & Typography
+ * Source of truth for tokens used across the design system.
+ * Brand colors are from the official LMG Media Branding 2025 kit.
+ */
+
+/* ─── Webfonts ───────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ─── Brand colors ─────────────────────────────────────── */
+  --lmg-yellow:        #FFD700; /* primary accent / CTA */
+  --lmg-yellow-deep:   #E6B800; /* hover / press on yellow */
+  --lmg-yellow-soft:   #FFF4B0; /* soft tint, hover bg */
+
+  --lmg-pink:          #FF4D94; /* secondary accent */
+  --lmg-pink-deep:     #E63F82; /* hover / press */
+  --lmg-pink-soft:     #FFD9E7;
+
+  --lmg-blue:          #3AAFF4; /* tertiary accent / data */
+  --lmg-blue-deep:     #1E94DA;
+  --lmg-blue-soft:     #D2EEFB;
+
+  --lmg-grey:          #3A3A3A; /* primary text on light */
+
+  /* ─── Neutral scale (warm-leaning, photo-friendly) ─────── */
+  --neutral-0:    #FFFFFF;
+  --neutral-50:   #FAFAF8; /* page bg, light cards */
+  --neutral-100:  #F4F3EF;
+  --neutral-200:  #E8E6DF;
+  --neutral-300:  #CFCDC4;
+  --neutral-400:  #9C9A91;
+  --neutral-500:  #6D6B65;
+  --neutral-600:  #4A4946;
+  --neutral-700:  #3A3A3A; /* === --lmg-grey === */
+  --neutral-800:  #232323;
+  --neutral-900:  #121212; /* dark mode bg */
+  --neutral-950:  #0A0A0A;
+
+  /* ─── Semantic colors ──────────────────────────────────── */
+  --fg-1: var(--lmg-grey);          /* primary text */
+  --fg-2: var(--neutral-500);       /* secondary text */
+  --fg-3: var(--neutral-400);       /* tertiary / muted */
+  --fg-inverse: var(--neutral-0);
+
+  --bg-1: var(--neutral-0);         /* page */
+  --bg-2: var(--neutral-50);        /* alt section bg */
+  --bg-3: var(--neutral-100);       /* card bg on alt section */
+  --bg-elev: var(--neutral-0);      /* elevated card on dark photo */
+
+  --border-1: var(--neutral-200);   /* hairline */
+  --border-2: var(--neutral-300);
+
+  --accent-primary: var(--lmg-yellow);
+  --accent-secondary: var(--lmg-pink);
+  --accent-data: var(--lmg-blue);
+
+  /* Audience color-coding (used across services, cards, badges) */
+  --audience-brand: var(--lmg-blue);          /* For Brands  → blue */
+  --audience-brand-soft: var(--lmg-blue-soft);
+  --audience-brand-deep: var(--lmg-blue-deep);
+  --audience-influencer: var(--lmg-pink);     /* For Influencers → pink */
+  --audience-influencer-soft: var(--lmg-pink-soft);
+  --audience-influencer-deep: var(--lmg-pink-deep);
+
+  /* Vibrant gradients (resource hero, social color-blocking) */
+  --grad-resource: linear-gradient(135deg, #B341E8 0%, #D63D8E 50%, #FF4D94 100%); /* @kind color */
+  --grad-resource-warm: linear-gradient(135deg, #FF4D94 0%, #FFD700 100%); /* @kind color */
+  --grad-cmyb: linear-gradient(90deg, #FF4D94 0%, #FFD700 50%, #3AAFF4 100%); /* @kind color */
+
+  --success: #2BB673;
+  --warning: var(--lmg-yellow-deep);
+  --danger:  #E04C4C;
+
+  /* ─── Type scale ───────────────────────────────────────── */
+  --font-display: 'Playfair Display', 'Didot', 'Bodoni 72', Georgia, serif;
+  --font-sans:    'Manrope', 'DM Sans', ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui:      'DM Sans', 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, "SF Mono", Menlo, monospace;
+
+  --fs-display-1: 88px;  --lh-display-1: 0.95; /* @kind font */ --ls-display-1: -0.03em; /* @kind font */
+  --fs-display-2: 64px;  --lh-display-2: 1.00; /* @kind font */ --ls-display-2: -0.025em; /* @kind font */
+  --fs-h1:        48px;  --lh-h1:        1.05; /* @kind font */ --ls-h1:        -0.02em; /* @kind font */
+  --fs-h2:        36px;  --lh-h2:        1.15; /* @kind font */ --ls-h2:        -0.015em; /* @kind font */
+  --fs-h3:        24px;  --lh-h3:        1.25; /* @kind font */ --ls-h3:        -0.01em; /* @kind font */
+  --fs-h4:        20px;  --lh-h4:        1.30; /* @kind font */ --ls-h4:        -0.005em; /* @kind font */
+  --fs-body:      16px;  --lh-body:      1.55; /* @kind font */ --ls-body:      0; /* @kind font */
+  --fs-body-lg:   18px;  --lh-body-lg:   1.55; /* @kind font */
+  --fs-body-sm:   14px;  --lh-body-sm:   1.50; /* @kind font */
+  --fs-caption:   12px;  --lh-caption:   1.40; /* @kind font */ --ls-caption: 0.04em; /* @kind font */
+  --fs-eyebrow:   11px;  --lh-eyebrow:   1.30; /* @kind font */ --ls-eyebrow: 0.18em; /* @kind font */
+
+  /* ─── Radii ────────────────────────────────────────────── */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-pill: 999px;
+
+  /* ─── Shadows ──────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(20, 18, 12, 0.04);
+  --shadow-sm: 0 2px 6px rgba(20, 18, 12, 0.06), 0 1px 2px rgba(20,18,12,0.04);
+  --shadow-md: 0 8px 24px rgba(20, 18, 12, 0.08), 0 2px 6px rgba(20,18,12,0.04);
+  --shadow-lg: 0 18px 48px rgba(20, 18, 12, 0.12), 0 4px 12px rgba(20,18,12,0.06);
+  --shadow-glow-yellow: 0 0 0 6px rgba(255, 215, 0, 0.18);
+  --shadow-glow-pink:   0 0 0 6px rgba(255, 77, 148, 0.18);
+
+  /* ─── Spacing ──────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ─── Motion ───────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* @kind other */
+  --dur-fast: 160ms; /* @kind other */
+  --dur-base: 240ms; /* @kind other */
+  --dur-slow: 480ms; /* @kind other */
+  --dur-hero: 900ms; /* @kind other */
+
+  /* ─── Layout ───────────────────────────────────────────── */
+  --container: 1200px; /* @kind spacing */
+  --container-wide: 1440px; /* @kind spacing */
+  --gutter: clamp(20px, 4vw, 48px); /* @kind spacing */
+}
+
+/* ─── Dark mode (brief: dark mode compatibility) ───────── */
+:root[data-theme="dark"], .lmg-dark {
+  --fg-1: #F2F1ED;
+  --fg-2: #B7B5AC;
+  --fg-3: #7A7872;
+  --fg-inverse: var(--neutral-900);
+
+  --bg-1: var(--neutral-900);
+  --bg-2: var(--neutral-800);
+  --bg-3: #1B1B1B;
+  --bg-elev: #1B1B1B;
+
+  --border-1: #2A2A2A;
+  --border-2: #3A3A3A;
+
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.5);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.55);
+  --shadow-lg: 0 18px 48px rgba(0,0,0,0.6);
+}
+
+/* ─── Base elements ───────────────────────────────────── */
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .lmg-h1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+  color: var(--fg-1);
+}
+h2, .lmg-h2 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+  color: var(--fg-1);
+}
+h3, .lmg-h3 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--ls-h3);
+}
+h4, .lmg-h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+}
+
+.lmg-display-1 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-display-1);
+  line-height: var(--lh-display-1);
+  letter-spacing: var(--ls-display-1);
+  text-wrap: balance;
+}
+.lmg-display-2 {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: var(--fs-display-2);
+  line-height: var(--lh-display-2);
+  letter-spacing: var(--ls-display-2);
+}
+.lmg-display-serif {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: italic;
+}
+
+p, .lmg-body { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-1); }
+.lmg-body-lg { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--fg-2); }
+.lmg-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body-sm); }
+.lmg-caption  { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--fg-2); }
+
+.lmg-eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg-2);
+}
+
+code, kbd, samp, pre, .lmg-mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* Signature gradient text — "Iconic / Influence" treatment */
+.lmg-accent-yellow { color: var(--lmg-yellow); }
+.lmg-accent-pink   { color: var(--lmg-pink); }
+.lmg-accent-blue   { color: var(--lmg-blue); }
+
+/* Logo wordmark */
+.lmg-wordmark {
+  font-family: var(--font-display);
+  color: var(--lmg-yellow);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  text-align: center;
+}
+.lmg-wordmark .lmg-mark { font-weight: 700; font-size: 2.4em; letter-spacing: 0.02em; }
+.lmg-wordmark .lmg-sub  { font-weight: 400; font-size: 0.95em; letter-spacing: 0.42em; padding-left: 0.42em; margin-top: 0.1em; }

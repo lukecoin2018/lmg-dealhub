@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources §4 — Featured + Riffle (blend)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--neutral-100); color: var(--fg-1); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  /* ── Doc header ───────────────────────────────────────── */
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--fg-3);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title { font-family: var(--font-sans); font-weight: 800; font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em; margin: 0 0 18px; text-wrap: balance; }
+  .doc-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 770px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  /* ── Direction scaffolding ────────────────────────────── */
+  .dir { margin-top: 56px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag { font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--fg-3); border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px; }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 22px; max-width: 900px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2);
+    background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm); padding: 7px 12px; }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); } .anno .inter svg { color: var(--lmg-blue); } .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); } .frame.is-light { background: var(--neutral-0); }
+  .frame-tab { display: flex; align-items: center; gap: 9px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 11px 18px; font-weight: 600; }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── Section shell ───────────────────────────────────── */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.4vw, 60px) clamp(26px, 3.4vw, 52px); }
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 34px; flex-wrap: wrap; }
+  .rs-eyebrow { font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; padding: 11px 18px; border-radius: var(--r-pill);
+    border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap; transition: border-color .16s, background .16s, gap .16s; }
+  .rs-viewall svg { width: 16px; height: 16px; } .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ════════════ COVER ENGINE (container-query scaled) ════════════ */
+  .cover { position: relative; container-type: inline-size; aspect-ratio: 3 / 4; width: 100%; border-radius: 2.4cqw; overflow: hidden; background: var(--neutral-300);
+    box-shadow: 0 1cqw 3cqw rgba(12,10,8,.22), 0 0.3cqw 1cqw rgba(12,10,8,.16); user-select: none; }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  .cov-block { background: linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%), linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%); }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines { position: absolute; inset: 0; opacity: .9; pointer-events: none;
+    background-image: repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%), repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%); }
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92; }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+  .cov-dl { position: absolute; left: 50%; bottom: 9cqw; transform: translate(-50%, 1.6cqw); display: inline-flex; align-items: center; gap: 1.6cqw;
+    background: var(--lmg-yellow); color: #0A0A0A; border: 0; cursor: pointer; font-family: var(--font-ui); font-weight: 800; font-size: 3.7cqw; letter-spacing: -0.01em;
+    padding: 2.6cqw 4.4cqw; border-radius: 99px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out), background .15s;
+    box-shadow: 0 1.6cqw 4cqw rgba(0,0,0,.4); z-index: 5; }
+  .cov-dl i { width: 4.2cqw; height: 4.2cqw; }
+  .cov-dl:hover { background: #fff; }
+  .show-dl:hover .cov-dl, .cover.is-front .cov-dl { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+  /* ════════════ BLEND LAYOUT ════════════ */
+  .blend { display: grid; grid-template-columns: minmax(380px, 0.92fr) 1.32fr; gap: 30px; align-items: stretch; }
+  @media (max-width: 1000px) { .blend { grid-template-columns: 1fr; gap: 48px; } }
+
+  /* — Featured hero (fixed anchor) — */
+  .feat { display: grid; grid-template-columns: 270px 1fr; gap: 30px; align-items: center; position: relative; }
+  @media (max-width: 560px) { .feat { grid-template-columns: 1fr; } }
+  .feat-cover { width: 270px; }
+  @media (max-width: 560px) { .feat-cover { width: 220px; } }
+  .feat-cover .cover { box-shadow: 0 26px 60px -14px rgba(12,10,8,.42), 0 6px 16px rgba(12,10,8,.2); }
+  .lmg-dark .feat-cover .cover { box-shadow: 0 30px 64px -14px rgba(0,0,0,.7); }
+  .feat-flag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+    color: #6B5500; background: var(--lmg-yellow); padding: 6px 12px; border-radius: 99px; margin-bottom: 16px; }
+  .feat-flag svg { width: 13px; height: 13px; }
+  .feat-course { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; color: var(--lmg-pink); margin-left: 8px; }
+  .feat-course svg { width: 13px; height: 13px; }
+  .feat-meta { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 10px; display: flex; align-items: center; gap: 9px; }
+  .feat-meta .ac-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--lmg-blue); }
+  .feat-title { font-size: clamp(25px, 2.7vw, 33px); font-weight: 800; letter-spacing: -0.024em; line-height: 1.07; margin: 0 0 13px; text-wrap: balance; }
+  .feat-desc { font-size: 15.5px; line-height: 1.62; color: var(--fg-2); margin: 0 0 22px; max-width: 44ch; }
+  .feat-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  /* dotted divider between anchor and kinetic library */
+  .blend-rule { position: absolute; top: -10px; bottom: -10px; right: -15px; width: 1px; background: var(--border-1); }
+  @media (max-width: 1000px) { .blend-rule { display: none; } }
+
+  .btn-dl { display: inline-flex; align-items: center; gap: 9px; height: 50px; padding: 0 24px; border: 0; cursor: pointer; border-radius: var(--r-md);
+    background: var(--lmg-yellow); color: #0A0A0A; font-family: var(--font-ui); font-weight: 800; font-size: 15px; transition: background .15s, transform .15s; text-decoration: none; }
+  .btn-dl:hover { background: var(--lmg-yellow-deep); transform: translateY(-1px); }
+  .btn-dl svg { width: 18px; height: 18px; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; height: 50px; padding: 0 18px; border: 1.5px solid var(--border-2); border-radius: var(--r-md);
+    background: transparent; color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none; transition: border-color .15s, color .15s; }
+  .btn-ghost:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* — Riffle library (kinetic) — */
+  .riffle-wrap { display: flex; flex-direction: column; min-width: 0; }
+  .riffle-stage { position: relative; height: 360px; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, #000 86%, transparent); mask-image: linear-gradient(90deg, #000 86%, transparent); }
+  .riffle { position: absolute; inset: 0; }
+  .rf-item { position: absolute; top: 50%; left: 0; width: 200px; margin-top: -133px;  /* 200 * 4/3 = 266.6 → half 133 */
+    transform-origin: 50% 64%; cursor: pointer; will-change: transform, opacity;
+    transition: transform .72s var(--ease-out), opacity .55s var(--ease-out), filter .55s var(--ease-out); }
+  .rf-item .cover { box-shadow: 0 16px 38px -8px rgba(12,10,8,.4), 0 4px 10px rgba(12,10,8,.22); }
+  .lmg-dark .rf-item .cover { box-shadow: 0 18px 42px -8px rgba(0,0,0,.7); }
+  .rf-item.is-back { pointer-events: none; }
+
+  .rf-bar { height: 3px; border-radius: 99px; background: var(--border-1); overflow: hidden; margin: 14px 2px 0; }
+  .rf-bar-fill { height: 100%; width: 100%; background: var(--lmg-pink); transform-origin: left; transform: scaleX(0); }
+  .riffle-wrap.paused .rf-bar-fill { background: var(--fg-3); }
+
+  .rf-ctl { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-top: 14px; }
+  .rf-cap { min-width: 0; }
+  .rf-cap-type { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ac, var(--lmg-pink)); margin-bottom: 6px; }
+  .rf-cap-type i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+  .rf-cap-title { font-size: 17px; font-weight: 800; letter-spacing: -0.015em; line-height: 1.2; margin: 0; text-wrap: balance; }
+  .rf-nav { display: flex; align-items: center; gap: 10px; flex: none; }
+  .rf-count { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--fg-2); min-width: 58px; text-align: center; }
+  .rf-count b { color: var(--fg-1); }
+  .rf-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: border-color .15s, background .15s, color .15s; }
+  .rf-btn:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .rf-btn svg { width: 17px; height: 17px; }
+  .rf-pausetag { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); opacity: 0; transition: opacity .2s; }
+  .riffle-wrap.paused .rf-pausetag { opacity: 1; }
+  .rf-pausetag svg { width: 12px; height: 12px; }
+
+  /* — Static gallery (reduced-motion + small screens fallback) — */
+  .rf-static { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 1280px) { .rf-static { grid-template-columns: repeat(3, 1fr); } }
+
+  /* ════════════ FALLBACK — Direction 4 original (two drifting columns) ════════════ */
+  .feat4 { display: grid; grid-template-columns: 1.05fr 1.15fr; gap: 40px; align-items: center; }
+  @media (max-width: 940px) { .feat4 { grid-template-columns: 1fr; } }
+  .feat4-l { display: grid; grid-template-columns: 230px 1fr; gap: 26px; align-items: center; }
+  @media (max-width: 560px) { .feat4-l { grid-template-columns: 1fr; } }
+  .feat4-cover { width: 230px; }
+  .lib { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; height: 420px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent); }
+  .lib-col { overflow: hidden; }
+  .lib-track { display: flex; flex-direction: column; gap: 18px; will-change: transform; }
+  .lib-up .lib-track { animation: libUp 36s linear infinite; }
+  .lib-dn .lib-track { animation: libDn 36s linear infinite; }
+  @keyframes libUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  @keyframes libDn { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+  .lib:hover .lib-track { animation-play-state: paused; }
+  .lib-item .cover { transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+  .lib-item:hover .cover { transform: scale(1.04); box-shadow: 0 16px 36px rgba(12,10,8,.34); z-index: 3; }
+
+  /* ── verdict / reco ───────────────────────────────────── */
+  .reco { margin-top: 64px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 38px clamp(26px,3.2vw,46px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 16px; font-weight: 800; display: flex; align-items: center; gap: 9px; }
+  .reco h3 svg { width: 16px; height: 16px; color: var(--lmg-yellow-deep); }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 940px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+  .reco .pk { color: var(--lmg-pink); font-weight: 800; }
+  .reco .verdict { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-weight: 800; font-size: 13px; letter-spacing: .02em; color: #1F7A3D; background: rgba(43,182,115,.13); border: 1px solid rgba(43,182,115,.3); padding: 6px 13px; border-radius: 99px; margin-bottom: 18px; }
+  .reco .verdict svg { width: 15px; height: 15px; }
+
+  /* toast */
+  #toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); z-index: 999; display: flex; align-items: center; gap: 11px;
+    background: #0A0A0A; color: #fff; padding: 13px 20px; border-radius: var(--r-pill); font-family: var(--font-ui); font-size: 14px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast svg { width: 17px; height: 17px; color: var(--lmg-yellow); } #toast b { color: var(--lmg-yellow); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lib-up .lib-track, .lib-dn .lib-track { animation: none !important; }
+    .lib { overflow-y: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4 · Focused pass</div>
+    <h1 class="doc-title">Featured + <span class="ital">Riffle</span></h1>
+    <p class="doc-sub">A blend of the two chosen directions: the <strong>structural bones of Direction 4 (Featured + Library)</strong> and the <strong>kinetic energy of Direction 3 (Fanned Spread)</strong>. A single fixed <strong>featured hero</strong> anchors the left — the flagship publication, now expanding into a multi-part course — while the rest of the 23-strong library <strong>fans and auto-riffles</strong> on the right, covers overlapping in motion, inviting a reach-in. Shown light and dark, motion pushed bold, with an honest cohesion check and the calmer Direction-4 fallback for comparison.</p>
+  </header>
+
+  <!-- ════════ THE BLEND ════════ -->
+  <section class="dir">
+    <div class="dir-label"><span class="dir-tag">THE BLEND</span><h2 class="dir-name">Anchored hero · riffling library</h2></div>
+    <p class="dir-note">Left is <strong>stable</strong>: the featured cover never drifts — it is the editorial anchor with a one-tap <strong>Download — Free PDF</strong> and a <strong>View details →</strong> route. Right is <strong>alive</strong>: a fanned deck of the other 22 covers auto-advances every 2.6s, the front cover peeling away to reveal the next, the depth of the stack always visible behind it.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="layers"></i><b>Motion:</b>&nbsp;auto-riffle deck — front card lifts off, fan shifts forward</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;hover-to-pause · click a cover to pull it front · prev/next · hover surfaces Download</span>
+      <span class="build"><i data-lucide="alert-triangle"></i><b>Build:</b>&nbsp;med-high — auto-riffle is cheap (transforms + timer); true <b>grab-and-flick riffle</b> needs pointer-velocity/inertia handling</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="blend-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="blend-dark"></div></div>
+  </section>
+
+  <!-- ════════ VERDICT ════════ -->
+  <div class="reco">
+    <h3><i data-lucide="scale"></i>Does the blend cohere?</h3>
+    <span class="verdict"><i data-lucide="check-circle-2"></i>Yes — with guardrails</span>
+    <p>The blend holds together <strong>because the two halves are given different jobs and different energy levels</strong>, not the same one twice. The featured cover is larger (270px) and sits in dead-still space with a full text block, so the eye lands there first; the riffle's front cover is deliberately smaller (200px), tilted, and embedded in a receding stack, so it reads as "a library in motion" rather than a second hero competing for the headline. The single dotted rule between them, and the pink accent reserved for the riffle's progress and caption, keep the two zones legible.</p>
+    <p>The guardrails that make it work — and that we would <strong>not</strong> relax: keep the featured slot <strong>perfectly still</strong> (any drift there and the two sides start fighting); cap the auto-advance at ~2.6s (faster reads as frantic next to a calm anchor); and keep the riffle's front cover <strong>smaller than the featured cover</strong>. If a future layout needs the featured cover to shrink, the blend tips toward clutter — that is the failure mode to watch.</p>
+    <p>Honest note on motion cost: the <strong>auto-riffle shown here is production-cheap</strong> (CSS transforms driven by a timer, plus click-to-front). The truly <em>tactile</em> version from the brief — <strong>grab the stack and flick through it with inertia</strong> — is the expensive part: it needs pointer-velocity tracking and a small spring/decay model, and careful touch handling so it doesn't hijack page scroll on mobile. Recommend shipping the auto + click version first, then layering drag-to-riffle as a progressive enhancement.</p>
+    <p class="pk" style="color:var(--fg-1)"><strong>Below: the calmer fallback</strong> — Direction 4 as originally designed (featured + two quietly drifting columns) — so you can compare side by side. It is the safer pick if the riffle ever feels too busy in context, or for a first ship while the drag physics are budgeted.</p>
+  </div>
+
+  <!-- ════════ FALLBACK — D4 ════════ -->
+  <section class="dir" style="margin-top:40px">
+    <div class="dir-label"><span class="dir-tag">FALLBACK</span><h2 class="dir-name">Direction 4 — calmer original</h2></div>
+    <p class="dir-note">The same featured anchor, but the library beside it is <strong>two vertical columns drifting in opposite directions</strong> — depth without the riffle's theatrics. Lower build cost, quieter read.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="move-vertical"></i><b>Motion:</b>&nbsp;two vertical marquees, opposite directions</span>
+      <span class="inter"><i data-lucide="pause"></i><b>Interaction:</b>&nbsp;hover pauses + lifts a cover</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — CSS only</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Light</div><div class="rs" id="fb-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Dark</div><div class="rs lmg-dark" id="fb-dark"></div></div>
+  </section>
+</div>
+
+<div id="toast"><i data-lucide="check-circle-2"></i><span>Downloading <b id="toast-name">your PDF</b> — free, no email</span></div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const FEATURED = PUBS[0];
+  const REST = PUBS.slice(1);
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  function featuredHTML() {
+    const aud = AUD[FEATURED.aud];
+    return `
+      <div class="feat">
+        <div class="feat-cover">${coverHTML(FEATURED)}</div>
+        <div class="feat-info">
+          <div style="margin-bottom:16px; display:flex; align-items:center; flex-wrap:wrap;">
+            <span class="feat-flag"><i data-lucide="star"></i>Featured</span>
+            <span class="feat-course"><i data-lucide="layers"></i>Now a multi-part course</span>
+          </div>
+          <p class="feat-meta"><span class="ac-dot" style="background:${aud.line}"></span>${FEATURED.type} · ${FEATURED.level}</p>
+          <h3 class="feat-title">${FEATURED.title}</h3>
+          <p class="feat-desc">${FEATURED.desc} It is the flagship of the library — and is expanding into a guided, multi-part course.</p>
+          <div class="feat-cta">
+            <button class="btn-dl" data-dl data-name="${FEATURED.title}"><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+            <a class="btn-ghost" href="/resources/${FEATURED.id}"><i data-lucide="arrow-up-right"></i>View details</a>
+          </div>
+        </div>
+        <div class="blend-rule"></div>
+      </div>`;
+  }
+
+  /* ── The riffle library ── */
+  function renderBlend(id) {
+    const staticGallery = rm;
+    el(id).innerHTML = secHead() + `
+      <div class="blend">
+        ${featuredHTML()}
+        <div class="riffle-wrap" id="${id}-wrap">
+          ${staticGallery
+            ? `<div class="rf-static">${REST.slice(0,12).map(p => `<div class="show-dl">${coverHTML(p)}</div>`).join('')}</div>`
+            : `<div class="riffle-stage"><div class="riffle">${REST.map((p,i)=>`<div class="rf-item show-dl" data-i="${i}">${coverHTML(p)}</div>`).join('')}</div></div>
+               <div class="rf-bar"><div class="rf-bar-fill" id="${id}-fill"></div></div>
+               <div class="rf-ctl">
+                 <div class="rf-cap"><span class="rf-cap-type" id="${id}-type"></span><h4 class="rf-cap-title" id="${id}-title"></h4></div>
+                 <div class="rf-nav">
+                   <span class="rf-pausetag"><i data-lucide="pause"></i>paused</span>
+                   <span class="rf-count" id="${id}-count"></span>
+                   <button class="rf-btn" data-prev aria-label="Previous"><i data-lucide="chevron-left"></i></button>
+                   <button class="rf-btn" data-next aria-label="Next"><i data-lucide="chevron-right"></i></button>
+                 </div>
+               </div>`}
+        </div>
+      </div>`;
+    if (staticGallery) return;
+
+    const N = REST.length;
+    const wrap = el(id + '-wrap');
+    const items = [...wrap.querySelectorAll('.rf-item')];
+    const fill = el(id + '-fill');
+    let active = 0, timer = null, paused = false;
+    const K = 6;            // visible fan cards behind the front
+    const DUR = 2600;
+
+    function place(item, slot) {
+      let x, rot, scale, op, bright, z, back = false;
+      if (slot === 0) { x = 8; rot = 0; scale = 1; op = 1; bright = 1; z = 100; }
+      else if (slot >= 1 && slot <= K) {
+        x = 116 + slot * 52; rot = -(5 + slot * 2.4); scale = 0.95 - slot * 0.025; op = 1; bright = 1 - slot * 0.085; z = 100 - slot;
+      } else if (slot === N - 1) { /* just departed front → lift away up-left */
+        x = -150; rot = 12; scale = 1.06; op = 0; bright = 1; z = 60; back = true;
+      } else { /* parked far back, hidden */
+        x = 116 + (K + 1) * 52; rot = -(5 + (K + 1) * 2.4); scale = 0.95 - (K + 1) * 0.025; op = 0; bright = 0.4; z = 5; back = true;
+      }
+      item.style.transform = `translateX(${x}px) translateY(${slot === N - 1 ? -26 : 0}px) rotate(${rot}deg) scale(${scale})`;
+      item.style.opacity = op;
+      item.style.filter = `brightness(${bright})`;
+      item.style.zIndex = z;
+      item.classList.toggle('is-back', back);
+      item.classList.toggle('is-front', slot === 0);
+    }
+    function layout() {
+      items.forEach((it, i) => place(it, ((i - active) % N + N) % N));
+      const p = REST[active];
+      el(id + '-type').innerHTML = `${p.type}<i></i>${p.level}`;
+      el(id + '-type').style.setProperty('--ac', AUD[p.aud].line);
+      el(id + '-title').textContent = p.title;
+      el(id + '-count').innerHTML = `<b>${active + 1}</b> / ${N}`;
+    }
+    function runBar() {
+      if (paused) return;
+      fill.style.transition = 'none'; fill.style.transform = 'scaleX(0)';
+      requestAnimationFrame(() => { requestAnimationFrame(() => { fill.style.transition = `transform ${DUR}ms linear`; fill.style.transform = 'scaleX(1)'; }); });
+    }
+    function go(n) { active = ((n) % N + N) % N; layout(); runBar(); }
+    function next() { go(active + 1); }
+    function arm() { clearInterval(timer); timer = setInterval(() => { if (!paused) next(); }, DUR); }
+
+    items.forEach((it, i) => it.addEventListener('click', () => { go(i); arm(); }));
+    wrap.querySelector('[data-next]').addEventListener('click', () => { next(); arm(); });
+    wrap.querySelector('[data-prev]').addEventListener('click', () => { go(active - 1); arm(); });
+    const stage = wrap.querySelector('.riffle-stage');
+    function setPaused(v) { paused = v; wrap.classList.toggle('paused', v); if (v) { fill.style.transition = 'none'; } else { runBar(); } }
+    stage.addEventListener('mouseenter', () => setPaused(true));
+    stage.addEventListener('mouseleave', () => setPaused(false));
+
+    layout(); runBar(); arm();
+  }
+
+  /* ── Fallback (Direction 4 two drifting columns) ── */
+  function renderFallback(id) {
+    const colA = REST.filter((_, i) => i % 2 === 0);
+    const colB = REST.filter((_, i) => i % 2 === 1);
+    const col = (arr, dir) => `<div class="lib-col lib-${dir}"><div class="lib-track">${[...arr, ...arr].map(p => `<div class="lib-item show-dl">${coverHTML(p)}</div>`).join('')}</div></div>`;
+    const aud = AUD[FEATURED.aud];
+    el(id).innerHTML = secHead() + `
+      <div class="feat4">
+        <div class="feat4-l">
+          <div class="feat4-cover">${coverHTML(FEATURED)}</div>
+          <div class="feat-info">
+            <span class="feat-flag"><i data-lucide="star"></i>Featured this week</span>
+            <p class="feat-meta" style="margin-top:14px"><span class="ac-dot" style="background:${aud.line}"></span>${FEATURED.type} · ${FEATURED.level}</p>
+            <h3 class="feat-title">${FEATURED.title}</h3>
+            <p class="feat-desc">${FEATURED.desc}</p>
+            <div class="feat-cta">
+              <button class="btn-dl" data-dl data-name="${FEATURED.title}"><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+              <a class="btn-ghost" href="/resources/${FEATURED.id}"><i data-lucide="arrow-up-right"></i>View details</a>
+            </div>
+          </div>
+        </div>
+        <div class="lib">${col(colA, 'up')}${col(colB, 'dn')}</div>
+      </div>`;
+  }
+
+  /* ── download toast ── */
+  const toast = el('toast'), toastName = el('toast-name');
+  let toastTimer = null;
+  document.addEventListener('click', e => {
+    const dl = e.target.closest('.cov-dl, [data-dl]');
+    if (!dl) return;
+    e.preventDefault();
+    const cover = dl.closest('.cover');
+    let name = dl.dataset.name;
+    if (!name && cover) { const p = PUBS.find(x => x.id === cover.dataset.id); name = p ? p.title : null; }
+    toastName.textContent = name || 'your PDF';
+    toast.classList.add('on');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('on'), 2400);
+  });
+
+  /* ── boot ── */
+  renderBlend('blend-light'); renderBlend('blend-dark');
+  renderFallback('fb-light'); renderFallback('fb-dark');
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>

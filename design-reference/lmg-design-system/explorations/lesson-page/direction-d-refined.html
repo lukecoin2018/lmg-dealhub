@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 · Refined — LMG Playbook</title>
+<link rel="stylesheet" href="../../colors_and_type.css">
+<link rel="stylesheet" href="../../components.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  /* ════ DIRECTION D — REFINED (A cinematic premium + B progress structure) ════
+     Warm-light base. Dark used ONLY for drama: the cinematic hero + the framed
+     video players (where dark makes "watch" moments pop) + the next-module
+     bookend. Playfair display for premium headings, Manrope for everything
+     functional. Pink-led (creator audience). Rhythm: dark watch / light read. */
+  :root {
+    --ink:    #211F27;   /* headings / slate */
+    --ink-2:  #4B4954;   /* body */
+    --ink-3:  #7E7B86;   /* muted */
+    --paper:  #FAFAF8;
+    --paper-2:#F3F1EC;
+    --card:   #FFFFFF;
+    --frame:  #0D0D12;   /* dark video frame */
+    --frame-2:#16161D;
+    --hair:   #E7E4DC;
+    --top: 70px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink-2); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--lmg-pink); color: #fff; }
+  .rf-display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.005em; }
+
+  /* ── Top bar (light, global progress) ── */
+  .rf-top {
+    position: sticky; top: 0; z-index: 90; height: var(--top);
+    background: rgba(250,250,248,0.86); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--hair);
+    display: flex; align-items: center; gap: 22px; padding: 0 clamp(18px,3vw,40px);
+  }
+  .rf-top .back { display:inline-flex; align-items:center; gap:8px; color:var(--ink-3); text-decoration:none; font-size:13px; font-weight:600; white-space:nowrap; }
+  .rf-top .back:hover { color:var(--ink); }
+  .rf-top .back i { width:16px; height:16px; }
+  .rf-modtag { display:flex; flex-direction:column; line-height:1.12; padding-left:22px; border-left:1px solid var(--hair); }
+  .rf-modtag .e { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--lmg-pink); font-weight:700; }
+  .rf-modtag .t { font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--ink); letter-spacing:-.01em; }
+  .rf-gprog { flex:1; display:flex; align-items:center; gap:14px; min-width:0; max-width:380px; margin-left:auto; }
+  .rf-gbar { flex:1; height:7px; border-radius:999px; background: var(--paper-2); overflow:hidden; box-shadow: inset 0 0 0 1px var(--hair); min-width:70px; }
+  .rf-gbar i { display:block; height:100%; width:0%; background: linear-gradient(90deg, var(--lmg-pink), #ff77ae); border-radius:999px; transition: width .55s var(--ease-out); }
+  .rf-gnum { font-size:12.5px; font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-3); }
+  .rf-gnum b { color: var(--lmg-pink); }
+  .rf-wordmark { font-family:var(--font-display); font-weight:700; color:var(--lmg-yellow); font-size:19px; letter-spacing:.04em; }
+  @media (max-width: 720px){ .rf-gprog { display:none; } }
+
+  /* ── HERO (dark, cinematic) ── */
+  .rf-hero { position: relative; overflow: hidden; background: var(--frame); color: #F6F4EF; padding: clamp(64px,10vw,128px) clamp(20px,7vw,120px) clamp(56px,8vw,104px); }
+  .rf-hero-bg { position:absolute; inset:0; background-size:cover; background-position:center 30%; opacity:.30; }
+  .rf-hero::after { content:""; position:absolute; inset:0; background: radial-gradient(120% 90% at 80% 0%, rgba(255,77,148,.22), transparent 55%), linear-gradient(180deg, rgba(13,13,18,.72), rgba(13,13,18,.92)); }
+  .rf-hero > * { position: relative; z-index: 1; }
+  .rf-hero .eyebrow { font-family:var(--font-ui); font-size:11.5px; letter-spacing:.24em; text-transform:uppercase; font-weight:700; color: rgba(246,244,239,.66); display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .rf-hero .eyebrow b { color: var(--lmg-yellow); font-weight:700; }
+  .rf-hero .eyebrow .ln { width:42px; height:1px; background: rgba(246,244,239,.3); }
+  .rf-hero h1 { font-family:var(--font-display); font-weight:700; font-size: clamp(48px,8vw,108px); line-height:1.0; letter-spacing:-.015em; margin: 26px 0 0; max-width: 15ch; text-wrap: balance; }
+  .rf-hero h1 em { font-style: italic; color: var(--lmg-pink); }
+  .rf-hero .lede { font-size: clamp(17px,1.9vw,21px); line-height:1.55; color: rgba(246,244,239,.78); max-width: 56ch; margin: 28px 0 0; }
+  .rf-hero-meta { display:flex; flex-wrap:wrap; gap:26px; margin-top: 40px; }
+  .rf-hero-meta .m { display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:600; color: rgba(246,244,239,.82); }
+  .rf-hero-meta .m i { width:16px; height:16px; color: var(--lmg-pink); }
+
+  /* ── SHELL: rail + main ── */
+  .rf-shell { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 300px 1fr; align-items: start; }
+  @media (max-width: 1040px){ .rf-shell { grid-template-columns: 1fr; } }
+
+  /* ── Progress rail (premium / editorial) ── */
+  .rf-rail { position: sticky; top: var(--top); align-self:start; padding: clamp(44px,5vw,68px) 30px 40px clamp(22px,4vw,44px); }
+  @media (max-width: 1040px){ .rf-rail { display:none; } }
+  .rf-rail-h { font-family:var(--font-display); font-weight:700; font-size:27px; color:var(--ink); letter-spacing:-.015em; line-height:1; }
+  .rf-rail-h em { font-style:italic; color:var(--lmg-pink); }
+  .rf-rail-sub { font-family:var(--font-ui); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-3); margin:12px 0 14px; font-weight:700; }
+  .rf-rail-prog { display:flex; align-items:center; gap:12px; margin-bottom:34px; }
+  .rf-rail-prog .bar { flex:1; height:5px; border-radius:999px; background:var(--paper-2); overflow:hidden; box-shadow: inset 0 0 0 1px var(--hair); }
+  .rf-rail-prog .bar i { display:block; height:100%; width:0%; background: var(--lmg-pink); border-radius:999px; transition: width .55s var(--ease-out); }
+  .rf-rail-prog .pct { font-family:var(--font-display); font-style:italic; font-size:14px; font-weight:700; color:var(--lmg-pink); font-variant-numeric:tabular-nums; }
+  .rf-steplist { list-style:none; margin:0; padding:0; position:relative; }
+  .rf-steplist::before { content:""; position:absolute; left:21px; top:24px; bottom:24px; width:1.5px; background:var(--hair); }
+  .rf-steplist .fill { position:absolute; left:21px; top:24px; width:1.5px; background:var(--lmg-pink); transition:height .55s var(--ease-out); border-radius:2px; }
+  .rf-step { position:relative; display:flex; gap:17px; align-items:flex-start; padding:15px 13px; border-radius:14px; text-decoration:none; color:inherit; transition: background .18s; }
+  .rf-step:hover { background: var(--card); box-shadow: var(--shadow-sm); }
+  .rf-step.active { background: var(--card); box-shadow: var(--shadow-sm); }
+  .rf-dot { width:42px; height:42px; border-radius:50%; flex:none; background:var(--paper); border:1.5px solid var(--hair); display:flex; align-items:center; justify-content:center; z-index:1; font-family:var(--font-display); font-style:italic; font-weight:700; font-size:19px; color:var(--ink-3); transition: all .25s; }
+  .rf-dot i { width:17px; height:17px; }
+  .rf-step.active .rf-dot { border-color: var(--lmg-pink); color: var(--lmg-pink); box-shadow: 0 0 0 4px var(--lmg-pink-soft); }
+  .rf-step.done .rf-dot { background: var(--lmg-pink); border-color: var(--lmg-pink); color:#fff; }
+  .rf-step-meta { padding-top:6px; min-width:0; }
+  .rf-step-meta .t { font-family:var(--font-display); font-size:17px; font-weight:700; line-height:1.18; letter-spacing:-.01em; color:var(--ink); }
+  .rf-step.active .rf-step-meta .t { color: var(--lmg-pink-deep); }
+  .rf-step-meta .d { font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); display:flex; align-items:center; gap:6px; margin-top:6px; font-weight:700; }
+  .rf-step-meta .d i { width:12px; height:12px; }
+  .rf-rail-foot { margin-top:32px; padding-top:26px; border-top:1px solid var(--hair); display:flex; flex-direction:column; gap:9px; }
+  .rf-rail-link { display:inline-flex; align-items:center; gap:10px; font-size:13px; font-weight:600; color:var(--ink-2); text-decoration:none; padding:8px 10px; border-radius:10px; transition: background .18s; }
+  .rf-rail-link:hover { background:var(--card); box-shadow: var(--shadow-sm); color:var(--ink); }
+  .rf-rail-link i { width:16px; height:16px; color:var(--lmg-pink); }
+
+  /* ── Main column ── */
+  .rf-main { padding: clamp(40px,5vw,68px) clamp(20px,4vw,68px) 60px; min-width:0; }
+
+  /* ── Segment (each one a chapter) ── */
+  .rf-seg { padding: clamp(46px,7vw,104px) 0; scroll-margin-top: calc(var(--top) + 20px); border-top: 1px solid var(--hair); }
+  .rf-seg:first-child { border-top: none; padding-top: clamp(10px,2vw,20px); }
+  .rf-seg-head { display:flex; align-items:flex-start; gap: clamp(20px,3vw,40px); margin-bottom: 4px; }
+  .rf-seg-no { font-family:var(--font-display); font-style:italic; font-weight:700; font-size: clamp(56px,8vw,104px); line-height:.82; color: var(--lmg-pink); flex:none; }
+  .rf-seg-kicker { font-family:var(--font-ui); font-size:12px; letter-spacing:.24em; text-transform:uppercase; font-weight:700; color:var(--ink-3); margin-bottom:14px; }
+  .rf-seg h2 { font-family:var(--font-display); font-weight:700; font-size: clamp(32px,4.6vw,60px); line-height:1.02; letter-spacing:-.018em; color:var(--ink); margin:0; max-width:18ch; text-wrap:balance; }
+
+  /* ── Dark video frame (the "watch" moment) ── */
+  .rf-watch { background: var(--frame); border-radius: 24px; padding: clamp(16px,1.8vw,24px); margin: clamp(34px,4vw,52px) 0 8px; box-shadow: 0 40px 90px -32px rgba(20,18,28,.55), 0 2px 8px rgba(20,18,28,.12); }
+  .rf-player { position: relative; aspect-ratio: 16/9; border-radius: 13px; overflow: hidden; background:#000; }
+  .rf-player .poster { position:absolute; inset:0; background-size:cover; background-position:center; filter: brightness(.72) saturate(1.05); transition: transform .9s var(--ease-out), filter .5s; }
+  .rf-watch:hover .rf-player .poster { transform: scale(1.04); filter: brightness(.8) saturate(1.1); }
+  .rf-player::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,0) 34%, rgba(0,0,0,.55)); }
+  .rf-player .top { position:absolute; top:15px; left:15px; right:15px; z-index:3; display:flex; justify-content:space-between; align-items:flex-start; }
+  .rf-chip { display:inline-flex; align-items:center; gap:8px; background: rgba(10,10,14,.5); backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,.16); color:#fff; padding:7px 13px; border-radius:999px; font-size:12px; font-weight:600; }
+  .rf-chip i { width:13px; height:13px; }
+  .rf-chip.soon { color: var(--lmg-yellow); border-color: rgba(255,215,0,.42); }
+  .rf-chip .pdot { width:6px; height:6px; border-radius:50%; background: var(--lmg-yellow); box-shadow:0 0 0 0 rgba(255,215,0,.6); animation: rfpulse 2s infinite; }
+  @keyframes rfpulse { 0%{box-shadow:0 0 0 0 rgba(255,215,0,.5);} 70%{box-shadow:0 0 0 8px rgba(255,215,0,0);} 100%{box-shadow:0 0 0 0 rgba(255,215,0,0);} }
+  .rf-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; width: clamp(64px,7vw,92px); height: clamp(64px,7vw,92px); border-radius:50%; border:1.5px solid rgba(255,255,255,.6); background: rgba(255,255,255,.10); backdrop-filter: blur(4px); display:flex; align-items:center; justify-content:center; transition: background .3s, transform .3s, border-color .3s; }
+  .rf-watch:hover .rf-play { background: rgba(255,255,255,.18); border-color:#fff; transform:translate(-50%,-50%) scale(1.06); }
+  .rf-play::before { content:""; position:absolute; inset:-1px; border-radius:50%; border:1.5px solid rgba(255,255,255,.2); animation: rfring 3s var(--ease-out) infinite; }
+  @keyframes rfring { 0%{transform:scale(1);opacity:.6;} 100%{transform:scale(1.45);opacity:0;} }
+  .rf-play i { width:38%; height:38%; color:#fff; margin-left:8%; }
+  /* dark frame caption strip */
+  .rf-watch-cap { display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 13px 8px 4px; color: rgba(246,244,239,.62); font-size:12.5px; font-weight:600; }
+  .rf-watch-cap .l { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .rf-watch-cap .seg { color: rgba(246,244,239,.92); }
+  .rf-watch-cap .runtime { display:inline-flex; align-items:center; gap:6px; }
+  .rf-watch-cap .runtime i { width:13px; height:13px; }
+  .rf-watch-cap .bar { width: clamp(80px,16vw,180px); height:3px; border-radius:2px; background: rgba(255,255,255,.18); position:relative; overflow:hidden; }
+  .rf-watch-cap .bar::after { content:""; position:absolute; inset:0 72% 0 0; background:var(--lmg-pink); border-radius:2px; }
+
+  /* ── Teaching text (light read) ── */
+  .rf-read { max-width: 62ch; margin: clamp(30px,3.5vw,46px) 0 0; }
+  .rf-read p { font-size: clamp(17px,1.5vw,20px); line-height:1.76; color: var(--ink-2); margin: 0 0 20px; }
+  .rf-read p:first-of-type { font-size: clamp(18px,1.7vw,22px); line-height:1.66; color: var(--ink); }
+  .rf-read p strong { color: var(--ink); font-weight:700; }
+  .rf-read p .hl { background: var(--lmg-yellow-soft); padding:1px 6px; border-radius:5px; font-weight:600; color: var(--ink); }
+  .rf-chips { display:flex; flex-wrap:wrap; gap:10px; margin: clamp(26px,3vw,34px) 0 4px; }
+  .rf-chipk { display:inline-flex; align-items:center; gap:11px; padding:11px 17px; border-radius:12px; background:var(--card); border:1px solid var(--hair); font-size:14.5px; font-weight:600; color:var(--ink); box-shadow: var(--shadow-xs); }
+  .rf-chipk .n { font-family:var(--font-display); font-style:italic; font-weight:700; color:var(--lmg-pink); font-size:18px; }
+  .rf-formula { display:flex; align-items:center; gap:16px; flex-wrap:wrap; background:var(--card); border:1px solid var(--hair); border-radius:16px; padding:22px 26px; margin:22px 0 4px; font-family:var(--font-display); font-size: clamp(19px,2.4vw,28px); color:var(--ink); box-shadow: var(--shadow-sm); }
+  .rf-formula .frac { display:inline-flex; flex-direction:column; text-align:center; line-height:1.05; }
+  .rf-formula .frac .t { border-bottom:1.5px solid var(--ink); padding-bottom:4px; }
+  .rf-formula .frac .b { padding-top:4px; }
+  .rf-formula .op { color: var(--ink-3); }
+  .rf-formula .res { color: var(--lmg-pink-deep); font-style:italic; }
+
+  /* segment footer: complete + next */
+  .rf-seg-foot { display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top: clamp(32px,4vw,48px); flex-wrap:wrap; }
+  .rf-complete { display:inline-flex; align-items:center; gap:10px; height:46px; padding:0 22px; border-radius:12px; border:1.5px solid var(--lmg-pink); background:transparent; color:var(--lmg-pink-deep); font-family:var(--font-ui); font-weight:700; font-size:14px; cursor:pointer; transition: all .2s; }
+  .rf-complete i { width:18px; height:18px; }
+  .rf-complete:hover { background: var(--lmg-pink-soft); }
+  .rf-seg.is-done .rf-complete { background: var(--lmg-pink); border-color:var(--lmg-pink); color:#fff; }
+  .rf-next-link { color:var(--ink-3); font-size:13.5px; font-weight:600; display:inline-flex; align-items:center; gap:7px; text-decoration:none; }
+  .rf-next-link:hover { color: var(--ink); }
+  .rf-next-link i { width:15px; height:15px; }
+
+  /* ── Ebook reference (light editorial card) ── */
+  .rf-ebook { margin: 30px 0 6px; background: var(--card); border:1px solid var(--hair); border-radius:20px; overflow:hidden; display:grid; grid-template-columns: 1fr 220px; box-shadow: var(--shadow-sm); }
+  @media (max-width:600px){ .rf-ebook { grid-template-columns:1fr; } }
+  .rf-ebook-copy { padding: clamp(26px,3vw,38px); }
+  .rf-ebook-copy .lab { font-size:11px; letter-spacing:.2em; text-transform:uppercase; font-weight:700; color:var(--lmg-pink); margin-bottom:12px; }
+  .rf-ebook-copy h3 { font-family:var(--font-display); font-weight:700; font-size: clamp(22px,2.6vw,30px); color:var(--ink); margin:0 0 12px; line-height:1.1; }
+  .rf-ebook-copy p { font-size:15px; line-height:1.6; color:var(--ink-2); margin:0 0 22px; max-width:48ch; }
+  .rf-ebook-media { background-size:cover; background-position:center; min-height:180px; }
+
+  .rf-btn { display:inline-flex; align-items:center; gap:10px; height:50px; padding:0 24px; border-radius:12px; font-family:var(--font-ui); font-weight:700; font-size:15px; cursor:pointer; text-decoration:none; border:1px solid transparent; transition: all .2s var(--ease-out); }
+  .rf-btn i { width:18px; height:18px; }
+  .rf-btn.pink { background: var(--lmg-pink); color:#fff; }
+  .rf-btn.pink:hover { background: var(--lmg-pink-deep); transform: translateY(-1px); }
+  .rf-btn.dark { background: var(--ink); color:#fff; }
+  .rf-btn.dark:hover { background:#000; transform: translateY(-1px); }
+  .rf-btn.yellow { background: var(--lmg-yellow); color:#2a2300; }
+  .rf-btn.yellow:hover { background: var(--lmg-yellow-deep); transform: translateY(-1px); }
+  .rf-btn.outline { border-color: var(--hair); color:var(--ink); background:var(--card); }
+  .rf-btn.outline:hover { background: var(--paper-2); }
+
+  /* ── Workbook CTA (premium light pink band) ── */
+  .rf-cta { background: linear-gradient(180deg, #fff, var(--lmg-pink-soft)); border-top:1px solid var(--hair); }
+  .rf-cta-inner { max-width: 1280px; margin:0 auto; padding: clamp(52px,7vw,92px) clamp(20px,5vw,60px); text-align:center; }
+  .rf-cta .lab { font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; color:var(--lmg-pink-deep); margin-bottom:18px; }
+  .rf-cta h2 { font-family:var(--font-display); font-weight:700; font-size: clamp(32px,5vw,60px); line-height:1.04; letter-spacing:-.015em; color:var(--ink); margin:0 auto 18px; max-width:18ch; }
+  .rf-cta h2 em { font-style:italic; color:var(--lmg-pink); }
+  .rf-cta p { font-size:17px; line-height:1.55; color:var(--ink-2); max-width:52ch; margin:0 auto 34px; }
+  .rf-cta-actions { display:flex; gap:13px; justify-content:center; flex-wrap:wrap; }
+
+  /* ── Next module (dark cinematic bookend) ── */
+  .rf-next { position:relative; min-height: 60vh; display:flex; align-items:flex-end; overflow:hidden; background:var(--frame); }
+  .rf-next .bg { position:absolute; inset:0; background-size:cover; background-position:center; filter: brightness(.46) saturate(1.05); }
+  .rf-next::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(13,13,18,.3), rgba(13,13,18,.9)); }
+  .rf-next-inner { position:relative; z-index:2; padding: clamp(40px,6vw,80px) clamp(20px,7vw,120px); width:100%; max-width:1280px; margin:0 auto; }
+  .rf-next .up { font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; color:var(--lmg-yellow); margin-bottom:16px; display:flex; align-items:center; gap:12px; }
+  .rf-next h2 { font-family:var(--font-display); font-weight:700; font-size: clamp(32px,5.5vw,68px); line-height:1.0; letter-spacing:-.01em; color:#F6F4EF; margin:0 0 16px; max-width:16ch; }
+  .rf-next h2 em { font-style:italic; color: var(--lmg-pink); }
+  .rf-next p { color: rgba(246,244,239,.8); font-size: clamp(15px,1.6vw,19px); line-height:1.5; max-width:50ch; margin:0 0 32px; }
+  .rf-footer { text-align:center; padding:36px; color:var(--ink-3); font-size:12px; letter-spacing:.04em; background:var(--frame); border-top:1px solid rgba(255,255,255,.06); }
+  .rf-footer span { color: rgba(246,244,239,.5); }
+
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; } html{ scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<header class="rf-top">
+  <a class="back" href="index.html"><i data-lucide="arrow-left"></i> Modules</a>
+  <div class="rf-modtag"><span class="e">Module 01</span><span class="t">The Partnership Landscape</span></div>
+  <div class="rf-gprog">
+    <div class="rf-gbar"><i id="rfGBar"></i></div>
+    <span class="rf-gnum"><b id="rfGDone">0</b>/5 complete</span>
+  </div>
+  <span class="rf-wordmark">LMG</span>
+</header>
+
+<!-- HERO (dark) -->
+<section class="rf-hero">
+  <div class="rf-hero-bg" style="background-image:url('../../assets/hero-02-rooftop-sign.jpg')"></div>
+  <div class="eyebrow"><span>Module 01</span><span class="ln"></span><b>The Complete Brand Partnership Playbook</b></div>
+  <h1>The Partnership <em>Landscape</em></h1>
+  <p class="lede">Every way creators get paid, the five things that actually set your rates, and an honest baseline on your own business. Your foundation for everything that follows.</p>
+  <div class="rf-hero-meta">
+    <span class="m"><i data-lucide="play-circle"></i> 5 video segments</span>
+    <span class="m"><i data-lucide="clock"></i> ~30 min</span>
+    <span class="m"><i data-lucide="users"></i> For Creators · 10K–500K</span>
+  </div>
+</section>
+
+<!-- SHELL -->
+<div class="rf-shell">
+  <!-- RAIL -->
+  <aside class="rf-rail">
+    <div class="rf-rail-h">Your <em>path</em></div>
+    <div class="rf-rail-sub">5 segments · ~30 min</div>
+    <div class="rf-rail-prog">
+      <div class="bar"><i id="rfRailBar"></i></div>
+      <span class="pct" id="rfRailPct">0%</span>
+    </div>
+    <div style="position:relative;">
+      <ul class="rf-steplist" id="rfRail">
+        <span class="fill" id="rfRailFill"></span>
+        <a class="rf-step active" href="#seg-1" data-i="0"><span class="rf-dot">1</span><span class="rf-step-meta"><span class="t">Welcome</span><span class="d"><i data-lucide="clock"></i>4 min</span></span></a>
+        <a class="rf-step" href="#seg-2" data-i="1"><span class="rf-dot">2</span><span class="rf-step-meta"><span class="t">Six ways you get paid</span><span class="d"><i data-lucide="clock"></i>8 min</span></span></a>
+        <a class="rf-step" href="#seg-3" data-i="2"><span class="rf-dot">3</span><span class="rf-step-meta"><span class="t">What drives your rates</span><span class="d"><i data-lucide="clock"></i>7 min</span></span></a>
+        <a class="rf-step" href="#seg-4" data-i="3"><span class="rf-dot">4</span><span class="rf-step-meta"><span class="t">Your pricing-power number</span><span class="d"><i data-lucide="clock"></i>6 min</span></span></a>
+        <a class="rf-step" href="#seg-5" data-i="4"><span class="rf-dot">5</span><span class="rf-step-meta"><span class="t">Your next steps</span><span class="d"><i data-lucide="clock"></i>5 min</span></span></a>
+      </ul>
+    </div>
+    <div class="rf-rail-foot">
+      <a class="rf-rail-link" href="../../course/Module 1 - Ebook.html"><i data-lucide="book-open"></i> Module 1 Ebook</a>
+      <a class="rf-rail-link" href="../../course/Module 1 - Workbook.html"><i data-lucide="pen-line"></i> Module 1 Workbook</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="rf-main">
+    <!-- S1 -->
+    <section class="rf-seg" id="seg-1" data-i="0">
+      <div class="rf-seg-head"><span class="rf-seg-no">01</span><div><div class="rf-seg-kicker">Welcome</div><h2>What this playbook will do for you</h2></div></div>
+      <div class="rf-watch">
+        <div class="rf-player">
+          <div class="poster" style="background-image:url('../../assets/hero-02-rooftop-sign.jpg')"></div>
+          <div class="rf-play"><i data-lucide="play"></i></div>
+          <div class="top"><span class="rf-chip soon"><span class="pdot"></span>Premieres in ~2 weeks</span><span class="rf-chip"><i data-lucide="clock"></i>4:10</span></div>
+        </div>
+        <div class="rf-watch-cap"><div class="l"><span class="seg">Segment 1 of 5</span><span>·</span><span>Welcome</span></div><span class="runtime"><i data-lucide="clock"></i>4:10</span></div>
+      </div>
+      <div class="rf-read">
+        <p>Most creators operate reactively. They wait to be discovered, quote a rate off the top of their head, and quietly accept whatever a brand offers.</p>
+        <p>This course replaces guesswork with a <strong>system.</strong> By the end you'll know exactly what you offer, what it's worth, and how to ask for it. Module 1 builds the <span class="hl">foundation</span> — the full map of how creator partnerships work.</p>
+      </div>
+      <div class="rf-seg-foot"><button class="rf-complete" data-complete><i data-lucide="circle"></i><span>Mark complete</span></button><a class="rf-next-link" href="#seg-2">Next: Six ways you get paid <i data-lucide="arrow-right"></i></a></div>
+    </section>
+
+    <!-- S2 -->
+    <section class="rf-seg" id="seg-2" data-i="1">
+      <div class="rf-seg-head"><span class="rf-seg-no">02</span><div><div class="rf-seg-kicker">The money</div><h2>The six ways creators get paid</h2></div></div>
+      <div class="rf-watch">
+        <div class="rf-player">
+          <div class="poster" style="background-image:url('../../assets/hero-01-office.jpg')"></div>
+          <div class="rf-play"><i data-lucide="play"></i></div>
+          <div class="top"><span class="rf-chip soon"><span class="pdot"></span>Premieres in ~2 weeks</span><span class="rf-chip"><i data-lucide="clock"></i>8:05</span></div>
+        </div>
+        <div class="rf-watch-cap"><div class="l"><span class="seg">Segment 2 of 5</span><span>·</span><span>The money</span></div><span class="runtime"><i data-lucide="clock"></i>8:05</span></div>
+      </div>
+      <div class="rf-read">
+        <p>Most creators know about sponsored posts and maybe affiliate links. There are <strong>six distinct revenue streams</strong> — and even established creators routinely leave several on the table.</p>
+      </div>
+      <div class="rf-chips">
+        <span class="rf-chipk"><span class="n">1</span> Sponsored content</span>
+        <span class="rf-chipk"><span class="n">2</span> Affiliate partnerships</span>
+        <span class="rf-chipk"><span class="n">3</span> Brand ambassadorships</span>
+        <span class="rf-chipk"><span class="n">4</span> Product gifting</span>
+        <span class="rf-chipk"><span class="n">5</span> Content licensing</span>
+        <span class="rf-chipk"><span class="n">6</span> Speaking &amp; UGC</span>
+      </div>
+      <div class="rf-seg-foot"><button class="rf-complete" data-complete><i data-lucide="circle"></i><span>Mark complete</span></button><a class="rf-next-link" href="#seg-3">Next: What drives your rates <i data-lucide="arrow-right"></i></a></div>
+    </section>
+
+    <!-- S3 -->
+    <section class="rf-seg" id="seg-3" data-i="2">
+      <div class="rf-seg-head"><span class="rf-seg-no">03</span><div><div class="rf-seg-kicker">The levers</div><h2>What actually drives your rates</h2></div></div>
+      <div class="rf-watch">
+        <div class="rf-player">
+          <div class="poster" style="background-image:url('../../assets/hero-04-networking.jpg')"></div>
+          <div class="rf-play"><i data-lucide="play"></i></div>
+          <div class="top"><span class="rf-chip soon"><span class="pdot"></span>Premieres in ~2 weeks</span><span class="rf-chip"><i data-lucide="clock"></i>7:20</span></div>
+        </div>
+        <div class="rf-watch-cap"><div class="l"><span class="seg">Segment 3 of 5</span><span>·</span><span>The levers</span></div><span class="runtime"><i data-lucide="clock"></i>7:20</span></div>
+      </div>
+      <div class="rf-read">
+        <p>If two creators have the same follower count, why does one command triple the rate? Because rates aren't set by size — <strong>they're set by five factors.</strong> Master these and you stop competing on follower count.</p>
+      </div>
+      <div class="rf-chips">
+        <span class="rf-chipk"><span class="n">1</span> Engagement</span>
+        <span class="rf-chipk"><span class="n">2</span> Content quality</span>
+        <span class="rf-chipk"><span class="n">3</span> Professionalism</span>
+        <span class="rf-chipk"><span class="n">4</span> Track record</span>
+        <span class="rf-chipk"><span class="n">5</span> Audience understanding</span>
+      </div>
+      <div class="rf-seg-foot"><button class="rf-complete" data-complete><i data-lucide="circle"></i><span>Mark complete</span></button><a class="rf-next-link" href="#seg-4">Next: Your pricing-power number <i data-lucide="arrow-right"></i></a></div>
+    </section>
+
+    <!-- S4 -->
+    <section class="rf-seg" id="seg-4" data-i="3">
+      <div class="rf-seg-head"><span class="rf-seg-no">04</span><div><div class="rf-seg-kicker">Your baseline</div><h2>Your pricing-power number</h2></div></div>
+      <div class="rf-watch">
+        <div class="rf-player">
+          <div class="poster" style="background-image:url('../../assets/hero-03-pinkhair-tablet.jpg')"></div>
+          <div class="rf-play"><i data-lucide="play"></i></div>
+          <div class="top"><span class="rf-chip soon"><span class="pdot"></span>Premieres in ~2 weeks</span><span class="rf-chip"><i data-lucide="clock"></i>6:15</span></div>
+        </div>
+        <div class="rf-watch-cap"><div class="l"><span class="seg">Segment 4 of 5</span><span>·</span><span>Your baseline</span></div><span class="runtime"><i data-lucide="clock"></i>6:15</span></div>
+      </div>
+      <div class="rf-read">
+        <p>The fastest way to see where you stand is your <span class="hl">engagement rate</span> — and it takes about five minutes.</p>
+      </div>
+      <div class="rf-formula"><span class="op">(</span><span class="frac"><span class="t">Likes + Comments</span><span class="b">Followers</span></span><span class="op">)</span><span class="op">×</span>100<span class="op">=</span><span class="res">Your rate</span></div>
+      <div class="rf-read" style="margin-top:18px;">
+        <p>A creator at <strong>6%</strong> can defend a meaningfully higher rate than a same-sized creator at <strong>1%</strong> — because the brand is paying for an audience that actually responds.</p>
+      </div>
+      <div class="rf-seg-foot"><button class="rf-complete" data-complete><i data-lucide="circle"></i><span>Mark complete</span></button><a class="rf-next-link" href="#seg-5">Next: Your next steps <i data-lucide="arrow-right"></i></a></div>
+    </section>
+
+    <!-- S5 -->
+    <section class="rf-seg" id="seg-5" data-i="4">
+      <div class="rf-seg-head"><span class="rf-seg-no">05</span><div><div class="rf-seg-kicker">The work</div><h2>Your next steps</h2></div></div>
+      <div class="rf-watch">
+        <div class="rf-player">
+          <div class="poster" style="background-image:url('../../assets/hero-05-la-balcony.jpg')"></div>
+          <div class="rf-play"><i data-lucide="play"></i></div>
+          <div class="top"><span class="rf-chip soon"><span class="pdot"></span>Premieres in ~2 weeks</span><span class="rf-chip"><i data-lucide="clock"></i>5:00</span></div>
+        </div>
+        <div class="rf-watch-cap"><div class="l"><span class="seg">Segment 5 of 5</span><span>·</span><span>The work</span></div><span class="runtime"><i data-lucide="clock"></i>5:00</span></div>
+      </div>
+      <div class="rf-read">
+        <p>You now have the full picture. Before Module 2, do <strong>three things</strong> — list your current revenue streams, score yourself on the five factors, and calculate your engagement rate. The <span class="hl">workbook</span> walks you through each.</p>
+      </div>
+      <div class="rf-seg-foot"><button class="rf-complete" data-complete><i data-lucide="circle"></i><span>Mark complete</span></button><a class="rf-next-link" href="#rfCta">Finish module <i data-lucide="arrow-right"></i></a></div>
+    </section>
+
+    <!-- EBOOK -->
+    <section class="rf-ebook">
+      <div class="rf-ebook-copy">
+        <div class="lab">The deep read</div>
+        <h3>Go deeper in the ebook</h3>
+        <p>The Partnership Landscape — a 12-page written reference. Every revenue stream defined, the five factors broken down, and worked examples of the engagement-rate math.</p>
+        <a class="rf-btn dark" href="../../course/Module 1 - Ebook.html"><i data-lucide="book-open"></i> Read the Ebook</a>
+      </div>
+      <div class="rf-ebook-media" style="background-image:url('../../assets/m1-cover.jpg')"></div>
+    </section>
+  </main>
+</div>
+
+<!-- WORKBOOK CTA (light premium band) -->
+<section class="rf-cta" id="rfCta">
+  <div class="rf-cta-inner">
+    <div class="lab">Put it into practice</div>
+    <h2>Turn the lesson into <em>your numbers</em></h2>
+    <p>The Module 1 Workbook maps your revenue streams, scores your five factors, and locks in your pricing-power baseline — the inputs every later module builds on.</p>
+    <div class="rf-cta-actions">
+      <a class="rf-btn pink" href="../../course/Module 1 - Workbook.html"><i data-lucide="pen-line"></i> Open the Workbook</a>
+      <a class="rf-btn outline" href="#seg-1"><i data-lucide="rotate-ccw"></i> Back to top</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT MODULE (dark bookend) -->
+<section class="rf-next">
+  <div class="bg" style="background-image:url('../../assets/m2-cover.jpg')"></div>
+  <div class="rf-next-inner">
+    <div class="up"><i data-lucide="arrow-right"></i> Up next · Module 02</div>
+    <h2>Finding &amp; Attracting <em>Brands</em></h2>
+    <p>Go on offense — build a pipeline of the specific brands you want, instead of waiting to be discovered.</p>
+    <a class="rf-btn yellow" href="index.html"><i data-lucide="arrow-right"></i> Continue to Module 2</a>
+  </div>
+</section>
+
+<footer class="rf-footer">LMG MEDIA · The Complete Brand Partnership Playbook · <span>Where Quality Brands Meet Iconic Influence</span></footer>
+
+<script>
+  lucide.createIcons();
+  const TOTAL = 5;
+  const segs = [...document.querySelectorAll('.rf-seg')];
+  const rail = [...document.querySelectorAll('.rf-step')];
+  const railFill = document.getElementById('rfRailFill');
+  const railBar = document.getElementById('rfRailBar');
+  const railPct = document.getElementById('rfRailPct');
+  const gBar = document.getElementById('rfGBar');
+  const gDone = document.getElementById('rfGDone');
+  const STORE = 'lmg-refined-m1-done';
+  let done = new Set(JSON.parse(localStorage.getItem(STORE) || '[]'));
+
+  function setUI(seg, isDone){
+    seg.classList.toggle('is-done', isDone);
+    const btn = seg.querySelector('[data-complete]');
+    btn.querySelector('span').textContent = isDone ? 'Completed' : 'Mark complete';
+    // lucide.createIcons() replaces <i> with <svg>, so rebuild the icon node fresh
+    const icon = btn.querySelector('i, svg');
+    if (icon) icon.outerHTML = '<i data-lucide="' + (isDone ? 'check-circle-2' : 'circle') + '"></i>';
+    const r = rail[+seg.dataset.i];
+    r.classList.toggle('done', isDone);
+    r.querySelector('.rf-dot').innerHTML = isDone ? '<i data-lucide="check"></i>' : (+seg.dataset.i + 1);
+  }
+  function refresh(){
+    const n = done.size, pct = Math.round(n/TOTAL*100);
+    gDone.textContent = n;
+    gBar.style.width = pct + '%';
+    railBar.style.width = pct + '%';
+    railFill.style.height = pct + '%';
+    railPct.textContent = pct + '%';
+    lucide.createIcons();
+  }
+  segs.forEach(seg => {
+    const i = +seg.dataset.i;
+    if (done.has(i)) setUI(seg, true);
+    seg.querySelector('[data-complete]').addEventListener('click', () => {
+      if (done.has(i)) done.delete(i); else done.add(i);
+      localStorage.setItem(STORE, JSON.stringify([...done]));
+      setUI(seg, done.has(i));
+      refresh();
+    });
+  });
+  refresh();
+
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) {
+      const i = +e.target.dataset.i;
+      rail.forEach((s, si) => s.classList.toggle('active', si === i));
+    }});
+  }, { rootMargin: '-30% 0px -55% 0px' });
+  segs.forEach(s => io.observe(s));
+</script>
+</body>
+</html>

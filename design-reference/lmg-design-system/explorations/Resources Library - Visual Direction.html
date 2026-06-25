@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resources Library — Visual Direction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@0.475.0/dist/umd/lucide.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--neutral-100);
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 64px var(--gutter) 140px; }
+
+  /* ── Doc header ───────────────────────────────────────── */
+  .doc-head { margin-bottom: 16px; max-width: 880px; }
+  .doc-eyebrow {
+    font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700; color: var(--fg-3);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  }
+  .doc-eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--lmg-yellow); }
+  .doc-title {
+    font-family: var(--font-sans); font-weight: 800;
+    font-size: clamp(34px, 5vw, 54px); line-height: 1.03; letter-spacing: -0.025em;
+    margin: 0 0 18px; color: var(--fg-1); text-wrap: balance;
+  }
+  .doc-sub { font-size: 17px; line-height: 1.62; color: var(--fg-2); margin: 0; max-width: 760px; }
+  .doc-sub strong { color: var(--fg-1); font-weight: 700; }
+
+  /* legend of the 5 directions */
+  .toc { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .toc a {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--fg-1);
+    border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 7px 14px;
+    background: var(--neutral-0); transition: border-color .16s, background .16s;
+  }
+  .toc a:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); }
+  .toc a .n { font-weight: 800; color: var(--fg-3); }
+
+  /* ── Direction scaffolding ────────────────────────────── */
+  .dir { margin-top: 84px; scroll-margin-top: 24px; }
+  .dir-label { display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px; flex-wrap: wrap; }
+  .dir-tag {
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em; color: var(--fg-3);
+    border: 1px solid var(--border-2); border-radius: var(--r-pill); padding: 4px 12px;
+  }
+  .dir-name { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+  .dir-name .invent { font-family: var(--font-display); font-style: italic; font-weight: 600; color: var(--lmg-pink); }
+  .dir-note { font-size: 15.5px; color: var(--fg-2); margin: 6px 0 24px; max-width: 880px; line-height: 1.6; }
+  .dir-note strong { color: var(--fg-1); font-weight: 700; }
+
+  /* annotation chips: motion / interaction / build cost */
+  .anno { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 22px; }
+  .anno span {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--fg-2);
+    background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-sm);
+    padding: 7px 12px;
+  }
+  .anno span svg { width: 14px; height: 14px; }
+  .anno .motion svg { color: var(--lmg-pink); }
+  .anno .inter svg { color: var(--lmg-blue); }
+  .anno .build svg { color: var(--lmg-yellow-deep); }
+  .anno b { color: var(--fg-1); font-weight: 700; }
+
+  /* Frame holding a live rendering */
+  .frame { border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-lg); }
+  .frame + .frame { margin-top: 26px; }
+  .frame.is-dark { background: var(--neutral-900); }
+  .frame.is-light { background: var(--neutral-0); }
+  .frame-tab {
+    display: flex; align-items: center; gap: 9px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 11px 18px; font-weight: 600;
+  }
+  .is-light .frame-tab { color: var(--neutral-500); border-bottom: 1px solid var(--border-1); }
+  .is-dark .frame-tab { color: #8A8880; border-bottom: 1px solid #262626; }
+  .frame-tab .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ════════════════════════════════════════════════════════
+     THE SECTION SHELL (shared by every direction)
+     ════════════════════════════════════════════════════════ */
+  .rs { background: var(--bg-1); color: var(--fg-1); padding: clamp(40px, 4.5vw, 60px) clamp(26px, 3.6vw, 52px); }
+  .rs.bleed { padding-left: 0; padding-right: 0; }           /* full-bleed bodies (marquee, wall) */
+  .rs-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 22px 40px; margin-bottom: 34px; flex-wrap: wrap; }
+  .bleed .rs-head { padding: 0 clamp(26px, 3.6vw, 52px); }
+  .rs-eyebrow {
+    font-family: var(--font-ui); font-size: var(--fs-eyebrow); letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase; font-weight: 700; color: var(--fg-2); margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .rs-eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--lmg-yellow); }
+  .rs-title { font-size: clamp(28px, 3.3vw, 40px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.06; margin: 0; max-width: 17ch; }
+  .rs-title .ital { font-family: var(--font-display); font-style: italic; font-weight: 500; }
+  .rs-head-r { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+  .rs-lead { font-size: 14.5px; line-height: 1.6; color: var(--fg-2); margin: 0; max-width: 32ch; text-align: right; }
+  .rs-viewall {
+    display: inline-flex; align-items: center; gap: 9px; text-decoration: none;
+    padding: 11px 18px; border-radius: var(--r-pill);
+    border: 1.5px solid var(--border-2); background: var(--bg-1); color: var(--fg-1);
+    font-family: var(--font-ui); font-weight: 700; font-size: 14px; white-space: nowrap;
+    transition: border-color .16s, background .16s, gap .16s;
+  }
+  .rs-viewall svg { width: 16px; height: 16px; }
+  .rs-viewall .count { color: var(--lmg-pink); font-weight: 800; }
+  .rs-viewall:hover { border-color: var(--lmg-yellow); background: var(--lmg-yellow-soft); gap: 13px; }
+  .lmg-dark .rs-viewall:hover { background: rgba(255,215,0,0.10); }
+
+  /* ════════════════════════════════════════════════════════
+     THE COVER  (container-query scaled — same markup, any size)
+     ════════════════════════════════════════════════════════ */
+  .cover {
+    position: relative; container-type: inline-size;
+    aspect-ratio: 3 / 4; width: 100%;
+    border-radius: 2.4cqw; overflow: hidden;
+    background: var(--neutral-300);
+    box-shadow: 0 1cqw 3cqw rgba(12,10,8,.22), 0 0.3cqw 1cqw rgba(12,10,8,.16);
+    user-select: none;
+  }
+  .cov-fill { position: absolute; inset: 0; }
+  .cov-photo { background-size: cover; background-repeat: no-repeat; }
+  /* designed color-block: diagonal split + corner wedge */
+  .cov-block {
+    background:
+      linear-gradient(124deg, transparent 0 60%, var(--c3) 60% 100%),
+      linear-gradient(124deg, var(--c2) 0 40%, var(--c1) 40% 100%);
+  }
+  .cov-grain { position: absolute; inset: 0; background: radial-gradient(118% 72% at 72% 4%, rgba(255,255,255,.16), transparent 58%); mix-blend-mode: screen; pointer-events: none; }
+  .cov-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,6,10,.9) 4%, rgba(8,6,10,.34) 40%, transparent 64%); }
+  .cov-bar { position: absolute; top: 0; left: 0; right: 0; height: 2.4cqw; z-index: 3; }
+  .cov-grid-lines {
+    position: absolute; inset: 0; opacity: .9; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 13.5%),
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--ln) 16%, transparent) 0 1px, transparent 1px 20%);
+  }
+
+  .cov-content { position: absolute; inset: 0; padding: 7cqw; display: flex; flex-direction: column; color: var(--fg); z-index: 2; }
+  .cov-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2cqw; }
+  .cov-wm { font-family: var(--font-display); font-weight: 700; font-size: 6.4cqw; line-height: .8; display: flex; flex-direction: column; letter-spacing: .02em; }
+  .cov-wm i { font-style: normal; font-weight: 400; font-size: .4em; letter-spacing: .44em; margin-top: .35em; }
+  .cov-kind {
+    font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+    padding: 1.3cqw 2.6cqw; border-radius: 99px; border: .42cqw solid currentColor; white-space: nowrap; opacity: .92;
+  }
+  .cov-title { margin: auto 0 0; font-family: var(--font-sans); font-weight: 800; font-size: 9.4cqw; line-height: 1.0; letter-spacing: -0.022em; text-wrap: balance;
+    display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  /* typographic archetype */
+  .cov-content--type { justify-content: flex-start; }
+  .cov-title--big { margin: auto 0; font-size: 13cqw; line-height: .98; -webkit-line-clamp: 6; }
+  .cov-rule { height: 1.3cqw; width: 34%; background: var(--fg); border-radius: 99px; opacity: .92; }
+  /* report archetype */
+  .cov-content--report { justify-content: flex-start; }
+  .cov-stat { margin: 5cqw 0 auto; display: flex; flex-direction: column; line-height: .9; }
+  .cov-stat-n { font-family: var(--font-sans); font-weight: 800; font-size: 26cqw; letter-spacing: -0.04em; color: var(--ac); }
+  .cov-stat-l { font-family: var(--font-ui); font-size: 3cqw; letter-spacing: .04em; opacity: .8; margin-top: 1cqw; max-width: 60%; line-height: 1.2; }
+  .cov-title--rpt { margin: 0; font-size: 7.4cqw; -webkit-line-clamp: 3; }
+  /* editorial archetype */
+  .cov-band { position: absolute; top: 0; left: 0; right: 0; height: 21%; display: flex; align-items: center; padding: 0 7cqw; z-index: 2; }
+  .cov-wm--band { font-size: 6.6cqw; }
+  .cov-content--ed { justify-content: flex-end; padding-top: 26%; }
+  .cov-kind--ed { color: var(--ac); border-color: currentColor; align-self: flex-start; margin-bottom: auto; }
+  .cov-title--ed { font-size: 9cqw; -webkit-line-clamp: 5; }
+
+  /* audience accent line — the sacred color code */
+  .cov-aud { position: absolute; left: 0; right: 0; bottom: 0; height: 1.7cqw; z-index: 4; }
+
+  /* download pill — zero-friction, appears on cover hover */
+  .cov-dl {
+    position: absolute; left: 50%; bottom: 9cqw; transform: translate(-50%, 1.6cqw);
+    display: inline-flex; align-items: center; gap: 1.6cqw;
+    background: var(--lmg-yellow); color: #0A0A0A; border: 0; cursor: pointer;
+    font-family: var(--font-ui); font-weight: 800; font-size: 3.7cqw; letter-spacing: -0.01em;
+    padding: 2.6cqw 4.4cqw; border-radius: 99px; white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity .2s var(--ease-out), transform .2s var(--ease-out), background .15s;
+    box-shadow: 0 1.6cqw 4cqw rgba(0,0,0,.4); z-index: 5;
+  }
+  .cov-dl i { width: 4.2cqw; height: 4.2cqw; }
+  .cov-dl:hover { background: #fff; }
+  .show-dl:hover .cov-dl, .cover.is-front .cov-dl { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+
+  /* minimal caption beneath a cover */
+  .cap { margin-top: 13px; }
+  .cap-type {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ac); margin-bottom: 7px;
+  }
+  .cap-type i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; display: inline-block; }
+  .cap-title { font-size: 14.5px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; margin: 0; color: var(--fg-1); text-wrap: pretty;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* ════════════ DIR 1 · NEWSSTAND / FACE-OUT SHELF ════════════ */
+  .shelf-wrap { display: flex; flex-direction: column; gap: 30px; }
+  .shelf { position: relative; }
+  .shelf-rack {
+    display: flex; gap: 30px; align-items: flex-end;
+    overflow-x: auto; scroll-snap-type: x proximity; padding: 8px 2px 0; margin-bottom: 0;
+    scrollbar-width: thin;
+  }
+  .shelf-item { flex: 0 0 152px; scroll-snap-align: start; }
+  .shelf-item .cover {
+    transition: transform .28s var(--ease-out), box-shadow .28s var(--ease-out);
+    transform-origin: bottom center;
+  }
+  .shelf-item:hover .cover { transform: translateY(-12px) scale(1.02); box-shadow: 0 22px 48px rgba(12,10,8,.32), 0 6px 16px rgba(12,10,8,.2); }
+  /* the wooden ledge */
+  .shelf-board { height: 16px; border-radius: 0 0 5px 5px; margin-top: -4px;
+    background: linear-gradient(180deg, var(--neutral-300), var(--neutral-200));
+    box-shadow: inset 0 2px 3px rgba(255,255,255,.5), 0 14px 22px -10px rgba(12,10,8,.28); position: relative; z-index: -1; }
+  .lmg-dark .shelf-board { background: linear-gradient(180deg, #2c2c2c, #202020); box-shadow: inset 0 2px 3px rgba(255,255,255,.06), 0 14px 22px -10px rgba(0,0,0,.6); }
+  .shelf-more {
+    flex: 0 0 152px; align-self: stretch; min-height: 202px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center;
+    border: 1.5px dashed var(--border-2); border-radius: var(--r-lg); color: var(--fg-2); text-decoration: none;
+    font-family: var(--font-ui); font-weight: 700; font-size: 13px; transition: border-color .16s, color .16s;
+  }
+  .shelf-more svg { width: 22px; height: 22px; }
+  .shelf-more:hover { border-color: var(--lmg-yellow); color: var(--fg-1); }
+
+  /* ════════════ DIR 2 · COVER MARQUEE (two counter rows) ════════════ */
+  .mq { display: flex; flex-direction: column; gap: 22px; }
+  .mq-row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
+  .mq-track { display: flex; gap: 24px; width: max-content; will-change: transform; }
+  .mq-l .mq-track { animation: mqL 78s linear infinite; }
+  .mq-r .mq-track { animation: mqR 92s linear infinite; }
+  @keyframes mqL { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes mqR { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  .mq-row:hover .mq-track { animation-play-state: paused; }
+  .mq-item { flex: 0 0 158px; }
+  .mq-item .cover { transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out); }
+  .mq-item:hover .cover { transform: translateY(-10px) scale(1.04); box-shadow: 0 22px 50px rgba(12,10,8,.34); z-index: 3; }
+
+  /* ════════════ DIR 3 · FANNED / RIFFLE SPREAD ════════════ */
+  .fan-stage { display: grid; grid-template-columns: 1.25fr 1fr; gap: 32px; align-items: center; }
+  @media (max-width: 900px) { .fan-stage { grid-template-columns: 1fr; } }
+  .fan { position: relative; height: 420px; }
+  .fan-item { position: absolute; bottom: 0; left: 50%; width: 232px; margin-left: -116px;
+    transform-origin: 50% 92%; transform: translateX(var(--x)) rotate(var(--rot));
+    transition: transform .5s var(--ease-out), filter .35s; cursor: pointer; }
+  .fan-item .cover { box-shadow: 0 16px 40px rgba(12,10,8,.3), 0 4px 12px rgba(12,10,8,.22); }
+  .fan-item:not(.is-front) { filter: brightness(.84) saturate(.9); }
+  .fan-item.is-front { transform: translateX(0) rotate(0deg) translateY(-22px) scale(1.05); z-index: 200 !important; filter: none; }
+  .fan-meta { }
+  .fan-meta .fm-type { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ac, var(--lmg-pink)); margin-bottom: 14px; }
+  .fan-meta .fm-type i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .fan-meta .fm-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 12px; text-wrap: balance; }
+  .fan-meta .fm-desc { font-size: 15.5px; line-height: 1.6; color: var(--fg-2); margin: 0 0 24px; max-width: 42ch; }
+  .fan-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .fan-dots { display: flex; gap: 7px; margin-top: 26px; }
+  .fan-dots button { width: 8px; height: 8px; padding: 0; border-radius: 50%; border: 0; background: var(--border-2); cursor: pointer; transition: background .2s, transform .2s; }
+  .fan-dots button.on { background: var(--lmg-pink); transform: scale(1.3); }
+
+  .btn-dl { display: inline-flex; align-items: center; gap: 9px; height: 48px; padding: 0 22px; border: 0; cursor: pointer;
+    border-radius: var(--r-md); background: var(--lmg-yellow); color: #0A0A0A; font-family: var(--font-ui); font-weight: 700; font-size: 15px;
+    transition: background .15s, transform .15s; text-decoration: none; }
+  .btn-dl:hover { background: var(--lmg-yellow-deep); transform: translateY(-1px); }
+  .btn-dl svg { width: 18px; height: 18px; }
+  .btn-ghost { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px; border: 1.5px solid var(--border-2);
+    border-radius: var(--r-md); background: transparent; color: var(--fg-1); font-family: var(--font-ui); font-weight: 700; font-size: 14px; cursor: pointer; text-decoration: none;
+    transition: border-color .15s, background .15s; }
+  .btn-ghost:hover { border-color: var(--lmg-pink); color: var(--lmg-pink); }
+  .btn-ghost svg { width: 16px; height: 16px; }
+
+  /* ════════════ DIR 4 · FEATURED + KINETIC LIBRARY ════════════ */
+  .feat { display: grid; grid-template-columns: 1.05fr 1.15fr; gap: 40px; align-items: center; }
+  @media (max-width: 940px) { .feat { grid-template-columns: 1fr; } }
+  .feat-l { display: grid; grid-template-columns: 250px 1fr; gap: 28px; align-items: center; }
+  @media (max-width: 560px) { .feat-l { grid-template-columns: 1fr; } }
+  .feat-cover { width: 250px; }
+  .feat-flag { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-ui); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: #6B5500; background: var(--lmg-yellow); padding: 5px 11px; border-radius: 99px; margin-bottom: 14px; }
+  .feat-flag svg { width: 13px; height: 13px; }
+  .feat-type { font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lmg-blue); margin: 0 0 10px; }
+  .feat-title { font-size: clamp(24px, 2.6vw, 32px); font-weight: 800; letter-spacing: -0.022em; line-height: 1.08; margin: 0 0 12px; text-wrap: balance; }
+  .feat-desc { font-size: 15.5px; line-height: 1.62; color: var(--fg-2); margin: 0 0 22px; }
+  .feat-cta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  /* kinetic right column — two vertical marquees */
+  .lib { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; height: 460px; overflow: hidden;
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(180deg, transparent, #000 9%, #000 91%, transparent); }
+  .lib-col { overflow: hidden; }
+  .lib-track { display: flex; flex-direction: column; gap: 18px; will-change: transform; }
+  .lib-up .lib-track { animation: libUp 38s linear infinite; }
+  .lib-dn .lib-track { animation: libDn 38s linear infinite; }
+  @keyframes libUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  @keyframes libDn { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+  .lib:hover .lib-track { animation-play-state: paused; }
+  .lib-item .cover { transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+  .lib-item:hover .cover { transform: scale(1.04); box-shadow: 0 16px 36px rgba(12,10,8,.34); z-index: 3; }
+
+  /* ════════════ DIR 5 · LIVING COVER WALL (invented) ════════════ */
+  .wall-stage { position: relative; overflow: hidden; padding: 30px clamp(22px,3vw,44px) 36px; }
+  .wall { columns: 6 132px; column-gap: 14px; }
+  @media (max-width: 1100px){ .wall { columns: 5 120px; } }
+  @media (max-width: 760px){ .wall { columns: 3 110px; } }
+  .wall-item { break-inside: avoid; margin: 0 0 14px; position: relative;
+    transform: rotate(var(--rot)) translate3d(var(--px,0), var(--py,0), 0);
+    transition: transform .3s var(--ease-out), filter .3s; will-change: transform; }
+  .wall-item .cover { transition: transform .28s var(--ease-out), box-shadow .28s var(--ease-out); box-shadow: 0 8px 22px rgba(8,6,10,.4); }
+  .wall-item:hover { z-index: 50; }
+  .wall-item:hover .cover { transform: scale(1.22) rotate(calc(-1 * var(--rot))); box-shadow: 0 30px 70px rgba(8,6,10,.6); }
+  .wall:hover .wall-item:not(:hover) { filter: brightness(.7) saturate(.85); }
+  .wall-hint { position: absolute; top: 16px; right: clamp(22px,3vw,44px); z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
+    color: var(--fg-3); background: color-mix(in srgb, var(--bg-1) 80%, transparent); border: 1px solid var(--border-1); border-radius: 99px; padding: 6px 12px; backdrop-filter: blur(6px); }
+  .wall-hint svg { width: 13px; height: 13px; }
+
+  /* ── recommendation ───────────────────────────────────── */
+  .reco { margin-top: 84px; background: var(--neutral-0); border: 1px solid var(--border-1); border-radius: var(--r-xl); padding: 40px clamp(26px,3.4vw,48px); box-shadow: var(--shadow-sm); }
+  .reco h3 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--font-ui); color: var(--fg-3); margin: 0 0 16px; font-weight: 800; }
+  .reco p { font-size: 16px; line-height: 1.72; color: var(--fg-2); margin: 0 0 14px; max-width: 920px; }
+  .reco p:last-child { margin-bottom: 0; }
+  .reco strong { color: var(--fg-1); font-weight: 700; }
+  .reco .pk { color: var(--lmg-pink); font-weight: 800; }
+
+  /* download toast */
+  #toast { position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px); z-index: 999;
+    display: flex; align-items: center; gap: 11px; background: #0A0A0A; color: #fff; padding: 13px 20px; border-radius: var(--r-pill);
+    font-family: var(--font-ui); font-size: 14px; font-weight: 600; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast svg { width: 17px; height: 17px; color: var(--lmg-yellow); }
+  #toast b { color: var(--lmg-yellow); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mq-l .mq-track, .mq-r .mq-track, .lib-up .lib-track, .lib-dn .lib-track { animation: none !important; }
+    .mq-row, .lib { overflow-x: auto; overflow-y: auto; }
+    .wall-item { transform: rotate(var(--rot)) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-head">
+    <div class="doc-eyebrow">Visual Direction · Homepage §4</div>
+    <h1 class="doc-title">The Resources Library</h1>
+    <p class="doc-sub">Section §4 is not a toolbox of small utilities — it is a <strong>newsstand of 23 premium, professionally designed publications</strong>: multi-page ebooks, strategy frameworks, reports, and toolkits, each with a magazine-grade cover. The cover artwork is the hero asset, so every direction below leans fully visual and lets the covers run large. Downloads are free, instant, and ungated, so a one-tap <strong>Download</strong> sits on every item. Five cover-led directions — four from the brief and one invented — each shown in <strong>light and dark</strong>, with motion and interaction annotated. All motion respects <code style="font-family:var(--font-mono);font-size:13px">prefers-reduced-motion</code>.</p>
+    <nav class="toc" aria-label="Directions">
+      <a href="#d1"><span class="n">01</span> Newsstand</a>
+      <a href="#d2"><span class="n">02</span> Cover Marquee</a>
+      <a href="#d3"><span class="n">03</span> Fanned Spread</a>
+      <a href="#d4"><span class="n">04</span> Featured + Library</a>
+      <a href="#d5"><span class="n">05</span> Living Cover Wall</a>
+    </nav>
+  </header>
+
+  <!-- ════════ DIR 1 — NEWSSTAND ════════ -->
+  <section class="dir" id="d1">
+    <div class="dir-label"><span class="dir-tag">DIRECTION 01</span><h2 class="dir-name">Newsstand</h2></div>
+    <p class="dir-note">Covers stand <strong>face-out on a shelf</strong>, like premium magazines on a rack. The artwork dominates; type label and title sit minimally beneath, and the free <strong>Download</strong> reveals on hover. Two shelves browse horizontally — the rack keeps going, so the depth of the library is felt by scrolling, not counting.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="move-horizontal"></i><b>Motion:</b>&nbsp;cover lifts off the shelf on hover</span>
+      <span class="inter"><i data-lucide="mouse-pointer-click"></i><b>Interaction:</b>&nbsp;horizontal scroll-snap rack</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — CSS only</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="shelf-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="shelf-dark"></div></div>
+  </section>
+
+  <!-- ════════ DIR 2 — COVER MARQUEE ════════ -->
+  <section class="dir" id="d2">
+    <div class="dir-label"><span class="dir-tag">DIRECTION 02</span><h2 class="dir-name">Cover Marquee</h2></div>
+    <p class="dir-note">A continuous <strong>river of covers</strong> in two counter-scrolling rows — a deep library, always in motion. Hover a row to <strong>pause it and grab a cover</strong>; the cover lifts and offers its Download. The opposing drift directions make the wall of artwork feel alive without ever demanding a click.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="repeat"></i><b>Motion:</b>&nbsp;infinite counter-scroll, edge-masked</span>
+      <span class="inter"><i data-lucide="pause"></i><b>Interaction:</b>&nbsp;hover-to-pause per row</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — CSS keyframes, reduced-motion → scroll</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Light</div><div class="rs bleed" id="mq-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Dark · evening browsing</div><div class="rs bleed lmg-dark" id="mq-dark"></div></div>
+  </section>
+
+  <!-- ════════ DIR 3 — FANNED SPREAD ════════ -->
+  <section class="dir" id="d3">
+    <div class="dir-label"><span class="dir-tag">DIRECTION 03</span><h2 class="dir-name">Fanned Spread</h2></div>
+    <p class="dir-note">Covers <strong>fanned like magazines spread on a table</strong>, overlapping and rotated. The deck auto-riffles every few seconds; click any cover to pull it to the front, where its title, type, level, and a prominent <strong>Download</strong> read out in the panel beside it. Tactile and honest to "these are real documents."</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="layers"></i><b>Motion:</b>&nbsp;auto-riffle deck, front card lifts</span>
+      <span class="inter"><i data-lucide="hand"></i><b>Interaction:</b>&nbsp;click to bring to front</span>
+      <span class="build"><i data-lucide="alert-triangle"></i><b>Build:</b>&nbsp;med — shown here click+auto; full <b>drag-physics riffle</b> needs a gesture lib</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Light</div><div class="rs" id="fan-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-blue)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="fan-dark"></div></div>
+  </section>
+
+  <!-- ════════ DIR 4 — FEATURED + LIBRARY ════════ -->
+  <section class="dir" id="d4">
+    <div class="dir-label"><span class="dir-tag">DIRECTION 04</span><h2 class="dir-name">Featured + Library</h2></div>
+    <p class="dir-note">One <strong>lead release</strong> runs large — full cover, description, and a prominent Download — paired with a <strong>kinetic library</strong> of the rest drifting in two vertical columns beside it. Editorial "this month's pick" energy, while the moving columns signal there are many more behind it.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="move-vertical"></i><b>Motion:</b>&nbsp;two vertical marquees, opposite directions</span>
+      <span class="inter"><i data-lucide="pause"></i><b>Interaction:</b>&nbsp;hover pauses + lifts a cover</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;low — CSS, one featured slot</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Light</div><div class="rs" id="feat-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-yellow)"></span>Dark · evening browsing</div><div class="rs lmg-dark" id="feat-dark"></div></div>
+  </section>
+
+  <!-- ════════ DIR 5 — LIVING COVER WALL (invented) ════════ -->
+  <section class="dir" id="d5">
+    <div class="dir-label"><span class="dir-tag">DIRECTION 05 · INVENTED</span><h2 class="dir-name">The <span class="invent">Living Cover Wall</span></h2></div>
+    <p class="dir-note">Every one of the 23 covers, packed edge-to-edge into a <strong>full-bleed mosaic wall</strong> — the entire library visible at a glance is the depth signal. The wall <strong>parallax-drifts</strong> as you move the mouse; hover any cover and it <strong>pops forward, straightens, and the rest dim back</strong>, surfacing its Download. Not a row of equal cards — a statement wall of artwork you reach into.</p>
+    <div class="anno">
+      <span class="motion"><i data-lucide="move"></i><b>Motion:</b>&nbsp;mouse-parallax drift across depth layers</span>
+      <span class="inter"><i data-lucide="scan-search"></i><b>Interaction:</b>&nbsp;hover-to-pop + spotlight dim</span>
+      <span class="build"><i data-lucide="gauge"></i><b>Build:</b>&nbsp;med — transforms + pointer parallax; reduced-motion → static wall</span>
+    </div>
+    <div class="frame is-light"><div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Light</div><div class="rs bleed" id="wall-light"></div></div>
+    <div class="frame is-dark"><div class="frame-tab"><span class="dot" style="background:var(--lmg-pink)"></span>Dark · evening browsing — the dramatic default</div><div class="rs bleed lmg-dark" id="wall-dark"></div></div>
+  </section>
+
+  <!-- ════════ RECOMMENDATION ════════ -->
+  <div class="reco">
+    <h3>Recommendation</h3>
+    <p>Lead with <strong>Direction 04 — Featured + Library</strong> for the homepage slot. It does both of §4's jobs at once: the large lead cover proves the production quality, while the two drifting columns make the depth of the library obvious — and it carries one unambiguous, ungated <strong>Download</strong> as the hero action without burying it in motion. It also degrades gracefully: under reduced motion the columns become a quiet scroll, and the featured release still anchors the section.</p>
+    <p>Pair it with <strong>Direction 05 — The Living Cover Wall</strong> on the dedicated <span class="pk">/resources</span> page, where a full-bleed, all-23 statement wall has room to breathe and rewards exploration. <strong>Newsstand (01)</strong> and <strong>Cover Marquee (02)</strong> are the low-risk, CSS-only fallbacks if engineering wants to ship fast; <strong>Fanned Spread (03)</strong> is the showpiece to revisit once a drag-gesture budget exists. Across all five: covers stay the star, the audience color-code (blue brands · pink creators · yellow universal) rides the accent line, and the <span class="pk">View all 23 resources →</span> route is always one control away.</p>
+  </div>
+</div>
+
+<div id="toast"><i data-lucide="check-circle-2"></i><span>Downloading <b id="toast-name">your PDF</b> — free, no email</span></div>
+
+<script src="resources-covers.js"></script>
+<script>
+  const el = id => document.getElementById(id);
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function secHead() {
+    return `
+      <div class="rs-head">
+        <div class="rs-head-l">
+          <p class="rs-eyebrow">Resources</p>
+          <h2 class="rs-title">A library of <span class="ital">field-tested</span> playbooks</h2>
+        </div>
+        <div class="rs-head-r">
+          <a class="rs-viewall" href="/resources">View all <span class="count">23</span> resources <i data-lucide="arrow-right"></i></a>
+          <p class="rs-lead">Guides, reports &amp; toolkits — free to download, no email required.</p>
+        </div>
+      </div>`;
+  }
+
+  /* ── DIR 1 · Newsstand ── */
+  function renderShelf(id) {
+    const shelf = (arr, more) => `
+      <div class="shelf">
+        <div class="shelf-rack">
+          ${arr.map(p => `<div class="shelf-item show-dl">${coverHTML(p)}${captionHTML(p)}</div>`).join('')}
+          ${more ? `<a class="shelf-more" href="/resources"><i data-lucide="arrow-right"></i>View all<br>23 resources</a>` : ''}
+        </div>
+        <div class="shelf-board"></div>
+      </div>`;
+    el(id).innerHTML = secHead() + `<div class="shelf-wrap">${shelf(PUBS.slice(0,8))}${shelf(PUBS.slice(8,15), true)}</div>`;
+  }
+
+  /* ── DIR 2 · Cover Marquee ── */
+  function renderMarquee(id) {
+    const rowA = PUBS.slice(0, 12);
+    const rowB = PUBS.slice(11).concat(PUBS.slice(0, 5));
+    const track = (arr, dir) => {
+      const seq = [...arr, ...arr];
+      return `<div class="mq-row mq-${dir}"><div class="mq-track">${seq.map(p => `<div class="mq-item show-dl">${coverHTML(p)}</div>`).join('')}</div></div>`;
+    };
+    el(id).innerHTML = secHead() + `<div class="mq">${track(rowA, 'l')}${track(rowB, 'r')}</div>`;
+  }
+
+  /* ── DIR 3 · Fanned Spread ── */
+  function renderFan(id) {
+    const arr = PUBS.slice(0, 7);
+    const n = arr.length, mid = (n - 1) / 2;
+    const items = arr.map((p, i) => {
+      const t = i - mid;
+      const rot = t * 9, x = t * 50;
+      return `<div class="fan-item" data-i="${i}" style="--rot:${rot}deg;--x:${x}px;z-index:${100 - Math.abs(Math.round(t))}">${coverHTML(p)}</div>`;
+    }).join('');
+    el(id).innerHTML = secHead() + `
+      <div class="fan-stage">
+        <div class="fan">${items}</div>
+        <div class="fan-meta">
+          <span class="fm-type" id="${id}-type"></span>
+          <h3 class="fm-title" id="${id}-title"></h3>
+          <p class="fm-desc" id="${id}-desc"></p>
+          <div class="fan-cta">
+            <button class="btn-dl" data-dl><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+            <a class="btn-ghost" href="/resources/slug"><i data-lucide="arrow-up-right"></i>View details</a>
+          </div>
+          <div class="fan-dots" id="${id}-dots"></div>
+        </div>
+      </div>`;
+
+    const fan = el(id).querySelector('.fan');
+    const items_ = [...fan.querySelectorAll('.fan-item')];
+    const dotsWrap = el(id + '-dots');
+    dotsWrap.innerHTML = items_.map((_, i) => `<button data-d="${i}" aria-label="Cover ${i+1}"></button>`).join('');
+    const dots = [...dotsWrap.querySelectorAll('button')];
+    let front = Math.round(mid), timer = null;
+
+    function setFront(i) {
+      front = i;
+      items_.forEach((it, k) => it.classList.toggle('is-front', k === i));
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+      const p = arr[i];
+      el(id + '-type').innerHTML = `${p.type}<i></i>${p.level}`;
+      el(id + '-type').style.setProperty('--ac', AUD[p.aud].line);
+      el(id + '-title').textContent = p.title;
+      el(id + '-desc').textContent = p.desc;
+      el(id + '-title').closest('.fan-meta').querySelector('[data-dl]').dataset.name = p.title;
+    }
+    function advance() { setFront((front + 1) % n); }
+    function arm() { if (rm) return; clearInterval(timer); timer = setInterval(advance, 3600); }
+
+    items_.forEach((it, i) => it.addEventListener('click', () => { setFront(i); arm(); }));
+    dots.forEach((d, i) => d.addEventListener('click', () => { setFront(i); arm(); }));
+    fan.addEventListener('mouseenter', () => clearInterval(timer));
+    fan.addEventListener('mouseleave', arm);
+    setFront(front); arm();
+  }
+
+  /* ── DIR 4 · Featured + Library ── */
+  function renderFeatured(id) {
+    const feat = PUBS[0];
+    const rest = PUBS.slice(1);
+    const colA = rest.filter((_, i) => i % 2 === 0);
+    const colB = rest.filter((_, i) => i % 2 === 1);
+    const col = (arr, dir) => {
+      const seq = [...arr, ...arr];
+      return `<div class="lib-col lib-${dir}"><div class="lib-track">${seq.map(p => `<div class="lib-item show-dl">${coverHTML(p)}</div>`).join('')}</div></div>`;
+    };
+    el(id).innerHTML = secHead() + `
+      <div class="feat">
+        <div class="feat-l">
+          <div class="feat-cover">${coverHTML(feat)}</div>
+          <div class="feat-info">
+            <span class="feat-flag"><i data-lucide="star"></i>Featured this week</span>
+            <p class="feat-type">${feat.type} · ${feat.level}</p>
+            <h3 class="feat-title">${feat.title}</h3>
+            <p class="feat-desc">${feat.desc}</p>
+            <div class="feat-cta">
+              <button class="btn-dl" data-dl data-name="${feat.title}"><i data-lucide="arrow-down-to-line"></i>Download — Free PDF</button>
+              <a class="btn-ghost" href="/resources/${feat.id}"><i data-lucide="arrow-up-right"></i>View details</a>
+            </div>
+          </div>
+        </div>
+        <div class="lib">${col(colA, 'up')}${col(colB, 'dn')}</div>
+      </div>`;
+  }
+
+  /* ── DIR 5 · Living Cover Wall ── */
+  function renderWall(id) {
+    let seed = 7;
+    const rand = () => { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    const items = PUBS.map(p => {
+      const rot = (rand() * 4 - 2).toFixed(2);
+      const depth = (1 + Math.floor(rand() * 3)); // 1..3 parallax tiers
+      return `<div class="wall-item show-dl" data-depth="${depth}" style="--rot:${rot}deg">${coverHTML(p)}</div>`;
+    }).join('');
+    el(id).innerHTML = secHead() + `
+      <div class="wall-stage">
+        <span class="wall-hint"><i data-lucide="scan-search"></i>Hover a cover to grab it</span>
+        <div class="wall">${items}</div>
+      </div>`;
+
+    if (rm) return;
+    const stage = el(id).querySelector('.wall-stage');
+    const tiles = [...stage.querySelectorAll('.wall-item')];
+    let raf = null;
+    stage.addEventListener('pointermove', e => {
+      const r = stage.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5;
+      const dy = (e.clientY - r.top) / r.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        tiles.forEach(t => {
+          const d = +t.dataset.depth;
+          t.style.setProperty('--px', (dx * d * 9).toFixed(1) + 'px');
+          t.style.setProperty('--py', (dy * d * 9).toFixed(1) + 'px');
+        });
+        raf = null;
+      });
+    });
+    stage.addEventListener('pointerleave', () => tiles.forEach(t => { t.style.setProperty('--px', '0px'); t.style.setProperty('--py', '0px'); }));
+  }
+
+  /* ── Download toast (zero-friction demo) ── */
+  const toast = el('toast'), toastName = el('toast-name');
+  let toastTimer = null;
+  function fireToast(name) {
+    toastName.textContent = name || 'your PDF';
+    toast.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('on'), 2400);
+  }
+  document.addEventListener('click', e => {
+    const dl = e.target.closest('.cov-dl, [data-dl]');
+    if (!dl) return;
+    e.preventDefault();
+    const cover = dl.closest('.cover');
+    let name = dl.dataset.name;
+    if (!name && cover) {
+      const p = PUBS.find(x => x.id === cover.dataset.id);
+      name = p ? p.title : null;
+    }
+    fireToast(name);
+  });
+
+  /* ── boot ── */
+  renderShelf('shelf-light'); renderShelf('shelf-dark');
+  renderMarquee('mq-light'); renderMarquee('mq-dark');
+  renderFan('fan-light'); renderFan('fan-dark');
+  renderFeatured('feat-light'); renderFeatured('feat-dark');
+  renderWall('wall-light'); renderWall('wall-dark');
+  if (window.lucide) lucide.createIcons();
+</script>
+</body>
+</html>
