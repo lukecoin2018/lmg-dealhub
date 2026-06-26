@@ -69,10 +69,10 @@ _slated for removal/redirect to `/dashboard`, not yet done_), `/dashboard`, `/ca
 
 ---
 
-## Lesson Pages _(Module 1 complete; 2–10 not yet built)_
-Real Next.js lesson pages live at `/course/module-N`. Module 1 is at `app/course/module-1/page.tsx`.
+## Lesson Pages _(Modules 1–5 complete; 6–10 not yet built)_
+Real Next.js lesson pages live at `/course/module-N`. Modules 1–5 are at `app/course/module-N/page.tsx`.
 
-**Template:** `components/course/LessonLayout.tsx` (client) renders any module from a `ModuleData` object. To add modules 2–10: create a data object in `lib/course/moduleData.ts` matching the `ModuleData` type, then a page at `app/course/module-N/page.tsx` that imports it and renders `<LessonLayout data={moduleN} />`. No other files need touching.
+**Template:** `components/course/LessonLayout.tsx` (client) renders any module from a `ModuleData` object. To add modules 6–10: create a data object in `lib/course/moduleData.ts` matching the `ModuleData` type, add any new visual components to `components/course/visuals/` and register them in the `getVisual()` switch in `LessonLayout.tsx`, add CSS to `styles/lesson.css`, then create a page at `app/course/module-N/page.tsx` that imports the data object and renders `<LessonLayout data={moduleN} />`. Finally add a Lesson link in `app/course/page.tsx` by bumping the `n <= N` threshold.
 
 **Data structure (`lib/course/moduleData.ts`):** Each module has `number`, `slug`, `title`, `heroCopy`, `coverImage`, `outroImage`, `ebookSlug`, `workbookSlug`, `nextModule`, and `segments[]`. Each segment has `id`, `eyebrow`, `title`, `summary`, `duration`, and `videoEmbed` (null = IN PRODUCTION placeholder; set to embed URL to go live — one-line swap per segment).
 

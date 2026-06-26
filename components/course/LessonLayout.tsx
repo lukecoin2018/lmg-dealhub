@@ -12,6 +12,15 @@ import CourseRoadmap from './visuals/CourseRoadmap'
 import ThreeChannels from './visuals/ThreeChannels'
 import OutreachSteps from './visuals/OutreachSteps'
 import MediaKitCallout from './visuals/MediaKitCallout'
+import SelfQuestions from './visuals/SelfQuestions'
+import BrandQuestions from './visuals/BrandQuestions'
+import Scorecard from './visuals/Scorecard'
+import PricingLevers from './visuals/PricingLevers'
+import UsageRights from './visuals/UsageRights'
+import QuoteRange from './visuals/QuoteRange'
+import PitchAnatomy from './visuals/PitchAnatomy'
+import PitchTiming from './visuals/PitchTiming'
+import FollowupCadence from './visuals/FollowupCadence'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -104,6 +113,15 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'three-channels':     return <ThreeChannels />
       case 'outreach-steps':     return <OutreachSteps />
       case 'media-kit-callout':  return <MediaKitCallout />
+      case 'self-questions':     return <SelfQuestions />
+      case 'brand-questions':    return <BrandQuestions />
+      case 'scorecard':          return <Scorecard />
+      case 'pricing-levers':     return <PricingLevers />
+      case 'usage-rights':       return <UsageRights />
+      case 'quote-range':        return <QuoteRange />
+      case 'pitch-anatomy':      return <PitchAnatomy />
+      case 'pitch-timing':       return <PitchTiming />
+      case 'followup-cadence':   return <FollowupCadence />
       default:                   return null
     }
   }

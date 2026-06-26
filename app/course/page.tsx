@@ -39,7 +39,7 @@ export default function CoursePage() {
               <p className="font-semibold truncate" style={{ color: '#1C1917' }}>{title}</p>
             </div>
             <div className="flex gap-2 shrink-0">
-              {(n === 1 || n === 2) && (
+              {n <= 5 && (
                 <Link
                   href={`/course/module-${n}`}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
