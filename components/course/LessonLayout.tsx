@@ -30,6 +30,14 @@ import BusinessBasics from './visuals/BusinessBasics'
 import VendorVsPartner from './visuals/VendorVsPartner'
 import ProductionQuality from './visuals/ProductionQuality'
 import PerformanceReport from './visuals/PerformanceReport'
+import OneoffVsRetainer from './visuals/OneoffVsRetainer'
+import AmbassadorBenefits from './visuals/AmbassadorBenefits'
+import ConversionEmail from './visuals/ConversionEmail'
+import RetainerStructure from './visuals/RetainerStructure'
+import RedFlags from './visuals/RedFlags'
+import GracefulDecline from './visuals/GracefulDecline'
+import FiveSystems from './visuals/FiveSystems'
+import NinetyDayPlan from './visuals/NinetyDayPlan'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -139,8 +147,16 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'business-basics':     return <BusinessBasics />
       case 'vendor-vs-partner':   return <VendorVsPartner />
       case 'production-quality':  return <ProductionQuality />
-      case 'performance-report':  return <PerformanceReport />
-      default:                    return null
+      case 'performance-report':   return <PerformanceReport />
+      case 'oneoff-vs-retainer':   return <OneoffVsRetainer />
+      case 'ambassador-benefits':  return <AmbassadorBenefits />
+      case 'conversion-email':     return <ConversionEmail />
+      case 'retainer-structure':   return <RetainerStructure />
+      case 'red-flags':            return <RedFlags />
+      case 'graceful-decline':     return <GracefulDecline />
+      case 'five-systems':         return <FiveSystems />
+      case 'ninety-day-plan':      return <NinetyDayPlan />
+      default:                     return null
     }
   }
 
@@ -394,8 +410,8 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
               </div>
             </div>
 
-            {/* Next module card */}
-            {data.nextModule && (
+            {/* Next module card — or Course Complete panel for Module 10 */}
+            {data.nextModule ? (
               <div className="lesson-nextmod">
                 <div className="nextmod-label">Up next</div>
                 <div className="nm-card">
@@ -422,6 +438,33 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
                     style={{ backgroundImage: `url('${data.nextModule.coverImage}')` }}
                   >
                     <span className="nm-chip">Module {data.nextModule.number}</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="lesson-complete">
+                <div className="lc-badge">🎓</div>
+                <div className="lc-body">
+                  <p className="lc-eyebrow">The Brand Partnership Playbook · 10 modules</p>
+                  <h2 className="lc-title">Course Complete</h2>
+                  <p className="lc-sub">
+                    You've finished The Complete Brand Partnership Playbook. You now have
+                    the numbers, the filter, the pitch, the contract, and the retainer
+                    structure — not as theory, but as tools for a real deal this week.
+                  </p>
+                  <div className="lc-actions">
+                    <a
+                      href={`/course/${data.workbookSlug}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="lc-btn-primary"
+                    >
+                      Open the Module 10 workbook
+                      <ArrowRight size={16} />
+                    </a>
+                    <Link href="/course" className="lc-btn-secondary">
+                      Back to course index
+                    </Link>
                   </div>
                 </div>
               </div>

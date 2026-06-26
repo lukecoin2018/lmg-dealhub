@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import { BookOpen, PenLine, Play } from 'lucide-react'
-import { module1, module2, module3, module4, module5, module6, module7, module8 } from '@/lib/course/moduleData'
+import { module1, module2, module3, module4, module5, module6, module7, module8, module9, module10 } from '@/lib/course/moduleData'
 
 // Any module whose data object is imported above gets a Lesson link automatically.
-// To add future modules: import the export here and add it to this set.
+// To add future modules: import the export here and add it to this array.
 const builtLessons = new Set(
-  [module1, module2, module3, module4, module5, module6, module7, module8].map(m => m.number)
+  [module1, module2, module3, module4, module5, module6, module7, module8, module9, module10].map(m => m.number)
 )
 
 const modules = [

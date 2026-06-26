@@ -69,8 +69,8 @@ _slated for removal/redirect to `/dashboard`, not yet done_), `/dashboard`, `/ca
 
 ---
 
-## Lesson Pages _(Modules 1–8 complete; 9–10 not yet built)_
-Real Next.js lesson pages live at `/course/module-N`. Modules 1–8 are at `app/course/module-N/page.tsx`.
+## Lesson Pages _(All 10 modules complete — course content-complete, pending real videos)_
+Real Next.js lesson pages live at `/course/module-N`. All 10 modules are at `app/course/module-N/page.tsx`.
 
 **Template:** `components/course/LessonLayout.tsx` (client) renders any module from a `ModuleData` object. To add modules 6–10: create a data object in `lib/course/moduleData.ts` matching the `ModuleData` type, add any new visual components to `components/course/visuals/` and register them in the `getVisual()` switch in `LessonLayout.tsx`, add CSS to `styles/lesson.css`, then create a page at `app/course/module-N/page.tsx` that imports the data object and renders `<LessonLayout data={moduleN} />`. Finally add a Lesson link in `app/course/page.tsx` by bumping the `n <= N` threshold.
 
