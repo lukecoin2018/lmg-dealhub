@@ -1,5 +1,12 @@
 import Link from 'next/link'
 import { BookOpen, PenLine, Play } from 'lucide-react'
+import { module1, module2, module3, module4, module5, module6, module7, module8 } from '@/lib/course/moduleData'
+
+// Any module whose data object is imported above gets a Lesson link automatically.
+// To add future modules: import the export here and add it to this set.
+const builtLessons = new Set(
+  [module1, module2, module3, module4, module5, module6, module7, module8].map(m => m.number)
+)
 
 const modules = [
   { n: 1,  title: 'The Partnership Landscape' },
@@ -39,7 +46,7 @@ export default function CoursePage() {
               <p className="font-semibold truncate" style={{ color: '#1C1917' }}>{title}</p>
             </div>
             <div className="flex gap-2 shrink-0">
-              {n <= 5 && (
+              {builtLessons.has(n) && (
                 <Link
                   href={`/course/module-${n}`}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"

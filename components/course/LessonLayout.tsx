@@ -21,6 +21,15 @@ import QuoteRange from './visuals/QuoteRange'
 import PitchAnatomy from './visuals/PitchAnatomy'
 import PitchTiming from './visuals/PitchTiming'
 import FollowupCadence from './visuals/FollowupCadence'
+import NegotiationPrep from './visuals/NegotiationPrep'
+import NegotiationTactics from './visuals/NegotiationTactics'
+import Objections from './visuals/Objections'
+import ContractSections from './visuals/ContractSections'
+import FtcDisclosure from './visuals/FtcDisclosure'
+import BusinessBasics from './visuals/BusinessBasics'
+import VendorVsPartner from './visuals/VendorVsPartner'
+import ProductionQuality from './visuals/ProductionQuality'
+import PerformanceReport from './visuals/PerformanceReport'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -121,8 +130,17 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'quote-range':        return <QuoteRange />
       case 'pitch-anatomy':      return <PitchAnatomy />
       case 'pitch-timing':       return <PitchTiming />
-      case 'followup-cadence':   return <FollowupCadence />
-      default:                   return null
+      case 'followup-cadence':    return <FollowupCadence />
+      case 'negotiation-prep':    return <NegotiationPrep />
+      case 'negotiation-tactics': return <NegotiationTactics />
+      case 'objections':          return <Objections />
+      case 'contract-sections':   return <ContractSections />
+      case 'ftc-disclosure':      return <FtcDisclosure />
+      case 'business-basics':     return <BusinessBasics />
+      case 'vendor-vs-partner':   return <VendorVsPartner />
+      case 'production-quality':  return <ProductionQuality />
+      case 'performance-report':  return <PerformanceReport />
+      default:                    return null
     }
   }
 
