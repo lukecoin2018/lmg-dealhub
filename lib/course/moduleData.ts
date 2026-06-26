@@ -34,7 +34,7 @@ export interface ModuleData {
   heroCopy: string        // Hero subheading paragraph
   heroImage: string       // Hero background — public/images/course/module-N/hero.jpg
   ebookCover: string      // Ebook book-mockup image — public/images/course/module-N/ebook-cover.jpg
-  outroImage: string      // Outro/closing image — public/images/course/module-N/outro.jpg
+  outroImage?: string     // Outro/closing image — public/images/course/module-N/outro.jpg (optional)
   ebookSlug: string       // Used with /api/course/[slug]
   workbookSlug: string
   nextModule: {
@@ -139,6 +139,98 @@ export const module1: ModuleData = {
         'Before you go, open the Module 1 workbook and write down your "before" picture: your engagement rate, your audience snapshot, and where you want this to be in twelve months. That before picture is how you\'ll measure everything this course is about to change — so get it down honestly. Then I\'ll see you in Module 2.',
       ],
       duration: '13 min',
+      videoEmbed: null,
+    },
+  ],
+}
+
+export const module2: ModuleData = {
+  number: 2,
+  slug: 'module-2',
+  title: 'Finding & Attracting Brands',
+  moduleIntro:
+    'You have your numbers. Now you put them to work — by building the system that brings the right brands to you, instead of waiting for them to show up.',
+  heroCopy:
+    "Go from reactive to proactive. Build a researched target-brand list, a media kit that sells for you, and an inbound setup that makes the right brands come to you — on purpose. The creators who win don't wait to be discovered; they run a system.",
+  heroImage:    '/images/course/module-2/hero.jpg',
+  ebookCover:   '/images/course/module-2/ebook-cover.jpg',
+  ebookSlug:    'module-2-ebook',
+  workbookSlug: 'module-2-workbook',
+  nextModule: {
+    number: 3,
+    title: 'Vetting Opportunities',
+    slug: 'module-3',
+    coverImage: '/images/course/module-3/hero.jpg',
+  },
+  segments: [
+    {
+      id: 'seg-1',
+      eyebrow: 'Chapter 2.1',
+      title: 'Stop Waiting to Be Discovered',
+      summary: 'Most creators are reactive — they take whatever lands in the inbox. This segment flips that: three channels, running in parallel, so you generate the opportunities you want.',
+      visualId: 'three-channels',
+      paragraphs: [
+        "In Module 1 you got your numbers. Now you put them to work — starting with the job most creators skip entirely: building a system that brings the right brands to you, instead of waiting and hoping one shows up.",
+        "Here's the trap nearly everyone falls into, and it has nothing to do with size. You're reactive. You wait for the DM. You take whatever inbound lands. You don't really choose which brands you work with — you just respond to whoever happens to find you. And here's the uncomfortable part: a 300K creator can be every bit as reactive as a 20K one. The only difference is the size of the inbox. Being reactive means your income depends on luck and other people's timing — and that you're constantly working with brands you'd never have picked.",
+        "Going proactive flips all of that. Instead of waiting, you generate a steady flow of opportunities from the brands you actually want. And the way you do it is by running three channels at once — because there are exactly three ways a brand opportunity reaches you. Channel one: you go to them (direct outreach). Channel two: a platform connects you (networks and marketplaces). Channel three: they come to you (inbound discovery). Most creators lean on one and ignore the rest. The ones who build reliable income run all three in parallel — so when one goes quiet, the others keep producing.",
+        "That's the shift this module makes: from waiting by the phone to running a pipeline. Let's build it.",
+      ],
+      duration: '10 min',
+      videoEmbed: null,
+    },
+    {
+      id: 'seg-2',
+      eyebrow: 'Chapter 2.2',
+      title: 'Build Your Target-Brand List',
+      summary: 'Direct outreach is the channel where you\'re in the driver\'s seat. It comes down to four moves — and the one most creators skip is the one that makes everything else work.',
+      visualId: 'outreach-steps',
+      paragraphs: [
+        "The most powerful channel is the one where you're in the driver's seat: direct outreach. Instead of hoping the right brand finds you, you decide which brands you want — and go get them. It comes down to four moves.",
+        "First, build the list — aim for 20 to 30 brands. Three things get a brand on it: ones you already use and love, ones whose aesthetic matches your content, and ones whose customers look like your audience. (This is where the audience snapshot you pulled in Module 1 starts earning its keep.) Second, look wide, not just big. See what creators similar to you already partner with — those brands clearly invest in creators — and don't ignore smaller or newer brands without a mature influencer program. They're often easier to start with and can grow into something long-term. Third, research each one before you reach out: their recent campaigns, their latest launches, who seems to make partnership decisions. You're hunting for specifics, because specifics are what separate a real pitch from a generic one. And fourth — the move most creators skip — warm them up first. Engage genuinely before you ever pitch: thoughtful comments, sharing their content, tagging them when you actually use the product. By the time your outreach lands, you're not a cold stranger. You're a name they've already seen.",
+        "We write the actual pitch in Module 5. Right now you're building the list and the relationships that make that pitch impossible to ignore.",
+      ],
+      duration: '12 min',
+      videoEmbed: null,
+    },
+    {
+      id: 'seg-3',
+      eyebrow: 'Chapter 2.3',
+      title: 'The Media Kit That Sells For You',
+      summary: 'One clean page that lets a brand understand your value in thirty seconds. This is where your Module 1 numbers go to work — and the framing of that first line is everything.',
+      visualId: 'media-kit-callout',
+      paragraphs: [
+        "Before you go to market, you need the one document that does your selling for you: a single, clean page that lets a brand understand your value in about thirty seconds. Brands forward media kits around internally, so yours has to stand on its own — and this is exactly where your Module 1 numbers go to work.",
+        "Four things belong on it. A short bio — your niche and what makes you valuable, in a sentence or two. Your audience demographics — real numbers from Module 1: age, location, gender split, interests. Your engagement metrics — your pricing-power number, the proof that your audience actually responds. And a few of your strongest pieces of content, with brief results if you have them. But here's the part that decides whether the kit works: lead with engagement and audience fit, not raw follower count. Don't open with \"50,000 followers.\" Open with \"50,000 followers, 6.8% engagement, audience 82% women 25–40 actively shopping for sustainable products.\" The first is a number. The second tells a brand their exact customer is already here — and that framing is your edge at any size. Update it every quarter so it never quietly undersells you.",
+        "This is the asset that turns a cold brand warm before you've said a word. Build it once, sharpen it often.",
+      ],
+      duration: '9 min',
+      videoEmbed: null,
+    },
+    {
+      id: 'seg-4',
+      eyebrow: 'Chapter 2.4',
+      title: 'Let the Platforms Work For You',
+      summary: 'Channels two and three work in the background while you sleep. Set them up once and they quietly generate opportunities on their own.',
+      paragraphs: [
+        "Channels two and three do something the first one can't: they work in the background while you sleep. Set them up once, and they quietly generate opportunities on their own.",
+        "Channel two is platforms and networks — your matchmakers. Influencer platforms connect creators and brands and handle the contracts, approvals, and payments; you apply to campaigns or get discovered by brands searching your criteria, so a strong profile matters. Affiliate networks run underneath everything else: smaller per-sale payouts than a flat fee, but passive income that compounds, especially on evergreen content. And talent agencies are a later-stage option — they take 15–20% for premium deals and negotiation, but they're selective and sign proven creators, so don't chase representation early; build your foundation and the good ones come to you. Channel three is making yourself findable. Most of it is a one-time setup that works forever: a professional email and an explicit \"Partnership inquiries:\" line in your bio, a Business account, consistent niche hashtags (serving your audience first — and never #ad on content that isn't sponsored), and a simple one-page landing site with your media kit and contact form that signals you run a real business. Don't overlook your creator network either — brands ask creators they trust for referrals, so be the generous name that comes up.",
+        "Run all three channels together and you've got a pipeline engine, not a waiting game.",
+      ],
+      duration: '11 min',
+      videoEmbed: null,
+    },
+    {
+      id: 'seg-5',
+      eyebrow: 'Chapter 2.5',
+      title: 'Where This Is Going',
+      summary: 'You now have a pipeline engine. Here\'s the next problem it creates — and how Module 3 solves it.',
+      visualId: 'course-roadmap',
+      paragraphs: [
+        "You now have a pipeline engine: a researched target list, a media kit that sells for you, platforms working quietly in the background, and an inbound setup that makes the right brands come to you. That's the difference between waiting to be discovered and running a system — and it holds whether you're at 20K or 500K.",
+        "But here's what happens next, and it's a good problem: once this pipeline starts producing, you'll have more offers than you can take. And not every brand deserves a yes. A single paycheck from the wrong partner can cost you the audience trust you spent years building. So Module 3 builds your filter — how to vet opportunities and say yes only to the deals worth your time, your content, and your credibility. From there the course keeps following the real path of a deal: pricing what you're worth, pitching so brands reply, negotiating without the knot in your stomach, locking it in with contracts you understand, and turning those wins into recurring income.",
+        "Before you go, open your Module 2 workbook and start building: your target-brand list, your media-kit content, and a weekly outreach habit. Pipelines reward consistency, not bursts — so the habit matters more than the burst. Get it started, and I'll see you in Module 3.",
+      ],
+      duration: '8 min',
       videoEmbed: null,
     },
   ],

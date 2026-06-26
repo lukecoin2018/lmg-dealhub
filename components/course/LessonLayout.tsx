@@ -9,6 +9,9 @@ import RevenueStreamsGrid from './visuals/RevenueStreamsGrid'
 import EngagementCallout from './visuals/EngagementCallout'
 import EngagementRateViz from './visuals/EngagementRateViz'
 import CourseRoadmap from './visuals/CourseRoadmap'
+import ThreeChannels from './visuals/ThreeChannels'
+import OutreachSteps from './visuals/OutreachSteps'
+import MediaKitCallout from './visuals/MediaKitCallout'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -98,6 +101,9 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'engagement-callout': return <EngagementCallout />
       case 'engagement-rate':    return <EngagementRateViz />
       case 'course-roadmap':     return <CourseRoadmap currentModule={data.number} />
+      case 'three-channels':     return <ThreeChannels />
+      case 'outreach-steps':     return <OutreachSteps />
+      case 'media-kit-callout':  return <MediaKitCallout />
       default:                   return null
     }
   }

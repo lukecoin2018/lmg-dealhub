@@ -1898,4 +1898,252 @@
   .ec-callout { padding: 20px 16px; border-radius: var(--r-lg); }
   .er-formula { gap: 6px; }
   .er-tiers { gap: 7px; }
+  .tc-cards { grid-template-columns: 1fr; }
+  .mk-row { flex-direction: column; gap: 12px; }
+  .mk-divider { transform: rotate(90deg); align-self: center; }
+}
+
+/* ─── Three channels (2.1) ───────────────────────────────── */
+.tc-wrap {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-xl);
+  padding: 28px 24px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tc-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lmg-pink);
+  margin: 0 0 18px;
+}
+
+.tc-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.tc-card {
+  background: var(--neutral-50);
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-lg);
+  padding: 20px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tc-num {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--fg-3);
+  margin-bottom: 2px;
+}
+
+.tc-name {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg-1);
+  line-height: 1.2;
+}
+
+.tc-dir {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lmg-pink-deep);
+  background: var(--lmg-pink-soft);
+  border-radius: 999px;
+  padding: 3px 10px;
+  align-self: flex-start;
+  margin: 4px 0 2px;
+}
+
+.tc-desc {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--fg-2);
+  margin: 4px 0 0;
+}
+
+/* ─── Outreach steps (2.2) ───────────────────────────────── */
+.os-wrap {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-xl);
+  padding: 28px 24px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.os-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lmg-yellow-deep);
+  margin: 0 0 20px;
+}
+
+.os-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.os-step {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.os-step:last-child { border-bottom: none; padding-bottom: 0; }
+.os-step:first-child { padding-top: 0; }
+
+.os-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--lmg-yellow-soft);
+  border: 1.5px solid var(--lmg-yellow-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 800;
+  color: #7A5C00;
+}
+
+.os-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.os-title {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-1);
+  line-height: 1.3;
+}
+
+.os-guidance {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  margin: 0;
+}
+
+/* ─── Media kit callout (2.3) ────────────────────────────── */
+.mk-callout {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-xl);
+  padding: 28px 24px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.mk-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lmg-pink);
+  margin: 0 0 18px;
+}
+
+.mk-row {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.mk-side {
+  flex: 1;
+  border-radius: var(--r-lg);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mk-side--weak {
+  background: var(--neutral-100);
+  border: 1.5px solid var(--border-2);
+}
+
+.mk-side--strong {
+  background: var(--lmg-pink-soft);
+  border: 1.5px solid var(--lmg-pink);
+}
+
+.mk-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  padding: 3px 10px;
+  align-self: flex-start;
+}
+
+.mk-tag--weak   { background: var(--border-2); color: var(--fg-3); }
+.mk-tag--strong { background: var(--lmg-pink); color: #fff; }
+
+.mk-text {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--fg-1);
+  margin: 0;
+  font-weight: 500;
+}
+
+.mk-text em {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--lmg-pink-deep);
+}
+
+.mk-divider {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fg-3);
+  flex-shrink: 0;
+  align-self: center;
+  padding-top: 28px;
+}
+
+.mk-note {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--fg-2);
+  text-align: center;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-1);
 }
