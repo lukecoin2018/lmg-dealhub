@@ -1423,3 +1423,42 @@ body {
 .wb-tkcard.pack { border-color: var(--blue-soft); background: var(--blue-tint); }
 .wb-tkcard .cn { font-family: var(--sans); font-weight: 800; font-size: 11.5px; color: var(--grey); display: block; }
 .wb-tkcard .cd { font-family: var(--sans); font-weight: 500; font-size: 9.5px; line-height: 1.35; color: var(--grey-2); margin-top: 3px; }
+
+/* ─── Mobile reflow  (screen only, ≤ 860px) ────────────────────────────
+   @media print locks .page back to 816 × 1056 px — PDF output unchanged.
+   lmg-mobile-v1 */
+@media screen and (max-width: 860px) {
+  body    { padding: 0 0 60px; gap: 0; align-items: stretch; }
+  .page   { width: 100%; min-height: 0; border-radius: 0; box-shadow: none; border-bottom: 1px solid var(--line); }
+  .toolbar { top: 0; border-radius: 0; padding: 10px 16px; justify-content: space-between; }
+  .toolbar .meta, .toolbar .sep { display: none; }
+
+  /* ebook multi-column → collapsed */
+  .eb-body.cols  { grid-template-columns: 1fr; column-gap: 0; }
+  .eb-deals      { grid-template-columns: 1fr 1fr; }
+  .eb-mult       { grid-template-columns: 1fr 1fr; }
+  .eb-timing     { grid-template-columns: 1fr 1fr; }
+  .eb-bench      { grid-template-columns: 1fr 1fr; }
+  .eb-plan       { grid-template-columns: 1fr 1fr; }
+  .eb-objrow     { grid-template-columns: 1fr; }
+  .eb-seq        { grid-template-columns: 1fr; }
+  .eb-seq .arr   { display: none; }
+  .eb-anat .bd   { grid-template-columns: 1fr; }
+  .eb-reprow .bd { grid-template-columns: 1fr; }
+
+  /* workbook multi-column → collapsed */
+  .wb-row2       { grid-template-columns: 1fr; gap: 12px; }
+  .wb-checks     { grid-template-columns: 1fr 1fr; }
+  .wb-objrow     { grid-template-columns: 1fr; }
+  .wb-polrow     { grid-template-columns: 1fr; border-radius: 12px; }
+  .wb-sign       { grid-template-columns: 1fr; }
+  .wb-sched      { grid-template-columns: 1fr; }
+  .wb-sched .arr { display: none; }
+  .wb-reviewrow  { grid-template-columns: 30px 1fr; }
+  .wb-reviewrow .rt { display: none; }
+  .wb-brief-meta { grid-template-columns: 1fr 1fr; }
+  .wb-tkcards    { grid-template-columns: 1fr 1fr; }
+  .wb-flaggroup.span2 .items { grid-template-columns: 1fr 1fr; }
+  .atf           { grid-template-columns: 1fr 1fr; }
+  .calc-cta      { grid-template-columns: 1fr; gap: 14px; }
+}
