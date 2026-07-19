@@ -7,6 +7,10 @@ import type { Segment } from '@/lib/course/moduleData'
 const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
 
 function durationToTimecode(duration: string): string {
+  if (duration.includes(':')) {
+    const [m, s] = duration.split(':')
+    return `${String(parseInt(m)).padStart(2, '0')}:${(s ?? '00').padStart(2, '0')}`
+  }
   const m = parseInt(duration)
   return isNaN(m) ? '00:00' : `${String(m).padStart(2, '0')}:00`
 }
