@@ -222,6 +222,21 @@ export const module2: ModuleData = {
     {
       id: 'seg-5',
       eyebrow: 'Chapter 2.5',
+      title: 'Make Brands Find You',
+      summary: "Three one-time setup moves — a professional contact surface, consistent hashtags, and a simple landing page — that keep working for you long after you close the laptop. Plus the referral network most creators overlook.",
+      paragraphs: [
+        "The first two channels put you in motion — you're reaching out, you're on platforms. This one runs differently: it makes you findable, so the right brands come to you on their own. Most of it is a one-time setup, and it keeps working indefinitely once it's in place.",
+        "Start with your contact surface. A professional business email — not a personal Gmail, something with your brand name — signals immediately that you run a business, not a hobby. Switch to a Business or Creator account on your main platform; it unlocks the analytics brands ask about and removes friction for anyone trying to connect with you officially. And put an explicit line in your bio: \"Partnership inquiries: [email].\" Don't make brands guess how to reach you. The ones who can't find a clean contact path often don't bother.",
+        "Second, be consistent with your niche hashtags — and think about your audience first, not brands. A hashtag is a discovery tool for the people you're trying to reach; brand visibility is a side effect of building a real audience, not something you manufacture. One hard rule: never use #ad, #sponsored, or #partner on content that isn't a paid partnership. The FTC requirement exists to protect audiences, and the creators who blur that line lose both trust and brand confidence fast.",
+        "Third, a simple landing page does something no social bio can: it tells a brand they're dealing with a professional. One page is enough — your media kit, two or three portfolio pieces, a short bio, and a contact form. Squarespace, Wix, and Carrd all work fine; the platform doesn't matter. Link to it everywhere: bio, email signature, media kit. When a brand types your name into Google, they should find something that answers every question they'd have before reaching out.",
+        "Finally, don't underestimate your creator network. Brands regularly ask creators they trust — \"know anyone good for this?\" — and those referrals land differently than cold inbound. Be generous with introductions, celebrate other creators' work, and operate from abundance rather than scarcity. The name that comes up in those conversations earns opportunities that never hit a public channel.",
+      ],
+      duration: '10 min',
+      videoEmbed: null,
+    },
+    {
+      id: 'seg-6',
+      eyebrow: 'Chapter 2.6',
       title: 'Where This Is Going',
       summary: 'You now have a pipeline engine. Here\'s the next problem it creates — and how Module 3 solves it.',
       visualId: 'course-roadmap',
