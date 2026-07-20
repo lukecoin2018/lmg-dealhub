@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Manrope, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/providers/Providers';
 
-const inter = Inter({ subsets: ['latin'] });
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
 
 export const metadata: Metadata = {
   title: 'DealHub',
@@ -16,14 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${manrope.variable} ${playfair.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('dealhub-theme') || 'dark';
+                  var theme = localStorage.getItem('dealhub-theme') || 'light';
                   var isDark = theme === 'dark' || 
                     (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
                   if (isDark) {
@@ -35,7 +36,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={manrope.className}>
         <Providers>
           {children}
         </Providers>

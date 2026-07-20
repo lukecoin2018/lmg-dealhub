@@ -27,9 +27,9 @@ export default function Sidebar() {
     <div className="flex flex-col h-full w-64 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)]">
       {/* Logo */}
       <div className="flex items-center h-16 px-6 border-b border-[var(--color-border)]">
-        <h1 className="text-xl font-bold">
-          <span className="text-brand-yellow">Deal</span>
-          <span className="text-brand-pink">Hub</span>
+        <h1 className="text-3xl font-bold" style={{fontFamily: 'var(--font-playfair, "Playfair Display", Georgia, serif)', textShadow: '0 1px 3px rgba(28,25,23,0.18)'}}>
+          <span className="text-brand-pink">Deal</span>
+          <span className="text-brand-yellow">Hub</span>
         </h1>
       </div>
 
@@ -44,7 +44,7 @@ export default function Sidebar() {
               className={`
                 flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all
                 ${isActive
-                  ? 'bg-brand-yellow text-black'
+                  ? 'bg-brand-pink text-white'
                   : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)] hover:text-[var(--color-text-primary)]'
                 }
               `}

@@ -13,31 +13,45 @@
 
 /* NEW - Light mode (default) */
 :root {
-  --color-bg-primary: #FFFFFF;
-  --color-bg-secondary: #F9FAFB;
-  --color-bg-tertiary: #F3F4F6;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6B7280;
-  --color-text-tertiary: #9CA3AF;
-  --color-border: #E5E7EB;
+  --color-bg-primary: #F7F4EF;
+  --color-bg-secondary: #F5F2EC;
+  --color-bg-tertiary: #EDE9E2;
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #78716C;
+  --color-text-tertiary: #A8A29E;
+  --color-border: #E5E0D5;
+  /* Surface aliases (used by Card.tsx) */
+  --color-surface: #F5F2EC;
+  --color-surface-secondary: #EDE9E2;
+  --color-border-hover: #D4CFC6;
 }
 
 /* NEW - Dark mode (when .dark class is present) */
 :root.dark,
 .dark {
-  --color-bg-primary: #0a0f1a;      /* Deep navy for main content */
-  --color-bg-secondary: #121b2e;     /* Lighter navy for sidebar/header */
-  --color-bg-tertiary: #1a2332;      /* Even lighter for hover states */
+  --color-bg-primary: #0a0f1a;
+  --color-bg-secondary: #121b2e;
+  --color-bg-tertiary: #1a2332;
   --color-text-primary: #FFFFFF;
   --color-text-secondary: #D1D5DB;
   --color-text-tertiary: #9CA3AF;
   --color-border: #404040;
+  --color-surface: #1e293b;
+  --color-surface-secondary: #263348;
+  --color-border-hover: #606060;
 }
 
 
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
+  font-family: var(--font-manrope, 'Manrope', system-ui, sans-serif);
+}
+
+/* Page headings in dashboard content use Playfair Display */
+main h1 {
+  font-family: var(--font-playfair, 'Playfair Display', Georgia, serif);
+  font-weight: 700;
 }
 
 /* NEW - Smooth theme transitions */
@@ -126,16 +140,18 @@ input:-webkit-autofill:focus {
   transform: translateY(-4px);
 }
 
-/* Light mode - cards are white, background is light gray */
+/* Light mode - warm white cards on warm gray ground */
+:root:not(.dark) .premium-card,
 [data-theme="light"] .premium-card {
-  background-color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: #F5F2EC;
+  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.04);
+  border: 1px solid var(--color-border);
 }
 
+:root:not(.dark) .premium-card:hover,
 [data-theme="light"] .premium-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 24px rgba(28, 25, 23, 0.10);
+  border: 1px solid var(--color-border-hover);
 }
 
 /* Dark mode - cards with nice contrast */
