@@ -1510,6 +1510,24 @@
   margin: 36px 0;
 }
 
+.seg-next-cta {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 32px;
+  padding: 13px 28px;
+  background: var(--lmg-pink);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: opacity .15s ease, transform .15s ease;
+  white-space: nowrap;
+}
+.seg-next-cta:hover { opacity: .88; transform: translateY(-1px); }
+.seg-next-cta:active { opacity: 1; transform: translateY(0); }
+
 /* ─── Revenue streams grid (1.2) ─────────────────────────── */
 .rs-grid {
   background: var(--bg-card);

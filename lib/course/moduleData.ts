@@ -15,6 +15,8 @@ export interface Segment {
   summary: string         // Short one-liner — used in course index cards and rail tooltips
   paragraphs?: string[]   // Full lesson copy rendered in the lesson view; falls back to summary when absent
   visualId?: string       // Identifier for an injected visual component (e.g. 'revenue-streams')
+  nextHref?: string       // If set, renders a "Continue to …" CTA button after the segment's visual
+  nextLabel?: string      // Button label — defaults to "Continue →" if nextHref is set but nextLabel is omitted
   duration: string        // e.g. "12 min"
   videoEmbed: string | null  // null = show IN PRODUCTION placeholder; swap to embed URL to go live (one-line change)
   pullQuote?: {
@@ -75,7 +77,7 @@ export const module1: ModuleData = {
         'Here\'s something that\'s true at 20K followers and still true at 500K: the creators making real, reliable money from brand partnerships aren\'t the biggest ones. They\'re the ones who treat this like a business instead of taking whatever lands in their inbox.',
         'You already know the feeling. A brand offers a number, and you take it — because pushing back feels risky. You hand over usage rights, exclusivity, an extra deliverable "to keep them happy," and never charge for any of it. You run one great campaign, and then the brand goes quiet and so does the income. None of that is because your audience is too small or your content isn\'t good enough. It\'s because no one ever gave you the system. That\'s not a talent problem. It\'s a systems problem — and systems can be learned.',
         'That\'s what this course is. By the time you finish, you\'ll find and attract the specific brands you actually want to work with. You\'ll price your work with real confidence and defend that price without flinching. You\'ll stop saying yes to lowball offers — not because you\'re told to, but because you\'ll finally know what your time and creative energy are genuinely worth. And the biggest shift: you\'ll turn scattered one-off deals into steady, recurring income you can actually plan your life around.',
-        'This isn\'t only knowledge, either. You get the tools that do the work with you — a rate calculator, a negotiation assistant, a contract builder — on every deal you take from here on out. The course teaches you to think like a professional; the tools keep you operating like one.',
+        'This isn\'t only knowledge, either. As you go, the course hands you the tools that do the work with you — the full rate calculator in Module 4, a negotiation assistant in Module 6, a contract builder in Module 7 — so on every deal from here on out, you\'re not just thinking like a professional, you\'re operating like one.',
         'This first module is where you get your bearings: every way you can get paid, what actually decides your rate, and an honest baseline on where your business stands today. Let\'s start with the money — because most creators are using a fraction of what\'s available to them.',
       ],
       duration: '1:49',
@@ -131,11 +133,13 @@ export const module1: ModuleData = {
       title: 'Where This Is Going',
       summary: 'You have your bearings. Here\'s the full build — ten modules that follow the exact path a real deal travels, from pipeline to recurring income.',
       visualId: 'course-roadmap',
+      nextHref: '/course/module-2',
+      nextLabel: 'Continue to Module 2',
       paragraphs: [
         'You now have your bearings: the full menu of how you get paid, the five levers that actually set your rate, and an honest baseline on your own business. That\'s the foundation. Here\'s the build.',
         'From here, the course follows the exact path a real deal travels — each module handing off to the next. You\'ll go on offense and build a pipeline of the specific brands you want, instead of waiting to be found. You\'ll learn to vet opportunities so you only say yes to deals worth your time. You\'ll set real rates — and finally charge for the usage, exclusivity, and add-ons you\'ve been giving away. You\'ll pitch so brands actually reply, negotiate without the knot in your stomach, and lock deals in with contracts you genuinely understand. You\'ll deliver work that gets you rebooked. And then the big one: you\'ll turn those scattered one-off wins into recurring monthly income through ambassadorships and retainers — before protecting the whole thing for the long haul.',
-        'That\'s the journey from here. Every module builds on the numbers you just found, and every one comes with the tools to put it into practice on real deals — not someday, but the next time a brand reaches out.',
-        'Before you go, open the Module 1 workbook and write down your "before" picture: your engagement rate, your audience snapshot, and where you want this to be in twelve months. That before picture is how you\'ll measure everything this course is about to change — so get it down honestly. Then I\'ll see you in Module 2.',
+        'That\'s the journey from here. Every module builds on the numbers you just found, and each brings the tool that puts it into practice — the calculator, the negotiation assistant, the contract builder, and more — so you\'re ready the next time a brand reaches out, not someday.',
+        'Before you go, open the Module 1 workbook and write down your "before" picture: your engagement rate, your audience snapshot, and where you want this to be in twelve months. That before picture is how you\'ll measure everything this course is about to change — so get it down honestly. When you\'re ready, Module 2 is where the real work begins: building a pipeline of the brands you actually want.',
       ],
       duration: '1:52',
       videoEmbed: 'https://player.mediadelivery.net/embed/708086/f498acea-caef-47c7-8f46-e99f86b6aa23?autoplay=false&loop=false&muted=false&preload=true&responsive=true',

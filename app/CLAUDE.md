@@ -92,6 +92,7 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 
 4. **Access gate after Module 1** — phased: email capture → login/accounts (replacing per-device `localStorage` progress) → payment. This is the deferred auth phase that also enables real sequential module gating on the landing page. _(planned)_
    - When the paid gate goes live: switch the `RateCalculatorMini` upsell block from Variant 2 (checklist + pink ✓) to Variant 3 (checklist + lock icons). The lock framing is correct once content is actually gated — premature while the course is free. See `components/course/visuals/RateCalculatorMini.tsx`.
+   - When the paid gate goes live: update the Module 1 Ch 1.5 "Continue to Module 2 →" CTA (`nextHref`/`nextLabel` on seg-5 in `moduleData.ts`) to point at the enroll/unlock/paywall flow instead of `/course/module-2` directly.
 
 ---
 

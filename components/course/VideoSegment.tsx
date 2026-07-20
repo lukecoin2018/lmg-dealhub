@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import type { Segment } from '@/lib/course/moduleData'
 
@@ -104,6 +105,12 @@ export default function VideoSegment({ segment, index, isComplete, onToggleCompl
           : <p>{segment.summary}</p>}
 
         {visual && <div className="seg-visual">{visual}</div>}
+
+        {segment.nextHref && (
+          <Link href={segment.nextHref} className="seg-next-cta">
+            {segment.nextLabel ?? 'Continue'} →
+          </Link>
+        )}
 
         {segment.pullQuote && (
           <div className="pullquote">
