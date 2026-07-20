@@ -209,7 +209,7 @@ export default function RateCalculatorMini() {
             <span className={`rcm-tier-badge rcm-tier-badge--${engTier}`}>{tierLabel}</span>
           )}
           <div className="rcm-upsell">
-            <p className="rcm-upsell-lead">This is your baseline from followers and engagement alone. The full rate calculator also handles:</p>
+            <p className="rcm-upsell-lead">This is your baseline from followers and engagement alone. The complete rate calculator in Module 04 also factors in:</p>
             <ul className="rcm-checklist">
               {[
                 'Full campaign pricing — multiple deliverables, not just one post',
