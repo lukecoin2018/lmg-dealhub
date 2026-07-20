@@ -38,6 +38,7 @@ import RedFlags from './visuals/RedFlags'
 import GracefulDecline from './visuals/GracefulDecline'
 import FiveSystems from './visuals/FiveSystems'
 import NinetyDayPlan from './visuals/NinetyDayPlan'
+import RateCalculatorMini from './visuals/RateCalculatorMini'
 import '@/styles/lesson.css'
 
 interface LessonLayoutProps {
@@ -155,7 +156,8 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'red-flags':            return <RedFlags />
       case 'graceful-decline':     return <GracefulDecline />
       case 'five-systems':         return <FiveSystems />
-      case 'ninety-day-plan':      return <NinetyDayPlan />
+      case 'ninety-day-plan':          return <NinetyDayPlan />
+      case 'rate-calculator-mini':     return <RateCalculatorMini />
       default:                     return null
     }
   }
