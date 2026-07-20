@@ -91,6 +91,7 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 3. **Dashboard reskin** — align the DealHub dashboard with the course's light editorial look (course tokens, Playfair/Manrope, `#FAFAF8`). Dashboard already has a light mode; intent is to make light the default and match the course aesthetic. Dark-toggle-vs-light-only TBD. _(planned)_
 
 4. **Access gate after Module 1** — phased: email capture → login/accounts (replacing per-device `localStorage` progress) → payment. This is the deferred auth phase that also enables real sequential module gating on the landing page. _(planned)_
+   - When the paid gate goes live: switch the `RateCalculatorMini` upsell block from Variant 2 (checklist + pink ✓) to Variant 3 (checklist + lock icons). The lock framing is correct once content is actually gated — premature while the course is free. See `components/course/visuals/RateCalculatorMini.tsx`.
 
 ---
 

@@ -208,11 +208,22 @@ export default function RateCalculatorMini() {
           {tierLabel && (
             <span className={`rcm-tier-badge rcm-tier-badge--${engTier}`}>{tierLabel}</span>
           )}
-          <p className="rcm-upsell">
-            This is your baseline from followers and engagement alone, for one standard Instagram reel.
-            The full rate calculator factors in your exact deliverables, usage rights, exclusivity,
-            and long-term deal terms — so every individual deal is priced precisely.
-          </p>
+          <div className="rcm-upsell">
+            <p className="rcm-upsell-lead">This is your baseline from followers and engagement alone. The full rate calculator also handles:</p>
+            <ul className="rcm-checklist">
+              {[
+                'Full campaign pricing — multiple deliverables, not just one post',
+                'Usage rights (organic vs. paid, 30 days → perpetual)',
+                'Whitelisting',
+                'Exclusivity terms',
+                'Red-flag detection on bad-deal terms',
+                'Negotiation strategy — opening ask, walk-away, script',
+                'Ready-to-send rate email template',
+              ].map(item => (
+                <li key={item} className="rcm-checklist-item"><span className="rcm-check">✓</span>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
