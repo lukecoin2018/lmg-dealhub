@@ -157,6 +157,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'negotiation-tactics': return <NegotiationTactics />
       case 'objections':          return <Objections />
       case 'contract-sections':   return <ContractSections />
+      case 'contract-sections-foundation': return <ContractSections show="foundation" />
       case 'ftc-disclosure':      return <FtcDisclosure />
       case 'business-basics':     return <BusinessBasics />
       case 'vendor-vs-partner':   return <VendorVsPartner />

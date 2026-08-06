@@ -1,4 +1,12 @@
-const foundation = [
+type Section = {
+  num: number
+  label: string
+  tag: string
+  tagVariant: string
+  detail: string
+}
+
+const foundation: Section[] = [
   {
     num: 1,
     label: 'Parties & Scope',
@@ -29,7 +37,7 @@ const foundation = [
   },
 ]
 
-const protective = [
+const protective: Section[] = [
   {
     num: 5,
     label: 'Revisions & Approvals',
@@ -60,52 +68,57 @@ const protective = [
   },
 ]
 
-export default function ContractSections() {
+function SectionGroup({ nums, title, variant, sections }: {
+  nums: string
+  title: string
+  variant: 'foundation' | 'protective'
+  sections: Section[]
+}) {
+  return (
+    <div className={variant === 'protective' ? 'cs-group cs-group--protective' : 'cs-group'}>
+      <div className={`cs-group-label cs-group-label--${variant}`}>
+        <span className="cs-group-nums">{nums}</span>
+        {title}
+      </div>
+      <div className="cs-rows">
+        {sections.map(s => (
+          <div key={s.num} className={`cs-row cs-row--${s.tagVariant}`}>
+            <div className="cs-row-left">
+              <span className="cs-row-num">{s.num}</span>
+              <span className={`cs-tag cs-tag--${s.tagVariant}`}>{s.tag}</span>
+            </div>
+            <div className="cs-row-body">
+              <strong className="cs-row-label">{s.label}</strong>
+              <p className="cs-row-detail">{s.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+interface ContractSectionsProps {
+  /** 'foundation' shows only sections 1–4 (Ch 7.2, Part 1). Default shows all eight. */
+  show?: 'all' | 'foundation'
+}
+
+export default function ContractSections({ show = 'all' }: ContractSectionsProps) {
+  const foundationOnly = show === 'foundation'
+
   return (
     <div className="cs-wrap">
-      <p className="cs-eyebrow">Eight sections — each guarding against a specific way creators get burned</p>
+      <p className="cs-eyebrow">
+        {foundationOnly
+          ? 'The first four — the foundation every contract is built on'
+          : 'Eight sections — each guarding against a specific way creators get burned'}
+      </p>
 
-      <div className="cs-group">
-        <div className="cs-group-label cs-group-label--foundation">
-          <span className="cs-group-nums">1–4</span>
-          Foundation
-        </div>
-        <div className="cs-rows">
-          {foundation.map(s => (
-            <div key={s.num} className={`cs-row cs-row--${s.tagVariant}`}>
-              <div className="cs-row-left">
-                <span className="cs-row-num">{s.num}</span>
-                <span className={`cs-tag cs-tag--${s.tagVariant}`}>{s.tag}</span>
-              </div>
-              <div className="cs-row-body">
-                <strong className="cs-row-label">{s.label}</strong>
-                <p className="cs-row-detail">{s.detail}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      <SectionGroup nums="1–4" title="Foundation" variant="foundation" sections={foundation} />
 
-      <div className="cs-group cs-group--protective">
-        <div className="cs-group-label cs-group-label--protective">
-          <span className="cs-group-nums">5–8</span>
-          Protective layers
-        </div>
-        <div className="cs-rows">
-          {protective.map(s => (
-            <div key={s.num} className={`cs-row cs-row--${s.tagVariant}`}>
-              <div className="cs-row-left">
-                <span className="cs-row-num">{s.num}</span>
-                <span className={`cs-tag cs-tag--${s.tagVariant}`}>{s.tag}</span>
-              </div>
-              <div className="cs-row-body">
-                <strong className="cs-row-label">{s.label}</strong>
-                <p className="cs-row-detail">{s.detail}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {!foundationOnly && (
+        <SectionGroup nums="5–8" title="Protective layers" variant="protective" sections={protective} />
+      )}
 
       <p className="cs-footer">You keep ownership — they get a license. That one line is the difference between renting your work and giving it away.</p>
     </div>
