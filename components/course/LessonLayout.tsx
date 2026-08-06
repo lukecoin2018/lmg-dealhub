@@ -47,6 +47,21 @@ interface LessonLayoutProps {
 
 const STORAGE_KEY_PREFIX = 'lmg-lesson-progress-v1-'
 
+// Durations are either a real runtime ("2:28") or a pre-production
+// placeholder ("12 min"). Both have to sum correctly while modules are
+// mid-wiring, so normalise to seconds before adding anything up.
+function durationToSeconds(duration: string): number {
+  if (duration.includes(':')) {
+    const [m, s] = duration.split(':')
+    const mins = parseInt(m)
+    const secs = parseInt(s ?? '0')
+    if (isNaN(mins)) return 0
+    return mins * 60 + (isNaN(secs) ? 0 : secs)
+  }
+  const mins = parseInt(duration)
+  return isNaN(mins) ? 0 : mins * 60
+}
+
 export default function LessonLayout({ data }: LessonLayoutProps) {
   const storageKey = STORAGE_KEY_PREFIX + data.slug
 
@@ -115,10 +130,8 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
 
   const completedCount = mounted ? data.segments.filter(s => completed[s.id]).length : 0
 
-  const totalMinutes = data.segments.reduce((sum, s) => {
-    const m = parseInt(s.duration)
-    return sum + (isNaN(m) ? 0 : m)
-  }, 0)
+  const totalSeconds = data.segments.reduce((sum, s) => sum + durationToSeconds(s.duration), 0)
+  const totalMinutes = Math.round(totalSeconds / 60)
 
   const moduleNum = String(data.number).padStart(2, '0')
 
