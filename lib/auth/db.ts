@@ -49,6 +49,17 @@ export function findUserById(id: number): UserRow | undefined {
   return getDb().prepare('SELECT * FROM users WHERE id = ?').get(id) as UserRow | undefined
 }
 
+export function listUsers(): UserRow[] {
+  return getDb()
+    .prepare('SELECT * FROM users ORDER BY created_at DESC, id DESC')
+    .all() as UserRow[]
+}
+
+export function setUserAccess(id: number, hasAccess: 0 | 1): UserRow | undefined {
+  getDb().prepare('UPDATE users SET has_access = ? WHERE id = ?').run(hasAccess, id)
+  return findUserById(id)
+}
+
 export function createUser(email: string, passwordHash: string): UserRow {
   const normalized = email.trim().toLowerCase()
   const result = getDb()

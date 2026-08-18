@@ -61,6 +61,13 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
   - `users` schema: `id`, `email` (unique, lowercased), `password_hash`, `has_access`
     (integer, default 0 — no payments wired; admin toggles it manually via sqlite for now),
     `created_at`.
+  - **Admin dashboard (August 2026):** `/admin` (`app/admin/page.tsx` +
+    `components/admin/AdminUsersClient.tsx`) — user table with grant/revoke of
+    `has_access` via POST `/api/admin/access`. Admin = email in the `ADMIN_EMAILS` env var
+    (comma-separated, case-insensitive; `lib/auth/admin.ts`). Non-admins — logged out OR
+    logged in — get a **404, never a redirect** (route isn't advertised); the API
+    re-verifies admin via `getAdminUser()` on every mutation. Revoke is a two-click
+    inline confirm.
   - **Not built yet:** content gating (all content still open), email verification,
     password reset (slots in beside `lib/auth/session.ts` — see comment there:
     `password_resets` table + reset routes), payments/Stripe.
