@@ -2079,6 +2079,13 @@
   flex-shrink: 0;
   margin-top: 1px;
 }
+/* Upsell Variant 3 (gated era): lock icons instead of checks — muted, matching the Trail's locks */
+.rcm-lock {
+  color: #A8A096;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-self: center;
+}
 
 /* Mobile — keep everything in column, no overflow risk */
 @media (max-width: 500px) {

@@ -68,9 +68,32 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
     logged in — get a **404, never a redirect** (route isn't advertised); the API
     re-verifies admin via `getAdminUser()` on every mutation. Revoke is a two-click
     inline confirm.
-  - **Not built yet:** content gating (all content still open), email verification,
-    password reset (slots in beside `lib/auth/session.ts` — see comment there:
-    `password_resets` table + reset routes), payments/Stripe.
+  - **ACCESS GATE LIVE (August 2026).** Gated = logged-in AND `has_access=1`, always via a
+    fresh DB read. Enforcement map:
+    - **`proxy.ts` middleware (Node runtime — this is why better-sqlite3 works there):**
+      matches `/course/*` + all 7 DealHub routes. Open allowlist (exact paths, beware the
+      module-1/module-10 prefix trap): `/course`, `/course/module-1`,
+      `/course/module-1-ebook`, `/course/module-1-workbook`. Anonymous → `/signup`;
+      logged-in without access → `/pending`.
+    - **Redirect mechanism (important):** Next's middleware adapter REFUSES relative
+      `Location` headers (ERR_INVALID_URL) however the response is built — so the proxy
+      REWRITES internally to `app/api/gate/[dest]/route.ts`, whose route handler emits the
+      relative 307. Never "simplify" this back to a direct middleware redirect; it 500s in
+      prod. The rewrite URL built from `req.url` is server-internal only.
+    - **`app/api/course/[slug]/route.ts`** self-checks (defense in depth): `module-1-*`
+      free; gated slugs → 401 (anonymous) / 403 (no access), not redirects.
+    - **`/pending` (`app/pending/page.tsx`):** friendly editorial holding page (links to
+      free Module 1 + `/course`); anonymous → `/signup`, has-access → `/course`.
+    - Conversion moments live: Trail modules 2–10 are real links routed through the gate;
+      Ch 1.5 "Continue to Module 2" CTA hits the gate naturally (data unchanged);
+      `RateCalculatorMini` upsell is Variant 3 (lock icons, `.rcm-lock` in `lesson.css`);
+      landing hero copy now says "Module 1 free & open".
+    - Bunny note: embed URLs for gated modules remain extractable from client JS chunks;
+      Bunny's domain lock (Referer-based) is the backstop. Real fix if ever needed: Bunny
+      token authentication (OFF by design). Analysis only — no hosting changes made.
+  - **Not built yet:** email verification, password reset (slots in beside
+    `lib/auth/session.ts` — see comment there: `password_resets` table + reset routes),
+    payments/Stripe (nothing payment-shaped exists).
   - History: the original Supabase auth was deleted June 2026 (project deleted, packages
     uninstalled, `(auth)` routes removed, `proxy.ts` reduced to a passthrough).
 - **Persistence:** the SQLite users DB is the only server-side data. Data-bearing pages
@@ -91,10 +114,13 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
 ---
 
 ## Routes (app)
-Top-level routes present after the dashboard deploy: `/` (now redirects to `/dashboard` —
-`app/page.tsx`; `components/landing/*` cleanup may still be pending), `/dashboard`,
-`/calculator`, `/negotiate`, `/contracts`, `/contracts/generate`, `/brands`, `/deals`, and
-(August 2026) `/login`, `/signup` + `/api/auth/{signup,login,logout}`.
+Top-level routes present after the dashboard deploy: `/` (session-aware redirect in
+`app/page.tsx`: approved users → `/dashboard`, everyone else → `/course` so cold traffic
+lands on the funnel, not the signup form; page-level `redirect()` emits relative Locations
+fine — the middleware bridge constraint applies only to `proxy.ts`. `components/landing/*`
+cleanup may still be pending), `/dashboard`, `/calculator`, `/negotiate`, `/contracts`,
+`/contracts/generate`, `/brands`, `/deals`, and (August 2026) `/login`, `/signup`,
+`/pending` + `/api/auth/{signup,login,logout}`, `/api/gate/[dest]`.
 
 > The root `/` still shows the inherited DealHub marketing landing page (Hero, Pricing,
 > "Sign In"/"Start Free" — the auth CTAs now point at deleted routes). Cleanup task:
@@ -145,11 +171,10 @@ App-walkthrough videos were skipped for now. When they arrive, follow the establ
 
 ### Open to-do items — in priority order
 
-1. **Access gate (the auth phase) — NEXT MAJOR PHASE.** Module 1 free → Module 2+ requires an account + payment, with **one login shared across the course and the dashboard**. Not started; being scoped separately. This phase also:
-   - converts the landing page's **soft module locks** (2–10 visible-but-not-clickable) into real gating;
-   - switches `RateCalculatorMini`'s upsell from Variant 2 (checklist + pink ✓) to **Variant 3** (checklist + lock icons) — the lock framing is only honest once content is actually gated. See `components/course/visuals/RateCalculatorMini.tsx`;
-   - repoints the Module 1 Ch 1.5 **"Continue to Module 2 →" CTA** (`nextHref`/`nextLabel` on seg-5 in `moduleData.ts`) at the enroll/paywall flow instead of `/course/module-2`. That CTA becomes the paywall.
-   - Build gating as an **entitlements** model, not a single boolean (see Auth section: course access ⊂ dashboard access).
+1. **Access gate — DONE (August 2026).** See the Auth section for the full enforcement
+   map. Access is granted manually via `/admin` (no payments). The old plan's
+   entitlements model was consciously simplified to the single `has_access` boolean at
+   the owner's direction; `getCurrentUser()` remains the seam if tiers return.
 
 2. **Deferred videos** — M5's 2 app walkthroughs and M9's "Maintaining the Relationship". See Deferred videos above; the M9 one requires lifting content out of 9.5, not just an insert.
 
@@ -241,9 +266,9 @@ tuned print/Save-as-PDF. **Do NOT rebuild as React.** Serve as-is.
 **Serving model (gate-ready):** course HTML lives in `course-content/` **OUTSIDE `/public`**
 (files in `/public` can't be auth-gated later). Served via a route handler validated against
 a 20-doc allowlist, embedded in `/course/[slug]` via iframe, with a `/course` index.
-**The route handler is the single Phase 2 auth seam** — a future session adds the
-session/entitlement check there (and/or a `proxy.ts` matcher on `/course/*`). Course is
-**FREE and OPEN now**; gating comes with Phase 2 auth.
+**The gate is live here (August 2026):** the route handler checks
+`getCurrentUser()` itself (module-1 docs free; other slugs 401/403) and `proxy.ts`
+gates the `/course/*` wrapper pages. See the Auth section for the full map.
 
 **Workbook progress** is per-browser `localStorage` today. Each input has a stable `data-k`
 attribute — the hook for swapping to account-synced API persistence in Phase 2 without

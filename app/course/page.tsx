@@ -23,6 +23,8 @@ export default function CoursePage() {
           100% { box-shadow: 0 0 0 0 rgba(255,77,148,0); }
         }
         .lmg-pulse { animation: lmg-pulse 2.2s infinite; }
+        .lmg-trail-link { transition: opacity 160ms ease, transform 160ms ease; }
+        .lmg-trail-link:hover { opacity: .75; transform: translateX(3px); }
       `}</style>
 
       {/* Two-column grid on lg+; single column stacked on mobile */}
@@ -53,7 +55,7 @@ export default function CoursePage() {
 
           <p style={{ fontSize: 16, lineHeight: 1.55, color: '#78716C', fontWeight: 500, margin: '0 0 34px', maxWidth: '34ch' }}>
             <strong style={{ color: '#1C1917', fontWeight: 700 }}>10 modules</strong>
-            {' '}· Free &amp; open access. A guided path from your first brand deal to scaling a partnership business.
+            {' '}· Module 1 free &amp; open. A guided path from your first brand deal to scaling a partnership business.
           </p>
 
           <Link
@@ -169,7 +171,8 @@ export default function CoursePage() {
               </Link>
             </div>
 
-            {/* Modules 2–10 — upcoming, display-only */}
+            {/* Modules 2–10 — gated, but real links: the access gate (proxy.ts)
+                routes each click to signup / pending / content by session state */}
             {upcomingModules.map(({ n, label, title }) => (
               <div key={n} className="relative" style={{ paddingLeft: 62, minHeight: 54, marginBottom: 8 }}>
                 <div style={{
@@ -182,7 +185,14 @@ export default function CoursePage() {
                 }}>
                   {n}
                 </div>
-                <div style={{ paddingTop: 5 }}>
+                <Link
+                  href={`/course/module-${n}`}
+                  className="lmg-trail-link"
+                  style={{
+                    display: 'block', textDecoration: 'none', color: 'inherit',
+                    paddingTop: 5, borderRadius: 12,
+                  }}
+                >
                   <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: '#A8A096', marginBottom: 3 }}>
                     {label}
                   </div>
@@ -196,7 +206,7 @@ export default function CoursePage() {
                       <Lock size={12} style={{ color: '#A8A096' }} />
                     </span>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
 

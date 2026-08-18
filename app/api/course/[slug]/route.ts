@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { readFile } from 'fs/promises'
 import path from 'path'
+import { getCurrentUser } from '@/lib/auth/session'
 
 const ALLOWED_SLUGS = new Set([
   'module-1-ebook', 'module-1-workbook',
@@ -21,11 +22,23 @@ export async function GET(
 ) {
   const { slug } = await params
 
-  // PHASE 2 AUTH GATE: check session/entitlement here before serving; return 401/redirect if not allowed.
-  // Example: const session = await getSession(req); if (!session) return NextResponse.redirect('/login');
-
   if (!ALLOWED_SLUGS.has(slug)) {
     return new NextResponse('Not Found', { status: 404 })
+  }
+
+  // ACCESS GATE (defense in depth — proxy.ts gates the wrapper pages, but this
+  // route must never leak Module 2–10 HTML on its own). Module 1 docs are free.
+  // getCurrentUser() re-reads has_access from the DB, so admin grants apply
+  // without re-login. 401/403 (not redirects): this is fetched by iframes/curl.
+  const isFree = slug === 'module-1-ebook' || slug === 'module-1-workbook'
+  if (!isFree) {
+    const user = await getCurrentUser()
+    if (!user) {
+      return new NextResponse('Unauthorized', { status: 401 })
+    }
+    if (user.has_access !== 1) {
+      return new NextResponse('Forbidden', { status: 403 })
+    }
   }
 
   // Resolve strictly inside course-content/ — no path traversal possible since slug is allowlisted

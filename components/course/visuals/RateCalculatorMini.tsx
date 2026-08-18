@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useId } from 'react'
+import { Lock } from 'lucide-react'
 import { calculateRate } from '@/lib/calculator-engine'
 import type { Niche } from '@/lib/types/calculator'
 
@@ -210,6 +211,7 @@ export default function RateCalculatorMini() {
           )}
           <div className="rcm-upsell">
             <p className="rcm-upsell-lead">This is your baseline from followers and engagement alone. The complete rate calculator in Module 04 also factors in:</p>
+            {/* Upsell Variant 3: lock icons — honest framing now that Modules 2–10 are gated */}
             <ul className="rcm-checklist">
               {[
                 'Full campaign pricing — multiple deliverables, not just one post',
@@ -220,7 +222,7 @@ export default function RateCalculatorMini() {
                 'Negotiation strategy — opening ask, walk-away, script',
                 'Ready-to-send rate email template',
               ].map(item => (
-                <li key={item} className="rcm-checklist-item"><span className="rcm-check">✓</span>{item}</li>
+                <li key={item} className="rcm-checklist-item"><span className="rcm-lock"><Lock size={11} /></span>{item}</li>
               ))}
             </ul>
           </div>

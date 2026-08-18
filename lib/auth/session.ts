@@ -48,11 +48,11 @@ export function sessionCookieOptions() {
   }
 }
 
-/** Verify the session cookie. JWT only — no DB hit. Fine for display (header email). */
-export async function getSession(): Promise<SessionPayload | null> {
-  const cookieStore = await cookies()
-  const token = cookieStore.get(SESSION_COOKIE)?.value
-  if (!token) return null
+/**
+ * Verify a raw session token. Shared by getSession() (pages/routes via
+ * next/headers) and proxy.ts (middleware, which reads req.cookies directly).
+ */
+export async function verifySessionToken(token: string): Promise<SessionPayload | null> {
   try {
     const { payload } = await jwtVerify(token, secretKey(), { algorithms: ['HS256'] })
     if (!payload.sub || typeof payload.email !== 'string') return null
@@ -64,6 +64,14 @@ export async function getSession(): Promise<SessionPayload | null> {
   } catch {
     return null // expired, tampered, or signed with an old secret
   }
+}
+
+/** Verify the session cookie. JWT only — no DB hit. Fine for display (header email). */
+export async function getSession(): Promise<SessionPayload | null> {
+  const cookieStore = await cookies()
+  const token = cookieStore.get(SESSION_COOKIE)?.value
+  if (!token) return null
+  return verifySessionToken(token)
 }
 
 /**
