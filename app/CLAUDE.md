@@ -1,9 +1,10 @@
 # Creators (creators.lmg.media) — Project Context for Claude Code
 
 > **Note on accuracy:** This file was created June 2026, right after the dashboard was
-> deployed and Supabase auth was removed. Where this document and the live repo/server
-> disagree, **trust the live repo** — verify with `git status`, `find`, and by reading the
-> actual files before making changes. Items marked _(planned)_ are not built yet.
+> deployed and Supabase auth was removed. **Last status update: August 2026** (all course
+> videos live). Where this document and the live repo/server disagree, **trust the live
+> repo** — verify with `git status`, `find`, and by reading the actual files before making
+> changes. Items marked _(planned)_ are not built yet.
 
 ## Project Overview
 `creators.lmg.media` is the **creator-facing platform/hub** for LMG Media — the gated
@@ -42,26 +43,49 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
 ---
 
 ## Auth — IMPORTANT (current state)
-- **There is currently NO auth.** The app originally used Supabase purely to gate the
-  dashboard behind a login. That Supabase project was **deleted**, and all Supabase auth was
-  **removed** (June 2026): `@supabase/ssr` + `@supabase/supabase-js` uninstalled, the
-  `lib/supabase/` client/server/middleware deleted, the `(auth)/login` + `(auth)/signup`
-  routes deleted, `proxy.ts` reduced to a passthrough, all `getUser`/`getSession` calls
-  stripped. The app is a fully OPEN hub.
-- **No persistence/backend.** Data-bearing pages (deals, negotiate, calculator results,
-  contract preview) are local-state / in-session only. Contract drafts persist via
-  `localStorage`. Nothing is saved server-side; there is no database.
-- **Planned (Phase 2):** standalone account creation + login for THIS subdomain (not shared
-  with lmg.media). When added, the access tiers are: **course access ⊂ dashboard access**
+- **Auth FOUNDATION built (August 2026), content NOT gated yet.** Simple email+password
+  accounts: SQLite (`better-sqlite3`) `users` table auto-created at
+  `DATABASE_PATH` (env; `./dev.db` locally, outside the repo on the VPS), bcrypt hashes
+  (`bcryptjs`, cost 12), JWT session (`jose`, HS256, secret from `SESSION_SECRET` env) in
+  an httpOnly `lmg_session` cookie (30 days, sameSite=lax, secure in prod).
+  - Core: `lib/auth/` — `db.ts` (singleton + user queries), `session.ts` (`getSession()`
+    JWT-only for display; **`getCurrentUser()` re-reads `has_access` from the DB — the
+    single gating seam**, so an admin toggle takes effect without re-login),
+    `validation.ts`, `rate-limit.ts` (in-memory, 5 failed logins / 15 min per ip+email).
+  - Routes: `/signup`, `/login` (pages, course light/editorial style, shared
+    `components/auth/AuthForm.tsx` + `AuthShell.tsx`); POST `/api/auth/signup`,
+    `/api/auth/login`, `/api/auth/logout`. Course header shows email + Log out
+    (`components/auth/HeaderAuth.tsx`, server component — makes `/course/*` dynamic).
+  - `users` schema: `id`, `email` (unique, lowercased), `password_hash`, `has_access`
+    (integer, default 0 — no payments wired; admin toggles it manually via sqlite for now),
+    `created_at`.
+  - **Not built yet:** content gating (all content still open), email verification,
+    password reset (slots in beside `lib/auth/session.ts` — see comment there:
+    `password_resets` table + reset routes), payments/Stripe.
+  - History: the original Supabase auth was deleted June 2026 (project deleted, packages
+    uninstalled, `(auth)` routes removed, `proxy.ts` reduced to a passthrough).
+- **Persistence:** the SQLite users DB is the only server-side data. Data-bearing pages
+  (deals, negotiate, calculator results, contract preview) remain local-state /
+  in-session only; contract drafts persist via `localStorage`.
+- **Planned — the access gate / "auth phase":** standalone account creation + login for THIS
+  subdomain (not shared with lmg.media), one login covering both the course and the dashboard.
+  > **Naming note:** older comments in this repo call the auth work **"Phase 2"** (the
+  > `// PHASE 2` marker in `LessonLayout.tsx`, the "Phase 2 auth seam" on the course route
+  > handler, the workbook `data-k` hooks). That predates the current numbering, where Phase 1
+  > = the Module 1 sales page and Phase 2 = the dashboard reskin. **Those `PHASE 2` code
+  > markers mean the auth phase** — don't confuse them with the reskin.
+
+  When added, the access tiers are: **course access ⊂ dashboard access**
   (everyone with course access has dashboard access; not everyone with dashboard access has
   course access). Build new gating as an **entitlements** model, not a single boolean.
 
 ---
 
 ## Routes (app)
-Top-level routes present after the dashboard deploy: `/` (DealHub marketing landing page —
-_slated for removal/redirect to `/dashboard`, not yet done_), `/dashboard`, `/calculator`,
-`/negotiate`, `/contracts`, `/contracts/generate`, `/brands`, `/deals`.
+Top-level routes present after the dashboard deploy: `/` (now redirects to `/dashboard` —
+`app/page.tsx`; `components/landing/*` cleanup may still be pending), `/dashboard`,
+`/calculator`, `/negotiate`, `/contracts`, `/contracts/generate`, `/brands`, `/deals`, and
+(August 2026) `/login`, `/signup` + `/api/auth/{signup,login,logout}`.
 
 > The root `/` still shows the inherited DealHub marketing landing page (Hero, Pricing,
 > "Sign In"/"Start Free" — the auth CTAs now point at deleted routes). Cleanup task:
@@ -69,12 +93,40 @@ _slated for removal/redirect to `/dashboard`, not yet done_), `/dashboard`, `/ca
 
 ---
 
-## Current Status _(July 2026)_
+## Current Status _(August 2026)_
 
-### Course — content-complete, Modules 1–2 fully live
+### Course — content-complete, ALL 10 MODULES LIVE
 All 10 lesson pages are built and content-complete (`/course/module-1` through `/course/module-10`). The data-driven template (`lib/course/moduleData.ts` → `LessonLayout` / `VideoSegment` / `visuals/`) is fully populated for every module. Module 10 has a Course Complete panel instead of a next-module card (correct by design).
 
-**Videos:** Modules 1 and 2 fully live. Modules 3–10 show the "IN PRODUCTION" placeholder pending footage. Module 2 was originally built with 5 chapters but had 6 videos; Chapter 2.5 "Make Brands Find You" (inbound discovery) was added and the former closer renumbered to 2.6 — a preview of the reconcile step required for each remaining module.
+**Videos: ALL 10 MODULES LIVE.** Every chapter in every module is wired to real Bunny video — no "IN PRODUCTION" placeholders remain anywhere in the course. Final shape: **56 chapters, ~2h29m of video.**
+
+| Module | Chapters | Runtime | Structural change during wiring |
+|--------|----------|---------|----------------------------------|
+| M1  | 5 | 11:53 | — |
+| M2  | 6 | 14:40 | added Ch 2.5 "Make Brands Find You"; old closer → 2.6 |
+| M3  | 5 | 11:37 | — (clean 1:1) |
+| M4  | 6 | 14:11 | added Ch 4.3 "Pricing Your Deliverables"; 4.3–4.5 → 4.4–4.6 |
+| M5  | 5 | 11:35 | — (clean 1:1; 2 app walkthroughs deferred) |
+| M6  | 6 | 16:26 | added Ch 6.5 "Your Non-Negotiables"; old closer → 6.6 |
+| M7  | 6 | 21:24 | split Ch 7.2 into Part 1 / Part 2; 7.3–7.5 → 7.4–7.6 |
+| M8  | 5 | 13:42 | — (clean 1:1) |
+| M9  | 5 | 13:30 | — (kept at 5; "Maintaining the Relationship" deferred) |
+| M10 | 7 | 20:28 | split 10.3 → 10.3 / 10.4; added 10.7 finale; old 10.4–10.5 → 10.5–10.6 |
+
+Chapter counts routinely did **not** match video counts as footage arrived — reconciling that (add / split / defer) was the norm, not the exception. Per-video Bunny IDs are not duplicated here; **`moduleData.ts` is the source of truth.**
+
+### Deferred videos _(each needs an insert-and-renumber when footage lands)_
+App-walkthrough videos were skipped for now. When they arrive, follow the established pattern (M2 2.5, M4 4.3, M6 6.5, M10 10.4) — new chapter takes the position's `seg-N` id, later segments shift up, both `id` and `eyebrow` renumber.
+
+- **M5 — 2 app walkthroughs** (`module-5-5`, `module-5-6`). Straight inserts.
+- **M9 — "Maintaining the Relationship."** Not a straight insert: its content currently lives **inside 9.5's second paragraph** (quarterly check-ins, proactive wins, 24-hour replies, "a retainer that's signed but not nurtured doesn't renew"). Adding the chapter means **lifting that material out of 9.5** into the new chapter, then renumbering — the same de-duplication call made for 6.5/6.6 and 10.6/10.7, so the beat lands once.
+
+### Phase status
+- **Phase 1 — DONE.** Module 1 sales page + embedded mini rate calculator (`RateCalculatorMini`, reusing `lib/calculator-engine.ts` rather than a second implementation), honest upsell pointing at "Module 04".
+- **Phase 2 — mostly done.** Dashboard reskin to the course light/editorial theme: token/theme reskin is live, pink active-nav, light default with the dark toggle kept. Sidebar is icons-only collapsible with a "Course" link below the tool nav. **Typography-matching polish is parked** — see backlog item 3.
+- **Next major phase — the access gate.** Not started; being scoped in a separate effort. See Open to-do items.
+
+### Course — other completed work
 
 **Course landing page:** redesigned as the "Trail" linear-journey page — two-column desktop (hero left / trail right), single-column mobile. Module 1 CTA links live; Modules 2–10 display-only with lock icons. Soft sequential guidance, not hard gating — real gating deferred to the auth phase. File: `app/course/page.tsx`.
 
@@ -84,15 +136,20 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 
 ### Open to-do items — in priority order
 
-1. **Videos modules 3–10** — wire each module as footage finalises; see Video Pipeline section for the repeatable recipe. Footage inventory: M3=6, M4=7, M5=7, M6=7, M7=7; M8–M10 still in production. Some videos still being edited (non-talking-head elements) — wire a module only once footage is FINAL (re-uploading changes the Bunny video ID and forces a re-wire).
+1. **Access gate (the auth phase) — NEXT MAJOR PHASE.** Module 1 free → Module 2+ requires an account + payment, with **one login shared across the course and the dashboard**. Not started; being scoped separately. This phase also:
+   - converts the landing page's **soft module locks** (2–10 visible-but-not-clickable) into real gating;
+   - switches `RateCalculatorMini`'s upsell from Variant 2 (checklist + pink ✓) to **Variant 3** (checklist + lock icons) — the lock framing is only honest once content is actually gated. See `components/course/visuals/RateCalculatorMini.tsx`;
+   - repoints the Module 1 Ch 1.5 **"Continue to Module 2 →" CTA** (`nextHref`/`nextLabel` on seg-5 in `moduleData.ts`) at the enroll/paywall flow instead of `/course/module-2`. That CTA becomes the paywall.
+   - Build gating as an **entitlements** model, not a single boolean (see Auth section: course access ⊂ dashboard access).
 
-2. **Course polish pass** — remove the rate-calculator link in Module 1; other small content/link fixes (TBD list).
+2. **Deferred videos** — M5's 2 app walkthroughs and M9's "Maintaining the Relationship". See Deferred videos above; the M9 one requires lifting content out of 9.5, not just an insert.
 
-3. **Dashboard reskin** — align the DealHub dashboard with the course's light editorial look (course tokens, Playfair/Manrope, `#FAFAF8`). Dashboard already has a light mode; intent is to make light the default and match the course aesthetic. Dark-toggle-vs-light-only TBD. _(planned)_
+3. **Small polish backlog** _(none blocking)_
+   - **M10 finale roadmap badge** — `CourseRoadmap` renders "You are here" on module 10 in the 10.7 finale. Should read **"complete"** for the capstone. Component change in `components/course/visuals/CourseRoadmap.tsx`.
+   - **M7 contract-sections chip overflow** — `.cs-row-left` is ~52px holding ~56px of content, so the `REQUIRED`/`CRITICAL`/`OPTIONAL` chips bleed ~4px. Affects all 12 chips in both visual variants, desktop and mobile. **Cosmetic only** — no page-level horizontal scroll. Pre-existing, not introduced by the 7.2 split.
+   - **Dashboard typography** — card fonts and logo font/weight don't yet match the CD mockup. Token/theme reskin is done; this is the remaining gap. **Parked for a dedicated session with CD's literal type spec** — don't guess at it piecemeal.
 
-4. **Access gate after Module 1** — phased: email capture → login/accounts (replacing per-device `localStorage` progress) → payment. This is the deferred auth phase that also enables real sequential module gating on the landing page. _(planned)_
-   - When the paid gate goes live: switch the `RateCalculatorMini` upsell block from Variant 2 (checklist + pink ✓) to Variant 3 (checklist + lock icons). The lock framing is correct once content is actually gated — premature while the course is free. See `components/course/visuals/RateCalculatorMini.tsx`.
-   - When the paid gate goes live: update the Module 1 Ch 1.5 "Continue to Module 2 →" CTA (`nextHref`/`nextLabel` on seg-5 in `moduleData.ts`) to point at the enroll/unlock/paywall flow instead of `/course/module-2` directly.
+4. **Course polish pass** — small content/link fixes (TBD list).
 
 ---
 
@@ -129,7 +186,11 @@ https://player.mediadelivery.net/embed/708086/{videoId}?autoplay=false&loop=fals
 | seg-5 | Ch 2.5 | 3:05 | `f5c764be-5bdd-4780-9778-6251a95b67b9` |
 | seg-6 | Ch 2.6 | 1:37 | `49a074d3-9668-4e1f-bae3-c74d7909a1a4` |
 
-**Modules 3–10 — awaiting footage.**
+**Modules 3–10 — all live** (wired July–August 2026). Per-video IDs are not mirrored here to avoid drift; read `moduleData.ts`. See the status table above for chapter counts, runtimes, and the structural change each module needed.
+
+**Two traps worth knowing before you wire anything:**
+- **Stale dev server.** The Next dev server can keep serving the OLD module data after an edit — surviving a hard reload, showing "IN PRODUCTION" or stale durations even though the file on disk is correct. Hit this twice (M5, M10). Confirm the file with `grep` first, then `preview_stop` → `rm -rf .next/cache` → restart. `curl -s localhost:3000/course/module-N` is the fastest way to check SSR truth. **Tell the user to rebuild, not just restart, after pulling on the VPS** for the same reason.
+- **Renumbering shifts saved progress.** Completion is keyed by segment id in `localStorage`. Renumbering `seg-N` on an insert means anyone mid-course sees their checkmarks land on the wrong chapters. Accepted every time so far (pre-launch); re-confirm if that changes.
 
 **Repeatable per-module recipe:**
 1. **Reconcile counts first** — video count often differs from built chapter count. Compare: live chapters in `moduleData.ts` vs. chapter spec in `module-N.md` vs. available video files. Decide add/merge/drop per module BEFORE uploading. (Module 2 was the first example: 5 built chapters, 6 videos → added Ch 2.5.)
@@ -143,7 +204,7 @@ Domain-lock and player color are library-wide — set once, not repeated per mod
 
 ---
 
-## Lesson Pages _(All 10 modules complete — Module 1 videos live)_
+## Lesson Pages _(All 10 modules complete — all videos live)_
 Real Next.js lesson pages live at `/course/module-N`. All 10 modules are at `app/course/module-N/page.tsx`.
 
 **Template:** `components/course/LessonLayout.tsx` (client) renders any module from a `ModuleData` object. To add a new module: create a data object in `lib/course/moduleData.ts` matching the `ModuleData` type, add any new visual components to `components/course/visuals/` and register them in the `getVisual()` switch in `LessonLayout.tsx`, add CSS to `styles/lesson.css`, then create a page at `app/course/module-N/page.tsx` that imports the data object and renders `<LessonLayout data={moduleN} />`. The course index (`app/course/page.tsx`) picks up the new lesson link automatically — just import the module export and add it to the `builtLessons` set at the top of that file.
@@ -215,7 +276,9 @@ git pull origin main
 ---
 
 ## Known Issues / Pending Work
-- **Videos modules 3–10** — in progress; see Open to-do items and Video Pipeline section.
+- **Videos** — complete. All 10 modules live; only the deferred M5/M9 chapters remain (see Deferred videos).
+- **M10 finale roadmap badge** and **M7 chip overflow** — cosmetic; see Small polish backlog.
+- **Dashboard typography** — parked pending CD's literal type spec; see Small polish backlog.
 - **Root `/` still the DealHub landing page** — redirect to `/dashboard` + remove
   `components/landing/*` and dead auth nav links (Sign In / Start Free point at deleted
   routes). _(planned)_
