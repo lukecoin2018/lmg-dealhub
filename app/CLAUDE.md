@@ -54,7 +54,9 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
     `validation.ts`, `rate-limit.ts` (in-memory, 5 failed logins / 15 min per ip+email).
   - Routes: `/signup`, `/login` (pages, course light/editorial style, shared
     `components/auth/AuthForm.tsx` + `AuthShell.tsx`); POST `/api/auth/signup`,
-    `/api/auth/login`, `/api/auth/logout`. Course header shows email + Log out
+    `/api/auth/login`, `/api/auth/logout` (303 with a **relative** `Location: /login` —
+    never build absolute redirect URLs from the request host; behind nginx the app sees
+    `localhost:30003`). Course header shows email + Log out
     (`components/auth/HeaderAuth.tsx`, server component — makes `/course/*` dynamic).
   - `users` schema: `id`, `email` (unique, lowercased), `password_hash`, `has_access`
     (integer, default 0 — no payments wired; admin toggles it manually via sqlite for now),
