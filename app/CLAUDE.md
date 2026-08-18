@@ -114,13 +114,15 @@ copy of the "DealHub" influencer dashboard and is being adapted for LMG's own pu
 ---
 
 ## Routes (app)
-Top-level routes present after the dashboard deploy: `/` (session-aware redirect in
-`app/page.tsx`: approved users → `/dashboard`, everyone else → `/course` so cold traffic
-lands on the funnel, not the signup form; page-level `redirect()` emits relative Locations
-fine — the middleware bridge constraint applies only to `proxy.ts`. `components/landing/*`
-cleanup may still be pending), `/dashboard`, `/calculator`, `/negotiate`, `/contracts`,
-`/contracts/generate`, `/brands`, `/deals`, and (August 2026) `/login`, `/signup`,
-`/pending` + `/api/auth/{signup,login,logout}`, `/api/gate/[dest]`.
+Top-level routes present after the dashboard deploy: `/` (unconditional redirect to
+`/course` in `app/page.tsx` — everyone lands on the Trail; approved users reach the
+dashboard via the sidebar link. Was briefly session-aware with a `/dashboard` branch, but
+that hop triggered an unstyled-page bug via a stale CSS chunk, so the branching was
+removed. Page-level `redirect()` emits relative Locations fine — the middleware bridge
+constraint applies only to `proxy.ts`. `components/landing/*` cleanup may still be
+pending), `/dashboard`, `/calculator`, `/negotiate`, `/contracts`, `/contracts/generate`,
+`/brands`, `/deals`, and (August 2026) `/login`, `/signup`, `/pending` +
+`/api/auth/{signup,login,logout}`, `/api/gate/[dest]`.
 
 > The root `/` still shows the inherited DealHub marketing landing page (Hero, Pricing,
 > "Sign In"/"Start Free" — the auth CTAs now point at deleted routes). Cleanup task:

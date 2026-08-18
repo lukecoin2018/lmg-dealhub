@@ -1,10 +1,8 @@
 import { redirect } from 'next/navigation'
-import { getCurrentUser } from '@/lib/auth/session'
 
-export default async function RootPage() {
-  // Anonymous + not-yet-approved → the Trail landing page (the funnel).
-  // Approved customers → the dashboard hub. Fresh DB read, same as the gate.
-  const user = await getCurrentUser()
-  if (user && user.has_access === 1) redirect('/dashboard')
+export default function RootPage() {
+  // Everyone lands on the Trail; approved users reach the dashboard via the
+  // sidebar link. (The old / → /dashboard hop also triggered a stale-CSS-chunk
+  // bug — removing the branch removes the failure mode.)
   redirect('/course')
 }
