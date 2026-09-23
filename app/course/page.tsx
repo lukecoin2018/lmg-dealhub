@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { DM_Sans } from 'next/font/google'
 import { getCurrentUser } from '@/lib/auth/session'
 import { allModules } from '@/lib/course/moduleData'
 import CourseHeader from '@/components/course/landing/CourseHeader'
 import CourseFooter from '@/components/course/landing/CourseFooter'
+import { dmSans } from '@/components/course/landing/fonts'
 import {
   ArrowRightIcon,
   LockIcon,
@@ -20,8 +20,6 @@ import '@/styles/course-landing.css'
 // authority; see handoff/CLAUDE_CODE_BRIEF.md). Styles: styles/course-landing.css.
 // Sits outside the (lesson) route group on purpose: the lesson pages keep their
 // own fixed-height shell + header in app/course/(lesson)/layout.tsx.
-
-const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
 
 const COVER_SRC = '/images/playbook-cover.webp'
 
@@ -50,7 +48,7 @@ export default async function CoursePage() {
   const capstone = allModules[allModules.length - 1]
 
   return (
-    <div className={`course-landing ${dmSans.variable}`}>
+    <div className={`course-landing course-landing--page ${dmSans.variable}`}>
       <CourseHeader />
 
       <main>

@@ -1,23 +1,21 @@
 import type { ReactNode } from 'react'
-import HeaderAuth from '@/components/auth/HeaderAuth'
+import CourseHeader from '@/components/course/landing/CourseHeader'
+import { dmSans } from '@/components/course/landing/fonts'
+import '@/styles/course-landing.css'
 
 export const metadata = {
   title: 'Brand Partnership Playbook · LMG Media',
   description: 'The Complete Brand Partnership Playbook — 10-module course by LMG Media',
 }
 
+// Lesson shell: the same brand header as the /course landing page over a
+// fixed-height, internally scrolling lesson body. `course-landing` (without
+// `--page`) scopes the header's tokens/styles only — lesson typography stays
+// with styles/lesson.css. Fixed light palette, not affected by global dark mode.
 export default function CourseLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col h-screen" style={{ background: '#FAFAF8' }}>
-      {/* LMG course header — standalone, no DealHub chrome. Fixed light palette — not affected by global dark-mode theme. */}
-      <header className="shrink-0 flex items-center justify-between gap-4 h-14 px-6" style={{ borderBottom: '1px solid #E5E0D5', background: '#FAFAF8' }}>
-        <span className="text-lg font-bold tracking-tight" style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-          <span style={{ color: '#FF4D94' }}>LMG</span>
-          <span style={{ color: '#9C9589', fontWeight: 400, margin: '0 6px' }}>·</span>
-          <span style={{ color: '#FFD700' }}>Brand Partnership Playbook</span>
-        </span>
-        <HeaderAuth />
-      </header>
+    <div className={`course-landing flex flex-col h-screen ${dmSans.variable}`} style={{ background: '#FAFAF8' }}>
+      <CourseHeader />
       {children}
     </div>
   )

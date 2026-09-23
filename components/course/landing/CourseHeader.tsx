@@ -4,7 +4,7 @@ import { getSession } from '@/lib/auth/session'
 // Sticky brand header for the /course landing page (reference §2.1).
 // Server component: reads the session (JWT only, no DB hit — display only, the
 // access gate lives in proxy.ts) so the Log in pill becomes email + Log out when
-// signed in, mirroring components/auth/HeaderAuth.tsx on the lesson pages.
+// signed in. Shared by the landing page and the lesson shell (app/course/(lesson)/layout.tsx).
 
 export default async function CourseHeader() {
   const session = await getSession()

@@ -47,8 +47,12 @@
   .course-landing { --page-pad: 20px; }
 }
 
-/* ---------- Base ---------- */
-.course-landing {
+/* ---------- Base ----------
+ * `.course-landing` alone provides the tokens + header/footer styles and is also
+ * the wrapper for the lesson shell (app/course/(lesson)/layout.tsx), which
+ * shares the brand header. `.course-landing--page` adds the full-page base for
+ * the landing page itself, so lesson typography is left untouched. */
+.course-landing--page {
   min-height: 100vh;
   background: var(--lmg-cream);
   color: var(--lmg-ink);
@@ -86,7 +90,7 @@
 .course-landing .btn svg { width: 18px; height: 18px; }
 
 /* ---------- Header ---------- */
-.course-landing .site-header { border-bottom: 1px solid var(--lmg-line); background: var(--lmg-cream); position: sticky; top: 0; z-index: 10; }
+.course-landing .site-header { border-bottom: 1px solid var(--lmg-line); background: var(--lmg-cream); color: var(--lmg-ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; position: sticky; top: 0; z-index: 10; flex-shrink: 0; }
 .course-landing .site-header .wrap { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .course-landing .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--lmg-ink); }
 .course-landing .brand__logo { width: 64px; height: auto; display: block; }   /* real LMG Media logo asset, black version */
