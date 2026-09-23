@@ -4,7 +4,7 @@ import './globals.css';
 import { Providers } from '@/components/providers/Providers';
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' });
+const playfair = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-playfair' });
 
 export const metadata: Metadata = {
   title: 'DealHub',

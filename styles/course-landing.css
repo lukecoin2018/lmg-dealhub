@@ -1,0 +1,244 @@
+/* LMG Media — /course landing page styles
+ * Port of handoff/reference/course-page.html + handoff/reference/brand.css.
+ * Design authority: handoff/reference/course-page.html — keep this file in sync
+ * with it by hand (the two sites are separate projects and share no code).
+ *
+ * Everything is scoped under `.course-landing` because styles/lesson.css
+ * declares the same token names (--lmg-pink, --lmg-yellow, --font-display …)
+ * on :root with the OLD dashboard values. Scoping keeps the two palettes apart
+ * whichever stylesheet the router happens to have loaded.
+ */
+
+/* ---------- Brand tokens (mirror of reference/brand.css) ---------- */
+.course-landing {
+  /* Colour */
+  --lmg-pink: #E8578B;        /* primary accent: CTAs, links, italic "Playbook" */
+  --lmg-pink-soft: #FFF3F7;   /* tinted fills behind icons / hero shape */
+  --lmg-pink-text-on: #FFE4EE;/* secondary text on a pink background */
+  --lmg-yellow: #F6D64A;      /* small accents only: live dot, capstone flag */
+  --lmg-yellow-soft: #FFF8DC;
+  --lmg-blue: #6EB1E8;        /* tertiary accent, used sparingly */
+  --lmg-blue-soft: #EAF3FC;
+  --lmg-ink: #1A1A1A;         /* headings, body, logo */
+  --lmg-ink-2: #3D3D3D;       /* lead paragraphs */
+  --lmg-ink-3: #5A5A5A;       /* body copy on cream (≥4.5:1) */
+  --lmg-ink-4: #6A6A6A;       /* captions / meta (≥4.5:1 on cream) */
+  --lmg-cream: #FBF9F6;       /* page background */
+  --lmg-paper: #FFFFFF;       /* cards, journey section */
+  --lmg-line: #ECE7E0;        /* hairlines and card borders */
+  --lmg-line-2: #D9D2C8;      /* button outlines, number rings */
+
+  /* Type — the font variables are set by next/font (app/layout.tsx, app/course/page.tsx) */
+  --font-display: var(--font-playfair), 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-dm-sans), 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Shape */
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-panel: 24px;
+  --radius-band: 28px;
+
+  /* Layout */
+  --page-max: 1440px;
+  --page-pad: 64px;
+}
+
+@media (max-width: 720px) {
+  .course-landing { --page-pad: 20px; }
+}
+
+/* ---------- Base ---------- */
+.course-landing {
+  min-height: 100vh;
+  background: var(--lmg-cream);
+  color: var(--lmg-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+.course-landing *, .course-landing *::before, .course-landing *::after { box-sizing: border-box; }
+.course-landing a { color: inherit; }
+.course-landing a:focus-visible, .course-landing button:focus-visible { outline: 3px solid var(--lmg-pink); outline-offset: 3px; border-radius: 4px; }
+.course-landing img { max-width: 100%; height: auto; display: block; }
+.course-landing h1, .course-landing h2, .course-landing h3 { margin: 0; font-family: var(--font-display); font-weight: 700; line-height: 1.1; }
+.course-landing p { margin: 0; }
+.course-landing .wrap { max-width: var(--page-max); margin: 0 auto; padding-left: var(--page-pad); padding-right: var(--page-pad); }
+.course-landing .serif-i { font-family: var(--font-display); font-style: italic; font-weight: 400; color: var(--lmg-pink); }
+
+/* The LMG Media logo only exists as a flat yellow single-colour PNG. lmg.media
+ * itself inks that same file black with filter: brightness(0) (header-v2.tsx,
+ * process-section.tsx) — this is the same rendering, not a redrawn mark. */
+.course-landing .lmg-logo--ink { filter: brightness(0); }
+
+/* Eyebrow: small pink rule + label */
+.course-landing .eyebrow { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--lmg-pink); }
+.course-landing .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+
+/* Buttons */
+.course-landing .btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 28px; border-radius: var(--radius-pill); font-weight: 600; font-size: 16px; font-family: inherit; line-height: 1.55; text-decoration: none; white-space: nowrap; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+.course-landing .btn:hover { transform: translateY(-1px); }
+.course-landing .btn--pink { background: var(--lmg-pink); color: #fff; box-shadow: 0 12px 28px rgba(232, 87, 139, .28); }
+.course-landing .btn--white { background: #fff; color: var(--lmg-ink); }
+.course-landing .btn--outline { background: #fff; color: var(--lmg-ink); border: 1px solid var(--lmg-line-2); padding: 10px 18px; font-size: 14px; font-weight: 500; }
+.course-landing .btn--sm { padding: 12px 22px; font-size: 14px; }
+.course-landing .btn svg { width: 18px; height: 18px; }
+
+/* ---------- Header ---------- */
+.course-landing .site-header { border-bottom: 1px solid var(--lmg-line); background: var(--lmg-cream); position: sticky; top: 0; z-index: 10; }
+.course-landing .site-header .wrap { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.course-landing .brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--lmg-ink); }
+.course-landing .brand__logo { width: 64px; height: auto; display: block; }   /* real LMG Media logo asset, black version */
+.course-landing .brand__divider { width: 1px; height: 28px; background: var(--lmg-line-2); }
+.course-landing .brand__course { font-family: var(--font-display); font-size: 18px; }
+.course-landing .site-nav { display: flex; align-items: center; gap: 28px; }
+.course-landing .site-nav__back { font-size: 14px; font-weight: 500; text-decoration: none; color: #4A4A4A; }
+/* Logged-in state: email replaces the Log in slot, Log out takes the outline pill */
+.course-landing .site-nav__user { font-size: 13px; font-weight: 500; color: var(--lmg-ink-4); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.course-landing .site-nav__logout { display: inline-flex; margin: 0; }
+
+/* ---------- Hero ---------- */
+.course-landing .hero .wrap { padding-top: 88px; padding-bottom: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; align-items: center; }
+.course-landing .hero__copy { display: flex; flex-direction: column; gap: 28px; max-width: 600px; }
+.course-landing .hero__title { font-size: clamp(40px, 4.6vw, 66px); line-height: 1.04; letter-spacing: -.01em; }
+.course-landing .hero__lead { font-size: 19px; color: var(--lmg-ink-2); }
+.course-landing .hero__sub { font-size: 17px; color: var(--lmg-ink-3); }
+.course-landing .hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding-top: 6px; }
+.course-landing .hero__secondary { font-size: 14px; font-weight: 600; letter-spacing: .04em; text-decoration: underline; text-underline-offset: 5px; color: var(--lmg-ink); }
+.course-landing .hero__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-top: 8px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; color: var(--lmg-ink-4); }
+.course-landing .hero__meta .dot { color: #C9C1B6; }
+.course-landing .hero__meta .free { color: var(--lmg-pink); }
+
+.course-landing .hero__art { position: relative; min-height: 720px; display: flex; align-items: center; justify-content: center; }
+.course-landing .hero__shape { position: absolute; left: 60px; top: 40px; width: 520px; height: 640px; border-radius: 32px; background: var(--lmg-pink-soft); transform: rotate(-4deg); }
+.course-landing .hero__glow { position: absolute; right: 30px; top: 100px; width: 360px; height: 360px; border-radius: 50%; background: var(--lmg-yellow-soft); opacity: .9; }
+.course-landing .hero__cover { position: relative; width: 520px; transform: rotate(2deg); filter: drop-shadow(0 30px 50px rgba(26, 26, 26, .18)); }
+.course-landing .hero__chip { position: absolute; left: 20px; bottom: 96px; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; background: #fff; border: 1px solid #F1EBE3; border-radius: 16px; box-shadow: 0 14px 34px rgba(26, 26, 26, .12); text-decoration: none; color: var(--lmg-ink); }
+.course-landing .hero__chip-num { width: 40px; height: 40px; border-radius: 50%; background: var(--lmg-pink); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.course-landing .hero__chip-label { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--lmg-pink); }
+.course-landing .hero__chip-title { font-size: 15px; font-weight: 600; }
+
+/* ---------- Pillars ---------- */
+.course-landing .pillars .wrap { padding-top: 24px; padding-bottom: 88px; display: flex; flex-direction: column; gap: 28px; }
+.course-landing .pillars__head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.course-landing .pillars__head h2 { font-size: 30px; }
+.course-landing .pillars__note { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--lmg-ink-4); font-weight: 500; }
+.course-landing .pillars__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.course-landing .pillar { padding: 28px; background: var(--lmg-paper); border: 1px solid var(--lmg-line); border-radius: var(--radius-card); display: flex; flex-direction: column; gap: 14px; }
+.course-landing .pillar__icon { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; }
+.course-landing .pillar__icon svg { width: 22px; height: 22px; }
+.course-landing .pillar__icon--pink { background: var(--lmg-pink-soft); color: var(--lmg-pink); }
+.course-landing .pillar__icon--gold { background: var(--lmg-yellow-soft); color: #A6791B; }
+.course-landing .pillar__icon--blue { background: var(--lmg-blue-soft); color: #2F6FA8; }
+.course-landing .pillar h3 { font-size: 20px; }
+.course-landing .pillar p { font-size: 14px; color: var(--lmg-ink-3); }
+
+/* ---------- Journey ---------- */
+.course-landing .journey { background: var(--lmg-paper); border-top: 1px solid var(--lmg-line); border-bottom: 1px solid var(--lmg-line); }
+.course-landing .journey .wrap { padding-top: 88px; padding-bottom: 88px; display: flex; flex-direction: column; gap: 40px; }
+.course-landing .journey__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.course-landing .journey__head-copy { display: flex; flex-direction: column; gap: 14px; }
+.course-landing .journey__head h2 { font-size: clamp(32px, 3.2vw, 44px); }
+.course-landing .journey__head p { font-size: 17px; color: var(--lmg-ink-3); max-width: 620px; }
+.course-landing .journey__lock { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--lmg-ink-4); font-weight: 500; }
+.course-landing .journey__lock svg { width: 16px; height: 16px; }
+
+.course-landing .feature { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; align-items: center; gap: 32px; padding: 36px 40px; border-radius: var(--radius-panel); background: var(--lmg-ink); color: #fff; text-decoration: none; }
+.course-landing .feature__num { width: 72px; height: 72px; border-radius: 50%; background: var(--lmg-pink); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 30px; }
+.course-landing .feature__body { display: flex; flex-direction: column; gap: 8px; }
+.course-landing .feature__live { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--lmg-yellow); }
+.course-landing .feature__live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.course-landing .feature__title { font-family: var(--font-display); font-weight: 700; font-size: 32px; }
+.course-landing .feature__desc { font-size: 16px; color: #D6D0C8; max-width: 720px; }
+.course-landing .feature .btn { padding: 16px 24px; font-size: 15px; }
+
+.course-landing .modules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; }
+.course-landing .module { display: flex; align-items: center; gap: 18px; padding: 22px 24px; border-radius: 18px; border: 1px solid var(--lmg-line); background: var(--lmg-cream); text-decoration: none; color: var(--lmg-ink); transition: border-color .15s ease; }
+.course-landing .module:hover { border-color: var(--lmg-line-2); }
+.course-landing .module__num { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--lmg-line-2); background: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+/* Completed state (when the app tracks it): pink filled ring */
+.course-landing .module__num--done { background: var(--lmg-pink); border-color: var(--lmg-pink); color: #fff; }
+.course-landing .module__body { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0; }
+.course-landing .module__label { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #7A7A7A; }
+.course-landing .module__title { font-size: 17px; font-weight: 600; }
+.course-landing .module__lock { width: 16px; height: 16px; color: #9A938A; flex-shrink: 0; }
+
+.course-landing .capstone { display: flex; align-items: center; gap: 14px; font-size: 15px; color: var(--lmg-ink-2); }
+.course-landing .capstone__flag { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--lmg-yellow); display: inline-flex; align-items: center; justify-content: center; color: #A6791B; }
+.course-landing .capstone__flag svg { width: 18px; height: 18px; }
+
+/* ---------- Why ---------- */
+.course-landing .why .wrap { padding-top: 88px; padding-bottom: 88px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: start; }
+.course-landing .why__copy { display: flex; flex-direction: column; gap: 14px; }
+.course-landing .why__copy h2 { font-size: clamp(30px, 3vw, 40px); line-height: 1.12; }
+.course-landing .why__copy p { font-size: 17px; color: var(--lmg-ink-3); }
+.course-landing .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.course-landing .stat { display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 2px solid var(--lmg-pink); }
+.course-landing .stat--gold { border-top-color: var(--lmg-yellow); }
+.course-landing .stat--blue { border-top-color: var(--lmg-blue); }
+.course-landing .stat__num { font-family: var(--font-display); font-size: 36px; font-weight: 700; }
+.course-landing .stat__title { font-size: 15px; font-weight: 600; }
+.course-landing .stat__desc { font-size: 14px; color: var(--lmg-ink-3); }
+
+/* ---------- Closing CTA ---------- */
+.course-landing .closing .wrap { padding-bottom: 0; }
+.course-landing .closing__band { padding: 64px 72px; border-radius: var(--radius-band); background: var(--lmg-pink); color: #fff; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; }
+.course-landing .closing__copy { display: flex; flex-direction: column; gap: 12px; }
+.course-landing .closing__kicker { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--lmg-pink-text-on); }
+.course-landing .closing__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3vw, 40px); }
+.course-landing .closing__desc { font-size: 17px; color: var(--lmg-pink-text-on); max-width: 640px; }
+.course-landing .closing__action { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.course-landing .closing__note { font-size: 13px; color: var(--lmg-pink-text-on); }
+
+/* ---------- Footer ---------- */
+.course-landing .site-footer { border-top: 1px solid var(--lmg-line); margin-top: 88px; }
+.course-landing .site-footer .wrap { padding-top: 40px; padding-bottom: 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.course-landing .site-footer__brand { display: flex; align-items: center; gap: 16px; }
+.course-landing .site-footer__logo { width: 52px; height: auto; }
+.course-landing .site-footer__tag { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--lmg-ink-3); }
+.course-landing .site-footer__nav { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; font-size: 13px; font-weight: 500; }
+.course-landing .site-footer__nav a { text-decoration: none; color: var(--lmg-ink-3); }
+.course-landing .site-footer__nav span { color: #8A8A8A; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .course-landing .hero .wrap { gap: 40px; }
+  .course-landing .hero__art { min-height: 620px; }
+  .course-landing .hero__cover { width: 420px; }
+  .course-landing .hero__shape { width: 420px; height: 520px; left: 40px; }
+  .course-landing .pillars__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .course-landing .why .wrap { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 900px) {
+  .course-landing .site-header .wrap { height: 72px; }
+  .course-landing .site-nav__back, .course-landing .site-nav__user { display: none; }
+  .course-landing .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 48px; }
+  .course-landing .hero__art { order: -1; min-height: 0; padding: 24px 0 40px; }
+  .course-landing .hero__cover { width: min(360px, 80vw); }
+  .course-landing .hero__shape { width: 70%; height: 90%; left: 15%; top: 5%; }
+  .course-landing .hero__glow { display: none; }
+  /* width: max-content — an absolutely positioned box at left:50% otherwise shrink-wraps to half the column and wraps the label (deviation from the reference, which wraps at 390px) */
+  .course-landing .hero__chip { left: 50%; transform: translateX(-50%); bottom: 8px; width: max-content; max-width: calc(100% - 16px); }
+  .course-landing .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .course-landing .feature { grid-template-columns: 1fr; gap: 20px; padding: 28px; }
+  .course-landing .feature .btn { justify-self: start; }
+  .course-landing .stats { grid-template-columns: 1fr; }
+  .course-landing .closing__band { grid-template-columns: 1fr; padding: 40px 32px; }
+  .course-landing .closing__action { align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .course-landing .site-nav { gap: 12px; }
+  .course-landing .site-nav .btn--outline, .course-landing .site-nav__logout { display: none; }
+  .course-landing .brand__course { display: none; }
+  .course-landing .pillars__grid, .course-landing .modules { grid-template-columns: 1fr; }
+  .course-landing .hero__actions { flex-direction: column; align-items: flex-start; }
+  .course-landing .journey .wrap, .course-landing .pillars .wrap, .course-landing .why .wrap { padding-top: 56px; padding-bottom: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .course-landing *, .course-landing *::before, .course-landing *::after { transition: none !important; }
+  .course-landing .btn:hover { transform: none; }
+}
+
+/* Screen-reader-only text (e.g. "(locked)" on gated module cards) */
+.course-landing .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }

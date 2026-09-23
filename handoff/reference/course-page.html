@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Complete Brand Partnership Playbook · LMG Media</title>
+<meta name="description" content="The Complete Brand Partnership Playbook — 10-module video course by LMG Media on the business side of being a creator. Module 1 is free, no account required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./brand.css">
+<style>
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--lmg-cream);
+  color: var(--lmg-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--lmg-pink); outline-offset: 3px; border-radius: 4px; }
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: 700; line-height: 1.1; }
+p { margin: 0; }
+.wrap { max-width: var(--page-max); margin: 0 auto; padding-left: var(--page-pad); padding-right: var(--page-pad); }
+.serif-i { font-family: var(--font-display); font-style: italic; font-weight: 400; color: var(--lmg-pink); }
+
+/* Eyebrow: small pink rule + label */
+.eyebrow { display: flex; align-items: center; gap: 12px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--lmg-pink); }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 18px 28px; border-radius: var(--radius-pill); font-weight: 600; font-size: 16px; text-decoration: none; white-space: nowrap; transition: transform .15s ease, box-shadow .15s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn--pink { background: var(--lmg-pink); color: #fff; box-shadow: 0 12px 28px rgba(232, 87, 139, .28); }
+.btn--white { background: #fff; color: var(--lmg-ink); }
+.btn--outline { background: #fff; color: var(--lmg-ink); border: 1px solid var(--lmg-line-2); padding: 10px 18px; font-size: 14px; font-weight: 500; }
+.btn--sm { padding: 12px 22px; font-size: 14px; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ---------- Header ---------- */
+.site-header { border-bottom: 1px solid var(--lmg-line); background: var(--lmg-cream); position: sticky; top: 0; z-index: 10; }
+.site-header .wrap { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--lmg-ink); }
+.brand__logo { width: 64px; height: auto; display: block; }   /* real LMG Media logo asset, black version */
+.brand__divider { width: 1px; height: 28px; background: var(--lmg-line-2); }
+.brand__course { font-family: var(--font-display); font-size: 18px; }
+.site-nav { display: flex; align-items: center; gap: 28px; }
+.site-nav__back { font-size: 14px; font-weight: 500; text-decoration: none; color: #4A4A4A; }
+
+/* ---------- Hero ---------- */
+.hero .wrap { padding-top: 88px; padding-bottom: 72px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px; align-items: center; }
+.hero__copy { display: flex; flex-direction: column; gap: 28px; max-width: 600px; }
+.hero__title { font-size: clamp(40px, 4.6vw, 66px); line-height: 1.04; letter-spacing: -.01em; }
+.hero__lead { font-size: 19px; color: var(--lmg-ink-2); }
+.hero__sub { font-size: 17px; color: var(--lmg-ink-3); }
+.hero__actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; padding-top: 6px; }
+.hero__secondary { font-size: 14px; font-weight: 600; letter-spacing: .04em; text-decoration: underline; text-underline-offset: 5px; color: var(--lmg-ink); }
+.hero__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-top: 8px; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; color: var(--lmg-ink-4); }
+.hero__meta .dot { color: #C9C1B6; }
+.hero__meta .free { color: var(--lmg-pink); }
+
+.hero__art { position: relative; min-height: 720px; display: flex; align-items: center; justify-content: center; }
+.hero__shape { position: absolute; left: 60px; top: 40px; width: 520px; height: 640px; border-radius: 32px; background: var(--lmg-pink-soft); transform: rotate(-4deg); }
+.hero__glow { position: absolute; right: 30px; top: 100px; width: 360px; height: 360px; border-radius: 50%; background: var(--lmg-yellow-soft); opacity: .9; }
+.hero__cover { position: relative; width: 520px; transform: rotate(2deg); filter: drop-shadow(0 30px 50px rgba(26, 26, 26, .18)); }
+.hero__chip { position: absolute; left: 20px; bottom: 96px; display: flex; align-items: center; gap: 14px; padding: 14px 18px 14px 14px; background: #fff; border: 1px solid #F1EBE3; border-radius: 16px; box-shadow: 0 14px 34px rgba(26, 26, 26, .12); }
+.hero__chip-num { width: 40px; height: 40px; border-radius: 50%; background: var(--lmg-pink); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.hero__chip-label { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--lmg-pink); }
+.hero__chip-title { font-size: 15px; font-weight: 600; }
+
+/* ---------- Pillars ---------- */
+.pillars .wrap { padding-top: 24px; padding-bottom: 88px; display: flex; flex-direction: column; gap: 28px; }
+.pillars__head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.pillars__head h2 { font-size: 30px; }
+.pillars__note { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--lmg-ink-4); font-weight: 500; }
+.pillars__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.pillar { padding: 28px; background: var(--lmg-paper); border: 1px solid var(--lmg-line); border-radius: var(--radius-card); display: flex; flex-direction: column; gap: 14px; }
+.pillar__icon { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; }
+.pillar__icon svg { width: 22px; height: 22px; }
+.pillar__icon--pink { background: var(--lmg-pink-soft); color: var(--lmg-pink); }
+.pillar__icon--gold { background: var(--lmg-yellow-soft); color: #A6791B; }
+.pillar__icon--blue { background: var(--lmg-blue-soft); color: #2F6FA8; }
+.pillar h3 { font-size: 20px; }
+.pillar p { font-size: 14px; color: var(--lmg-ink-3); }
+
+/* ---------- Journey ---------- */
+.journey { background: var(--lmg-paper); border-top: 1px solid var(--lmg-line); border-bottom: 1px solid var(--lmg-line); }
+.journey .wrap { padding-top: 88px; padding-bottom: 88px; display: flex; flex-direction: column; gap: 40px; }
+.journey__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.journey__head-copy { display: flex; flex-direction: column; gap: 14px; }
+.journey__head h2 { font-size: clamp(32px, 3.2vw, 44px); }
+.journey__head p { font-size: 17px; color: var(--lmg-ink-3); max-width: 620px; }
+.journey__lock { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--lmg-ink-4); font-weight: 500; }
+.journey__lock svg { width: 16px; height: 16px; }
+
+.feature { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; align-items: center; gap: 32px; padding: 36px 40px; border-radius: var(--radius-panel); background: var(--lmg-ink); color: #fff; text-decoration: none; }
+.feature__num { width: 72px; height: 72px; border-radius: 50%; background: var(--lmg-pink); display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 30px; }
+.feature__body { display: flex; flex-direction: column; gap: 8px; }
+.feature__live { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--lmg-yellow); }
+.feature__live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.feature__title { font-family: var(--font-display); font-weight: 700; font-size: 32px; }
+.feature__desc { font-size: 16px; color: #D6D0C8; max-width: 720px; }
+.feature .btn { padding: 16px 24px; font-size: 15px; }
+
+.modules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; list-style: none; margin: 0; padding: 0; }
+.module { display: flex; align-items: center; gap: 18px; padding: 22px 24px; border-radius: 18px; border: 1px solid var(--lmg-line); background: var(--lmg-cream); text-decoration: none; color: var(--lmg-ink); transition: border-color .15s ease; }
+.module:hover { border-color: var(--lmg-line-2); }
+.module__num { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--lmg-line-2); background: #fff; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+.module__body { display: flex; flex-direction: column; gap: 4px; flex-grow: 1; min-width: 0; }
+.module__label { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: #7A7A7A; }
+.module__title { font-size: 17px; font-weight: 600; }
+.module__lock { width: 16px; height: 16px; color: #9A938A; flex-shrink: 0; }
+
+.capstone { display: flex; align-items: center; gap: 14px; font-size: 15px; color: var(--lmg-ink-2); }
+.capstone__flag { width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--lmg-yellow); display: inline-flex; align-items: center; justify-content: center; color: #A6791B; }
+.capstone__flag svg { width: 18px; height: 18px; }
+
+/* ---------- Why ---------- */
+.why .wrap { padding-top: 88px; padding-bottom: 88px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: start; }
+.why__copy { display: flex; flex-direction: column; gap: 14px; }
+.why__copy h2 { font-size: clamp(30px, 3vw, 40px); line-height: 1.12; }
+.why__copy p { font-size: 17px; color: var(--lmg-ink-3); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.stat { display: flex; flex-direction: column; gap: 10px; padding-top: 20px; border-top: 2px solid var(--lmg-pink); }
+.stat--gold { border-top-color: var(--lmg-yellow); }
+.stat--blue { border-top-color: var(--lmg-blue); }
+.stat__num { font-family: var(--font-display); font-size: 36px; font-weight: 700; }
+.stat__title { font-size: 15px; font-weight: 600; }
+.stat__desc { font-size: 14px; color: var(--lmg-ink-3); }
+
+/* ---------- Closing CTA ---------- */
+.closing .wrap { padding-bottom: 0; }
+.closing__band { padding: 64px 72px; border-radius: var(--radius-band); background: var(--lmg-pink); color: #fff; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 48px; }
+.closing__copy { display: flex; flex-direction: column; gap: 12px; }
+.closing__kicker { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--lmg-pink-text-on); }
+.closing__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(30px, 3vw, 40px); }
+.closing__desc { font-size: 17px; color: var(--lmg-pink-text-on); max-width: 640px; }
+.closing__action { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+.closing__note { font-size: 13px; color: var(--lmg-pink-text-on); }
+
+/* ---------- Footer ---------- */
+.site-footer { border-top: 1px solid var(--lmg-line); margin-top: 88px; }
+.site-footer .wrap { padding-top: 40px; padding-bottom: 44px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.site-footer__brand { display: flex; align-items: center; gap: 16px; }
+.site-footer__logo { width: 52px; height: auto; }
+.site-footer__tag { font-family: var(--font-display); font-style: italic; font-size: 15px; color: var(--lmg-ink-3); }
+.site-footer__nav { display: flex; align-items: center; flex-wrap: wrap; gap: 28px; font-size: 13px; font-weight: 500; }
+.site-footer__nav a { text-decoration: none; color: var(--lmg-ink-3); }
+.site-footer__nav span { color: #8A8A8A; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  .hero .wrap { gap: 40px; }
+  .hero__art { min-height: 620px; }
+  .hero__cover { width: 420px; }
+  .hero__shape { width: 420px; height: 520px; left: 40px; }
+  .pillars__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why .wrap { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 900px) {
+  .site-header .wrap { height: 72px; }
+  .site-nav__back { display: none; }
+  .hero .wrap { grid-template-columns: 1fr; padding-top: 56px; padding-bottom: 48px; }
+  .hero__art { order: -1; min-height: 0; padding: 24px 0 40px; }
+  .hero__cover { width: min(360px, 80vw); }
+  .hero__shape { width: 70%; height: 90%; left: 15%; top: 5%; }
+  .hero__glow { display: none; }
+  .hero__chip { left: 50%; transform: translateX(-50%); bottom: 8px; }
+  .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature { grid-template-columns: 1fr; gap: 20px; padding: 28px; }
+  .feature .btn { justify-self: start; }
+  .stats { grid-template-columns: 1fr; }
+  .closing__band { grid-template-columns: 1fr; padding: 40px 32px; }
+  .closing__action { align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .site-nav { gap: 12px; }
+  .site-nav .btn--outline { display: none; }
+  .brand__course { display: none; }
+  .pillars__grid, .modules { grid-template-columns: 1fr; }
+  .hero__actions { flex-direction: column; align-items: flex-start; }
+  .journey .wrap, .pillars .wrap, .why .wrap { padding-top: 56px; padding-bottom: 56px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/course" aria-label="LMG Media — Brand Partnership Playbook">
+      <img class="brand__logo" src="/images/lmg-logo.png" alt="" width="64" height="43">
+      <span class="brand__divider" aria-hidden="true"></span>
+      <span class="brand__course">Brand Partnership <span class="serif-i">Playbook</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a class="site-nav__back" href="https://lmg.media/for-influencers">← lmg.media</a>
+      <a class="btn btn--outline" href="/login">Log in</a>
+      <a class="btn btn--pink btn--sm" href="/course/module-1">Start Module 1 — free</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero__copy">
+        <p class="eyebrow">The Playbook · For creators</p>
+        <h1 id="hero-title" class="hero__title">The business side of being a creator, taught <span class="serif-i">properly</span>.</h1>
+        <p class="hero__lead">Pricing, pitching, contracts, renewals — the system behind every professional partnership. Whether you work with us, with another agency, or on your own, this is the foundation.</p>
+        <p class="hero__sub">Ten modules, taught on video, built from the same playbooks we use on real deals. Module 1 and the rate calculator are free — no account, no card, no catch.</p>
+        <div class="hero__actions">
+          <a class="btn btn--pink" href="/course/module-1">
+            <span>Start Module 1 — free</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="hero__secondary" href="/login">Already working with us? It's still yours →</a>
+        </div>
+        <p class="hero__meta">
+          <span>10 modules</span><span class="dot">·</span>
+          <span>50 videos</span><span class="dot">·</span>
+          <span>10 workbooks</span><span class="dot">·</span>
+          <span class="free">Module 1 free, no account</span>
+        </p>
+      </div>
+
+      <div class="hero__art">
+        <div class="hero__shape" aria-hidden="true"></div>
+        <div class="hero__glow" aria-hidden="true"></div>
+        <img class="hero__cover" src="/images/playbook-cover.png" alt="Cover of The Complete Brand Partnership Playbook" width="520" height="640" fetchpriority="high">
+        <a class="hero__chip" href="/course/module-1">
+          <span class="hero__chip-num">1</span>
+          <span>
+            <span class="hero__chip-label">Module 1 · Live now</span><br>
+            <span class="hero__chip-title">The Partnership Landscape</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="pillars" aria-labelledby="pillars-title">
+    <div class="wrap">
+      <div class="pillars__head">
+        <h2 id="pillars-title">The system behind every professional partnership</h2>
+        <span class="pillars__note">What the ten modules cover</span>
+      </div>
+      <div class="pillars__grid">
+        <article class="pillar">
+          <span class="pillar__icon pillar__icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 6.5c0-1.9-2.2-3-5-3s-5 1.1-5 3 2.2 2.6 5 3.2 5 1.3 5 3.3-2.2 3-5 3-5-1.1-5-3"/></svg></span>
+          <h3>Pricing</h3>
+          <p>Know your worth and put a number on it — before the brand does.</p>
+        </article>
+        <article class="pillar">
+          <span class="pillar__icon pillar__icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></span>
+          <h3>Pitching</h3>
+          <p>Find the right brands, then reach them with a pitch that gets answered.</p>
+        </article>
+        <article class="pillar">
+          <span class="pillar__icon pillar__icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg></span>
+          <h3>Contracts</h3>
+          <p>Usage, terms and the clauses that quietly cost creators money.</p>
+        </article>
+        <article class="pillar">
+          <span class="pillar__icon pillar__icon--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></span>
+          <h3>Renewals</h3>
+          <p>Turn one deal into a partnership that renews — at a higher rate.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey -->
+  <section class="journey" aria-labelledby="journey-title">
+    <div class="wrap">
+      <div class="journey__head">
+        <div class="journey__head-copy">
+          <p class="eyebrow">The journey</p>
+          <h2 id="journey-title">Ten modules. One guided path.</h2>
+          <p>From your first brand deal to scaling a partnership business. Begin at the beginning — the course builds in order.</p>
+        </div>
+        <p class="journey__lock">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span>Modules 2–10 unlock in order</span>
+        </p>
+      </div>
+
+      <a class="feature" href="/course/module-1">
+        <span class="feature__num">1</span>
+        <span class="feature__body">
+          <span class="feature__live">Start here · Free · Live now</span>
+          <span class="feature__title">The Partnership Landscape</span>
+          <span class="feature__desc">How the creator–brand economy actually works, where the money flows, and where you fit in.</span>
+        </span>
+        <span class="btn btn--white">
+          <span>Enter Module 1</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+
+      <!-- Render these from the existing module data; lock icon only when the module is locked for this user. -->
+      <ul class="modules">
+        <li><a class="module" href="/course/module-2"><span class="module__num">2</span><span class="module__body"><span class="module__label">Module 02</span><span class="module__title">Finding &amp; Attracting Brands</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-3"><span class="module__num">3</span><span class="module__body"><span class="module__label">Module 03</span><span class="module__title">Vetting Opportunities</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-4"><span class="module__num">4</span><span class="module__body"><span class="module__label">Module 04</span><span class="module__title">Know Your Worth · Pricing</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-5"><span class="module__num">5</span><span class="module__body"><span class="module__label">Module 05</span><span class="module__title">The Perfect Pitch</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-6"><span class="module__num">6</span><span class="module__body"><span class="module__label">Module 06</span><span class="module__title">Negotiating Like a Pro</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-7"><span class="module__num">7</span><span class="module__body"><span class="module__label">Module 07</span><span class="module__title">Contracts &amp; Legal</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-8"><span class="module__num">8</span><span class="module__body"><span class="module__label">Module 08</span><span class="module__title">Delivering Results &amp; Reporting</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-9"><span class="module__num">9</span><span class="module__body"><span class="module__label">Module 09</span><span class="module__title">Building Long-Term Partnerships</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+        <li><a class="module" href="/course/module-10"><span class="module__num">10</span><span class="module__body"><span class="module__label">Module 10 · Capstone</span><span class="module__title">Protect &amp; Scale</span></span><svg class="module__lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></a></li>
+      </ul>
+
+      <p class="capstone">
+        <span class="capstone__flag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4"/><path d="M4 4h14l-3 4 3 4H4"/></svg></span>
+        <span><strong>Capstone complete.</strong> A partnership business that protects and scales itself.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section class="why" aria-labelledby="why-title">
+    <div class="wrap">
+      <div class="why__copy">
+        <p class="eyebrow">Why this one</p>
+        <h2 id="why-title">Built from the playbooks we use on real deals.</h2>
+        <p>Every creator we work with knows this business. The Playbook is where that starts — whoever ends up handling your deals.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <span class="stat__num">50</span>
+          <span class="stat__title">Videos, taught on camera</span>
+          <span class="stat__desc">Across ten modules — the same material we use when we take a deal to the table.</span>
+        </div>
+        <div class="stat stat--gold">
+          <span class="stat__num">10</span>
+          <span class="stat__title">Workbooks you keep</span>
+          <span class="stat__desc">One per module, so what you work through in the videos leaves with you.</span>
+        </div>
+        <div class="stat stat--blue">
+          <span class="stat__num">Free</span>
+          <span class="stat__title">Module 1 + rate calculator</span>
+          <span class="stat__desc">No account, no card, no catch. Decide whether it's for you before you sign up.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="wrap">
+      <div class="closing__band">
+        <div class="closing__copy">
+          <span class="closing__kicker">Start Module 1</span>
+          <h2 id="closing-title" class="closing__title">Begin at the beginning.</h2>
+          <p class="closing__desc">The Partnership Landscape is free and open. Watch it, work the workbook, and the course opens up from there.</p>
+        </div>
+        <div class="closing__action">
+          <a class="btn btn--white" href="/course/module-1">
+            <span>Start Module 1 — free</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          </a>
+          <span class="closing__note">No account required for Module 1</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__brand">
+      <img class="site-footer__logo" src="/images/lmg-logo.png" alt="LMG Media" width="52" height="35">
+      <span class="site-footer__tag">Where Quality Brands Meet Iconic Influence</span>
+    </div>
+    <nav class="site-footer__nav" aria-label="Footer">
+      <a href="https://lmg.media/for-influencers">For Influencers</a>
+      <a href="https://lmg.media/for-influencers/apply">Apply to work with us</a>
+      <a href="https://lmg.media/privacy-policy">Privacy</a>
+      <span>© 2026 LMG Media</span>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

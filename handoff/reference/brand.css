@@ -1,0 +1,40 @@
+/* LMG brand tokens for creators.lmg.media
+   Mirror of the values used on lmg.media. Keep this file in sync by hand —
+   the two sites are separate projects and do not share code. */
+
+:root {
+  /* Colour */
+  --lmg-pink: #E8578B;        /* primary accent: CTAs, links, italic "Playbook" */
+  --lmg-pink-soft: #FFF3F7;   /* tinted fills behind icons / hero shape */
+  --lmg-pink-text-on: #FFE4EE;/* secondary text on a pink background */
+  --lmg-yellow: #F6D64A;      /* small accents only: live dot, capstone flag */
+  --lmg-yellow-soft: #FFF8DC;
+  --lmg-blue: #6EB1E8;        /* tertiary accent, used sparingly */
+  --lmg-blue-soft: #EAF3FC;
+  --lmg-ink: #1A1A1A;         /* headings, body, logo */
+  --lmg-ink-2: #3D3D3D;       /* lead paragraphs */
+  --lmg-ink-3: #5A5A5A;       /* body copy on cream (≥4.5:1) */
+  --lmg-ink-4: #6A6A6A;       /* captions / meta (≥4.5:1 on cream) */
+  --lmg-cream: #FBF9F6;       /* page background */
+  --lmg-paper: #FFFFFF;       /* cards, journey section */
+  --lmg-line: #ECE7E0;        /* hairlines and card borders */
+  --lmg-line-2: #D9D2C8;      /* button outlines, number rings */
+
+  /* Type */
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Shape */
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-panel: 24px;
+  --radius-band: 28px;
+
+  /* Layout */
+  --page-max: 1440px;
+  --page-pad: 64px;
+}
+
+@media (max-width: 720px) {
+  :root { --page-pad: 20px; }
+}

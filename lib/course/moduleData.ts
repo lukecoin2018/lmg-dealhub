@@ -1046,3 +1046,9 @@ export const module10: ModuleData = {
     },
   ],
 }
+
+/** All modules in course order — the /course landing page renders its module cards from this. */
+export const allModules: ModuleData[] = [
+  module1, module2, module3, module4, module5,
+  module6, module7, module8, module9, module10,
+]

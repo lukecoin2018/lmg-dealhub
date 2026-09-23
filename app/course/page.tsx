@@ -1,246 +1,246 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowRight, Unlock, Lock, Flag } from 'lucide-react'
+import { DM_Sans } from 'next/font/google'
+import { getCurrentUser } from '@/lib/auth/session'
+import { allModules } from '@/lib/course/moduleData'
+import CourseHeader from '@/components/course/landing/CourseHeader'
+import CourseFooter from '@/components/course/landing/CourseFooter'
+import {
+  ArrowRightIcon,
+  LockIcon,
+  FlagIcon,
+  PricingIcon,
+  PitchingIcon,
+  ContractsIcon,
+  RenewalsIcon,
+} from '@/components/course/landing/icons'
+import '@/styles/course-landing.css'
 
-const upcomingModules = [
-  { n: 2,  label: 'Module 02',             title: 'Finding & Attracting Brands' },
-  { n: 3,  label: 'Module 03',             title: 'Vetting Opportunities' },
-  { n: 4,  label: 'Module 04',             title: 'Know Your Worth · Pricing' },
-  { n: 5,  label: 'Module 05',             title: 'The Perfect Pitch' },
-  { n: 6,  label: 'Module 06',             title: 'Negotiating Like a Pro' },
-  { n: 7,  label: 'Module 07',             title: 'Contracts & Legal' },
-  { n: 8,  label: 'Module 08',             title: 'Delivering Results & Reporting' },
-  { n: 9,  label: 'Module 09',             title: 'Building Long-Term Partnerships' },
-  { n: 10, label: 'Module 10 · Capstone',  title: 'Protect & Scale' },
-]
+// /course landing page — port of handoff/reference/course-page.html (design
+// authority; see handoff/CLAUDE_CODE_BRIEF.md). Styles: styles/course-landing.css.
+// Sits outside the (lesson) route group on purpose: the lesson pages keep their
+// own fixed-height shell + header in app/course/(lesson)/layout.tsx.
 
-export default function CoursePage() {
+const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-dm-sans' })
+
+const COVER_SRC = '/images/playbook-cover.webp'
+
+export const metadata: Metadata = {
+  title: 'Brand Partnership Playbook · LMG Media',
+  description:
+    'The Complete Brand Partnership Playbook — 10-module video course by LMG Media on the business side of being a creator. Module 1 is free, no account required.',
+}
+
+const PILLARS = [
+  { tint: 'pink', Icon: PricingIcon, title: 'Pricing', line: 'Know your worth and put a number on it — before the brand does.' },
+  { tint: 'gold', Icon: PitchingIcon, title: 'Pitching', line: 'Find the right brands, then reach them with a pitch that gets answered.' },
+  { tint: 'blue', Icon: ContractsIcon, title: 'Contracts', line: 'Usage, terms and the clauses that quietly cost creators money.' },
+  { tint: 'pink', Icon: RenewalsIcon, title: 'Renewals', line: 'Turn one deal into a partnership that renews — at a higher rate.' },
+] as const
+
+export default async function CoursePage() {
+
+  // Lock state mirrors the access gate in proxy.ts: modules 2–10 need a
+  // logged-in user with has_access = 1, read fresh from the DB (never the JWT).
+  const user = await getCurrentUser()
+  const hasAccess = user?.has_access === 1
+
+  const featured = allModules[0]
+  const laterModules = allModules.slice(1)
+  const capstone = allModules[allModules.length - 1]
+
   return (
-    <div className="flex-1 overflow-y-auto" style={{ background: '#FAFAF8' }}>
-      <style>{`
-        @keyframes lmg-pulse {
-          0%   { box-shadow: 0 0 0 0 rgba(255,77,148,.5); }
-          70%  { box-shadow: 0 0 0 8px rgba(255,77,148,0); }
-          100% { box-shadow: 0 0 0 0 rgba(255,77,148,0); }
-        }
-        .lmg-pulse { animation: lmg-pulse 2.2s infinite; }
-        .lmg-trail-link { transition: opacity 160ms ease, transform 160ms ease; }
-        .lmg-trail-link:hover { opacity: .75; transform: translateX(3px); }
-      `}</style>
+    <div className={`course-landing ${dmSans.variable}`}>
+      <CourseHeader />
 
-      {/* Two-column grid on lg+; single column stacked on mobile */}
-      <div className="lg:grid lg:grid-cols-2 lg:min-h-full">
-
-        {/* ── Left col: Hero ──────────────────────────────────── */}
-        <section className="px-6 pt-14 pb-10 max-w-[448px] mx-auto lg:max-w-none lg:px-12 lg:pt-16 lg:pb-20">
-
-          <div className="flex items-center gap-3 mb-6">
-            <span style={{ display: 'inline-block', width: 26, height: 1.5, background: '#FF4D94', opacity: .55, flexShrink: 0 }} />
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase', color: '#FF4D94' }}>
-              The Complete Course
-            </span>
-          </div>
-
-          <h1 style={{
-            fontFamily: "'Playfair Display', Georgia, serif",
-            fontWeight: 700,
-            fontSize: 'clamp(40px, 10vw, 52px)',
-            lineHeight: 1.0,
-            letterSpacing: '-.015em',
-            color: '#1C1917',
-            margin: '0 0 20px',
-            textWrap: 'balance',
-          } as React.CSSProperties}>
-            The Complete Brand Partnership <em style={{ fontStyle: 'italic' }}>Playbook</em>
-          </h1>
-
-          <p style={{ fontSize: 16, lineHeight: 1.55, color: '#78716C', fontWeight: 500, margin: '0 0 34px', maxWidth: '34ch' }}>
-            <strong style={{ color: '#1C1917', fontWeight: 700 }}>10 modules</strong>
-            {' '}· Module 1 free &amp; open. A guided path from your first brand deal to scaling a partnership business.
-          </p>
-
-          <Link
-            href="/course/module-1"
-            className="flex items-center justify-between gap-4 w-full"
-            style={{
-              background: '#FF4D94',
-              color: '#fff',
-              textDecoration: 'none',
-              padding: '18px 22px',
-              borderRadius: 16,
-              boxShadow: '0 14px 30px rgba(255,77,148,.32)',
-              marginBottom: 16,
-            }}
-          >
-            <span className="flex flex-col gap-1 text-left">
-              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.13em', textTransform: 'uppercase', opacity: .82 }}>
-                Start Module 1
-              </span>
-              <span style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-.01em', lineHeight: 1.1 }}>
-                The Partnership Landscape
-              </span>
-            </span>
-            <span style={{
-              width: 44, height: 44, borderRadius: '50%',
-              background: 'rgba(255,255,255,.18)',
-              display: 'grid', placeItems: 'center', flexShrink: 0,
-            }}>
-              <ArrowRight size={21} />
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-2" style={{ fontSize: 12.5, color: '#78716C' }}>
-            <Unlock size={14} style={{ color: '#3AAFF4', flexShrink: 0 }} />
-            Begin at the beginning — the course builds in order.
-          </div>
-        </section>
-
-        {/* ── Right col: Trail ────────────────────────────────── */}
-        <section
-          className="px-6 pb-16 max-w-[448px] mx-auto lg:max-w-none lg:px-12 lg:pt-14"
-          style={{ borderLeft: '1px solid #E5E0D5' } as React.CSSProperties}
-        >
-          {/* On mobile this border-left is invisible (single column); on lg it becomes the divider */}
-
-          {/* Mobile-only top rule to separate sections */}
-          <div className="lg:hidden" style={{ borderTop: '1px solid #E5E0D5', marginBottom: 28 }} />
-
-          <div className="flex items-baseline justify-between" style={{ marginBottom: 30 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase', color: '#78716C' }}>
-              The Journey
-            </span>
-            <span style={{ fontSize: 12, fontWeight: 700, color: '#1C1917' }}>10 Modules</span>
-          </div>
-
-          {/* Trail */}
-          <div className="relative" style={{ paddingLeft: 8 }}>
-
-            {/* Spine — dashed vertical line */}
-            <div style={{
-              position: 'absolute',
-              left: 25, top: 18, bottom: 30, width: 2,
-              background: 'repeating-linear-gradient(to bottom, #E5E0D5 0 6px, transparent 6px 12px)',
-              zIndex: 1,
-            }} />
-
-            {/* Module 1 — active, linked */}
-            <div className="relative" style={{ paddingLeft: 62, marginBottom: 8 }}>
-              <div style={{
-                position: 'absolute', left: -2, top: 0, zIndex: 2,
-                width: 56, height: 56, borderRadius: '50%',
-                background: '#FF4D94', color: '#fff',
-                display: 'grid', placeItems: 'center',
-                fontFamily: 'inherit', fontWeight: 800, fontSize: 22,
-                boxShadow: '0 0 0 6px rgba(255,77,148,.16), 0 10px 24px rgba(255,77,148,.3)',
-              }}>
-                1
-              </div>
-              <Link
-                href="/course/module-1"
-                style={{
-                  display: 'block', textDecoration: 'none', color: 'inherit',
-                  background: '#fff',
-                  border: '1.5px solid #FF4D94',
-                  borderRadius: 18,
-                  padding: '20px 20px 18px',
-                  boxShadow: '0 16px 36px rgba(28,25,23,.1)',
-                  marginBottom: 30,
-                }}
-              >
-                <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
-                  <span
-                    className="lmg-pulse"
-                    style={{ width: 7, height: 7, borderRadius: '50%', background: '#FF4D94', flexShrink: 0 }}
-                  />
-                  <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '.13em', textTransform: 'uppercase', color: '#FF4D94' }}>
-                    Start here · Live now
-                  </span>
-                </div>
-                <h3 style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontWeight: 700, fontSize: 25, lineHeight: 1.08,
-                  letterSpacing: '-.01em', margin: '0 0 8px', color: '#1C1917',
-                }}>
-                  The Partnership Landscape
-                </h3>
-                <p style={{ fontSize: 13.5, lineHeight: 1.5, color: '#78716C', margin: '0 0 16px' }}>
-                  How the creator–brand economy actually works, where the money flows, and where you fit in.
-                </p>
-                <span className="flex items-center gap-2" style={{ fontSize: 14, fontWeight: 800, color: '#FF4D94' }}>
-                  Enter Module 1 <ArrowRight size={17} />
-                </span>
-              </Link>
-            </div>
-
-            {/* Modules 2–10 — gated, but real links: the access gate (proxy.ts)
-                routes each click to signup / pending / content by session state */}
-            {upcomingModules.map(({ n, label, title }) => (
-              <div key={n} className="relative" style={{ paddingLeft: 62, minHeight: 54, marginBottom: 8 }}>
-                <div style={{
-                  position: 'absolute', left: 0, top: 0, zIndex: 2,
-                  width: 52, height: 52, borderRadius: '50%',
-                  border: '2px solid #E5E0D5',
-                  background: '#FAFAF8', color: '#78716C',
-                  display: 'grid', placeItems: 'center',
-                  fontFamily: 'inherit', fontWeight: 800, fontSize: 18,
-                }}>
-                  {n}
-                </div>
-                <Link
-                  href={`/course/module-${n}`}
-                  className="lmg-trail-link"
-                  style={{
-                    display: 'block', textDecoration: 'none', color: 'inherit',
-                    paddingTop: 5, borderRadius: 12,
-                  }}
-                >
-                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: '#A8A096', marginBottom: 3 }}>
-                    {label}
-                  </div>
-                  <div className="flex items-center gap-2 flex-wrap" style={{ fontSize: 16.5, fontWeight: 700, letterSpacing: '-.01em', color: '#5C544D' }}>
-                    {title}
-                    <span style={{
-                      width: 22, height: 22, borderRadius: '50%',
-                      background: '#F5F2EC',
-                      display: 'grid', placeItems: 'center', flexShrink: 0,
-                    }}>
-                      <Lock size={12} style={{ color: '#A8A096' }} />
-                    </span>
-                  </div>
+      <main>
+        {/* Hero */}
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="wrap">
+            <div className="hero__copy">
+              <p className="eyebrow">The Playbook · For creators</p>
+              <h1 id="hero-title" className="hero__title">
+                The business side of being a creator, taught <span className="serif-i">properly</span>.
+              </h1>
+              <p className="hero__lead">
+                Pricing, pitching, contracts, renewals — the system behind every professional partnership. Whether you work with us, with another agency, or on your own, this is the foundation.
+              </p>
+              <p className="hero__sub">
+                Ten modules, taught on video, built from the same playbooks we use on real deals. Module 1 and the rate calculator are free — no account, no card, no catch.
+              </p>
+              <div className="hero__actions">
+                <Link className="btn btn--pink" href="/course/module-1">
+                  <span>Start Module 1 — free</span>
+                  <ArrowRightIcon />
                 </Link>
+                <Link className="hero__secondary" href="/login">Already working with us? It&apos;s still yours →</Link>
               </div>
-            ))}
-
-            {/* Trail end */}
-            <div className="relative" style={{ paddingLeft: 62, marginTop: 4 }}>
-              <div style={{
-                position: 'absolute', left: 10, top: 2, zIndex: 2,
-                width: 34, height: 34, borderRadius: '50%',
-                border: '2px solid #E5E0D5', background: '#FAFAF8',
-                display: 'grid', placeItems: 'center',
-              }}>
-                <Flag size={15} style={{ color: '#FFD700' }} />
-              </div>
-              <p style={{ fontSize: 13, fontWeight: 600, color: '#78716C', paddingTop: 7 }}>
-                <strong style={{ color: '#1C1917', fontWeight: 800 }}>Capstone complete.</strong>
-                {' '}A partnership business that protects and scales itself.
+              <p className="hero__meta">
+                <span>10 modules</span><span className="dot">·</span>
+                <span>50 videos</span><span className="dot">·</span>
+                <span>10 workbooks</span><span className="dot">·</span>
+                <span className="free">Module 1 free, no account</span>
               </p>
             </div>
 
+            <div className="hero__art">
+              <div className="hero__shape" aria-hidden="true" />
+              <div className="hero__glow" aria-hidden="true" />
+              {/* eslint-disable-next-line @next/next/no-img-element -- the full-resolution cover, served as-is */}
+              <img
+                className="hero__cover"
+                src={COVER_SRC}
+                alt="Cover of The Complete Brand Partnership Playbook"
+                width={520}
+                height={674}
+                fetchPriority="high"
+              />
+              <Link className="hero__chip" href={`/course/${featured.slug}`}>
+                <span className="hero__chip-num">{featured.number}</span>
+                <span>
+                  <span className="hero__chip-label">Module {featured.number} · Live now</span><br />
+                  <span className="hero__chip-title">{featured.title}</span>
+                </span>
+              </Link>
+            </div>
           </div>
         </section>
-      </div>
 
-      {/* Footer */}
-      <footer style={{ borderTop: '1px solid #E5E0D5', padding: '26px 26px 40px', textAlign: 'center' }}>
-        <div style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: 15 }}>
-          <span style={{ color: '#FF4D94', fontWeight: 800 }}>LMG</span>
-          {' · '}
-          <span style={{ color: '#FFD700', fontWeight: 700 }}>Brand Partnership Playbook</span>
-        </div>
-        <p style={{ fontSize: 11.5, color: '#78716C', margin: '10px 0 0', letterSpacing: '.02em' }}>
-          Where Quality Brands Meet Iconic Influence
-        </p>
-      </footer>
+        {/* Pillars */}
+        <section className="pillars" aria-labelledby="pillars-title">
+          <div className="wrap">
+            <div className="pillars__head">
+              <h2 id="pillars-title">The system behind every professional partnership</h2>
+              <span className="pillars__note">What the ten modules cover</span>
+            </div>
+            <div className="pillars__grid">
+              {PILLARS.map(({ tint, Icon, title, line }) => (
+                <article className="pillar" key={title}>
+                  <span className={`pillar__icon pillar__icon--${tint}`}><Icon /></span>
+                  <h3>{title}</h3>
+                  <p>{line}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Journey */}
+        <section className="journey" aria-labelledby="journey-title">
+          <div className="wrap">
+            <div className="journey__head">
+              <div className="journey__head-copy">
+                <p className="eyebrow">The journey</p>
+                <h2 id="journey-title">Ten modules. One guided path.</h2>
+                <p>From your first brand deal to scaling a partnership business. Begin at the beginning — the course builds in order.</p>
+              </div>
+              <p className="journey__lock">
+                <LockIcon />
+                <span>Modules 2–10 unlock in order</span>
+              </p>
+            </div>
+
+            <Link className="feature" href={`/course/${featured.slug}`}>
+              <span className="feature__num">{featured.number}</span>
+              <span className="feature__body">
+                <span className="feature__live">Start here · Free · Live now</span>
+                <span className="feature__title">{featured.title}</span>
+                <span className="feature__desc">How the creator–brand economy actually works, where the money flows, and where you fit in.</span>
+              </span>
+              <span className="btn btn--white">
+                <span>Enter Module {featured.number}</span>
+                <ArrowRightIcon />
+              </span>
+            </Link>
+
+            {/* Modules 2–10 from lib/course/moduleData.ts. Real links: the access
+                gate (proxy.ts) routes each click to signup / pending / content.
+                Lock icon only when the module is locked for this user. Completed
+                state is not tracked server-side yet (lesson progress lives in
+                localStorage) — when it is, add `module__num--done` to the ring. */}
+            <ul className="modules">
+              {laterModules.map((m) => {
+                const isCapstone = m === capstone
+                const locked = !hasAccess
+                return (
+                  <li key={m.slug}>
+                    <Link className="module" href={`/course/${m.slug}`}>
+                      <span className="module__num">{m.number}</span>
+                      <span className="module__body">
+                        <span className="module__label">
+                          Module {String(m.number).padStart(2, '0')}{isCapstone ? ' · Capstone' : ''}
+                        </span>
+                        <span className="module__title">{m.title}</span>
+                      </span>
+                      {locked && (
+                        <>
+                          <LockIcon className="module__lock" />
+                          <span className="visually-hidden">(locked)</span>
+                        </>
+                      )}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+
+            <p className="capstone">
+              <span className="capstone__flag"><FlagIcon /></span>
+              <span><strong>Capstone complete.</strong> A partnership business that protects and scales itself.</span>
+            </p>
+          </div>
+        </section>
+
+        {/* Why */}
+        <section className="why" aria-labelledby="why-title">
+          <div className="wrap">
+            <div className="why__copy">
+              <p className="eyebrow">Why this one</p>
+              <h2 id="why-title">Built from the playbooks we use on real deals.</h2>
+              <p>Every creator we work with knows this business. The Playbook is where that starts — whoever ends up handling your deals.</p>
+            </div>
+            <div className="stats">
+              <div className="stat">
+                <span className="stat__num">50</span>
+                <span className="stat__title">Videos, taught on camera</span>
+                <span className="stat__desc">Across ten modules — the same material we use when we take a deal to the table.</span>
+              </div>
+              <div className="stat stat--gold">
+                <span className="stat__num">10</span>
+                <span className="stat__title">Workbooks you keep</span>
+                <span className="stat__desc">One per module, so what you work through in the videos leaves with you.</span>
+              </div>
+              <div className="stat stat--blue">
+                <span className="stat__num">Free</span>
+                <span className="stat__title">Module 1 + rate calculator</span>
+                <span className="stat__desc">No account, no card, no catch. Decide whether it&apos;s for you before you sign up.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Closing CTA */}
+        <section className="closing" aria-labelledby="closing-title">
+          <div className="wrap">
+            <div className="closing__band">
+              <div className="closing__copy">
+                <span className="closing__kicker">Start Module 1</span>
+                <h2 id="closing-title" className="closing__title">Begin at the beginning.</h2>
+                <p className="closing__desc">The Partnership Landscape is free and open. Watch it, work the workbook, and the course opens up from there.</p>
+              </div>
+              <div className="closing__action">
+                <Link className="btn btn--white" href="/course/module-1">
+                  <span>Start Module 1 — free</span>
+                  <ArrowRightIcon />
+                </Link>
+                <span className="closing__note">No account required for Module 1</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <CourseFooter />
     </div>
   )
 }
