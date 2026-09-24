@@ -31,7 +31,9 @@ export default async function AdminPage() {
           <span style={{ color: '#9C9589', fontWeight: 400, margin: '0 6px' }}>·</span>
           <span style={{ color: '#FFD700' }}>Admin</span>
         </Link>
-        <span style={{ fontSize: 12.5, fontWeight: 600, color: '#78716C' }}>{admin.email}</span>
+        <Link href="/account" title="Account settings" style={{ fontSize: 12.5, fontWeight: 600, color: '#78716C', textDecoration: 'none' }}>
+          {admin.email}
+        </Link>
       </header>
 
       <main className="px-6 py-10" style={{ maxWidth: 860, margin: '0 auto' }}>

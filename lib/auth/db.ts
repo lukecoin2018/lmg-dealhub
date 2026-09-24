@@ -67,3 +67,7 @@ export function createUser(email: string, passwordHash: string): UserRow {
     .run(normalized, passwordHash)
   return findUserById(Number(result.lastInsertRowid))!
 }
+
+export function setUserPassword(id: number, passwordHash: string): void {
+  getDb().prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(passwordHash, id)
+}
