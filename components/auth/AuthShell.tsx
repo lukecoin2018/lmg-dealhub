@@ -1,8 +1,11 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import CourseHeader from '@/components/course/landing/CourseHeader'
+import { dmSans } from '@/components/course/landing/fonts'
+import '@/styles/course-landing.css'
 
 // Shared page shell for /login and /signup — course light/editorial palette,
-// fixed light regardless of the dashboard dark-mode class.
+// fixed light regardless of the dashboard dark-mode class. Uses the compact
+// brand header (no Module 1 pill); /login hides the Log in pill as well.
 
 export default function AuthShell({
   eyebrow,
@@ -10,7 +13,9 @@ export default function AuthShell({
   subtitle,
   children,
   footer,
+  authPill = true,
 }: {
+  authPill?: boolean
   eyebrow: string
   title: ReactNode
   subtitle: string
@@ -19,19 +24,10 @@ export default function AuthShell({
 }) {
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className={`course-landing min-h-screen flex flex-col ${dmSans.variable}`}
       style={{ background: '#FAFAF8', color: '#1C1917' }}
     >
-      <header
-        className="shrink-0 flex items-center h-14 px-6"
-        style={{ borderBottom: '1px solid #E5E0D5', background: '#FAFAF8' }}
-      >
-        <Link href="/course" className="text-lg font-bold tracking-tight" style={{ textDecoration: 'none' }}>
-          <span style={{ color: '#FF4D94' }}>LMG</span>
-          <span style={{ color: '#9C9589', fontWeight: 400, margin: '0 6px' }}>·</span>
-          <span style={{ color: '#FFD700' }}>Brand Partnership Playbook</span>
-        </Link>
-      </header>
+      <CourseHeader variant="compact" authPill={authPill} />
 
       <main className="flex-1 flex justify-center px-6" style={{ paddingTop: 'clamp(40px, 9vh, 96px)', paddingBottom: 60 }}>
         <div style={{ width: '100%', maxWidth: 420 }}>

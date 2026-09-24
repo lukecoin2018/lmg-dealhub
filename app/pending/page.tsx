@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ArrowRight, Hourglass } from 'lucide-react'
 import { getCurrentUser } from '@/lib/auth/session'
+import CourseHeader from '@/components/course/landing/CourseHeader'
+import { dmSans } from '@/components/course/landing/fonts'
+import '@/styles/course-landing.css'
 
 export const metadata = {
   title: 'Access Pending · Brand Partnership Playbook',
@@ -14,17 +17,8 @@ export default async function PendingPage() {
   if (user.has_access === 1) redirect('/course')
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF8', color: '#1C1917' }}>
-      <header
-        className="shrink-0 flex items-center h-14 px-6"
-        style={{ borderBottom: '1px solid #E5E0D5', background: '#FAFAF8' }}
-      >
-        <Link href="/course" className="text-lg font-bold tracking-tight" style={{ textDecoration: 'none' }}>
-          <span style={{ color: '#FF4D94' }}>LMG</span>
-          <span style={{ color: '#9C9589', fontWeight: 400, margin: '0 6px' }}>·</span>
-          <span style={{ color: '#FFD700' }}>Brand Partnership Playbook</span>
-        </Link>
-      </header>
+    <div className={`course-landing min-h-screen flex flex-col ${dmSans.variable}`} style={{ background: '#FAFAF8', color: '#1C1917' }}>
+      <CourseHeader variant="compact" />
 
       <main className="flex-1 flex justify-center px-6" style={{ paddingTop: 'clamp(40px, 10vh, 110px)', paddingBottom: 60 }}>
         <div style={{ width: '100%', maxWidth: 460 }}>

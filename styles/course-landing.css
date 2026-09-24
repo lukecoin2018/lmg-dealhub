@@ -234,6 +234,8 @@
 @media (max-width: 600px) {
   .course-landing .site-nav { gap: 12px; }
   .course-landing .site-nav .btn--outline, .course-landing .site-nav__logout { display: none; }
+  /* Compact variant (no Module 1 pill): the auth pill is the only action, keep it */
+  .course-landing .site-nav--compact .btn--outline, .course-landing .site-nav--compact .site-nav__logout { display: inline-flex; }
   .course-landing .brand__course { display: none; }
   .course-landing .pillars__grid, .course-landing .modules { grid-template-columns: 1fr; }
   .course-landing .hero__actions { flex-direction: column; align-items: flex-start; }

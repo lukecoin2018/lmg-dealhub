@@ -11,6 +11,7 @@ const linkStyle: React.CSSProperties = { color: '#FF4D94', fontWeight: 700, text
 export default function LoginPage() {
   return (
     <AuthShell
+      authPill={false}
       eyebrow="Welcome back"
       title={<>Log in to your <em style={{ fontStyle: 'italic' }}>Playbook</em></>}
       subtitle="Pick up right where you left off."

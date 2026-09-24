@@ -15,7 +15,7 @@ export const metadata = {
 export default function CourseLayout({ children }: { children: ReactNode }) {
   return (
     <div className={`course-landing flex flex-col h-screen ${dmSans.variable}`} style={{ background: '#FAFAF8' }}>
-      <CourseHeader />
+      <CourseHeader variant="compact" />
       {children}
     </div>
   )
