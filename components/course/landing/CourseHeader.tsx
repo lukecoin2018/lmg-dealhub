@@ -38,7 +38,7 @@ export default async function CourseHeader({
           <a className="site-nav__back" href="https://lmg.media/for-influencers">← lmg.media</a>
           {authPill && (session ? (
             <>
-              <span className="site-nav__user" title={session.email}>{session.email}</span>
+              <Link className="site-nav__user" href="/account" title="Account settings">{session.email}</Link>
               <form action="/api/auth/logout" method="post" className="site-nav__logout">
                 <button type="submit" className="btn btn--outline">Log out</button>
               </form>

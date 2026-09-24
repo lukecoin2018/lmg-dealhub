@@ -99,7 +99,8 @@
 .course-landing .site-nav { display: flex; align-items: center; gap: 28px; }
 .course-landing .site-nav__back { font-size: 14px; font-weight: 500; text-decoration: none; color: #4A4A4A; }
 /* Logged-in state: email replaces the Log in slot, Log out takes the outline pill */
-.course-landing .site-nav__user { font-size: 13px; font-weight: 500; color: var(--lmg-ink-4); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.course-landing .site-nav__user { font-size: 13px; font-weight: 500; color: var(--lmg-ink-4); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+.course-landing a.site-nav__user:hover { color: var(--lmg-ink); text-decoration: underline; }
 .course-landing .site-nav__logout { display: inline-flex; margin: 0; }
 
 /* ---------- Hero ---------- */

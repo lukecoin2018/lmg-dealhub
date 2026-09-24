@@ -28,5 +28,11 @@
     "eslint-config-next": "16.1.4",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "allowScripts": {
+    "better-sqlite3": true,
+    "core-js": true,
+    "sharp": true,
+    "unrs-resolver": true
   }
 }
