@@ -28,6 +28,15 @@ function openDb(): Database.Database {
       has_access    INTEGER NOT NULL DEFAULT 0,
       created_at    TEXT NOT NULL DEFAULT (datetime('now'))
     );
+    CREATE TABLE IF NOT EXISTS password_resets (
+      id         INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      token_hash TEXT NOT NULL UNIQUE,
+      expires_at TEXT NOT NULL,
+      used_at    TEXT,
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX IF NOT EXISTS password_resets_user_id ON password_resets(user_id);
   `)
   return db
 }
@@ -70,4 +79,42 @@ export function createUser(email: string, passwordHash: string): UserRow {
 
 export function setUserPassword(id: number, passwordHash: string): void {
   getDb().prepare('UPDATE users SET password_hash = ? WHERE id = ?').run(passwordHash, id)
+}
+
+// ---- Password resets --------------------------------------------------------
+// Only a SHA-256 hash of the token is stored; the raw token lives in the email
+// link alone. Tokens are single-use and short-lived (see reset-request route).
+
+export interface PasswordResetRow {
+  id: number
+  user_id: number
+  token_hash: string
+  expires_at: string
+  used_at: string | null
+  created_at: string
+}
+
+export function createPasswordReset(userId: number, tokenHash: string, expiresAt: Date): void {
+  const db = getDb()
+  // Requesting a new link retires any earlier unused ones for this user.
+  db.prepare("UPDATE password_resets SET used_at = datetime('now') WHERE user_id = ? AND used_at IS NULL").run(userId)
+  db.prepare('INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES (?, ?, ?)').run(
+    userId,
+    tokenHash,
+    expiresAt.toISOString(),
+  )
+}
+
+/** Returns the reset row only if it is unused and unexpired. */
+export function findValidPasswordReset(tokenHash: string): PasswordResetRow | undefined {
+  const row = getDb()
+    .prepare('SELECT * FROM password_resets WHERE token_hash = ? AND used_at IS NULL')
+    .get(tokenHash) as PasswordResetRow | undefined
+  if (!row) return undefined
+  if (new Date(row.expires_at).getTime() < Date.now()) return undefined
+  return row
+}
+
+export function consumePasswordReset(id: number): void {
+  getDb().prepare("UPDATE password_resets SET used_at = datetime('now') WHERE id = ?").run(id)
 }
