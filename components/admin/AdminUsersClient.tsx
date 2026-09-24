@@ -43,22 +43,50 @@ function formatDate(sqliteUtc: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
+type View = 'all' | 'pending' | 'access'
+
+const PILL_BASE: React.CSSProperties = {
+  fontSize: 12.5,
+  fontWeight: 700,
+  borderRadius: 999,
+  padding: '6px 13px',
+  cursor: 'pointer',
+  whiteSpace: 'nowrap',
+  border: '1px solid #E5E0D5',
+  background: '#FFFFFF',
+  color: '#78716C',
+}
+
+const PILL_ACTIVE: React.CSSProperties = {
+  ...PILL_BASE,
+  background: '#1C1917',
+  borderColor: '#1C1917',
+  color: '#FFFFFF',
+  cursor: 'default',
+}
+
 export default function AdminUsersClient({ initialUsers }: { initialUsers: AdminUser[] }) {
   const [users, setUsers] = useState(initialUsers)
   const [query, setQuery] = useState('')
+  const [view, setView] = useState<View>('all')
   const [pendingId, setPendingId] = useState<number | null>(null)
   const [armedId, setArmedId] = useState<number | null>(null) // revoke awaiting confirm
   const [error, setError] = useState<string | null>(null)
   const disarmTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return users
-    return users.filter((u) => u.email.includes(q))
-  }, [users, query])
-
   const total = users.length
   const withAccess = users.filter((u) => u.hasAccess === 1).length
+  const pendingCount = total - withAccess
+
+  // Awaiting-approval users first (that's the job of this page), then newest
+  // first within each group. initialUsers already arrives newest-first.
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return users
+      .filter((u) => (view === 'all' ? true : view === 'pending' ? u.hasAccess === 0 : u.hasAccess === 1))
+      .filter((u) => !q || u.email.includes(q))
+      .sort((a, b) => a.hasAccess - b.hasAccess)
+  }, [users, query, view])
 
   function disarm() {
     if (disarmTimer.current) clearTimeout(disarmTimer.current)
@@ -110,13 +138,51 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
 
   return (
     <div>
+      {pendingCount > 0 && (
+        <div
+          className="flex flex-wrap items-center justify-between gap-3"
+          style={{
+            background: '#FFF4B0',
+            border: '1px solid #F2DF7A',
+            borderRadius: 12,
+            padding: '11px 14px',
+            marginBottom: 14,
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#5C4A00',
+          }}
+        >
+          <span>
+            <strong style={{ fontWeight: 800 }}>{pendingCount}</strong>
+            {` user${pendingCount === 1 ? '' : 's'} waiting for approval`}
+          </span>
+          {view !== 'pending' && (
+            <button type="button" onClick={() => setView('pending')} style={{ ...PILL_BASE, background: '#1C1917', borderColor: '#1C1917', color: '#fff' }}>
+              Show only these
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="flex flex-wrap items-center justify-between gap-3" style={{ marginBottom: 14 }}>
-        <span style={{ fontSize: 14, fontWeight: 600, color: '#78716C' }}>
-          <strong style={{ color: '#1C1917', fontWeight: 800 }}>{total}</strong>
-          {` user${total === 1 ? '' : 's'}, `}
-          <strong style={{ color: '#FF4D94', fontWeight: 800 }}>{withAccess}</strong>
-          {' with access'}
-        </span>
+        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter by status">
+          {([
+            ['all', `All (${total})`],
+            ['pending', `Awaiting (${pendingCount})`],
+            ['access', `With access (${withAccess})`],
+          ] as [View, string][]).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              aria-selected={view === key}
+              onClick={() => setView(key)}
+              style={view === key ? PILL_ACTIVE : PILL_BASE}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         <input
           type="search"
           value={query}
@@ -171,7 +237,11 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
               {filtered.length === 0 && (
                 <tr>
                   <td colSpan={4} style={{ ...TD, color: '#78716C', borderBottom: 'none' }}>
-                    {total === 0 ? 'No users yet.' : 'No users match that filter.'}
+                    {total === 0
+                      ? 'No users yet.'
+                      : view === 'pending' && !query
+                        ? 'Nobody is waiting for approval.'
+                        : 'No users match that filter.'}
                   </td>
                 </tr>
               )}
