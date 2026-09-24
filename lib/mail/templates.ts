@@ -49,3 +49,25 @@ If you didn't ask for this, you can ignore this email — your password stays th
     ),
   }
 }
+
+export function newSignupEmail(to: string, signupEmail: string, adminLink: string, pendingCount: number): MailMessage {
+  const safeLink = escapeHtml(adminLink)
+  const waiting = pendingCount === 1 ? '1 user is waiting for access.' : `${pendingCount} users are waiting for access.`
+  return {
+    to,
+    subject: `New signup: ${signupEmail}`,
+    text: `${signupEmail} just created an account on the Brand Partnership Playbook and is waiting for approval.
+
+${waiting}
+
+Grant access here:
+${adminLink}`,
+    html: layout(
+      'New signup',
+      `<p style="${P}"><strong>${escapeHtml(signupEmail)}</strong> just created an account and is waiting for approval.</p>
+       <p style="${P}">${waiting}</p>
+       ${button(safeLink, 'Open the admin dashboard')}
+       <p style="font-size:12px;line-height:1.5;color:#9C9589;margin:18px 0 0;word-break:break-all;">${safeLink}</p>`,
+    ),
+  }
+}

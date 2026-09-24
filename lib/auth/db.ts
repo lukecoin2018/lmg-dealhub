@@ -118,3 +118,8 @@ export function findValidPasswordReset(tokenHash: string): PasswordResetRow | un
 export function consumePasswordReset(id: number): void {
   getDb().prepare("UPDATE password_resets SET used_at = datetime('now') WHERE id = ?").run(id)
 }
+
+export function countPendingUsers(): number {
+  const row = getDb().prepare('SELECT COUNT(*) AS n FROM users WHERE has_access = 0').get() as { n: number }
+  return row.n
+}

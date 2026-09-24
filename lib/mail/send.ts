@@ -3,6 +3,8 @@
 //                     server console instead of sent (local dev / tests).
 //   MAIL_FROM       — e.g. "LMG Media <noreply@lmg.media>"; the domain must be
 //                     verified in Resend.
+//   ADMIN_NOTIFY_EMAILS — optional comma-separated recipients for new-signup
+//                     notices; defaults to ADMIN_EMAILS.
 //   APP_URL         — public origin used to build links, e.g.
 //                     https://creators.lmg.media (no trailing slash).
 
