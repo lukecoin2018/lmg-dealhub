@@ -269,25 +269,35 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
             </button>
           ))}
         </div>
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Filter by email…"
-          aria-label="Filter users by email"
-          style={{
-            fontSize: 14,
-            fontWeight: 500,
-            color: '#1C1917',
-            background: '#FFFFFF',
-            border: '1px solid #E5E0D5',
-            borderRadius: 10,
-            padding: '8px 12px',
-            outline: 'none',
-            width: 230,
-            maxWidth: '100%',
-          }}
-        />
+        <div className="flex flex-wrap items-center gap-2">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Filter by email…"
+            aria-label="Filter users by email"
+            style={{
+              fontSize: 14,
+              fontWeight: 500,
+              color: '#1C1917',
+              background: '#FFFFFF',
+              border: '1px solid #E5E0D5',
+              borderRadius: 10,
+              padding: '8px 12px',
+              outline: 'none',
+              width: 230,
+              maxWidth: '100%',
+            }}
+          />
+          <a
+            href={view === 'all' ? '/api/admin/export' : `/api/admin/export?status=${view}`}
+            download
+            title={`Download ${view === 'all' ? 'all users' : view === 'pending' ? 'users awaiting approval' : 'users with access'} as CSV`}
+            style={{ ...PILL_BASE, textDecoration: 'none', padding: '8px 13px' }}
+          >
+            Export CSV
+          </a>
+        </div>
       </div>
 
       {error && (
