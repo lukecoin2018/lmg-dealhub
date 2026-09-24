@@ -71,3 +71,24 @@ ${adminLink}`,
     ),
   }
 }
+
+export function accessGrantedEmail(to: string, courseLink: string): MailMessage {
+  const safeLink = escapeHtml(courseLink)
+  return {
+    to,
+    subject: "You're in — the Brand Partnership Playbook is open",
+    text: `Good news: your account (${to}) has been approved.
+
+All ten modules, the workbooks and the creator dashboard are open for you now:
+${courseLink}
+
+Log in with the email and password you signed up with.`,
+    html: layout(
+      'You&#39;re in',
+      `<p style="${P}">Good news: your account (<strong>${escapeHtml(to)}</strong>) has been approved. All ten modules, the workbooks and the creator dashboard are open for you now.</p>
+       ${button(safeLink, 'Open the Playbook')}
+       <p style="${P}">Log in with the email and password you signed up with.</p>
+       <p style="font-size:12px;line-height:1.5;color:#9C9589;margin:18px 0 0;word-break:break-all;">${safeLink}</p>`,
+    ),
+  }
+}
