@@ -1,6 +1,4 @@
 import Database from 'better-sqlite3'
-import fs from 'node:fs'
-import path from 'node:path'
 
 export interface UserRow {
   id: number
@@ -15,11 +13,15 @@ export interface UserRow {
 const globalForDb = globalThis as unknown as { __lmgAuthDb?: Database.Database }
 
 function openDb(): Database.Database {
+  // DATABASE_PATH (absolute on the VPS, e.g. /home/lukelmg/data/creators.db)
+  // or ./dev.db relative to the working directory. The directory must exist.
+  //
+  // Deliberately no path.resolve()/fs.mkdirSync() here: Turbopack statically
+  // traces those calls, and with an env var it can't evaluate it falls back to
+  // including the whole working directory in every server bundle (hundreds of
+  // MB of design assets), which pushes Vercel functions past their size limit.
   const dbPath = process.env.DATABASE_PATH ?? './dev.db'
-  const resolved = path.resolve(dbPath)
-  fs.mkdirSync(path.dirname(resolved), { recursive: true })
-
-  const db = new Database(resolved)
+  const db = new Database(dbPath)
   db.pragma('journal_mode = WAL')
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
