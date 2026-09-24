@@ -123,3 +123,13 @@ export function countPendingUsers(): number {
   const row = getDb().prepare('SELECT COUNT(*) AS n FROM users WHERE has_access = 0').get() as { n: number }
   return row.n
 }
+
+export function deleteUser(id: number): void {
+  const db = getDb()
+  // Explicit cleanup rather than relying on ON DELETE CASCADE, which SQLite
+  // only honours with foreign_keys=ON.
+  db.transaction(() => {
+    db.prepare('DELETE FROM password_resets WHERE user_id = ?').run(id)
+    db.prepare('DELETE FROM users WHERE id = ?').run(id)
+  })()
+}

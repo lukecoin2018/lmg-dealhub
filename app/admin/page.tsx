@@ -48,7 +48,7 @@ export default async function AdminPage() {
         >
           User access
         </h1>
-        <AdminUsersClient initialUsers={users} />
+        <AdminUsersClient initialUsers={users} adminId={admin.id} />
       </main>
     </div>
   )

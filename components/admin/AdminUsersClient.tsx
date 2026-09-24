@@ -65,12 +65,12 @@ const PILL_ACTIVE: React.CSSProperties = {
   cursor: 'default',
 }
 
-export default function AdminUsersClient({ initialUsers }: { initialUsers: AdminUser[] }) {
+export default function AdminUsersClient({ initialUsers, adminId }: { initialUsers: AdminUser[]; adminId: number }) {
   const [users, setUsers] = useState(initialUsers)
   const [query, setQuery] = useState('')
   const [view, setView] = useState<View>('all')
   const [pendingId, setPendingId] = useState<number | null>(null)
-  const [armedId, setArmedId] = useState<number | null>(null) // revoke awaiting confirm
+  const [armed, setArmed] = useState<{ id: number; action: 'revoke' | 'delete' } | null>(null) // awaiting confirm
   const [error, setError] = useState<string | null>(null)
   const [resetId, setResetId] = useState<number | null>(null) // reset link in flight
   const [sentId, setSentId] = useState<number | null>(null) // reset link just sent
@@ -94,8 +94,16 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
   function disarm() {
     if (disarmTimer.current) clearTimeout(disarmTimer.current)
     disarmTimer.current = null
-    setArmedId(null)
+    setArmed(null)
   }
+
+  function arm(id: number, action: 'revoke' | 'delete') {
+    disarm()
+    setArmed({ id, action })
+    disarmTimer.current = setTimeout(() => setArmed(null), 3000)
+  }
+
+  const busy = pendingId !== null || resetId !== null
 
   async function setAccess(user: AdminUser, target: 0 | 1) {
     disarm()
@@ -156,12 +164,42 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
       return
     }
     // Revoking: first click arms, second click (within 3s) executes.
-    if (armedId === user.id) {
+    if (armed?.id === user.id && armed.action === 'revoke') {
       void setAccess(user, 0)
     } else {
-      disarm()
-      setArmedId(user.id)
-      disarmTimer.current = setTimeout(() => setArmedId(null), 3000)
+      arm(user.id, 'revoke')
+    }
+  }
+
+  async function removeUser(user: AdminUser) {
+    disarm()
+    setPendingId(user.id)
+    setError(null)
+    try {
+      const res = await fetch('/api/admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      })
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null
+        setError(data?.error ?? `Delete failed (${res.status}). Reload and try again.`)
+        return
+      }
+      setUsers((prev) => prev.filter((u) => u.id !== user.id))
+    } catch {
+      setError('Network error. Reload and try again.')
+    } finally {
+      setPendingId(null)
+    }
+  }
+
+  function handleDeleteClick(user: AdminUser) {
+    if (busy) return
+    if (armed?.id === user.id && armed.action === 'delete') {
+      void removeUser(user)
+    } else {
+      arm(user.id, 'delete')
     }
   }
 
@@ -276,8 +314,10 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
               )}
               {filtered.map((u, i) => {
                 const last = i === filtered.length - 1
-                const armed = armedId === u.id
+                const revokeArmed = armed?.id === u.id && armed.action === 'revoke'
+                const deleteArmed = armed?.id === u.id && armed.action === 'delete'
                 const pending = pendingId === u.id
+                const isSelf = u.id === adminId
                 return (
                   <tr key={u.id}>
                     <td style={{ ...TD, ...(last && { borderBottom: 'none' }), fontWeight: 600, wordBreak: 'break-all' }}>
@@ -309,7 +349,7 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
                       <button
                         type="button"
                         onClick={() => sendResetLink(u)}
-                        disabled={resetId !== null || pendingId !== null}
+                        disabled={busy}
                         title={`Email ${u.email} a link to choose a new password`}
                         style={{
                           fontSize: 12.5,
@@ -317,7 +357,7 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
                           borderRadius: 999,
                           padding: '6px 12px',
                           marginRight: 8,
-                          cursor: resetId !== null || pendingId !== null ? 'default' : 'pointer',
+                          cursor: busy ? 'default' : 'pointer',
                           background: 'transparent',
                           ...(sentId === u.id
                             ? { color: '#1E6B3A', border: '1px solid #BFE3C9' }
@@ -330,24 +370,47 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
                       <button
                         type="button"
                         onClick={() => handleClick(u)}
-                        onBlur={() => { if (armed) disarm() }}
-                        disabled={pendingId !== null || resetId !== null}
+                        onBlur={() => { if (revokeArmed) disarm() }}
+                        disabled={busy}
                         style={{
                           fontSize: 12.5,
                           fontWeight: 700,
                           borderRadius: 999,
                           padding: '6px 14px',
-                          cursor: pendingId !== null || resetId !== null ? 'default' : 'pointer',
+                          cursor: busy ? 'default' : 'pointer',
                           whiteSpace: 'nowrap',
                           opacity: pending ? 0.6 : 1,
                           ...(u.hasAccess === 0
                             ? { color: '#fff', background: '#FF4D94', border: '1px solid #FF4D94' }
-                            : armed
+                            : revokeArmed
                               ? { color: '#fff', background: '#B3261E', border: '1px solid #B3261E' }
                               : { color: '#78716C', background: 'transparent', border: '1px solid #E5E0D5' }),
                         }}
                       >
-                        {pending ? 'Saving…' : u.hasAccess === 0 ? 'Grant' : armed ? 'Confirm revoke?' : 'Revoke'}
+                        {pending ? 'Saving…' : u.hasAccess === 0 ? 'Grant' : revokeArmed ? 'Confirm revoke?' : 'Revoke'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteClick(u)}
+                        onBlur={() => { if (deleteArmed) disarm() }}
+                        disabled={busy || isSelf}
+                        aria-label={deleteArmed ? `Confirm delete ${u.email}` : `Delete ${u.email}`}
+                        title={isSelf ? "You can't delete your own account" : `Delete ${u.email}`}
+                        style={{
+                          fontSize: 12.5,
+                          fontWeight: 700,
+                          borderRadius: 999,
+                          padding: deleteArmed ? '6px 12px' : '6px 10px',
+                          marginLeft: 8,
+                          cursor: busy || isSelf ? 'default' : 'pointer',
+                          whiteSpace: 'nowrap',
+                          opacity: isSelf ? 0.35 : 1,
+                          ...(deleteArmed
+                            ? { color: '#fff', background: '#B3261E', border: '1px solid #B3261E' }
+                            : { color: '#B3261E', background: 'transparent', border: '1px solid #F0C9C5' }),
+                        }}
+                      >
+                        {deleteArmed ? 'Confirm delete?' : '✕'}
                       </button>
                     </td>
                   </tr>
