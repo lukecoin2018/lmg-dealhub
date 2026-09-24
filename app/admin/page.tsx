@@ -18,6 +18,7 @@ export default async function AdminPage() {
     email: u.email,
     hasAccess: u.has_access,
     createdAt: u.created_at,
+    lastLoginAt: u.last_login_at,
   }))
 
   return (

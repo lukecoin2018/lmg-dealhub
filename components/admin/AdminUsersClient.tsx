@@ -7,6 +7,7 @@ interface AdminUser {
   email: string
   hasAccess: number
   createdAt: string // sqlite "YYYY-MM-DD HH:MM:SS" (UTC)
+  lastLoginAt: string | null
 }
 
 const CARD: React.CSSProperties = {
@@ -37,10 +38,28 @@ const TD: React.CSSProperties = {
   verticalAlign: 'middle',
 }
 
+function parseSqlite(sqliteUtc: string): Date {
+  return new Date(sqliteUtc.replace(' ', 'T') + 'Z')
+}
+
 function formatDate(sqliteUtc: string): string {
-  const d = new Date(sqliteUtc.replace(' ', 'T') + 'Z')
+  const d = parseSqlite(sqliteUtc)
   if (Number.isNaN(d.getTime())) return sqliteUtc
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
+// "Just now", "3h ago", "2d ago", then a short date past two weeks.
+function formatRelative(sqliteUtc: string): string {
+  const d = parseSqlite(sqliteUtc)
+  if (Number.isNaN(d.getTime())) return sqliteUtc
+  const mins = Math.max(0, Math.round((Date.now() - d.getTime()) / 60000))
+  if (mins < 2) return 'Just now'
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.round(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.round(hours / 24)
+  if (days < 14) return `${days}d ago`
+  return formatDate(sqliteUtc)
 }
 
 type View = 'all' | 'pending' | 'access'
@@ -296,6 +315,7 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
               <tr>
                 <th style={TH}>Email</th>
                 <th style={TH}>Signed up</th>
+                <th style={TH}>Last login</th>
                 <th style={TH}>Access</th>
                 <th style={{ ...TH, textAlign: 'right' }}>Action</th>
               </tr>
@@ -303,7 +323,7 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
             <tbody>
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={4} style={{ ...TD, color: '#78716C', borderBottom: 'none' }}>
+                  <td colSpan={5} style={{ ...TD, color: '#78716C', borderBottom: 'none' }}>
                     {total === 0
                       ? 'No users yet.'
                       : view === 'pending' && !query
@@ -325,6 +345,12 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
                     </td>
                     <td style={{ ...TD, ...(last && { borderBottom: 'none' }), color: '#78716C', whiteSpace: 'nowrap' }}>
                       {formatDate(u.createdAt)}
+                    </td>
+                    <td
+                      style={{ ...TD, ...(last && { borderBottom: 'none' }), color: u.lastLoginAt ? '#78716C' : '#B8B2A6', whiteSpace: 'nowrap' }}
+                      title={u.lastLoginAt ? parseSqlite(u.lastLoginAt).toLocaleString() : 'Has not logged in since signing up'}
+                    >
+                      {u.lastLoginAt ? formatRelative(u.lastLoginAt) : 'Never'}
                     </td>
                     <td style={{ ...TD, ...(last && { borderBottom: 'none' }) }}>
                       <span

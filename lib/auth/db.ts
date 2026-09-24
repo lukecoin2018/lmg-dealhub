@@ -8,6 +8,7 @@ export interface UserRow {
   password_hash: string
   has_access: number
   created_at: string
+  last_login_at: string | null // sqlite "YYYY-MM-DD HH:MM:SS" (UTC), null until first login
 }
 
 // Singleton on globalThis so dev-server HMR doesn't stack up open handles.
@@ -38,7 +39,16 @@ function openDb(): Database.Database {
     );
     CREATE INDEX IF NOT EXISTS password_resets_user_id ON password_resets(user_id);
   `)
+  migrate(db)
   return db
+}
+
+// Additive migrations for databases created before a column existed.
+function migrate(db: Database.Database): void {
+  const cols = (db.pragma('table_info(users)') as { name: string }[]).map((c) => c.name)
+  if (!cols.includes('last_login_at')) {
+    db.exec('ALTER TABLE users ADD COLUMN last_login_at TEXT')
+  }
 }
 
 export function getDb(): Database.Database {
@@ -132,4 +142,8 @@ export function deleteUser(id: number): void {
     db.prepare('DELETE FROM password_resets WHERE user_id = ?').run(id)
     db.prepare('DELETE FROM users WHERE id = ?').run(id)
   })()
+}
+
+export function touchLastLogin(id: number): void {
+  getDb().prepare("UPDATE users SET last_login_at = datetime('now') WHERE id = ?").run(id)
 }

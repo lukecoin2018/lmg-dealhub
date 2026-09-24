@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { consumePasswordReset, findUserById, findValidPasswordReset, setUserPassword } from '@/lib/auth/db'
+import { consumePasswordReset, findUserById, findValidPasswordReset, setUserPassword, touchLastLogin } from '@/lib/auth/db'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE } from '@/lib/auth/session'
 import { validatePassword } from '@/lib/auth/validation'
 import { hashResetToken } from '@/lib/auth/reset-token'
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
 
   setUserPassword(user.id, await bcrypt.hash(password, 12))
   consumePasswordReset(reset.id)
+  touchLastLogin(user.id)
 
   const session = await createSessionToken(user)
   const res = NextResponse.json({ ok: true, next: user.has_access === 1 ? '/course' : '/pending' })
