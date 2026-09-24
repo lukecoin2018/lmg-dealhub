@@ -79,7 +79,7 @@ const PILL_BASE: React.CSSProperties = {
 const PILL_ACTIVE: React.CSSProperties = {
   ...PILL_BASE,
   background: '#1C1917',
-  borderColor: '#1C1917',
+  border: '1px solid #1C1917',
   color: '#FFFFFF',
   cursor: 'default',
 }
@@ -243,7 +243,7 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
             {` user${pendingCount === 1 ? '' : 's'} waiting for approval`}
           </span>
           {view !== 'pending' && (
-            <button type="button" onClick={() => setView('pending')} style={{ ...PILL_BASE, background: '#1C1917', borderColor: '#1C1917', color: '#fff' }}>
+            <button type="button" onClick={() => setView('pending')} style={PILL_ACTIVE}>
               Show only these
             </button>
           )}
