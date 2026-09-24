@@ -72,7 +72,10 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
   const [pendingId, setPendingId] = useState<number | null>(null)
   const [armedId, setArmedId] = useState<number | null>(null) // revoke awaiting confirm
   const [error, setError] = useState<string | null>(null)
+  const [resetId, setResetId] = useState<number | null>(null) // reset link in flight
+  const [sentId, setSentId] = useState<number | null>(null) // reset link just sent
   const disarmTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const sentTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const total = users.length
   const withAccess = users.filter((u) => u.hasAccess === 1).length
@@ -117,6 +120,32 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
       setError('Network error. Reload and try again.')
     } finally {
       setPendingId(null)
+    }
+  }
+
+  async function sendResetLink(user: AdminUser) {
+    if (resetId !== null || pendingId !== null) return
+    disarm()
+    setResetId(user.id)
+    setError(null)
+    try {
+      const res = await fetch('/api/admin/reset-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id }),
+      })
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null
+        setError(data?.error ?? `Could not send (${res.status}). Reload and try again.`)
+        return
+      }
+      if (sentTimer.current) clearTimeout(sentTimer.current)
+      setSentId(user.id)
+      sentTimer.current = setTimeout(() => setSentId(null), 4000)
+    } catch {
+      setError('Network error. Reload and try again.')
+    } finally {
+      setResetId(null)
     }
   }
 
@@ -276,18 +305,39 @@ export default function AdminUsersClient({ initialUsers }: { initialUsers: Admin
                         {u.hasAccess === 1 ? 'Access' : 'No access'}
                       </span>
                     </td>
-                    <td style={{ ...TD, ...(last && { borderBottom: 'none' }), textAlign: 'right' }}>
+                    <td style={{ ...TD, ...(last && { borderBottom: 'none' }), textAlign: 'right', whiteSpace: 'nowrap' }}>
+                      <button
+                        type="button"
+                        onClick={() => sendResetLink(u)}
+                        disabled={resetId !== null || pendingId !== null}
+                        title={`Email ${u.email} a link to choose a new password`}
+                        style={{
+                          fontSize: 12.5,
+                          fontWeight: 700,
+                          borderRadius: 999,
+                          padding: '6px 12px',
+                          marginRight: 8,
+                          cursor: resetId !== null || pendingId !== null ? 'default' : 'pointer',
+                          background: 'transparent',
+                          ...(sentId === u.id
+                            ? { color: '#1E6B3A', border: '1px solid #BFE3C9' }
+                            : { color: '#78716C', border: '1px solid #E5E0D5' }),
+                          opacity: resetId === u.id ? 0.6 : 1,
+                        }}
+                      >
+                        {resetId === u.id ? 'Sending…' : sentId === u.id ? 'Link sent ✓' : 'Reset link'}
+                      </button>
                       <button
                         type="button"
                         onClick={() => handleClick(u)}
                         onBlur={() => { if (armed) disarm() }}
-                        disabled={pendingId !== null}
+                        disabled={pendingId !== null || resetId !== null}
                         style={{
                           fontSize: 12.5,
                           fontWeight: 700,
                           borderRadius: 999,
                           padding: '6px 14px',
-                          cursor: pendingId !== null ? 'default' : 'pointer',
+                          cursor: pendingId !== null || resetId !== null ? 'default' : 'pointer',
                           whiteSpace: 'nowrap',
                           opacity: pending ? 0.6 : 1,
                           ...(u.hasAccess === 0
