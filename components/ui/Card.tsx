@@ -17,8 +17,8 @@ export function Card({
   interactive = false,
   onClick 
 }: CardProps) {
-  const baseStyles = 'bg-surface border border-border rounded-xl transition-all duration-200';
-  const hoverStyles = hover ? 'hover:border-border-hover hover:shadow-lg' : '';
+  const baseStyles = 'bg-surface border border-border rounded-[18px] transition-all duration-200';
+  const hoverStyles = hover ? 'hover:border-border-hover' : '';
   const interactiveStyles = interactive ? 'cursor-pointer active:scale-[0.98]' : '';
 
   return (
@@ -95,7 +95,7 @@ export function CardFooter({
   className?: string;
 }) {
   return (
-    <div className={`px-6 py-4 border-t border-border bg-surface-secondary/50 rounded-b-xl ${className}`}>
+    <div className={`px-6 py-4 border-t border-border bg-surface-secondary/50 rounded-b-[18px] ${className}`}>
       {children}
     </div>
   );

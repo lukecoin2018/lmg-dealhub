@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -59,6 +59,13 @@ export default function DealsPage() {
     const [deliverables, setDeliverables] = useState('');
     const [deadline, setDeadline] = useState('');
     const [notes, setNotes] = useState('');
+
+    // /deals?new=1 (the dashboard's "New deal" links) opens the add-deal modal
+    useEffect(() => {
+      if (new URLSearchParams(window.location.search).get('new') === '1') {
+        setIsAddModalOpen(true);
+      }
+    }, []);
 
     const handleAddDeal = (e: React.FormEvent) => {
       e.preventDefault();

@@ -1,31 +1,10 @@
-'use client'
-
-import Sidebar from './Sidebar'
-import Header from './Header'
-
+// Page-content wrapper for the app routes. The chrome (brand header, sidebar,
+// scrolling <main>) is rendered once by app/(app)/layout.tsx, so it persists
+// across navigations; this only frames the page's own content.
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <Sidebar />
-
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Header */}
-        <Header />
-
-        {/* Page content */}
-        <main 
-  className="flex-1 overflow-y-auto p-6" 
-  style={{ backgroundColor: 'var(--color-bg-primary)' }}
->
-  {children}
-</main>
-      </div>
-    </div>
-  )
+  return <div className="app-shell__page">{children}</div>
 }

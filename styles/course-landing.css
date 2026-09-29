@@ -9,8 +9,11 @@
  * whichever stylesheet the router happens to have loaded.
  */
 
-/* ---------- Brand tokens (mirror of reference/brand.css) ---------- */
-.course-landing {
+/* ---------- Brand tokens (mirror of reference/brand.css) ----------
+ * `.app-shell` is the authenticated DealHub shell (app/(app)/layout.tsx): it
+ * takes the same tokens, and styles/app-shell.css maps them to dark mode. */
+.course-landing,
+.app-shell {
   /* Colour */
   --lmg-pink: #E8578B;        /* primary accent: CTAs, links, italic "Playbook" */
   --lmg-pink-soft: #FFF3F7;   /* tinted fills behind icons / hero shape */
@@ -44,7 +47,7 @@
 }
 
 @media (max-width: 720px) {
-  .course-landing { --page-pad: 20px; }
+  .course-landing, .app-shell { --page-pad: 20px; }
 }
 
 /* ---------- Base ----------

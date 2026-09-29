@@ -10,9 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         // Static brand colors (work in v4)
-        'brand-yellow': '#FFD700',
-        'brand-pink': '#FF4D94',
-        'brand-blue': '#3AAFF4',
+        'brand-yellow': '#F6D64A',
+        'brand-pink': '#E8578B',
+        'brand-blue': '#6EB1E8',
         'brand-grey': '#3A3A3A',
         
         // Theme-aware colors (reference CSS variables)

@@ -50,7 +50,7 @@ export function ThemeToggle() {
                     w-full px-4 py-3 flex items-center gap-3 transition-colors
                     ${
                       isActive
-                        ? 'bg-brand-yellow/10 text-brand-yellow'
+                        ? 'bg-brand-pink/10 text-brand-pink'
                         : 'text-[var(--color-text-primary)] hover:bg-[var(--color-bg-secondary)]'
                     }
                   `}

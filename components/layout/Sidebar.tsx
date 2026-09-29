@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -28,82 +29,129 @@ const courseNav = [
   { name: 'Course', href: '/course', icon: BookOpen },
 ]
 
-export default function Sidebar() {
+export interface SidebarCourseModule {
+  number: number
+  slug: string
+  title: string
+  segmentIds: string[]
+}
+
+interface Promo {
+  href: string
+  label: string
+  title: string
+  desc: string
+  cta: string
+}
+
+const MODULE_1_PROMO: Promo = {
+  href: '/course/module-1',
+  label: 'Module 1 · Free',
+  title: 'The Partnership Landscape',
+  desc: 'Start the Brand Partnership Playbook — the course builds in order.',
+  cta: 'Enter Module 1',
+}
+
+// Same per-browser store the lesson pages write (components/course/LessonLayout.tsx):
+// `lmg-lesson-progress-v1-{slug}` → { segmentId: boolean }.
+const PROGRESS_KEY_PREFIX = 'lmg-lesson-progress-v1-'
+
+function nextModulePromo(modules: SidebarCourseModule[]): Promo {
+  const next = modules.find(m => {
+    try {
+      const raw = localStorage.getItem(PROGRESS_KEY_PREFIX + m.slug)
+      const done: Record<string, boolean> = raw ? JSON.parse(raw) : {}
+      return !m.segmentIds.every(id => done[id])
+    } catch {
+      return true
+    }
+  })
+
+  if (!next) {
+    return {
+      href: '/course',
+      label: 'Course complete',
+      title: 'The Brand Partnership Playbook',
+      desc: 'All ten modules done. Revisit any of them whenever you need to.',
+      cta: 'Back to the course',
+    }
+  }
+  if (next.number === 1) return MODULE_1_PROMO
+  return {
+    href: `/course/${next.slug}`,
+    label: `Module ${next.number} · Up next`,
+    title: next.title,
+    desc: 'Continue the Brand Partnership Playbook — the course builds in order.',
+    cta: `Enter Module ${next.number}`,
+  }
+}
+
+export default function Sidebar({ courseModules = [] }: { courseModules?: SidebarCourseModule[] }) {
   const pathname = usePathname()
   const { collapsed, toggle } = useSidebar()
+  const [promo, setPromo] = useState<Promo>(MODULE_1_PROMO)
+  // Below 900px the sidebar is always the icon rail (styles/app-shell.css)
+  const [narrow, setNarrow] = useState(false)
 
-  const w = collapsed ? 'w-[64px]' : 'w-64'
+  useEffect(() => {
+    if (courseModules.length) setPromo(nextModulePromo(courseModules))
+  }, [courseModules])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 900px)')
+    const update = () => setNarrow(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  const iconsOnly = collapsed || narrow
 
   function NavLink({ name, href, icon: Icon }: { name: string; href: string; icon: React.ElementType }) {
     const isActive = pathname === href || pathname.startsWith(href + '/')
     return (
       <Link
         href={href}
-        title={collapsed ? name : undefined}
-        className={`
-          relative flex items-center rounded-lg transition-all duration-150 group
-          ${collapsed ? 'justify-center px-0 py-3' : 'px-4 py-3'}
-          ${isActive
-            ? 'bg-brand-pink text-white'
-            : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)] hover:text-[var(--color-text-primary)]'
-          }
-        `}
+        title={iconsOnly ? name : undefined}
+        aria-current={isActive ? 'page' : undefined}
+        className={`app-nav__link ${isActive ? 'app-nav__link--active' : ''}`}
       >
-        <Icon className={`shrink-0 w-5 h-5 ${collapsed ? '' : 'mr-3'}`} />
-        {!collapsed && <span className="text-sm font-medium truncate">{name}</span>}
-        {/* Tooltip for collapsed state */}
-        {collapsed && (
-          <span className="
-            pointer-events-none absolute left-full ml-2 z-50
-            whitespace-nowrap rounded-md px-2 py-1 text-xs font-medium
-            bg-[var(--color-text-primary)] text-[var(--color-bg-primary)]
-            opacity-0 group-hover:opacity-100 transition-opacity duration-150
-          ">
-            {name}
-          </span>
-        )}
+        <Icon aria-hidden="true" />
+        <span className="app-nav__text">{name}</span>
       </Link>
     )
   }
 
   return (
-    <div
-      className={`
-        flex flex-col h-full shrink-0 ${w}
-        bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)]
-        transition-[width] duration-200 overflow-hidden
-      `}
-    >
-      {/* Logo + toggle */}
-      <div className={`flex items-center h-16 border-b border-[var(--color-border)] ${collapsed ? 'justify-center px-2' : 'px-4'}`}>
-        {!collapsed && (
-          <h1
-            className="text-3xl font-bold flex-1 truncate"
-            style={{ fontFamily: 'var(--font-playfair, "Playfair Display", Georgia, serif)', textShadow: '0 1px 3px rgba(28,25,23,0.18)' }}
-          >
-            <span className="text-brand-pink">Deal</span>
-            <span className="text-brand-yellow">Hub</span>
-          </h1>
-        )}
+    <aside className={`app-sidebar ${collapsed ? 'app-sidebar--collapsed' : ''}`}>
+      <div className="app-sidebar__top">
         <button
           onClick={toggle}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="shrink-0 p-1.5 rounded-lg text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)] hover:text-[var(--color-text-primary)] transition-colors"
+          className="app-sidebar__toggle"
         >
-          {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+          {collapsed ? <ChevronRight aria-hidden="true" /> : <ChevronLeft aria-hidden="true" />}
         </button>
       </div>
 
-      {/* Tool nav + course link */}
-      <nav className={`flex-1 py-4 flex flex-col gap-0.5 ${collapsed ? 'px-2' : 'px-3'}`}>
+      <nav className="app-nav" aria-label="App">
+        <p className="app-nav__label">Workspace</p>
         {toolNav.map(item => (
           <NavLink key={item.href} {...item} />
         ))}
-        <div className="border-t border-[var(--color-border)] my-2" />
+        <div className="app-nav__divider" />
+        <p className="app-nav__label">Learn</p>
         {courseNav.map(item => (
           <NavLink key={item.href} {...item} />
         ))}
       </nav>
-    </div>
+
+      <Link className="app-promo" href={promo.href}>
+        <span className="app-promo__label">{promo.label}</span>
+        <span className="app-promo__title">{promo.title}</span>
+        <span className="app-promo__desc">{promo.desc}</span>
+        <span className="app-promo__cta">{promo.cta} →</span>
+      </Link>
+    </aside>
   )
 }

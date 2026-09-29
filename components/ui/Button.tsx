@@ -20,10 +20,10 @@ export function Button({
   disabled,
   ...props 
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyles = "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
   
   const variants = {
-    primary: "bg-brand-yellow text-black hover:opacity-90",
+    primary: "bg-brand-pink text-white hover:opacity-90",
     secondary: "border border-[var(--color-border)] hover:bg-[var(--color-bg-tertiary)]",
     ghost: "hover:bg-[var(--color-bg-secondary)]",
     outline: "border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/10"
