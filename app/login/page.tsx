@@ -16,7 +16,11 @@ export default function LoginPage() {
       title={<>Log in to your <em style={{ fontStyle: 'italic' }}>Playbook</em></>}
       subtitle="Pick up right where you left off."
       footer={
-        <>New here? <Link href="/signup" style={linkStyle}>Create an account</Link></>
+        <>
+          New here? <Link href="/signup" style={linkStyle}>Create an account</Link>
+          <span style={{ margin: '0 10px', color: '#D6D0C4' }}>·</span>
+          <Link href="/forgot-password" style={linkStyle}>Forgot password?</Link>
+        </>
       }
     >
       <AuthForm mode="login" />

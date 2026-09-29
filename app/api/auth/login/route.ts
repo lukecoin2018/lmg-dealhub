@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { findUserByEmail } from '@/lib/auth/db'
+import { findUserByEmail, touchLastLogin } from '@/lib/auth/db'
 import { clearFailures, isRateLimited, recordFailure } from '@/lib/auth/rate-limit'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE } from '@/lib/auth/session'
 import { normalizeEmail } from '@/lib/auth/validation'
@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
   }
 
   clearFailures(ip, email)
+  touchLastLogin(user.id)
   const token = await createSessionToken(user)
   const res = NextResponse.json({ ok: true })
   res.cookies.set(SESSION_COOKIE, token, sessionCookieOptions())

@@ -1,8 +1,11 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest, after } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { createUser, findUserByEmail } from '@/lib/auth/db'
+import { notifyEmails } from '@/lib/auth/admin'
+import { countPendingUsers, createUser, findUserByEmail } from '@/lib/auth/db'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE } from '@/lib/auth/session'
 import { normalizeEmail, validatePassword } from '@/lib/auth/validation'
+import { appUrl, sendMail } from '@/lib/mail/send'
+import { newSignupEmail } from '@/lib/mail/templates'
 
 export async function POST(req: NextRequest) {
   let body: unknown
@@ -48,6 +51,22 @@ export async function POST(req: NextRequest) {
     }
     throw err
   }
+
+  // Tell the admins after the response is sent — a mail hiccup never fails
+  // or slows a signup.
+  after(async () => {
+    const recipients = notifyEmails()
+    if (recipients.length === 0) return
+    const pending = countPendingUsers()
+    const link = appUrl('/admin')
+    await Promise.all(
+      recipients.map((to) =>
+        sendMail(newSignupEmail(to, user.email, link, pending)).catch((err) =>
+          console.error(`[signup] notification to ${to} failed:`, err),
+        ),
+      ),
+    )
+  })
 
   const token = await createSessionToken(user)
   const res = NextResponse.json({ ok: true })

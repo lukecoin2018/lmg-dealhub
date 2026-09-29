@@ -1,6 +1,8 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest, after } from 'next/server'
 import { getAdminUser } from '@/lib/auth/admin'
 import { findUserById, setUserAccess } from '@/lib/auth/db'
+import { appUrl, sendMail } from '@/lib/mail/send'
+import { accessGrantedEmail } from '@/lib/mail/templates'
 
 // Grant/revoke a user's has_access flag. Admin is re-verified server-side on
 // every call; non-admins get a bare 404 (same as the page — don't advertise).
@@ -23,11 +25,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
   }
 
-  if (!findUserById(userId)) {
+  const before = findUserById(userId)
+  if (!before) {
     return NextResponse.json({ error: 'No such user.' }, { status: 400 })
   }
 
   const updated = setUserAccess(userId, hasAccess)!
+
+  // Tell the user they're in — only on a real 0→1 transition, and after the
+  // response so a mail hiccup never fails the grant.
+  if (before.has_access === 0 && hasAccess === 1) {
+    after(async () => {
+      try {
+        await sendMail(accessGrantedEmail(updated.email, appUrl('/course')))
+      } catch (err) {
+        console.error(`[admin] access-granted email to ${updated.email} failed:`, err)
+      }
+    })
+  }
+
   return NextResponse.json({
     ok: true,
     user: { id: updated.id, email: updated.email, hasAccess: updated.has_access },
