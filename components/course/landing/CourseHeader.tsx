@@ -53,12 +53,12 @@ export default async function CourseHeader({
                 <Bell aria-hidden="true" />
               </button>
             </div>
-            <span className="site-nav__account" title={session?.email}>
+            <Link className="site-nav__account" href="/account" title="Account settings" aria-label="Account settings">
               {session && <span className="site-nav__account-email">{session.email}</span>}
               <span className="site-nav__avatar" aria-hidden="true">
                 {session ? session.email.charAt(0).toUpperCase() : ''}
               </span>
-            </span>
+            </Link>
           </nav>
         </div>
       </header>
