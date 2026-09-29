@@ -4,41 +4,44 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Static brand colors - always the same */
-  --color-brand-yellow: #FFD700;
-  --color-brand-pink: #FF4D94;
-  --color-brand-blue: #3AAFF4;
+  /* Static brand colors - LMG brand values (mirror of --lmg-pink / --lmg-yellow /
+     --lmg-blue in styles/course-landing.css) */
+  --color-brand-yellow: #F6D64A;
+  --color-brand-pink: #E8578B;
+  --color-brand-blue: #6EB1E8;
   --color-brand-grey: #3A3A3A;
 }
 
-/* NEW - Light mode (default) */
+/* Theme variables. Inside the app shell these are re-pointed at the --lmg-*
+   brand tokens (styles/app-shell.css); the literal values here are the same
+   palette, for anything rendered outside the shell (body, toasts). */
 :root {
-  --color-bg-primary: #F7F4EF;
-  --color-bg-secondary: #F5F2EC;
-  --color-bg-tertiary: #EDE9E2;
-  --color-text-primary: #1C1917;
-  --color-text-secondary: #78716C;
-  --color-text-tertiary: #A8A29E;
-  --color-border: #E5E0D5;
+  --color-bg-primary: #FBF9F6;
+  --color-bg-secondary: #FFFFFF;
+  --color-bg-tertiary: #F3EFE9;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #5A5A5A;
+  --color-text-tertiary: #6A6A6A;
+  --color-border: #ECE7E0;
   /* Surface aliases (used by Card.tsx) */
-  --color-surface: #F5F2EC;
-  --color-surface-secondary: #EDE9E2;
-  --color-border-hover: #D4CFC6;
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #FBF9F6;
+  --color-border-hover: #D9D2C8;
 }
 
-/* NEW - Dark mode (when .dark class is present) */
+/* Dark mode (when .dark class is present) */
 :root.dark,
 .dark {
-  --color-bg-primary: #0a0f1a;
-  --color-bg-secondary: #121b2e;
-  --color-bg-tertiary: #1a2332;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #D1D5DB;
-  --color-text-tertiary: #9CA3AF;
-  --color-border: #404040;
-  --color-surface: #1e293b;
-  --color-surface-secondary: #263348;
-  --color-border-hover: #606060;
+  --color-bg-primary: #141312;
+  --color-bg-secondary: #1E1C1A;
+  --color-bg-tertiary: #292623;
+  --color-text-primary: #F5F2EC;
+  --color-text-secondary: #B8B2A9;
+  --color-text-tertiary: #9A948B;
+  --color-border: #2F2C28;
+  --color-surface: #1E1C1A;
+  --color-surface-secondary: #141312;
+  --color-border-hover: #47433D;
 }
 
 
@@ -103,8 +106,8 @@ input[type="date"]:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--color-brand-yellow);
-  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+  border-color: var(--color-brand-pink);
+  box-shadow: 0 0 0 2px rgba(232, 87, 139, 0.12);
 }
 
 input::placeholder,
@@ -126,44 +129,14 @@ input:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Premium Card Styles */
+/* Cards: paper on cream, hairline border, no drop shadow */
 .premium-card {
-  border-radius: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  border-radius: 18px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.15s ease;
 }
 
 .premium-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-}
-
-/* Light mode - warm white cards on warm gray ground */
-:root:not(.dark) .premium-card,
-[data-theme="light"] .premium-card {
-  background-color: #F5F2EC;
-  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.04);
-  border: 1px solid var(--color-border);
-}
-
-:root:not(.dark) .premium-card:hover,
-[data-theme="light"] .premium-card:hover {
-  box-shadow: 0 6px 24px rgba(28, 25, 23, 0.10);
-  border: 1px solid var(--color-border-hover);
-}
-
-/* Dark mode - cards with nice contrast */
-.dark .premium-card {
-  background-color: #1e293b;  /* Slate blue-gray */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-}
-
-.dark .premium-card:hover {
-  background-color: #334155;  /* Lighter slate on hover */
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  transform: translateY(-4px);
+  border-color: var(--color-border-hover);
 }

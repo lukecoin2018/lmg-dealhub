@@ -128,6 +128,16 @@ pending), `/dashboard`, `/calculator`, `/negotiate`, `/contracts`, `/contracts/g
 > "Sign In"/"Start Free" — the auth CTAs now point at deleted routes). Cleanup task:
 > redirect `/` → `/dashboard` and remove `components/landing/*` + dead auth nav links. _(planned)_
 
+### App shell _(September 2026 rebrand)_
+The six DealHub routes live in the `app/(app)/` route group (URLs unchanged).
+`app/(app)/layout.tsx` renders the chrome once: `CourseHeader variant="app"` + `Sidebar` +
+scrolling `<main>`; `DashboardLayout` is now only a page-content wrapper. Brand tokens are
+the `--lmg-*` set in `styles/course-landing.css` (declared on `.course-landing, .app-shell`);
+`styles/app-shell.css` holds the dark-mode mapping, points the old `--color-*` variables at
+those tokens, and styles the sidebar + dashboard. Don't wrap tool pages in `.course-landing`
+— its unlayered element resets override Tailwind utilities. `/deals?new=1` opens the
+add-deal modal.
+
 ---
 
 ## Current Status _(August 2026)_
