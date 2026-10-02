@@ -149,7 +149,7 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 
 | Module | Chapters | Runtime | Structural change during wiring |
 |--------|----------|---------|----------------------------------|
-| M1  | 5 | 11:53 | — |
+| M1  | 5 | 12:01 | — (re-recorded Oct 2026) |
 | M2  | 6 | 14:40 | added Ch 2.5 "Make Brands Find You"; old closer → 2.6 |
 | M3  | 5 | 11:37 | — (clean 1:1) |
 | M4  | 6 | 14:11 | added Ch 4.3 "Pricing Your Deliverables"; 4.3–4.5 → 4.4–4.6 |
@@ -211,15 +211,15 @@ https://player.mediadelivery.net/embed/708086/{videoId}?autoplay=false&loop=fals
 
 **Mobile containment:** iframe renders inside `.segment-video` (`width:100%; aspect-ratio:16/9; overflow:hidden`) — no fixed width, no overflow risk on any screen size.
 
-**Module 1 — live (5 segments):**
+**Module 1 — live (5 segments, re-recorded October 2026 — all five IDs replaced, 1.4/1.5 durations changed):**
 
 | Seg | Chapter | Duration | Bunny video ID |
 |-----|---------|----------|----------------|
-| seg-1 | Ch 1.1 | 1:49 | `1c1eb408-f40c-46f1-803c-2a0834ca4826` |
-| seg-2 | Ch 1.2 | 3:04 | `c29096a2-e943-405a-9a38-b14a943de51d` |
-| seg-3 | Ch 1.3 | 2:51 | `66ab7344-1271-49c4-b541-d1e17b609742` |
-| seg-4 | Ch 1.4 | 2:17 | `7d42a3f2-8eb6-431c-bb5d-830d675b6731` |
-| seg-5 | Ch 1.5 | 1:52 | `f498acea-caef-47c7-8f46-e99f86b6aa23` |
+| seg-1 | Ch 1.1 | 1:49 | `679a0755-f2f4-4f14-b2fd-01e9b33393c2` |
+| seg-2 | Ch 1.2 | 3:04 | `224308a2-58ff-4136-9fa0-5d8338b594e7` |
+| seg-3 | Ch 1.3 | 2:51 | `4d2fed0b-21e0-4dd9-8a88-13a8248e05de` |
+| seg-4 | Ch 1.4 | 2:21 | `82a202d0-1518-4e42-87e8-1b750d179e34` |
+| seg-5 | Ch 1.5 | 1:56 | `7e9a2a4f-e71d-4df3-ae99-dcecf3fed09f` |
 
 **Module 2 — live (6 segments):**
 

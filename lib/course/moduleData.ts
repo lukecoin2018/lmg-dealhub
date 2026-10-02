@@ -81,7 +81,7 @@ export const module1: ModuleData = {
         'This first module is where you get your bearings: every way you can get paid, what actually decides your rate, and an honest baseline on where your business stands today. Let\'s start with the money — because most creators are using a fraction of what\'s available to them.',
       ],
       duration: '1:49',
-      videoEmbed: 'https://player.mediadelivery.net/embed/708086/1c1eb408-f40c-46f1-803c-2a0834ca4826?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
+      videoEmbed: 'https://player.mediadelivery.net/embed/708086/679a0755-f2f4-4f14-b2fd-01e9b33393c2?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
     },
     {
       id: 'seg-2',
@@ -96,7 +96,7 @@ export const module1: ModuleData = {
         'That\'s the difference this course makes. A professional doesn\'t depend on the next sponsored post landing in their DMs. They\'ve got several streams running at once, so when one brand goes quiet, the income doesn\'t. By Module 9 you\'ll be building the recurring ones on purpose. For now, just sit with how many doors you\'ve left closed.',
       ],
       duration: '3:04',
-      videoEmbed: 'https://player.mediadelivery.net/embed/708086/c29096a2-e943-405a-9a38-b14a943de51d?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
+      videoEmbed: 'https://player.mediadelivery.net/embed/708086/224308a2-58ff-4136-9fa0-5d8338b594e7?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
     },
     {
       id: 'seg-3',
@@ -111,7 +111,7 @@ export const module1: ModuleData = {
         'This is the whole premise of the course in one idea: it was never your size. We sharpen all five of these as you go — and in Module 4, we turn them into your actual prices.',
       ],
       duration: '2:51',
-      videoEmbed: 'https://player.mediadelivery.net/embed/708086/66ab7344-1271-49c4-b541-d1e17b609742?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
+      videoEmbed: 'https://player.mediadelivery.net/embed/708086/4d2fed0b-21e0-4dd9-8a88-13a8248e05de?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
     },
     {
       id: 'seg-4',
@@ -124,8 +124,8 @@ export const module1: ModuleData = {
         'It\'s your engagement rate, and it\'s the fastest read on where you actually stand. Take a typical recent post. Add the likes and comments together, divide by your follower count, and multiply by 100. That\'s your number. As a rough map: 2–3% is average, 3–5% is good, 5% and above is excellent — and a strong argument for premium pricing. A real example: 1,500 likes plus 80 comments on a 22,000-follower account is 7.2%. That\'s excellent, and it\'s the kind of number you build a premium rate on. Run the same math on a 500K account with proportional engagement and the conclusion is identical — this is the figure that justifies your price at any size.',
         'Whatever your number comes out to, don\'t treat it as a verdict. It\'s a baseline and a lever. A lower number isn\'t a ceiling; it\'s the first thing this course helps you raise. A higher one is leverage you may not have known you were sitting on. Either way, you now know something most creators never bother to check — and knowing it is the first professional move you make. Now put your number to work:',
       ],
-      duration: '2:17',
-      videoEmbed: 'https://player.mediadelivery.net/embed/708086/7d42a3f2-8eb6-431c-bb5d-830d675b6731?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
+      duration: '2:21',
+      videoEmbed: 'https://player.mediadelivery.net/embed/708086/82a202d0-1518-4e42-87e8-1b750d179e34?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
     },
     {
       id: 'seg-5',
@@ -141,8 +141,8 @@ export const module1: ModuleData = {
         'That\'s the journey from here. Every module builds on the numbers you just found, and each brings the tool that puts it into practice — the calculator, the negotiation assistant, the contract builder, and more — so you\'re ready the next time a brand reaches out, not someday.',
         'Before you go, open the Module 1 workbook and write down your "before" picture: your engagement rate, your audience snapshot, and where you want this to be in twelve months. That before picture is how you\'ll measure everything this course is about to change — so get it down honestly. When you\'re ready, Module 2 is where the real work begins: building a pipeline of the brands you actually want.',
       ],
-      duration: '1:52',
-      videoEmbed: 'https://player.mediadelivery.net/embed/708086/f498acea-caef-47c7-8f46-e99f86b6aa23?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
+      duration: '1:56',
+      videoEmbed: 'https://player.mediadelivery.net/embed/708086/7e9a2a4f-e71d-4df3-ae99-dcecf3fed09f?autoplay=false&loop=false&muted=false&preload=true&responsive=true',
     },
   ],
 }
