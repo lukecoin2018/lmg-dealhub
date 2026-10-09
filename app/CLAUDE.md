@@ -150,7 +150,7 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 | Module | Chapters | Runtime | Structural change during wiring |
 |--------|----------|---------|----------------------------------|
 | M1  | 5 | 12:01 | — (re-recorded Oct 2026) |
-| M2  | 6 | 14:40 | added Ch 2.5 "Make Brands Find You"; old closer → 2.6 |
+| M2  | 6 | 15:08 | added Ch 2.5 "Make Brands Find You"; old closer → 2.6 (re-recorded Oct 2026) |
 | M3  | 5 | 11:37 | — (clean 1:1) |
 | M4  | 6 | 14:11 | added Ch 4.3 "Pricing Your Deliverables"; 4.3–4.5 → 4.4–4.6 |
 | M5  | 5 | 11:35 | — (clean 1:1; 2 app walkthroughs deferred) |
@@ -221,16 +221,16 @@ https://player.mediadelivery.net/embed/708086/{videoId}?autoplay=false&loop=fals
 | seg-4 | Ch 1.4 | 2:21 | `82a202d0-1518-4e42-87e8-1b750d179e34` |
 | seg-5 | Ch 1.5 | 1:56 | `7e9a2a4f-e71d-4df3-ae99-dcecf3fed09f` |
 
-**Module 2 — live (6 segments):**
+**Module 2 — live (6 segments, re-recorded October 2026 — all six IDs replaced, all six durations changed):**
 
 | Seg | Chapter | Duration | Bunny video ID |
 |-----|---------|----------|----------------|
-| seg-1 | Ch 2.1 | 1:41 | `f2f08327-7ea3-430e-a49b-9db913ab5f79` |
-| seg-2 | Ch 2.2 | 3:06 | `3cf60a86-8537-44bc-9951-67ab2da167e4` |
-| seg-3 | Ch 2.3 | 2:28 | `e52e71ac-3a49-46dd-b50f-58e01e0e173f` |
-| seg-4 | Ch 2.4 | 2:43 | `2af1bbd1-fd55-4c02-b4ae-d5d7f4c645e8` |
-| seg-5 | Ch 2.5 | 3:05 | `f5c764be-5bdd-4780-9778-6251a95b67b9` |
-| seg-6 | Ch 2.6 | 1:37 | `49a074d3-9668-4e1f-bae3-c74d7909a1a4` |
+| seg-1 | Ch 2.1 | 1:45 | `0392be3d-0a37-4a68-8d83-5161f5c026fc` |
+| seg-2 | Ch 2.2 | 3:11 | `8d826dcb-d0f3-4ba6-84a9-713c64c2de4a` |
+| seg-3 | Ch 2.3 | 2:33 | `404de2e0-abb1-4360-bb22-df99ba370b53` |
+| seg-4 | Ch 2.4 | 2:48 | `d3cdcdd1-9c28-4c1f-93b5-f5b7bcf406ea` |
+| seg-5 | Ch 2.5 | 3:10 | `53a4f15a-4086-4569-b11b-7d5f23bae5f8` |
+| seg-6 | Ch 2.6 | 1:41 | `484fe421-8fc8-420e-88d6-b6c1617c63f2` |
 
 **Modules 3–10 — all live** (wired July–August 2026). Per-video IDs are not mirrored here to avoid drift; read `moduleData.ts`. See the status table above for chapter counts, runtimes, and the structural change each module needed.
 
