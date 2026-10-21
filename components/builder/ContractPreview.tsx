@@ -344,7 +344,7 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
             </div>
           </div>
           <p className="mt-10 text-xs text-gray-600">
-            Erstellt mit dem Contract Builder – allgemeines Muster, keine Rechtsberatung. / Created with the Contract Builder – general template, not legal advice.
+            Created with the Contract Builder – general template, not legal advice.
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@ export default function CourseFooter() {
           <span className="site-footer__tag">Where Quality Brands Meet Iconic Influence</span>
         </div>
         <nav className="site-footer__nav" aria-label="Footer">
-          <Link href="/impressum">Impressum</Link>
+          <Link href="/impressum">Legal Notice</Link>
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <span>© 2026 LMG Media</span>

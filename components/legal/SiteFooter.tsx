@@ -2,7 +2,7 @@ import Link from 'next/link'
 import '@/styles/legal.css'
 
 const LINKS = [
-  { href: '/impressum', label: 'Impressum' },
+  { href: '/impressum', label: 'Legal Notice' },
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
 ] as const

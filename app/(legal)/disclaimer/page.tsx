@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import DisclaimerText from '@/components/legal/DisclaimerText'
 
 export const metadata: Metadata = {
@@ -9,9 +10,9 @@ export default function DisclaimerPage() {
   return (
     <>
       <p className="legal-kicker">Disclaimer</p>
-      <h1>Hinweise zu den Werkzeugen</h1>
+      <h1>Disclaimers</h1>
       <p className="legal-note">
-        Der deutsche Text ist die Fassung. Darunter steht dieselbe Aussage auf Englisch. Dieselben Texte stehen auch in den <a href="/terms">Nutzungsbedingungen</a>.
+        The same text is also in the <Link href="/terms">terms of use</Link>.
       </p>
       <DisclaimerText />
     </>

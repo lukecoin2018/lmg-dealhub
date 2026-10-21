@@ -144,3 +144,24 @@
 .legal-doc address {
   font-style: normal;
 }
+
+.course-landing .legal-doc details.legal-de,
+.legal-doc details.legal-de {
+  margin-top: 48px;
+  border-top: 1px solid #E5E0D5;
+  padding-top: 8px;
+}
+
+.course-landing .legal-doc details.legal-de summary,
+.legal-doc details.legal-de summary {
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  color: #78716C;
+  padding: 12px 0;
+}
+
+.course-landing .legal-doc details.legal-de summary:hover,
+.legal-doc details.legal-de summary:hover {
+  color: #1C1917;
+}
