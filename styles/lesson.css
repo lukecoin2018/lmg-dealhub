@@ -2641,6 +2641,93 @@
   border-top: 1px solid var(--border-1);
 }
 
+/* ─── Audience fit (3.4) ─────────────────────────────────── */
+.af-wrap {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-xl);
+  padding: 28px 24px 22px;
+  box-shadow: var(--shadow-sm);
+}
+
+.af-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lmg-pink);
+  margin: 0 0 18px;
+}
+
+.af-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1.5px solid var(--border-1);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.af-row { display: contents; }
+
+.af-col-head {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 16px;
+}
+
+@media (max-width: 480px) {
+  .af-col-head { font-size: 10px; letter-spacing: 0.06em; padding: 10px 12px; }
+  .af-cell { padding: 10px 12px; }
+}
+
+.af-col-head--demo   { background: var(--neutral-200); color: var(--fg-1); border-right: 1.5px solid var(--border-2); }
+.af-col-head--psycho { background: var(--lmg-pink); color: #fff; }
+
+.af-cell {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.af-cell--demo   { background: var(--bg-card); border-right: 1.5px solid var(--border-1); }
+.af-cell--psycho { background: var(--lmg-pink-soft); }
+
+.af-row-label {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.af-cell--psycho .af-row-label { color: var(--lmg-pink-deep); }
+
+.af-text {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--fg-2);
+}
+
+.af-cell--psycho .af-text { color: var(--lmg-pink-deep); font-weight: 600; }
+
+.af-footer {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--fg-3);
+  font-style: italic;
+  margin: 0;
+}
+
 /* ─── Scorecard (3.4) ────────────────────────────────────── */
 .sc-wrap {
   background: var(--bg-card);

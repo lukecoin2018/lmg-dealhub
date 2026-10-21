@@ -15,6 +15,7 @@ import MediaKitCallout from './visuals/MediaKitCallout'
 import SelfQuestions from './visuals/SelfQuestions'
 import BrandQuestions from './visuals/BrandQuestions'
 import Scorecard from './visuals/Scorecard'
+import AudienceFit from './visuals/AudienceFit'
 import PricingLevers from './visuals/PricingLevers'
 import UsageRights from './visuals/UsageRights'
 import QuoteRange from './visuals/QuoteRange'
@@ -147,6 +148,7 @@ export default function LessonLayout({ data }: LessonLayoutProps) {
       case 'self-questions':     return <SelfQuestions />
       case 'brand-questions':    return <BrandQuestions />
       case 'scorecard':          return <Scorecard />
+      case 'audience-fit':       return <AudienceFit />
       case 'pricing-levers':     return <PricingLevers />
       case 'usage-rights':       return <UsageRights />
       case 'quote-range':        return <QuoteRange />
