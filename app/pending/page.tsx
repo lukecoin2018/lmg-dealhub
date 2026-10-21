@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ArrowRight, Hourglass } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { getCurrentUser } from '@/lib/auth/session'
 import CourseHeader from '@/components/course/landing/CourseHeader'
 import { dmSans } from '@/components/course/landing/fonts'
 import '@/styles/course-landing.css'
 
 export const metadata = {
-  title: 'Access Pending · Brand Partnership Playbook',
+  title: "You're signed up · Brand Partnership Playbook",
 }
 
 export default async function PendingPage() {
@@ -15,6 +15,8 @@ export default async function PendingPage() {
   const user = await getCurrentUser()
   if (!user) redirect('/signup')
   if (user.has_access === 1) redirect('/course')
+
+  const name = user.name?.trim() || null
 
   return (
     <div className={`course-landing min-h-screen flex flex-col ${dmSans.variable}`} style={{ background: '#FAFAF8', color: '#1C1917' }}>
@@ -25,7 +27,7 @@ export default async function PendingPage() {
           <div className="flex items-center gap-3" style={{ marginBottom: 14 }}>
             <span style={{ display: 'inline-block', width: 26, height: 1.5, background: '#FF4D94', opacity: .55, flexShrink: 0 }} />
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase', color: '#FF4D94' }}>
-              Almost there
+              You&apos;re signed up
             </span>
           </div>
 
@@ -40,41 +42,14 @@ export default async function PendingPage() {
               textWrap: 'balance',
             } as React.CSSProperties}
           >
-            Your account is <em style={{ fontStyle: 'italic' }}>created</em>
+            {name ? <>Thanks, <em style={{ fontStyle: 'italic' }}>{name}</em></> : <>Thanks for signing <em style={{ fontStyle: 'italic' }}>up</em></>}
           </h1>
 
-          <p style={{ fontSize: 15.5, lineHeight: 1.6, color: '#78716C', fontWeight: 500, margin: '0 0 28px' }}>
-            Access is granted by the team — you&apos;ll be able to enter the full course and the
-            creator dashboard once you&apos;re approved. No action needed on your side.
+          <p style={{ fontSize: 15.5, lineHeight: 1.6, color: '#78716C', fontWeight: 500, margin: '0 0 10px' }}>
+            Your account is being reviewed. You&apos;ll get access soon.
           </p>
-
-          <div
-            className="flex items-center gap-3"
-            style={{
-              background: '#FFFFFF',
-              border: '1px solid #E5E0D5',
-              borderRadius: 16,
-              padding: '16px 18px',
-              marginBottom: 28,
-              boxShadow: '0 2px 6px rgba(20,18,12,0.06)',
-            }}
-          >
-            <span
-              style={{
-                width: 38, height: 38, borderRadius: '50%',
-                background: '#FFF4B0', display: 'grid', placeItems: 'center', flexShrink: 0,
-              }}
-            >
-              <Hourglass size={17} style={{ color: '#E6B800' }} />
-            </span>
-            <span style={{ fontSize: 13.5, lineHeight: 1.5, color: '#52504A', fontWeight: 600 }}>
-              Signed in as <strong style={{ color: '#1C1917' }}>{user.email}</strong> — approval
-              usually doesn&apos;t take long.
-            </span>
-          </div>
-
-          <p style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.13em', textTransform: 'uppercase', color: '#78716C', margin: '0 0 12px' }}>
-            In the meantime
+          <p style={{ fontSize: 15.5, lineHeight: 1.6, color: '#78716C', fontWeight: 500, margin: '0 0 28px' }}>
+            Module 1 is free to watch right now.
           </p>
 
           <Link
@@ -87,29 +62,19 @@ export default async function PendingPage() {
               padding: '15px 20px',
               borderRadius: 14,
               boxShadow: '0 14px 30px rgba(255,77,148,.28)',
-              marginBottom: 12,
+              marginBottom: 16,
               fontSize: 15,
               fontWeight: 800,
               letterSpacing: '-.01em',
             }}
           >
-            Module 1 is free — start it now
+            Watch Module 1
             <ArrowRight size={18} style={{ flexShrink: 0 }} />
           </Link>
 
-          <Link
-            href="/course"
-            style={{
-              display: 'inline-block',
-              fontSize: 13.5,
-              fontWeight: 700,
-              color: '#78716C',
-              textDecoration: 'none',
-              padding: '6px 2px',
-            }}
-          >
-            ← Back to the course overview
-          </Link>
+          <p style={{ fontSize: 13.5, lineHeight: 1.5, color: '#78716C', fontWeight: 600, margin: 0 }}>
+            Signed in as <strong style={{ color: '#1C1917' }}>{user.email}</strong>
+          </p>
         </div>
       </main>
     </div>
