@@ -108,7 +108,12 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
     const q = query.trim().toLowerCase()
     return users
       .filter((u) => (view === 'all' ? true : view === 'pending' ? u.hasAccess === 0 : u.hasAccess === 1))
-      .filter((u) => !q || u.email.includes(q) || (u.name ?? '').toLowerCase().includes(q))
+      .filter((u) => {
+        if (!q) return true
+        const name = (u.name ?? '').toLowerCase()
+        const email = u.email.toLowerCase()
+        return name.includes(q) || email.includes(q)
+      })
       .sort((a, b) => a.hasAccess - b.hasAccess)
   }, [users, query, view])
 
@@ -325,7 +330,7 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                <th style={TH}>Email</th>
+                <th style={TH}>Name</th>
                 <th style={TH}>Signed up</th>
                 <th style={TH}>Last login</th>
                 <th style={TH}>Access</th>
@@ -352,11 +357,11 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
                 const isSelf = u.id === adminId
                 return (
                   <tr key={u.id}>
-                    <td style={{ ...TD, ...(last && { borderBottom: 'none' }), fontWeight: 600, wordBreak: 'break-all' }}>
-                      <div>{u.email}</div>
-                      {u.name && (
-                        <div style={{ fontWeight: 500, color: '#78716C', marginTop: 2 }}>{u.name}</div>
-                      )}
+                    <td style={{ ...TD, ...(last && { borderBottom: 'none' }), fontWeight: 600 }}>
+                      <div style={{ color: u.name?.trim() ? '#1C1917' : '#B8B2A6' }}>
+                        {u.name?.trim() || '—'}
+                      </div>
+                      <div style={{ fontWeight: 500, color: '#78716C', marginTop: 2, wordBreak: 'break-all' }}>{u.email}</div>
                       <div style={{ fontSize: 12, fontWeight: 600, color: u.proLaunchOptIn === 1 ? '#1E6B3A' : '#B8B2A6', marginTop: 2 }}>
                         {u.proLaunchOptIn === 1 ? 'Pro launch email: yes' : 'Pro launch email: no'}
                       </div>

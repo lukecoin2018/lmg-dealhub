@@ -44,7 +44,13 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
         ),
       })
       if (res.ok) {
-        // Only allow same-site relative destinations from ?next=
+        // New accounts wait for approval, so sign-up always lands on the pending
+        // page (the confirmation). Login still honours a same-site ?next=.
+        if (mode === 'signup') {
+          router.push('/pending')
+          router.refresh()
+          return
+        }
         const next = new URLSearchParams(window.location.search).get('next')
         const dest = next && next.startsWith('/') && !next.startsWith('//') ? next : '/course'
         router.push(dest)
