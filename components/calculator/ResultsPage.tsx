@@ -4,6 +4,7 @@ import { CalculatorResult, CalculatorInput } from "@/lib/types/calculator"; // A
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useWorkflow } from "@/contexts/WorkflowContext";
+import { RateEstimateNotice } from "@/components/legal/Notices";
 
 interface ResultsPageProps {
   result: CalculatorResult;
@@ -72,6 +73,7 @@ export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPa
         <div className="text-xl text-text-secondary mb-6">
           Recommended: <span className="text-brand-yellow font-semibold">${result.recommendedRate.toLocaleString()}</span>
         </div>
+        <RateEstimateNotice />
         <div className="flex items-center justify-center gap-2">
           <div className={`px-4 py-2 rounded-full bg-bg-tertiary ${confidenceColors[result.confidence]}`}>
             <span className="font-medium capitalize">{result.confidence} Confidence</span>
@@ -277,14 +279,6 @@ export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPa
         </button>
       </div>
 
-      {/* Disclaimer */}
-      <div className="mt-12 p-6 bg-bg-secondary rounded-lg text-center text-sm text-text-tertiary border border-border-color">
-        <p>
-          This calculator provides an estimate from the inputs you enter.
-          Actual rates may vary based on your specific audience, content quality, and brand relationships.
-          Always do your own research and trust your instincts.
-        </p>
-      </div>
     </div>
   );
 }

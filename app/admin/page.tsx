@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getAdminUser } from '@/lib/auth/admin'
 import { listUsers } from '@/lib/auth/db'
 import AdminUsersClient from '@/components/admin/AdminUsersClient'
+import SiteFooter from '@/components/legal/SiteFooter'
 
 export const metadata = {
   title: 'Admin · LMG',
@@ -24,7 +25,7 @@ export default async function AdminPage() {
   }))
 
   return (
-    <div className="min-h-screen" style={{ background: '#FAFAF8', color: '#1C1917' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#FAFAF8', color: '#1C1917' }}>
       <header
         className="flex items-center justify-between gap-4 h-14 px-6"
         style={{ borderBottom: '1px solid #E5E0D5', background: '#FAFAF8' }}
@@ -53,6 +54,9 @@ export default async function AdminPage() {
         </h1>
         <AdminUsersClient initialUsers={users} adminId={admin.id} />
       </main>
+      <div className="mt-auto">
+        <SiteFooter />
+      </div>
     </div>
   )
 }

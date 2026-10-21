@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import CourseHeader from '@/components/course/landing/CourseHeader'
 import { dmSans } from '@/components/course/landing/fonts'
+import SiteFooter from '@/components/legal/SiteFooter'
 import Sidebar from '@/components/layout/Sidebar'
 import { allModules } from '@/lib/course/moduleData'
 import '@/styles/course-landing.css'
@@ -35,6 +36,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
         <Sidebar courseModules={courseModules} />
         <main className="app-shell__main">{children}</main>
       </div>
+      <SiteFooter />
     </div>
   )
 }

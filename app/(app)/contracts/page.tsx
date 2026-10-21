@@ -1,3 +1,4 @@
+import { ContractTemplateNotice } from '@/components/legal/Notices'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { FileText, Plus } from 'lucide-react'
 import Link from 'next/link'
@@ -11,6 +12,7 @@ export default function ContractsPage() {
           <div>
             <h1 className="text-3xl font-bold text-text-primary">Contracts</h1>
             <p className="text-text-secondary mt-1">Manage your generated contracts</p>
+            <ContractTemplateNotice />
           </div>
           <Link
             href="/contracts/generate"

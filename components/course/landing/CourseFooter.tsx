@@ -1,4 +1,8 @@
-// Footer for the /course landing page (reference §2.7).
+import Link from 'next/link'
+
+// Footer for the /course landing page. Legal links point at this site.
+// "Apply to work with us" is omitted: representation is not offered yet.
+// "For Influencers" pointed at the agency site, not the free course, so it is omitted too.
 
 export default function CourseFooter() {
   return (
@@ -10,9 +14,9 @@ export default function CourseFooter() {
           <span className="site-footer__tag">Where Quality Brands Meet Iconic Influence</span>
         </div>
         <nav className="site-footer__nav" aria-label="Footer">
-          <a href="https://lmg.media/for-influencers">For Influencers</a>
-          <a href="https://lmg.media/for-influencers/apply">Apply to work with us</a>
-          <a href="https://lmg.media/privacy-policy">Privacy</a>
+          <Link href="/impressum">Legal Notice</Link>
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
           <span>© 2026 LMG Media</span>
         </nav>
       </div>

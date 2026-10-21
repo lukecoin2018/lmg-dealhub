@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { blurField, CHECK_INPUT_STYLE, CHECK_ROW_STYLE, ERROR_STYLE, focusField, INPUT_STYLE, LABEL_STYLE, SUBMIT_STYLE } from './formStyles'
 
@@ -165,6 +166,11 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
           ? (mode === 'signup' ? 'Creating account…' : 'Logging in…')
           : (mode === 'signup' ? 'Create account' : 'Log in')}
       </button>
+      {mode === 'signup' && (
+        <p style={{ fontSize: 13, lineHeight: 1.5, color: '#78716C', fontWeight: 500, textAlign: 'center', margin: '14px 0 0' }}>
+          By creating an account you agree to the <Link href="/terms" style={{ color: '#FF4D94', fontWeight: 700, textDecoration: 'none' }}>Terms</Link> and <Link href="/privacy" style={{ color: '#FF4D94', fontWeight: 700, textDecoration: 'none' }}>Privacy Policy</Link>.
+        </p>
+      )}
     </form>
   )
 }

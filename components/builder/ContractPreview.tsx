@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useContract } from '@/contexts/ContractContext';
 import { CLAUSE_LIBRARY } from '@/data/clauseLibrary';
+import { ContractTemplateNotice } from '@/components/legal/Notices';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 
@@ -207,6 +208,9 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
     doc.setFontSize(10);
     doc.text('Date: _________________', margin, yPosition);
     doc.text('Date: _________________', margin + colWidth + margin, yPosition);
+
+    yPosition += 16;
+    addText('Created with the Contract Builder - general template, not legal advice.', 9, false);
   
     // Save the PDF
     const fileName = `${brandName.replace(/[^a-z0-9]/gi, '_')}_${creatorName.replace(/[^a-z0-9]/gi, '_')}_Contract.pdf`;
@@ -339,11 +343,16 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
               </div>
             </div>
           </div>
+          <p className="mt-10 text-xs text-gray-600">
+            Created with the Contract Builder – general template, not legal advice.
+          </p>
         </div>
       </div>
 
+      <ContractTemplateNotice />
+
       {/* Action Buttons */}
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 mt-6">
         <button
           onClick={onBack}
           className="px-6 py-3 rounded-lg font-semibold border-2 border-border-color text-text-primary hover:border-brand-yellow transition-colors"
@@ -369,12 +378,6 @@ export default function ContractPreview({ onBack }: ContractPreviewProps) {
         </div>
       </div>
 
-      {/* Disclaimer */}
-      <div className="p-4 bg-yellow-900/20 border border-yellow-600/30 rounded-lg">
-        <p className="text-sm text-text-secondary">
-          <strong className="text-yellow-400">⚠️ Legal Disclaimer:</strong> This contract template is provided for informational purposes only and does not constitute legal advice. We strongly recommend having this agreement reviewed by a qualified attorney before signing, especially for high-value partnerships or complex arrangements.
-        </p>
-      </div>
     </div>
   );
 }// rebuild

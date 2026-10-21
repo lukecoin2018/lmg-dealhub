@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import CourseHeader from '@/components/course/landing/CourseHeader'
+import SiteFooter from '@/components/legal/SiteFooter'
 import { dmSans } from '@/components/course/landing/fonts'
 import '@/styles/course-landing.css'
 
@@ -17,6 +18,7 @@ export default function CourseLayout({ children }: { children: ReactNode }) {
     <div className={`course-landing flex flex-col h-screen ${dmSans.variable}`} style={{ background: '#FAFAF8' }}>
       <CourseHeader variant="compact" />
       {children}
+      <SiteFooter />
     </div>
   )
 }
