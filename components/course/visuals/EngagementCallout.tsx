@@ -13,7 +13,7 @@ export default function EngagementCallout() {
         </div>
       </div>
       <p className="ec-note">
-        Same follower count. Very different rate — because brands pay for an audience that{' '}
+        Example: Same follower count. Very different rate — because brands pay for an audience that{' '}
         <em>responds</em>, not one that scrolls past.
       </p>
     </div>

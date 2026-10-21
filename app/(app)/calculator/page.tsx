@@ -163,22 +163,6 @@ export default function CalculatorPage() {
             </button>
           </div>
         </div>
-
-        {/* Trust Indicators */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-brand-yellow">1,247+</div>
-            <div className="text-sm text-text-secondary mt-1">Creator Deals Analyzed</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-brand-pink">$2.4M+</div>
-            <div className="text-sm text-text-secondary mt-1">In Fair Rates Calculated</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-brand-blue">94%</div>
-            <div className="text-sm text-text-secondary mt-1">Accuracy Rate</div>
-          </div>
-        </div>
       </div>
     </DashboardLayout>
   );

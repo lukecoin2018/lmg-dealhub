@@ -14,7 +14,7 @@ const tactics = [
   {
     num: 3,
     label: 'Bundle to grow the deal',
-    detail: '"One post is $2,000; three over two months is $5,400." Better per-post rate for them, sustained visibility, and you held your positioning while growing the total.',
+    detail: 'Example: "One post is $2,000; three over two months is $5,400." Better per-post rate for them, sustained visibility, and you held your positioning while growing the total.',
     isKey: false,
   },
   {

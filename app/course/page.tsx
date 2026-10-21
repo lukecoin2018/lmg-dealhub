@@ -61,17 +61,17 @@ export default async function CoursePage() {
                 The business side of being a creator, taught <span className="serif-i">properly</span>.
               </h1>
               <p className="hero__lead">
-                Pricing, pitching, contracts, renewals — the system behind every professional partnership. Whether you work with us, with another agency, or on your own, this is the foundation.
+                Pricing, pitching, contracts, renewals — the system behind every professional partnership. This is the foundation, whether a creator works with an agency or on their own.
               </p>
               <p className="hero__sub">
-                Ten modules, taught on video, built from the same playbooks we use on real deals. Module 1 and the rate calculator are free — no account, no card, no catch.
+                Ten modules, taught on video. Module 1 and the rate calculator are free — no account, no card, no catch.
               </p>
               <div className="hero__actions">
                 <Link className="btn btn--pink" href="/course/module-1">
                   <span>Start Module 1 — free</span>
                   <ArrowRightIcon />
                 </Link>
-                <Link className="hero__secondary" href="/login">Already working with us? It&apos;s still yours →</Link>
+                <Link className="hero__secondary" href="/login">Already have an account? Log in →</Link>
               </div>
               <p className="hero__meta">
                 <span>10 modules</span><span className="dot">·</span>
@@ -194,14 +194,14 @@ export default async function CoursePage() {
           <div className="wrap">
             <div className="why__copy">
               <p className="eyebrow">Why this one</p>
-              <h2 id="why-title">Built from the playbooks we use on real deals.</h2>
-              <p>Every creator we work with knows this business. The Playbook is where that starts — whoever ends up handling your deals.</p>
+              <h2 id="why-title">Ten modules. One path through a brand partnership.</h2>
+              <p>The Playbook walks through pricing, pitching, contracts, and renewals.</p>
             </div>
             <div className="stats">
               <div className="stat">
                 <span className="stat__num">50</span>
                 <span className="stat__title">Videos, taught on camera</span>
-                <span className="stat__desc">Across ten modules — the same material we use when we take a deal to the table.</span>
+                <span className="stat__desc">Across ten modules.</span>
               </div>
               <div className="stat stat--gold">
                 <span className="stat__num">10</span>

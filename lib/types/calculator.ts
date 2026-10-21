@@ -79,7 +79,6 @@ export interface CalculatorResult {
   // Context
   creatorTier: CreatorTier;
   engagementTier: EngagementTier;
-  marketPosition: string;
   
   // Flags
   redFlags: RedFlag[];
@@ -94,5 +93,4 @@ export interface CalculatorResult {
   
   // Meta
   calculatedAt: Date;
-  dataSourceNote: string;
 }

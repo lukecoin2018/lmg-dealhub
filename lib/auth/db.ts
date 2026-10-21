@@ -7,6 +7,9 @@ export interface UserRow {
   has_access: number
   created_at: string
   last_login_at: string | null // sqlite "YYYY-MM-DD HH:MM:SS" (UTC), null until first login
+  name: string | null // null for accounts created before the name field existed
+  pro_launch_opt_in: number // 1 = asked to be emailed when Pro launches; never required
+  pro_launch_opt_in_at: string | null // ISO-8601 UTC timestamp of consent; null when opted out
 }
 
 // Singleton on globalThis so dev-server HMR doesn't stack up open handles.
@@ -25,11 +28,14 @@ function openDb(): Database.Database {
   db.pragma('journal_mode = WAL')
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
-      id            INTEGER PRIMARY KEY AUTOINCREMENT,
-      email         TEXT NOT NULL UNIQUE,
-      password_hash TEXT NOT NULL,
-      has_access    INTEGER NOT NULL DEFAULT 0,
-      created_at    TEXT NOT NULL DEFAULT (datetime('now'))
+      id                    INTEGER PRIMARY KEY AUTOINCREMENT,
+      email                 TEXT NOT NULL UNIQUE,
+      password_hash         TEXT NOT NULL,
+      has_access            INTEGER NOT NULL DEFAULT 0,
+      created_at            TEXT NOT NULL DEFAULT (datetime('now')),
+      name                  TEXT,
+      pro_launch_opt_in     INTEGER NOT NULL DEFAULT 0,
+      pro_launch_opt_in_at  TEXT
     );
     CREATE TABLE IF NOT EXISTS password_resets (
       id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,6 +56,17 @@ function migrate(db: Database.Database): void {
   const cols = (db.pragma('table_info(users)') as { name: string }[]).map((c) => c.name)
   if (!cols.includes('last_login_at')) {
     db.exec('ALTER TABLE users ADD COLUMN last_login_at TEXT')
+  }
+  // Name is nullable so accounts created before this column keep working.
+  if (!cols.includes('name')) {
+    db.exec('ALTER TABLE users ADD COLUMN name TEXT')
+  }
+  // Opt-in defaults to off. Existing rows get 0 and a null consent timestamp.
+  if (!cols.includes('pro_launch_opt_in')) {
+    db.exec('ALTER TABLE users ADD COLUMN pro_launch_opt_in INTEGER NOT NULL DEFAULT 0')
+  }
+  if (!cols.includes('pro_launch_opt_in_at')) {
+    db.exec('ALTER TABLE users ADD COLUMN pro_launch_opt_in_at TEXT')
   }
 }
 
@@ -81,12 +98,47 @@ export function setUserAccess(id: number, hasAccess: 0 | 1): UserRow | undefined
   return findUserById(id)
 }
 
-export function createUser(email: string, passwordHash: string): UserRow {
+export function createUser(
+  email: string,
+  passwordHash: string,
+  profile: { name: string; proLaunchOptIn: boolean },
+): UserRow {
   const normalized = email.trim().toLowerCase()
+  const optedIn = profile.proLaunchOptIn ? 1 : 0
+  const consentedAt = profile.proLaunchOptIn ? new Date().toISOString() : null
   const result = getDb()
-    .prepare('INSERT INTO users (email, password_hash) VALUES (?, ?)')
-    .run(normalized, passwordHash)
+    .prepare(
+      'INSERT INTO users (email, password_hash, name, pro_launch_opt_in, pro_launch_opt_in_at) VALUES (?, ?, ?, ?, ?)',
+    )
+    .run(normalized, passwordHash, profile.name, optedIn, consentedAt)
   return findUserById(Number(result.lastInsertRowid))!
+}
+
+/**
+ * Update the display name and Pro-launch email choice.
+ * A new opt-in records a fresh consent timestamp. Leaving an existing opt-in
+ * checked keeps the original timestamp. Opting out clears it.
+ * Pass name: null only for an account that does not have one yet.
+ */
+export function updateUserProfile(
+  id: number,
+  input: { name: string | null; proLaunchOptIn: boolean },
+): UserRow | undefined {
+  const current = findUserById(id)
+  if (!current) return undefined
+  let consentedAt: string | null
+  if (input.proLaunchOptIn) {
+    consentedAt =
+      current.pro_launch_opt_in === 1 && current.pro_launch_opt_in_at
+        ? current.pro_launch_opt_in_at
+        : new Date().toISOString()
+  } else {
+    consentedAt = null
+  }
+  getDb()
+    .prepare('UPDATE users SET name = ?, pro_launch_opt_in = ?, pro_launch_opt_in_at = ? WHERE id = ?')
+    .run(input.name, input.proLaunchOptIn ? 1 : 0, consentedAt, id)
+  return findUserById(id)
 }
 
 export function setUserPassword(id: number, passwordHash: string): void {

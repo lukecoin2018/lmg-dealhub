@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth/session'
 import AuthShell from '@/components/auth/AuthShell'
+import AccountProfileForm from '@/components/auth/AccountProfileForm'
 import ChangePasswordForm from '@/components/auth/ChangePasswordForm'
 
 export const metadata = {
@@ -18,14 +19,30 @@ export default async function AccountPage() {
   return (
     <AuthShell
       eyebrow="Your account"
-      title={<>Change your <em style={{ fontStyle: 'italic' }}>password</em></>}
-      subtitle={`Signed in as ${user.email}.`}
+      title={<>Your <em style={{ fontStyle: 'italic' }}>account</em></>}
+      subtitle={user.name ? `${user.name} · ${user.email}` : `Signed in as ${user.email}.`}
       footer={
         <Link href={user.has_access === 1 ? '/course' : '/pending'} style={linkStyle}>
           ← Back to the Playbook
         </Link>
       }
     >
+      <AccountProfileForm
+        initialName={user.name}
+        initialOptIn={user.pro_launch_opt_in === 1}
+        initialOptInAt={user.pro_launch_opt_in_at}
+      />
+      <h2
+        style={{
+          fontFamily: "var(--font-playfair, 'Playfair Display', Georgia, serif)",
+          fontWeight: 700,
+          fontSize: 22,
+          letterSpacing: '-.015em',
+          margin: '28px 0 16px',
+        }}
+      >
+        Password
+      </h2>
       <ChangePasswordForm />
     </AuthShell>
   )

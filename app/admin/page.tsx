@@ -16,9 +16,11 @@ export default async function AdminPage() {
   const users = listUsers().map((u) => ({
     id: u.id,
     email: u.email,
+    name: u.name,
     hasAccess: u.has_access,
     createdAt: u.created_at,
     lastLoginAt: u.last_login_at,
+    proLaunchOptIn: u.pro_launch_opt_in,
   }))
 
   return (

@@ -1,4 +1,5 @@
 import DashboardLayout from '@/components/layout/DashboardLayout'
+import { getCurrentUser } from '@/lib/auth/session'
 import {
   Calculator,
   MessageSquare,
@@ -28,7 +29,9 @@ const quickActions = [
   { title: 'New deal', desc: 'Track a new campaign', href: '/deals', icon: Briefcase, tint: 'blue' },
 ]
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const user = await getCurrentUser()
+  const name = user?.name?.trim()
   return (
     <DashboardLayout>
       <div className="course-landing dash">
@@ -36,7 +39,9 @@ export default function DashboardPage() {
         <div className="dash__head">
           <div>
             <h1>Dashboard</h1>
-            <p className="dash__welcome">Welcome back! Here&apos;s your business overview.</p>
+            <p className="dash__welcome">
+              {name ? `Welcome back, ${name}!` : 'Welcome back!'} Here&apos;s your business overview.
+            </p>
           </div>
           <Link className="btn btn--pink btn--sm" href={NEW_DEAL_HREF}>
             <Plus aria-hidden="true" />

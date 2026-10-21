@@ -3,7 +3,7 @@ const parts = [
     num: 1,
     label: 'Headline',
     job: 'One forward-up-able summary line',
-    example: '"The Reel reached 47,000 impressions at 7.2% engagement, both above benchmarks."',
+    example: 'Example: "The Reel reached 47,000 impressions at 7.2% engagement, both above benchmarks."',
     note: 'Make it the kind of line your contact can paste straight into a message to their boss.',
   },
   {

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import { notifyEmails } from '@/lib/auth/admin'
 import { countPendingUsers, createUser, findUserByEmail } from '@/lib/auth/db'
 import { createSessionToken, sessionCookieOptions, SESSION_COOKIE } from '@/lib/auth/session'
-import { normalizeEmail, validatePassword } from '@/lib/auth/validation'
+import { normalizeEmail, parseName, parseOptIn, validatePassword } from '@/lib/auth/validation'
 import { appUrl, sendMail } from '@/lib/mail/send'
 import { newSignupEmail } from '@/lib/mail/templates'
 
@@ -15,11 +15,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
   }
 
-  const { email: rawEmail, password: rawPassword } = (body ?? {}) as Record<string, unknown>
+  const { email: rawEmail, password: rawPassword, name: rawName, proLaunchOptIn: rawOptIn } = (body ?? {}) as Record<string, unknown>
 
   const email = normalizeEmail(rawEmail)
   if (!email) {
     return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 })
+  }
+  const name = parseName(rawName, true)
+  if (!name.ok || !name.value) {
+    return NextResponse.json({ error: name.ok ? 'Please enter your name.' : name.error }, { status: 400 })
   }
   const password = validatePassword(rawPassword)
   if (!password) {
@@ -40,7 +44,7 @@ export async function POST(req: NextRequest) {
 
   let user
   try {
-    user = createUser(email, passwordHash)
+    user = createUser(email, passwordHash, { name: name.value, proLaunchOptIn: parseOptIn(rawOptIn) })
   } catch (err: unknown) {
     // UNIQUE constraint race between the check above and the insert
     if (err instanceof Error && err.message.includes('UNIQUE')) {

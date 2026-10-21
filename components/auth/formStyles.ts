@@ -63,6 +63,26 @@ export const SUBMIT_STYLE = (pending: boolean): React.CSSProperties => ({
   transition: 'opacity 160ms ease',
 })
 
+export const CHECK_ROW_STYLE: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: 10,
+  marginBottom: 22,
+  fontSize: 14,
+  fontWeight: 500,
+  lineHeight: 1.45,
+  color: '#1C1917',
+  cursor: 'pointer',
+}
+
+export const CHECK_INPUT_STYLE: React.CSSProperties = {
+  width: 18,
+  height: 18,
+  marginTop: 1,
+  flexShrink: 0,
+  accentColor: '#FF4D94',
+}
+
 export function focusField(e: React.FocusEvent<HTMLInputElement>) {
   e.currentTarget.style.borderColor = '#FF4D94'
   e.currentTarget.style.boxShadow = '0 0 0 3px rgba(255,77,148,.14)'

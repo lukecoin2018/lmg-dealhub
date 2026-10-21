@@ -12,7 +12,7 @@ const prepItems = [
     label: 'Performance proof',
     sub: 'Your leverage made concrete',
     detail:
-      '"My last three sponsored posts averaged 9% engagement and drove around 500 clicks." Show the receipts — don\'t ask brands to imagine your value.',
+      'Example: "My last three sponsored posts averaged 9% engagement and drove around 500 clicks." Show the receipts — don\'t ask brands to imagine your value.',
     isKey: false,
   },
   {

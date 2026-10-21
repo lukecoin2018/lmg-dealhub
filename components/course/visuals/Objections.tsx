@@ -6,7 +6,7 @@ const objections = [
   },
   {
     say: '"Other creators charge way less."',
-    respond: 'Educate: "Engagement and fit vary widely. My rate reflects 6.8% engagement and an audience that\'s 82% your demographic."',
+    respond: 'Educate: Example: "Engagement and fit vary widely. My rate reflects 6.8% engagement and an audience that\'s 82% your demographic."',
     flag: null,
   },
   {

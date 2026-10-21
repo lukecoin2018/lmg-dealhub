@@ -5,9 +5,11 @@ import { useMemo, useRef, useState } from 'react'
 interface AdminUser {
   id: number
   email: string
+  name: string | null
   hasAccess: number
   createdAt: string // sqlite "YYYY-MM-DD HH:MM:SS" (UTC)
   lastLoginAt: string | null
+  proLaunchOptIn: number
 }
 
 const CARD: React.CSSProperties = {
@@ -106,7 +108,7 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
     const q = query.trim().toLowerCase()
     return users
       .filter((u) => (view === 'all' ? true : view === 'pending' ? u.hasAccess === 0 : u.hasAccess === 1))
-      .filter((u) => !q || u.email.includes(q))
+      .filter((u) => !q || u.email.includes(q) || (u.name ?? '').toLowerCase().includes(q))
       .sort((a, b) => a.hasAccess - b.hasAccess)
   }, [users, query, view])
 
@@ -274,8 +276,8 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filter by email…"
-            aria-label="Filter users by email"
+            placeholder="Filter by name or email…"
+            aria-label="Filter users by name or email"
             style={{
               fontSize: 14,
               fontWeight: 500,
@@ -351,7 +353,13 @@ export default function AdminUsersClient({ initialUsers, adminId }: { initialUse
                 return (
                   <tr key={u.id}>
                     <td style={{ ...TD, ...(last && { borderBottom: 'none' }), fontWeight: 600, wordBreak: 'break-all' }}>
-                      {u.email}
+                      <div>{u.email}</div>
+                      {u.name && (
+                        <div style={{ fontWeight: 500, color: '#78716C', marginTop: 2 }}>{u.name}</div>
+                      )}
+                      <div style={{ fontSize: 12, fontWeight: 600, color: u.proLaunchOptIn === 1 ? '#1E6B3A' : '#B8B2A6', marginTop: 2 }}>
+                        {u.proLaunchOptIn === 1 ? 'Pro launch email: yes' : 'Pro launch email: no'}
+                      </div>
                     </td>
                     <td style={{ ...TD, ...(last && { borderBottom: 'none' }), color: '#78716C', whiteSpace: 'nowrap' }}>
                       {formatDate(u.createdAt)}

@@ -5,13 +5,13 @@ export default function QuoteRange() {
       <div className="qr-row">
         <div className="qr-side qr-side--weak">
           <span className="qr-tag qr-tag--weak">Single number</span>
-          <p className="qr-text">"My rate is $1,500."</p>
+          <p className="qr-text">Example: "My rate is $1,500."</p>
           <p className="qr-sub">Sounds like you're asking permission. Leaves no room to move.</p>
         </div>
         <div className="qr-arrow" aria-hidden="true">→</div>
         <div className="qr-side qr-side--strong">
           <span className="qr-tag qr-tag--strong">Range</span>
-          <p className="qr-text">"A single Reel typically runs <em>$1,500–$2,000</em>, depending on usage rights and timeline."</p>
+          <p className="qr-text">Example: "A single Reel typically runs <em>$1,500–$2,000</em>, depending on usage rights and timeline."</p>
           <p className="qr-sub">Anchors the brand at your real value. Gives you room to flex without seeming arbitrary.</p>
         </div>
       </div>
