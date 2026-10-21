@@ -8,6 +8,7 @@ import DealTypeSelector from '@/components/builder/DealTypeSelector';
 import SectionSelector from '@/components/builder/SectionSelector';
 import ClauseCustomizer from '@/components/builder/ClauseCustomizer';
 import ContractPreview from '@/components/builder/ContractPreview';
+import { ContractTemplateNotice } from '@/components/legal/Notices';
 
 type BuilderStep = 'deal-type' | 'sections' | 'customize' | 'preview';
 
@@ -38,9 +39,12 @@ function ContractBuilderContent() {
           <h1 className="text-3xl font-bold text-text-primary mb-2">
             Contract Generator
           </h1>
-          <p className="text-text-secondary mb-6">
+          <p className="text-text-secondary mb-2">
             Build a professional influencer contract in minutes
           </p>
+          <div className="mb-6">
+            <ContractTemplateNotice />
+          </div>
 
           {/* Progress Indicator */}
           <div className="flex items-center gap-2">

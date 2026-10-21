@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { getCurrentUser } from '@/lib/auth/session'
 import CourseHeader from '@/components/course/landing/CourseHeader'
+import SiteFooter from '@/components/legal/SiteFooter'
 import { dmSans } from '@/components/course/landing/fonts'
 import '@/styles/course-landing.css'
 
@@ -77,6 +78,7 @@ export default async function PendingPage() {
           </p>
         </div>
       </main>
+      <SiteFooter />
     </div>
   )
 }

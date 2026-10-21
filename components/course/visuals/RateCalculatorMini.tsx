@@ -2,6 +2,7 @@
 
 import { useState, useId } from 'react'
 import { Lock } from 'lucide-react'
+import { RateEstimateNotice } from '@/components/legal/Notices'
 import { calculateRate } from '@/lib/calculator-engine'
 import type { Niche } from '@/lib/types/calculator'
 
@@ -206,6 +207,7 @@ export default function RateCalculatorMini() {
           <div className="rcm-result-rec">
             Recommended: <strong>${result.recommendedRate.toLocaleString()}</strong>
           </div>
+          <RateEstimateNotice />
           {tierLabel && (
             <span className={`rcm-tier-badge rcm-tier-badge--${engTier}`}>{tierLabel}</span>
           )}
