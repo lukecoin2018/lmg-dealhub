@@ -8,7 +8,7 @@ const addOns = [
   {
     item: 'Paid advertising usage',
     value: '+50–100%',
-    note: 'Brand runs your content as paid ads. Creator content outperforms brand ads — they know it.',
+    note: 'Brand runs your content as paid ads.',
   },
   {
     item: 'Whitelisting',

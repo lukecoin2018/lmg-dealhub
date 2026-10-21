@@ -76,9 +76,6 @@ export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPa
           <div className={`px-4 py-2 rounded-full bg-bg-tertiary ${confidenceColors[result.confidence]}`}>
             <span className="font-medium capitalize">{result.confidence} Confidence</span>
           </div>
-          <div className="px-4 py-2 rounded-full bg-bg-tertiary text-text-secondary">
-            {result.marketPosition}
-          </div>
         </div>
 
         {/* Action Buttons */}
@@ -283,12 +280,9 @@ export function ResultsPage({ result, formData, onStartOver, onBack }: ResultsPa
       {/* Disclaimer */}
       <div className="mt-12 p-6 bg-bg-secondary rounded-lg text-center text-sm text-text-tertiary border border-border-color">
         <p>
-          💡 This calculator provides estimated rates based on industry data and market analysis.
+          This calculator provides an estimate from the inputs you enter.
           Actual rates may vary based on your specific audience, content quality, and brand relationships.
           Always do your own research and trust your instincts.
-        </p>
-        <p className="mt-2 text-xs">
-          {result.dataSourceNote}
         </p>
       </div>
     </div>

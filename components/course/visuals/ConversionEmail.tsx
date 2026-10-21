@@ -3,7 +3,7 @@ const parts = [
     num: 1,
     label: 'Lead with the result',
     job: 'Remind them it worked',
-    example: '"The Reel hit 7.2% engagement and drove 480 site clicks, both above our projections."',
+    example: 'Example: "The Reel hit 7.2% engagement and drove 480 site clicks, both above our projections."',
     note: 'The fresh data is why you send this within a week — before it\'s forgotten.',
   },
   {

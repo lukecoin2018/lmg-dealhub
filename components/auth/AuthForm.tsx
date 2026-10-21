@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
-import { blurField, ERROR_STYLE, focusField, INPUT_STYLE, LABEL_STYLE, SUBMIT_STYLE } from './formStyles'
+import { blurField, CHECK_INPUT_STYLE, CHECK_ROW_STYLE, ERROR_STYLE, focusField, INPUT_STYLE, LABEL_STYLE, SUBMIT_STYLE } from './formStyles'
 
 // Shared login/signup form. Server does the real validation; this only handles
 // UX (pending state, inline errors). Fixed light palette to match the course
@@ -21,7 +21,14 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     const form = new FormData(e.currentTarget)
     const email = String(form.get('email') ?? '')
     const password = String(form.get('password') ?? '')
+    const name = String(form.get('name') ?? '').trim()
+    // Checkbox is optional and posts only when ticked. Absence means no.
+    const proLaunchOptIn = form.get('proLaunchOptIn') === 'on'
 
+    if (mode === 'signup' && !name) {
+      setError('Please enter your name.')
+      return
+    }
     if (mode === 'signup' && password.length < 8) {
       setError('Password must be at least 8 characters.')
       return
@@ -32,7 +39,9 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
       const res = await fetch(`/api/auth/${mode}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(
+          mode === 'signup' ? { email, password, name, proLaunchOptIn } : { email, password },
+        ),
       })
       if (res.ok) {
         // Only allow same-site relative destinations from ?next=
@@ -53,6 +62,44 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
+      {mode === 'signup' && (
+        <div className="auth-pair">
+          <div>
+            <label htmlFor="auth-name" style={LABEL_STYLE}>Name</label>
+            <input
+              id="auth-name"
+              name="name"
+              type="text"
+              required
+              autoComplete="name"
+              maxLength={80}
+              placeholder="Your name"
+              style={INPUT_STYLE}
+              onFocus={focusField}
+              onBlur={blurField}
+            />
+          </div>
+          <div>
+            <label htmlFor="auth-email" style={LABEL_STYLE}>Email</label>
+            <input
+              id="auth-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              inputMode="email"
+              autoCapitalize="none"
+              spellCheck={false}
+              placeholder="you@example.com"
+              style={INPUT_STYLE}
+              onFocus={focusField}
+              onBlur={blurField}
+            />
+          </div>
+        </div>
+      )}
+
+      {mode === 'login' && (
       <div style={{ marginBottom: 18 }}>
         <label htmlFor="auth-email" style={LABEL_STYLE}>Email</label>
         <input
@@ -70,8 +117,9 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
           onBlur={blurField}
         />
       </div>
+      )}
 
-      <div style={{ marginBottom: 22 }}>
+      <div style={{ marginBottom: mode === 'signup' ? 18 : 22 }}>
         <label htmlFor="auth-password" style={LABEL_STYLE}>Password</label>
         <input
           id="auth-password"
@@ -86,6 +134,19 @@ export default function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
           onBlur={blurField}
         />
       </div>
+
+      {mode === 'signup' && (
+        <label style={CHECK_ROW_STYLE}>
+          <input
+            id="auth-pro-launch"
+            name="proLaunchOptIn"
+            type="checkbox"
+            defaultChecked={false}
+            style={CHECK_INPUT_STYLE}
+          />
+          <span>Tell me by email when the Pro version launches.</span>
+        </label>
+      )}
 
       {error && (
         <div role="alert" style={ERROR_STYLE}>

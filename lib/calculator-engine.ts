@@ -68,10 +68,7 @@ import {
       
       // Step 10: Generate negotiation strategy
       const negotiation = this.generateNegotiationStrategy(minRate, maxRate, recommendedRate);
-      
-      // Step 11: Determine market position
-      const marketPosition = this.getMarketPosition(recommendedRate, creatorTier);
-      
+
       return {
         minRate: Math.round(minRate),
         maxRate: Math.round(maxRate),
@@ -83,11 +80,9 @@ import {
         steps: this.steps,
         creatorTier,
         engagementTier,
-        marketPosition,
         redFlags: this.redFlags,
         negotiation,
         calculatedAt: new Date(),
-        dataSourceNote: "Based on analysis of 1,247+ creator deals (Jan 2025)",
       };
     }
   
@@ -502,29 +497,6 @@ import {
         strategy,
       };
     }
-  
-    private getMarketPosition(rate: number, tier: CreatorTier): string {
-      const totalItems = this.input.deliverables.reduce((sum, d) => sum + d.quantity, 0);
-      
-      const averages: Record<CreatorTier, number> = {
-        micro: 1200,
-        "mid-micro": 3000,
-        "mid-tier": 7500,
-      };
-      
-      const avgRate = (averages[tier] / 3) * totalItems;
-      const percentDiff = ((rate - avgRate) / avgRate) * 100;
-      
-      if (percentDiff > 30) return "significantly above average";
-      if (percentDiff > 10) return "above average";
-      if (percentDiff > -10) return "average";
-      if (percentDiff > -30) return "below average";
-      return "significantly below average";
-    }
-  
-    // ============================================
-    // FORMATTING HELPERS
-    // ============================================
   
     private formatPlatform(platform: string): string {
       const names: Record<string, string> = {

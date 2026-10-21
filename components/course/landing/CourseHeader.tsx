@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import { Bell, BookOpen } from 'lucide-react'
-import { getSession } from '@/lib/auth/session'
+import { getCurrentUser, getSession } from '@/lib/auth/session'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 // Sticky brand header (reference §2.1), shared by the /course landing page, the
 // lesson shell (app/course/(lesson)/layout.tsx) and the auth pages.
-// Server component: reads the session (JWT only, no DB hit — display only, the
-// access gate lives in proxy.ts) so the Log in pill becomes email + Log out when
-// signed in.
+// Server component. Reads the session, then the user row when someone is signed
+// in, so the account pill can show their saved name (email if they have none).
+// The access gate itself lives in proxy.ts.
 //
 // variant="landing" (default): ← lmg.media · Log in · "Start Module 1 — free".
 // variant="compact": the same without the Module 1 pill, for pages where the
@@ -16,7 +16,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 // authPill={false}: drop the Log in / Log out pill (e.g. on /login itself).
 // variant="app": the authenticated DealHub shell (app/(app)/layout.tsx). Brand
 //   reads "DealHub" and links to /dashboard; the nav is ← lmg.media · Course ·
-//   theme toggle · notifications · account pill (email + avatar).
+//   theme toggle · notifications · account pill (name, or email if unset, + avatar).
 
 export default async function CourseHeader({
   variant = 'landing',
@@ -26,6 +26,10 @@ export default async function CourseHeader({
   authPill?: boolean
 } = {}) {
   const session = await getSession()
+  const user = session ? await getCurrentUser() : null
+  const displayName = user?.name?.trim() || null
+  const accountLabel = displayName || session?.email || ''
+  const accountInitial = accountLabel.charAt(0).toUpperCase()
   const compact = variant === 'compact'
 
   if (variant === 'app') {
@@ -53,10 +57,10 @@ export default async function CourseHeader({
                 <Bell aria-hidden="true" />
               </button>
             </div>
-            <Link className="site-nav__account" href="/account" title="Account settings" aria-label="Account settings">
-              {session && <span className="site-nav__account-email">{session.email}</span>}
+            <Link className="site-nav__account" href="/account" title={session?.email ?? 'Account settings'} aria-label="Account settings">
+              {accountLabel && <span className="site-nav__account-email">{accountLabel}</span>}
               <span className="site-nav__avatar" aria-hidden="true">
-                {session ? session.email.charAt(0).toUpperCase() : ''}
+                {accountInitial}
               </span>
             </Link>
           </nav>
@@ -80,7 +84,7 @@ export default async function CourseHeader({
           <a className="site-nav__back" href="https://lmg.media/for-influencers">← lmg.media</a>
           {authPill && (session ? (
             <>
-              <Link className="site-nav__user" href="/account" title="Account settings">{session.email}</Link>
+              <Link className="site-nav__user" href="/account" title={session.email}>{accountLabel}</Link>
               <form action="/api/auth/logout" method="post" className="site-nav__logout">
                 <button type="submit" className="btn btn--outline">Log out</button>
               </form>

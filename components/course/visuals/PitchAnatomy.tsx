@@ -2,7 +2,7 @@ const parts = [
   {
     label: 'Subject line',
     job: 'Get opened',
-    example: '"Partnership Proposal: Reaching 50,000 Engaged Home-Design Enthusiasts"',
+    example: 'Example: "Partnership Proposal: Reaching 50,000 Engaged Home-Design Enthusiasts"',
     note: 'Specific and value-focused — never "Collaboration Opportunity."',
   },
   {
@@ -14,13 +14,13 @@ const parts = [
   {
     label: 'Value proposition',
     job: 'Lead with engagement, not followers',
-    example: '"50K followers · 6.8% engagement · 82% women 25–40 shopping eco"',
+    example: 'Example: "50K followers · 6.8% engagement · 82% women 25–40 shopping eco"',
     note: 'One tight paragraph. Demographics and ER from Module 1 — not a raw count.',
   },
   {
     label: 'Alignment',
     job: 'Make the strategic case',
-    example: '"73% of my audience said they want to switch but can\'t find a brand they trust."',
+    example: 'Example: "73% of my audience said they want to switch but can\'t find a brand they trust."',
     note: 'The specific overlap between your audience\'s need and their product — ideally with a number.',
   },
   {

@@ -252,3 +252,9 @@
 
 /* Screen-reader-only text (e.g. "(locked)" on gated module cards) */
 .course-landing .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* Sign-up: name sits next to email, stacking when the card is narrow. */
+.course-landing .auth-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+@media (max-width: 520px) {
+  .course-landing .auth-pair { grid-template-columns: 1fr; }
+}

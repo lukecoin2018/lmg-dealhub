@@ -24,9 +24,17 @@ export async function GET(req: NextRequest) {
   )
 
   const lines = [
-    ['email', 'signed_up_utc', 'last_login_utc', 'has_access'].join(','),
+    ['email', 'name', 'signed_up_utc', 'last_login_utc', 'has_access', 'pro_launch_opt_in', 'pro_launch_opt_in_at'].join(','),
     ...rows.map((u) =>
-      [csvCell(u.email), csvCell(u.created_at), csvCell(u.last_login_at), csvCell(u.has_access ? 'yes' : 'no')].join(','),
+      [
+        csvCell(u.email),
+        csvCell(u.name),
+        csvCell(u.created_at),
+        csvCell(u.last_login_at),
+        csvCell(u.has_access ? 'yes' : 'no'),
+        csvCell(u.pro_launch_opt_in ? 'yes' : 'no'),
+        csvCell(u.pro_launch_opt_in_at),
+      ].join(','),
     ),
   ]
 
