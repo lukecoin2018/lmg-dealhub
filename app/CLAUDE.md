@@ -152,7 +152,7 @@ All 10 lesson pages are built and content-complete (`/course/module-1` through `
 | M1  | 5 | 12:01 | — (re-recorded Oct 2026) |
 | M2  | 6 | 15:08 | added Ch 2.5 "Make Brands Find You"; old closer → 2.6 (re-recorded Oct 2026) |
 | M3  | 5 | 12:01 | — (clean 1:1; re-recorded Oct 2026) |
-| M4  | 6 | 14:11 | added Ch 4.3 "Pricing Your Deliverables"; 4.3–4.5 → 4.4–4.6 |
+| M4  | 6 | 14:36 | added Ch 4.3 "Pricing Your Deliverables"; 4.3–4.5 → 4.4–4.6 (re-recorded Oct 2026) |
 | M5  | 5 | 11:35 | — (clean 1:1; 2 app walkthroughs deferred) |
 | M6  | 6 | 16:26 | added Ch 6.5 "Your Non-Negotiables"; old closer → 6.6 |
 | M7  | 6 | 21:24 | split Ch 7.2 into Part 1 / Part 2; 7.3–7.5 → 7.4–7.6 |
@@ -242,7 +242,18 @@ https://player.mediadelivery.net/embed/708086/{videoId}?autoplay=false&loop=fals
 | seg-4 | Ch 3.4 | 2:33 | `12f9222d-4d44-4126-a88f-cee3f85ee475` |
 | seg-5 | Ch 3.5 | 1:31 | `b2b60131-7d05-4d55-a88d-429b11ca3be7` |
 
-**Modules 4–10 — all live** (wired July–August 2026). Per-video IDs are not mirrored here to avoid drift; read `moduleData.ts`. See the status table above for chapter counts, runtimes, and the structural change each module needed.
+**Module 4 — live (6 segments, re-recorded October 2026 — all six IDs replaced, all six durations changed):**
+
+| Seg | Chapter | Duration | Bunny video ID |
+|-----|---------|----------|----------------|
+| seg-1 | Ch 4.1 | 2:00 | `f8bb0c78-ddca-4019-b5ee-52ee4609f067` |
+| seg-2 | Ch 4.2 | 2:23 | `a0561818-b565-4ada-9300-6b34c678676b` |
+| seg-3 | Ch 4.3 | 2:31 | `b85d6bd6-49f3-47de-b7be-05903bd2fada` |
+| seg-4 | Ch 4.4 | 3:24 | `7b7e7fae-4696-48ff-a546-5a03e4598012` |
+| seg-5 | Ch 4.5 | 2:36 | `c33d694e-107d-41b5-ae07-70cc42671c0b` |
+| seg-6 | Ch 4.6 | 1:42 | `07545517-a660-4301-936e-92b9d0446de0` |
+
+**Modules 5–10 — all live** (wired July–August 2026). Per-video IDs are not mirrored here to avoid drift; read `moduleData.ts`. See the status table above for chapter counts, runtimes, and the structural change each module needed.
 
 **Two traps worth knowing before you wire anything:**
 - **Stale dev server.** The Next dev server can keep serving the OLD module data after an edit — surviving a hard reload, showing "IN PRODUCTION" or stale durations even though the file on disk is correct. Hit this twice (M5, M10). Confirm the file with `grep` first, then `preview_stop` → `rm -rf .next/cache` → restart. `curl -s localhost:3000/course/module-N` is the fastest way to check SSR truth. **Tell the user to rebuild, not just restart, after pulling on the VPS** for the same reason.
