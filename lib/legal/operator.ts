@@ -1,40 +1,28 @@
 /**
- * Operator details for the Impressum, privacy policy and terms.
+ * Company details used on /impressum (Legal Notice), /privacy and /terms.
  *
- * The postcode is a single field so it can be corrected in one place.
- * Leave a Gewerbe field as an empty string to hide that line on /impressum.
- * Do not invent a GISA number, UID or trade wording here.
+ * Change a value here and it updates on all three pages.
+ * Leave `phone` as an empty string to hide the phone line.
  */
 export const operator = {
-  name: 'Luke Langer',
-  /** Geschäftsbezeichnung only. Not a registered company name. */
-  tradingName: 'LMG Media',
-  street: 'Walcherstraße 5',
-  postcode: '1020',
-  city: 'Wien',
-  countryDe: 'Österreich',
-  countryEn: 'Austria',
-  email: 'luke@lmg.media',
-  /** Unternehmensgegenstand. Empty hides the trade-purpose lines. */
-  businessPurpose: '',
-  /** First trade-licence wording. Empty hides that line. */
-  gewerbe: '',
-  /** Second trade-licence wording, if there is one. */
-  gewerbeExtra: '',
-  /** GISA number. */
-  gisa: '',
-  /** Supervisory trade authority. */
-  tradeAuthority: '',
-  /** WKO Wien Fachgruppe. */
-  wkoFachgruppe: '',
-  /** UID, for example ATU12345678. Empty hides the VAT line. */
-  uid: '',
+  /** Full legal name of the company. */
+  legalName: 'LMG Media LLC',
+  /** Short brand name used in running text. */
+  brandName: 'LMG Media',
+  street: '8383 Wilshire Blvd #803',
+  city: 'Beverly Hills',
+  state: 'CA',
+  zip: '90211',
+  country: 'United States',
+  email: 'brands@lmg.media',
+  /** Optional, for example '+1 (310) 555-0100'. Empty hides the line. */
+  phone: '',
+  website: 'creators.lmg.media',
 }
+
+/** One-line postal address, e.g. "8383 Wilshire Blvd #803, Beverly Hills, CA 90211, United States". */
+export const operatorAddress = `${operator.street}, ${operator.city}, ${operator.state} ${operator.zip}, ${operator.country}`
 
 export function filled(value: string): boolean {
   return value.trim().length > 0
-}
-
-export function hasTradeLicence(): boolean {
-  return [operator.gewerbe, operator.gewerbeExtra, operator.gisa, operator.tradeAuthority, operator.wkoFachgruppe].some(filled)
 }

@@ -4,7 +4,7 @@ import '@/styles/legal.css'
 export function RateEstimateNotice() {
   return (
     <p className="legal-notice">
-      <strong>Estimates only.</strong> This is a non-binding range from your inputs and general assumptions, shown in US dollars. It does not guarantee income, it is not an offer from a brand, and it is not financial, tax or legal advice. VAT, social security and income tax are not included. Pricing decisions are yours.{' '}
+      <strong>Estimates only.</strong> This is a non-binding range from your inputs and general assumptions, shown in US dollars. It does not guarantee income, it is not an offer from a brand, and it is not financial, tax or legal advice. Amounts are before any taxes. Pricing decisions are yours.{' '}
       <Link href="/disclaimer">Full disclaimer</Link>
     </p>
   )
